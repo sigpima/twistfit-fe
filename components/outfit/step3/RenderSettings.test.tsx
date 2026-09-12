@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import RenderSettings from './RenderSettings'
 
 describe('RenderSettings', () => {
   it('toggles the HD 4K and Smart Fit Physics switches independently', () => {
-    render(<RenderSettings />)
+    renderWithIntl(<RenderSettings />)
     const hdToggle = screen.getByLabelText('Chế độ chất lượng cao HD 4K') as HTMLInputElement
     const physicsToggle = screen.getByLabelText('Mô phỏng chuyển động vải Smart Fit Physics') as HTMLInputElement
 

@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import BodyMeasurements from './BodyMeasurements'
 import { OutfitFlowProvider } from '../OutfitFlowProvider'
 
 describe('BodyMeasurements', () => {
   it('shows the default measurements and the selected model body shape', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <BodyMeasurements />
       </OutfitFlowProvider>
@@ -16,7 +17,7 @@ describe('BodyMeasurements', () => {
   })
 
   it('updates the height label when the slider moves', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <BodyMeasurements />
       </OutfitFlowProvider>
@@ -26,7 +27,7 @@ describe('BodyMeasurements', () => {
   })
 
   it('increments and clamps the waist stepper', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <BodyMeasurements />
       </OutfitFlowProvider>

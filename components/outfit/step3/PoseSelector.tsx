@@ -1,20 +1,22 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useOutfitFlow } from '../OutfitFlowProvider'
 
 const POSES = [
-  { id: 'front', icon: 'man', label: 'Đứng thẳng phía trước', sublabel: 'Chuẩn Form 0°' },
-  { id: '45deg', icon: 'person', label: 'Góc 45 độ', sublabel: 'Năng động' },
-  { id: 'side', icon: 'directions_walk', label: 'Nghiêng cạnh bên', sublabel: 'Góc 90° rõ eo' },
-  { id: 'hand-hip', icon: 'dry_cleaning', label: 'Chống tay hông', sublabel: 'Phong cách Chic' },
-  { id: 'arms-crossed', icon: 'accessibility', label: 'Khoanh tay tự tin', sublabel: 'Hiện đại' },
-  { id: 'runway-walk', icon: 'transfer_within_a_station', label: 'Sải chân Runway', sublabel: 'Chuyển động cao' },
-  { id: 'seated', icon: 'chair', label: 'Ngồi thanh lịch', sublabel: 'Look cà phê' },
-  { id: 'back-view', icon: 'flip', label: 'Góc sau lưng', sublabel: 'Chi tiết khóa lưng' },
-  { id: 'dress-spin', icon: 'motion_sensor_active', label: 'Váy xoay nhẹ', sublabel: 'Bồng bềnh' },
-]
+  { id: 'front', icon: 'man', key: 'front' },
+  { id: '45deg', icon: 'person', key: 'angle45' },
+  { id: 'side', icon: 'directions_walk', key: 'side' },
+  { id: 'hand-hip', icon: 'dry_cleaning', key: 'handHip' },
+  { id: 'arms-crossed', icon: 'accessibility', key: 'armsCrossed' },
+  { id: 'runway-walk', icon: 'transfer_within_a_station', key: 'runwayWalk' },
+  { id: 'seated', icon: 'chair', key: 'seated' },
+  { id: 'back-view', icon: 'flip', key: 'backView' },
+  { id: 'dress-spin', icon: 'motion_sensor_active', key: 'dressSpin' },
+] as const
 
 export default function PoseSelector() {
+  const t = useTranslations('Outfit.Step3.PoseSelector')
   const { selectedPose, setSelectedPose } = useOutfitFlow()
 
   return (
@@ -22,24 +24,23 @@ export default function PoseSelector() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-space-xs">
           <span className="material-symbols-outlined text-primary">view_in_ar</span>
-          <h2 className="text-title-md font-semibold text-on-surface">Lựa chọn tư thế (9 tư thế có sẵn)</h2>
+          <h2 className="text-title-md font-semibold text-on-surface">{t('heading')}</h2>
         </div>
         <span className="rounded-full bg-primary-fixed px-2.5 py-1 text-label-sm font-medium text-on-primary-fixed">
-          Đã chọn: {selectedPose.label}
+          {t('selectedBadge', { label: selectedPose.label })}
         </span>
       </div>
-      <p className="text-body-sm text-on-surface-variant">
-        Góc nhìn và thế đứng làm nổi bật độ rủ peplum và tôn đường cong cơ thể tốt nhất.
-      </p>
+      <p className="text-body-sm text-on-surface-variant">{t('description')}</p>
       <div className="grid grid-cols-3 gap-space-sm pt-space-xs">
         {POSES.map((pose) => {
           const isSelected = selectedPose.id === pose.id
+          const label = t(`poses.${pose.key}.label`)
           return (
             <button
               key={pose.id}
               type="button"
               aria-pressed={isSelected}
-              onClick={() => setSelectedPose({ id: pose.id, label: pose.label })}
+              onClick={() => setSelectedPose({ id: pose.id, label })}
               className={`relative flex flex-col items-center justify-center gap-space-xs rounded-xl p-space-md text-center transition-all ${
                 isSelected
                   ? 'bg-surface-container-high text-primary shadow-sm hover:shadow-md'
@@ -54,8 +55,8 @@ export default function PoseSelector() {
               >
                 <span className="material-symbols-outlined text-[24px]">{pose.icon}</span>
               </div>
-              <span className="text-label-md font-bold text-on-surface">{pose.label}</span>
-              <span className="text-label-sm text-on-surface-variant">{pose.sublabel}</span>
+              <span className="text-label-md font-bold text-on-surface">{label}</span>
+              <span className="text-label-sm text-on-surface-variant">{t(`poses.${pose.key}.sublabel`)}</span>
             </button>
           )
         })}
@@ -64,10 +65,8 @@ export default function PoseSelector() {
         <div className="flex items-center gap-space-sm">
           <span className="material-symbols-outlined text-secondary">wb_sunny</span>
           <div className="flex flex-col">
-            <span className="text-label-md font-semibold text-on-surface">Ánh sáng trường quay</span>
-            <span className="text-body-sm text-on-surface-variant">
-              Natural Studio Light 5200K (Tôn da Spring/Summer)
-            </span>
+            <span className="text-label-md font-semibold text-on-surface">{t('lightingLabel')}</span>
+            <span className="text-body-sm text-on-surface-variant">{t('lightingDetail')}</span>
           </div>
         </div>
         <span className="material-symbols-outlined text-primary">tune</span>

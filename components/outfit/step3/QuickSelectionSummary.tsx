@@ -1,8 +1,10 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useOutfitFlow } from '../OutfitFlowProvider'
 
 export default function QuickSelectionSummary() {
+  const t = useTranslations('Outfit.Step3.QuickSelectionSummary')
   const { selectedGarment, selectedModel } = useOutfitFlow()
 
   return (
@@ -14,7 +16,7 @@ export default function QuickSelectionSummary() {
       <span className="text-outline-variant">|</span>
       <div className="flex items-center gap-2">
         <span className="material-symbols-outlined text-[16px] text-primary">face_3</span>
-        <span className="text-label-md font-medium text-on-surface">Người mẫu {selectedModel.name}</span>
+        <span className="text-label-md font-medium text-on-surface">{t('modelPrefix', { name: selectedModel.name })}</span>
       </div>
     </div>
   )

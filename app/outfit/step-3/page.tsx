@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import FlowOverviewBanner from '@/components/outfit/FlowOverviewBanner'
 import QuickSelectionSummary from '@/components/outfit/step3/QuickSelectionSummary'
@@ -8,6 +9,7 @@ import RenderSettings from '@/components/outfit/step3/RenderSettings'
 import BodyMeasurements from '@/components/outfit/step3/BodyMeasurements'
 
 export default function Step3Page() {
+  const t = useTranslations('Outfit.Step3.Page')
   const router = useRouter()
 
   function handleGenerate() {
@@ -21,25 +23,21 @@ export default function Step3Page() {
           <div className="flex flex-col gap-space-xs">
             <div className="flex items-center gap-space-xs">
               <span className="rounded-full bg-secondary-fixed px-2.5 py-0.5 text-label-sm font-semibold uppercase text-on-secondary-fixed">
-                Virtual Dressing Studio
+                {t('badge')}
               </span>
               <span className="text-outline-variant">•</span>
-              <span className="text-label-sm text-outline">Smart Fit Engine 3.2</span>
+              <span className="text-label-sm text-outline">{t('engineBadge')}</span>
             </div>
-            <h1 className="text-headline-lg text-on-surface">
-              Bước 3: Chọn Tư Thế &amp; Điều Chỉnh Tỷ Lệ Vóc Dáng
-            </h1>
-            <p className="text-body-md text-on-surface-variant">
-              Tinh chỉnh tư thế người mẫu và số đo cơ thể để công nghệ AI render chính xác từng nếp vải.
-            </p>
+            <h1 className="text-headline-lg text-on-surface">{t('heading')}</h1>
+            <p className="text-body-md text-on-surface-variant">{t('subheading')}</p>
           </div>
           <QuickSelectionSummary />
         </div>
         <FlowOverviewBanner
-          title="Quy trình thiết lập trực quan 3 bước TwistFit Studio"
-          subtitle="Đồng bộ hoá tự động với dữ liệu Personal Color của bạn"
+          title={t('flowBannerTitle')}
+          subtitle={t('flowBannerSubtitle')}
           image="/outfit/flow-overview-step3.png"
-          imageAlt="Tiến trình phòng thử đồ TwistFit"
+          imageAlt={t('flowBannerImageAlt')}
         />
         <div className="grid grid-cols-1 gap-space-lg lg:grid-cols-12">
           <div className="flex flex-col gap-space-md lg:col-span-7">
@@ -58,7 +56,7 @@ export default function Step3Page() {
                   <span className="material-symbols-outlined text-[26px] transition-transform group-hover:rotate-12">
                     bolt
                   </span>
-                  <span>⚡ Tạo Đồ Ảo Ngay (Nhanh - 1 credit)</span>
+                  <span>{t('generateButton')}</span>
                 </button>
                 <button
                   type="button"
@@ -66,11 +64,11 @@ export default function Step3Page() {
                   className="flex w-full items-center justify-center gap-2 rounded-full bg-surface-container px-space-md py-space-sm text-label-lg text-on-surface transition-colors hover:bg-surface-container-high"
                 >
                   <span className="material-symbols-outlined text-[18px]">arrow_back</span>
-                  <span>Quay lại Bước 2</span>
+                  <span>{t('backButton')}</span>
                 </button>
                 <div className="flex items-center justify-center gap-2 text-label-sm text-outline">
                   <span className="material-symbols-outlined text-[16px]">verified_user</span>
-                  <span>Thời gian xử lý AI ước tính: ~4 giây</span>
+                  <span>{t('estimatedTime')}</span>
                 </div>
               </div>
             </div>
@@ -82,20 +80,17 @@ export default function Step3Page() {
               <span className="material-symbols-outlined text-[32px]">tips_and_updates</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-headline-sm text-on-surface">Mẹo nhỏ tạo dáng cho Áo Peplum</span>
-              <p className="max-w-2xl text-body-md text-on-surface-variant">
-                Tư thế &quot;Đứng thẳng phía trước&quot; và &quot;Góc 45 độ&quot; là 2 lựa chọn hàng đầu của
-                stylist TwistFit giúp thấy rõ độ chuyển động của vạt áo và eo thon.
-              </p>
+              <span className="text-headline-sm text-on-surface">{t('tipTitle')}</span>
+              <p className="max-w-2xl text-body-md text-on-surface-variant">{t('tipBody')}</p>
             </div>
           </div>
           <div className="flex shrink-0 items-center gap-space-sm">
-            <span className="text-label-lg font-semibold text-primary">Tài khoản còn: 12 Credits</span>
+            <span className="text-label-lg font-semibold text-primary">{t('creditsBalance')}</span>
             <button
               type="button"
               className="rounded-full bg-primary-fixed px-space-md py-space-xs text-label-md font-semibold text-on-primary-fixed transition-all hover:bg-primary hover:text-on-primary"
             >
-              Nạp thêm
+              {t('topUpButton')}
             </button>
           </div>
         </div>

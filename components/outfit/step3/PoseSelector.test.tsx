@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import PoseSelector from './PoseSelector'
 import { OutfitFlowProvider } from '../OutfitFlowProvider'
 
 describe('PoseSelector', () => {
   it('shows the default pose as selected', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <PoseSelector />
       </OutfitFlowProvider>
@@ -18,7 +19,7 @@ describe('PoseSelector', () => {
   })
 
   it('updates the shared selected pose when a different pose is clicked', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <PoseSelector />
       </OutfitFlowProvider>
