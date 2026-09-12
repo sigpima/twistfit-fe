@@ -1,26 +1,138 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Colors — ported from stitch_personal_color_fashion_website/twistfit_atelier/DESIGN.md */
+  --color-surface: #f9f9ff;
+  --color-surface-dim: #c7dbff;
+  --color-surface-bright: #f9f9ff;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f0f3ff;
+  --color-surface-container: #e7eeff;
+  --color-surface-container-high: #dde9ff;
+  --color-surface-container-highest: #d4e3ff;
+  --color-on-surface: #041c37;
+  --color-on-surface-variant: #45464f;
+  --color-inverse-surface: #1c314d;
+  --color-inverse-on-surface: #ebf1ff;
+  --color-outline: #757680;
+  --color-outline-variant: #c6c6d0;
+  --color-surface-tint: #4f5d8b;
+  --color-primary: #4c5a88;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #6573a2;
+  --color-on-primary-container: #fefcff;
+  --color-inverse-primary: #b7c5f9;
+  --color-secondary: #7b516d;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #fdc8e9;
+  --color-on-secondary-container: #7a506c;
+  --color-tertiary: #615c48;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #7a7560;
+  --color-on-tertiary-container: #fffbff;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+  --color-primary-fixed: #dbe1ff;
+  --color-primary-fixed-dim: #b7c5f9;
+  --color-on-primary-fixed: #071843;
+  --color-on-primary-fixed-variant: #374571;
+  --color-secondary-fixed: #ffd7ef;
+  --color-secondary-fixed-dim: #ebb7d8;
+  --color-on-secondary-fixed: #300f28;
+  --color-on-secondary-fixed-variant: #613a55;
+  --color-tertiary-fixed: #eae2c9;
+  --color-tertiary-fixed-dim: #cdc6ae;
+  --color-on-tertiary-fixed: #1f1c0c;
+  --color-on-tertiary-fixed-variant: #4b4734;
+  --color-background: #f9f9ff;
+  --color-on-background: #041c37;
+  --color-surface-variant: #d4e3ff;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Radii — matches the Tailwind config actually embedded in the mockup's
+     code.html (NOT the aspirational values in DESIGN.md's front-matter,
+     which drifted from what the page was actually rendered with). Only
+     DEFAULT/lg/xl/full are overridden; sm/md/2xl/3xl keep Tailwind's
+     stock scale, exactly as the mockup left them. */
+  --radius: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Spacing — named tokens, used alongside Tailwind's numeric scale */
+  --spacing-gutter: 1rem;
+  --spacing-gutter-desktop: 1.5rem;
+  --spacing-margin: 1.25rem;
+  --spacing-margin-desktop: 2.5rem;
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.25rem;
+
+  /* Typography */
+  --text-display-lg: 48px;
+  --text-display-lg--line-height: 56px;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-lg--font-weight: 700;
+
+  --text-display-lg-mobile: 34px;
+  --text-display-lg-mobile--line-height: 42px;
+  --text-display-lg-mobile--letter-spacing: -0.01em;
+  --text-display-lg-mobile--font-weight: 700;
+
+  --text-headline-lg: 32px;
+  --text-headline-lg--line-height: 40px;
+  --text-headline-lg--letter-spacing: -0.01em;
+  --text-headline-lg--font-weight: 600;
+
+  --text-headline-lg-mobile: 26px;
+  --text-headline-lg-mobile--line-height: 34px;
+  --text-headline-lg-mobile--font-weight: 600;
+
+  --text-headline-md: 24px;
+  --text-headline-md--line-height: 32px;
+  --text-headline-md--font-weight: 600;
+
+  --text-headline-sm: 20px;
+  --text-headline-sm--line-height: 28px;
+  --text-headline-sm--font-weight: 600;
+
+  --text-title-md: 18px;
+  --text-title-md--line-height: 24px;
+  --text-title-md--font-weight: 500;
+
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 24px;
+  --text-body-lg--font-weight: 400;
+
+  --text-body-md: 14px;
+  --text-body-md--line-height: 22px;
+  --text-body-md--font-weight: 400;
+
+  --text-body-sm: 12px;
+  --text-body-sm--line-height: 18px;
+  --text-body-sm--font-weight: 400;
+
+  --text-label-lg: 14px;
+  --text-label-lg--line-height: 20px;
+  --text-label-lg--letter-spacing: 0.02em;
+  --text-label-lg--font-weight: 600;
+
+  --text-label-md: 12px;
+  --text-label-md--line-height: 16px;
+  --text-label-md--letter-spacing: 0.04em;
+  --text-label-md--font-weight: 600;
+
+  --text-label-sm: 11px;
+  --text-label-sm--line-height: 14px;
+  --text-label-sm--letter-spacing: 0.05em;
+  --text-label-sm--font-weight: 500;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-surface);
+  color: var(--color-on-surface);
+  font-family: var(--font-montserrat), system-ui, sans-serif;
 }
