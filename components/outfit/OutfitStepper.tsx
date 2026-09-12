@@ -1,0 +1,97 @@
+import Link from 'next/link'
+
+const STEPS = [
+  { step: 1, label: 'Chọn Quần Áo', href: '/outfit/step-1' },
+  { step: 2, label: 'Dáng & Khuôn Mặt', href: '/outfit/step-2' },
+  { step: 3, label: 'Tư Thế & Góc Nhìn', href: '/outfit/step-3' },
+  { step: 4, label: 'Xem Kết Quả 3D', href: '/outfit/step-4' },
+] as const
+
+export default function OutfitStepper({ currentStep }: { currentStep: 1 | 2 | 3 | 4 }) {
+  return (
+    <section className="w-full bg-surface-container-low/80 px-margin-desktop py-space-lg shadow-sm backdrop-blur-md">
+      <div className="mx-auto flex max-w-6xl flex-col gap-space-md">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-space-xs text-on-surface-variant">
+            <span className="text-label-sm font-bold uppercase tracking-widest text-primary">
+              Virtual Fitting Studio
+            </span>
+            <span className="material-symbols-outlined text-[14px]">chevron_right</span>
+            <span className="text-label-sm font-medium">Quy trình 4 bước</span>
+          </div>
+          <div className="flex items-center gap-space-xs rounded-full bg-secondary-container/60 px-space-sm py-0.5 text-label-sm text-on-secondary-container">
+            <span className="material-symbols-outlined text-[15px]">auto_awesome</span>
+            <span>AI Segmentation 4.0 Online</span>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 gap-space-md pt-space-xs md:grid-cols-4">
+          {STEPS.map((item) => {
+            const isCurrent = item.step === currentStep
+            const isCompleted = item.step < currentStep
+            const content = (
+              <>
+                <div
+                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-headline-sm font-bold ${
+                    isCurrent
+                      ? 'bg-primary text-on-primary shadow-[0_0_0_4px_rgba(219,225,255,0.7)]'
+                      : isCompleted
+                        ? 'bg-primary-fixed text-primary'
+                        : 'bg-surface-container-highest text-on-surface-variant'
+                  }`}
+                >
+                  {isCompleted ? (
+                    <span className="material-symbols-outlined text-[20px]">check</span>
+                  ) : (
+                    item.step
+                  )}
+                </div>
+                <div className="flex min-w-0 flex-col">
+                  <span
+                    className={`text-label-md font-bold uppercase tracking-tight ${
+                      isCurrent ? 'text-primary' : 'text-outline'
+                    }`}
+                  >
+                    {isCurrent
+                      ? `Bước ${item.step} · Đang chọn`
+                      : isCompleted
+                        ? `Bước ${item.step} · Đã xong`
+                        : `Bước ${item.step} · Sắp tới`}
+                  </span>
+                  <span
+                    className={`truncate text-title-md font-semibold ${
+                      isCurrent ? 'text-on-surface' : 'text-on-surface-variant'
+                    }`}
+                  >
+                    {item.label}
+                  </span>
+                </div>
+              </>
+            )
+
+            const className = `flex items-center gap-space-sm rounded-xl p-space-sm transition-all ${
+              isCurrent
+                ? 'bg-surface-container-lowest shadow-md'
+                : isCompleted
+                  ? 'bg-surface-container-lowest/60 hover:bg-surface-container-lowest'
+                  : 'bg-surface-container/60 opacity-70'
+            }`
+
+            if (isCompleted) {
+              return (
+                <Link key={item.step} href={item.href} className={className}>
+                  {content}
+                </Link>
+              )
+            }
+
+            return (
+              <div key={item.step} className={className}>
+                {content}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
