@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import QuizFlow from './QuizFlow'
 
 const pushMock = vi.fn()
@@ -14,13 +15,13 @@ describe('QuizFlow', () => {
   })
 
   it('shows the first question with the Tiếp theo button disabled until an option is picked', () => {
-    render(<QuizFlow />)
+    renderWithIntl(<QuizFlow />)
     expect(screen.getByText('Câu hỏi 1/5')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Tiếp theo' })).toBeDisabled()
   })
 
   it('enables Tiếp theo once an option is selected and advances to the next question', () => {
-    render(<QuizFlow />)
+    renderWithIntl(<QuizFlow />)
     fireEvent.click(screen.getAllByRole('button', { name: /./ })[0])
     const nextButton = screen.getByRole('button', { name: 'Tiếp theo' })
     expect(nextButton).toBeEnabled()
@@ -29,7 +30,7 @@ describe('QuizFlow', () => {
   })
 
   it('shows "Xem kết quả" on the last question and navigates to the result page when finished', () => {
-    render(<QuizFlow />)
+    renderWithIntl(<QuizFlow />)
 
     for (let step = 0; step < 5; step++) {
       const optionButtons = screen.getAllByRole('button').filter((btn) => btn.dataset.quizOption === 'true')

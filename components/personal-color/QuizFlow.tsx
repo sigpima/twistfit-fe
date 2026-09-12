@@ -1,11 +1,13 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { QUIZ_QUESTIONS, type Season } from '@/lib/personalColorQuiz'
 import { computeSeasonResult } from '@/lib/computeSeasonResult'
 
 export default function QuizFlow() {
+  const t = useTranslations('PersonalColor.Quiz')
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(0)
   const [answers, setAnswers] = useState<(Season | null)[]>(
@@ -35,10 +37,8 @@ export default function QuizFlow() {
     <div className="mx-auto w-full max-w-2xl rounded-3xl bg-surface-container-lowest p-6 shadow-sm sm:p-8">
       <div className="mb-6">
         <div className="mb-2 flex items-center justify-between text-label-sm text-on-surface-variant">
-          <span>Personal Color Test</span>
-          <span>
-            Câu hỏi {currentStep + 1}/{totalSteps}
-          </span>
+          <span>{t('badgeLabel')}</span>
+          <span>{t('questionCounter', { current: currentStep + 1, total: totalSteps })}</span>
         </div>
         <div className="h-2 w-full overflow-hidden rounded-full bg-surface-container-highest">
           <div
@@ -78,7 +78,7 @@ export default function QuizFlow() {
           disabled={currentStep === 0}
           className="text-label-md font-semibold text-on-surface-variant disabled:opacity-0"
         >
-          Quay lại
+          {t('backButton')}
         </button>
         <button
           type="button"
@@ -86,7 +86,7 @@ export default function QuizFlow() {
           disabled={selectedSeason === null}
           className="rounded-full bg-primary px-7 py-3 text-label-lg text-on-primary transition-all hover:bg-primary-container disabled:cursor-not-allowed disabled:opacity-40"
         >
-          {isLastStep ? 'Xem kết quả' : 'Tiếp theo'}
+          {isLastStep ? t('viewResultButton') : t('nextButton')}
         </button>
       </div>
     </div>

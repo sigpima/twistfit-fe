@@ -228,5 +228,16 @@
       "submitButton": "GỬI LỜI NHẮN",
       "successMessage": "Cảm ơn bạn! Lời nhắn đã được chuyển đến bộ phận chăm sóc TwistFit."
     }
+  },
+  "PersonalColor": {
+    "Quiz": {
+      "pageTitle": "Kiểm Tra Personal Color",
+      "pageSubtitle": "Trả lời {count} câu hỏi ngắn để xác định nhóm màu mùa phù hợp với bạn.",
+      "badgeLabel": "Personal Color Test",
+      "questionCounter": "Câu hỏi {current}/{total}",
+      "backButton": "Quay lại",
+      "nextButton": "Tiếp theo",
+      "viewResultButton": "Xem kết quả"
+    }
   }
 }
