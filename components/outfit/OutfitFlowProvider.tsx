@@ -52,11 +52,20 @@ export const DEFAULT_MODEL: Model = {
   personalColor: 'Autumn Soft',
 }
 
+export type Pose = {
+  id: string
+  label: string
+}
+
+export const DEFAULT_POSE: Pose = { id: 'front', label: 'Đứng thẳng phía trước' }
+
 type OutfitFlowContextValue = {
   selectedGarment: Garment
   setSelectedGarment: (garment: Garment) => void
   selectedModel: Model
   setSelectedModel: (model: Model) => void
+  selectedPose: Pose
+  setSelectedPose: (pose: Pose) => void
 }
 
 const OutfitFlowContext = createContext<OutfitFlowContextValue | null>(null)
@@ -64,10 +73,18 @@ const OutfitFlowContext = createContext<OutfitFlowContextValue | null>(null)
 export function OutfitFlowProvider({ children }: { children: ReactNode }) {
   const [selectedGarment, setSelectedGarment] = useState<Garment>(DEFAULT_GARMENT)
   const [selectedModel, setSelectedModel] = useState<Model>(DEFAULT_MODEL)
+  const [selectedPose, setSelectedPose] = useState<Pose>(DEFAULT_POSE)
 
   return (
     <OutfitFlowContext.Provider
-      value={{ selectedGarment, setSelectedGarment, selectedModel, setSelectedModel }}
+      value={{
+        selectedGarment,
+        setSelectedGarment,
+        selectedModel,
+        setSelectedModel,
+        selectedPose,
+        setSelectedPose,
+      }}
     >
       {children}
     </OutfitFlowContext.Provider>
