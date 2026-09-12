@@ -194,6 +194,39 @@
         },
         "cta": "Khám Phá Diễn Đàn"
       }
+    },
+    "ContactSection": {
+      "brandTagline": "A little twist, a better fit",
+      "logoAlt": "Logo TwistFit",
+      "heading": "Chúng Tôi Luôn Lắng Nghe Ý Kiến Của Bạn",
+      "description": "Bạn có câu hỏi về kết quả màu sắc, muốn hợp tác stylist hoặc muốn góp ý tính năng phối đồ? Hãy để lại lời nhắn cho đội ngũ cố vấn thời trang của TwistFit.",
+      "email": "support@twistfit.vn",
+      "phone": "1900 8899 (8:30 - 21:00 hàng ngày)",
+      "address": "TwistFit AI Studio, Quận 1, TP. Hồ Chí Minh",
+      "formHeading": "Hòm Thư Góp Ý & Đặt Lịch Tư Vấn",
+      "formSubheading": "Vui lòng điền thông tin bên dưới, chúng tôi sẽ phản hồi trong vòng 24 giờ làm việc.",
+      "labels": {
+        "name": "Họ và tên *",
+        "email": "Địa chỉ Email *",
+        "phone": "Số điện thoại",
+        "subject": "Chủ đề góp ý *",
+        "message": "Nội dung tin nhắn *"
+      },
+      "placeholders": {
+        "name": "Ví dụ: Nguyễn Linh Đan",
+        "email": "linhdan@gmail.com",
+        "phone": "0909 xxx xxx",
+        "message": "Chia sẻ suy nghĩ, góp ý hoặc yêu cầu hỗ trợ của bạn tại đây..."
+      },
+      "subjectOptions": {
+        "placeholder": "-- Chọn chủ đề --",
+        "colorTest": "Hỏi về kết quả Personal Color",
+        "virtualFitting": "Góp ý tính năng Phòng Thử Đồ Ảo",
+        "stylist": "Đăng ký hợp tác Stylist / Fashion KOL",
+        "other": "Ý kiến đóng góp khác"
+      },
+      "submitButton": "GỬI LỜI NHẮN",
+      "successMessage": "Cảm ơn bạn! Lời nhắn đã được chuyển đến bộ phận chăm sóc TwistFit."
     }
   }
 }

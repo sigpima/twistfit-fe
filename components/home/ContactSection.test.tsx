@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import ContactSection from './ContactSection'
 
 describe('ContactSection', () => {
   it('shows a confirmation message after submitting the form', () => {
-    render(<ContactSection />)
+    renderWithIntl(<ContactSection />)
     fireEvent.change(screen.getByLabelText('Họ và tên *'), { target: { value: 'Linh Đan' } })
     fireEvent.change(screen.getByLabelText('Địa chỉ Email *'), { target: { value: 'linhdan@gmail.com' } })
     fireEvent.change(screen.getByLabelText('Chủ đề góp ý *'), { target: { value: 'other' } })
