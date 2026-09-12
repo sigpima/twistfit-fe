@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -10,11 +11,12 @@ import ColorHarmonyCard from '@/components/outfit/step1/ColorHarmonyCard'
 import RecentGarments from '@/components/outfit/step1/RecentGarments'
 
 const MODE_TABS = [
-  { id: 'single', icon: 'checkroom', label: 'Quần áo đơn lẻ' },
-  { id: 'set', icon: 'layers', label: 'Set đồ (Trên & Dưới)' },
+  { id: 'single', icon: 'checkroom', key: 'single' },
+  { id: 'set', icon: 'layers', key: 'set' },
 ] as const
 
 export default function Step1Page() {
+  const t = useTranslations('Outfit.Step1.Page')
   const router = useRouter()
   const [activeMode, setActiveMode] = useState<(typeof MODE_TABS)[number]['id']>('single')
 
@@ -27,27 +29,22 @@ export default function Step1Page() {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-space-lg px-margin-desktop pt-space-md">
         <div className="pt-space-lg">
           <FlowOverviewBanner
-            title="Lộ trình thử đồ thông minh cá nhân hóa"
-            subtitle="Hệ thống phân tách bóc phông chuẩn Studio, hỗ trợ link sàn Shopee, Zara, TikTok Shop"
+            title={t('bannerTitle')}
+            subtitle={t('bannerSubtitle')}
             image="/outfit/flow-overview.png"
-            imageAlt="Quy trình thử đồ ảo TwistFit 4 bước"
+            imageAlt={t('bannerImageAlt')}
           />
         </div>
         <div className="flex flex-col justify-between gap-space-md pb-space-xs md:flex-row md:items-end">
           <div className="flex flex-col gap-space-xs">
             <div className="flex items-center gap-space-xs">
               <span className="rounded-full bg-primary px-2.5 py-0.5 text-label-sm font-semibold uppercase tracking-widest text-on-primary">
-                Step 01 / 04
+                {t('stepBadge')}
               </span>
-              <span className="text-label-md font-semibold italic text-secondary">A little twist, a better fit</span>
+              <span className="text-label-md font-semibold italic text-secondary">{t('tagline')}</span>
             </div>
-            <h1 className="text-headline-lg font-bold tracking-tight text-on-surface">
-              Tải lên hoặc Chọn Trang Phục Cần Thử
-            </h1>
-            <p className="max-w-2xl text-body-md text-on-surface-variant">
-              Sử dụng ảnh flat-lay, ảnh treo móc đồ hoặc dán trực tiếp đường dẫn sản phẩm online. Thuật toán AI
-              Vision tự động xóa nền phức tạp và giữ nguyên nếp vải thực tế.
-            </p>
+            <h1 className="text-headline-lg font-bold tracking-tight text-on-surface">{t('heading')}</h1>
+            <p className="max-w-2xl text-body-md text-on-surface-variant">{t('subheading')}</p>
           </div>
           <div className="inline-flex shrink-0 self-start rounded-2xl bg-surface-container-high p-1 shadow-inner md:self-auto">
             {MODE_TABS.map((tab) => (
@@ -62,7 +59,7 @@ export default function Step1Page() {
                 }`}
               >
                 <span className="material-symbols-outlined text-[18px]">{tab.icon}</span>
-                <span>{tab.label}</span>
+                <span>{t(`modeTabs.${tab.key}`)}</span>
               </button>
             ))}
           </div>
@@ -83,18 +80,16 @@ export default function Step1Page() {
             className="flex w-full items-center justify-center gap-space-xs rounded-2xl bg-surface-container-low px-space-lg py-space-md font-semibold text-label-lg text-on-surface transition-all hover:bg-surface-container sm:w-auto"
           >
             <span className="material-symbols-outlined text-[18px]">arrow_back</span>
-            <span>Quay lại trang chủ</span>
+            <span>{t('backHome')}</span>
           </Link>
           <div className="flex w-full items-center gap-space-md sm:w-auto">
-            <span className="hidden text-body-sm text-outline md:inline">
-              Đã lưu trang phục tự động vào phiên thử
-            </span>
+            <span className="hidden text-body-sm text-outline md:inline">{t('autoSavedNote')}</span>
             <button
               type="button"
               onClick={handleContinue}
               className="flex w-full items-center justify-center gap-space-sm rounded-2xl bg-primary px-space-xl py-space-md font-bold text-headline-sm text-on-primary shadow-lg shadow-primary/25 transition-all hover:bg-primary-container hover:shadow-xl sm:w-auto"
             >
-              <span>Tiếp tục sang Bước 2: Chọn Người Mẫu</span>
+              <span>{t('continueButton')}</span>
               <span className="material-symbols-outlined text-[22px]">arrow_forward</span>
             </button>
           </div>

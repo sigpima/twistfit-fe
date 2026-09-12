@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import GarmentDropzone from './GarmentDropzone'
 import { OutfitFlowProvider } from '../OutfitFlowProvider'
 
@@ -13,7 +14,7 @@ describe('GarmentDropzone', () => {
   })
 
   it('shows the selected garment name and image by default', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <GarmentDropzone />
       </OutfitFlowProvider>
@@ -26,7 +27,7 @@ describe('GarmentDropzone', () => {
   })
 
   it('previews an uploaded image and resets back to the selected garment image', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <GarmentDropzone />
       </OutfitFlowProvider>
@@ -45,7 +46,7 @@ describe('GarmentDropzone', () => {
   })
 
   it('toggles the background removal switch', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <GarmentDropzone />
       </OutfitFlowProvider>

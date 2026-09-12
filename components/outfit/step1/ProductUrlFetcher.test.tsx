@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
-import { render, screen, fireEvent, act } from '@testing-library/react'
+import { screen, fireEvent, act } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import ProductUrlFetcher from './ProductUrlFetcher'
 
 describe('ProductUrlFetcher', () => {
@@ -12,13 +13,13 @@ describe('ProductUrlFetcher', () => {
   })
 
   it('flags the input when submitting an empty URL', () => {
-    render(<ProductUrlFetcher />)
+    renderWithIntl(<ProductUrlFetcher />)
     fireEvent.click(screen.getByRole('button', { name: /Lấy dữ liệu đồ/ }))
     expect(screen.getByPlaceholderText(/shopee\.vn/)).toHaveAttribute('aria-invalid', 'true')
   })
 
   it('walks through loading and success states before returning to idle', () => {
-    render(<ProductUrlFetcher />)
+    renderWithIntl(<ProductUrlFetcher />)
     const input = screen.getByPlaceholderText(/shopee\.vn/)
     fireEvent.change(input, { target: { value: 'https://shopee.vn/ao-peplum-voan-xep-ly-TF8821' } })
     fireEvent.click(screen.getByRole('button', { name: /Lấy dữ liệu đồ/ }))

@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useOutfitFlow, DEFAULT_GARMENT, type Garment } from '../OutfitFlowProvider'
 
 const RECENT_GARMENTS: { shortLabel: string; garment: Garment }[] = [
@@ -43,6 +44,7 @@ const RECENT_GARMENTS: { shortLabel: string; garment: Garment }[] = [
 ]
 
 export default function RecentGarments() {
+  const t = useTranslations('Outfit.Step1.RecentGarments')
   const { selectedGarment, setSelectedGarment } = useOutfitFlow()
 
   return (
@@ -50,10 +52,10 @@ export default function RecentGarments() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-space-xs">
           <span className="material-symbols-outlined text-[20px] text-primary">history</span>
-          <h2 className="text-headline-sm font-semibold text-on-surface">Mục Gần Đây Đã Thử</h2>
+          <h2 className="text-headline-sm font-semibold text-on-surface">{t('title')}</h2>
         </div>
         <a href="#" className="text-label-md font-medium text-primary hover:underline">
-          Xem tủ đồ ➔
+          {t('viewCloset')}
         </a>
       </div>
       <div className="grid grid-cols-4 gap-space-sm">

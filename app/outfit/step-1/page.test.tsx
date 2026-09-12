@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import Step1Page from './page'
 import { OutfitFlowProvider } from '@/components/outfit/OutfitFlowProvider'
 
@@ -15,7 +16,7 @@ describe('Step1Page', () => {
   })
 
   it('renders the step heading', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <Step1Page />
       </OutfitFlowProvider>
@@ -24,7 +25,7 @@ describe('Step1Page', () => {
   })
 
   it('links back to the home page', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <Step1Page />
       </OutfitFlowProvider>
@@ -33,7 +34,7 @@ describe('Step1Page', () => {
   })
 
   it('navigates to step 2 after clicking continue', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <Step1Page />
       </OutfitFlowProvider>

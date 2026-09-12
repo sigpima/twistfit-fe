@@ -1,9 +1,11 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useState, type ChangeEvent } from 'react'
 import { useOutfitFlow } from '../OutfitFlowProvider'
 
 export default function GarmentDropzone() {
+  const t = useTranslations('Outfit.Step1.GarmentDropzone')
   const { selectedGarment } = useOutfitFlow()
   const [uploadedImage, setUploadedImage] = useState<string | null>(null)
   const [isBackgroundRemovalOn, setIsBackgroundRemovalOn] = useState(true)
@@ -23,27 +25,27 @@ export default function GarmentDropzone() {
         <div className="flex items-center gap-space-xs">
           <span className="h-2.5 w-2.5 rounded-full bg-secondary" />
           <span className="text-label-sm font-semibold uppercase tracking-wider text-on-surface-variant">
-            Live AI Canvas
+            {t('liveCanvasLabel')}
           </span>
         </div>
         <div className="flex items-center gap-space-sm">
           <button
             type="button"
-            title="Phóng to"
+            title={t('zoomTitle')}
             className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-container-low text-on-surface transition-colors hover:bg-surface-container"
           >
             <span className="material-symbols-outlined text-[16px]">zoom_in</span>
           </button>
           <button
             type="button"
-            title="Xoay ảnh"
+            title={t('rotateTitle')}
             className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-container-low text-on-surface transition-colors hover:bg-surface-container"
           >
             <span className="material-symbols-outlined text-[16px]">rotate_right</span>
           </button>
           <button
             type="button"
-            title="Đặt lại ảnh"
+            title={t('resetTitle')}
             onClick={() => setUploadedImage(null)}
             className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-container-low text-on-surface transition-colors hover:bg-error-container hover:text-on-error-container"
           >
@@ -62,12 +64,12 @@ export default function GarmentDropzone() {
           />
           <div className="absolute bottom-2 right-2 z-20 flex items-center gap-1.5 rounded-full bg-surface-container-lowest/90 px-3 py-1 text-label-sm font-semibold text-primary shadow-md backdrop-blur-md">
             <span className="material-symbols-outlined text-[15px] text-secondary">check_circle</span>
-            <span>Đã tách nền sạch 100%</span>
+            <span>{t('bgRemovedBadge')}</span>
           </div>
         </div>
         <div className="mt-space-sm text-center">
           <h3 className="text-headline-sm font-semibold text-on-surface">{selectedGarment.name}</h3>
-          <p className="text-body-sm text-on-surface-variant">TwistFit Studio Catalog · Vải tơ organza mềm</p>
+          <p className="text-body-sm text-on-surface-variant">{t('catalogNote')}</p>
         </div>
         <label
           htmlFor="garmentUploadInput"
@@ -76,10 +78,10 @@ export default function GarmentDropzone() {
           <div className="mb-space-sm flex h-14 w-14 items-center justify-center rounded-full bg-primary-fixed text-on-primary-fixed shadow-md transition-transform group-hover:scale-110">
             <span className="material-symbols-outlined text-[28px]">cloud_upload</span>
           </div>
-          <span className="text-headline-sm font-semibold text-on-surface">Kéo thả hoặc Bấm để đổi ảnh</span>
-          <span className="mt-1 text-body-sm text-on-surface-variant">Hỗ trợ PNG, JPG, WEBP lên đến 15MB</span>
+          <span className="text-headline-sm font-semibold text-on-surface">{t('dragDropTitle')}</span>
+          <span className="mt-1 text-body-sm text-on-surface-variant">{t('supportedFormats')}</span>
           <span className="mt-space-md rounded-full bg-primary px-space-md py-1.5 text-label-sm font-medium text-on-primary">
-            Tải từ thiết bị
+            {t('uploadFromDevice')}
           </span>
         </label>
         <input
@@ -96,20 +98,18 @@ export default function GarmentDropzone() {
             type="checkbox"
             checked={isBackgroundRemovalOn}
             onChange={(event) => setIsBackgroundRemovalOn(event.target.checked)}
-            aria-label="Tự động bóc nền AI (Background Removal)"
+            aria-label={t('bgRemovalToggleLabel')}
           />
-          <span className="text-label-md font-medium text-on-surface">
-            Tự động bóc nền AI (Background Removal)
-          </span>
+          <span className="text-label-md font-medium text-on-surface">{t('bgRemovalToggleLabel')}</span>
         </label>
         <label className="flex cursor-pointer select-none items-center gap-space-xs">
           <input
             type="checkbox"
             checked={isUltraHdOn}
             onChange={(event) => setIsUltraHdOn(event.target.checked)}
-            aria-label="Chế độ sắc nét Ultra-HD"
+            aria-label={t('ultraHdToggleLabel')}
           />
-          <span className="text-label-md font-medium text-on-surface">Chế độ sắc nét Ultra-HD</span>
+          <span className="text-label-md font-medium text-on-surface">{t('ultraHdToggleLabel')}</span>
         </label>
       </div>
     </div>

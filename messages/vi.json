@@ -344,6 +344,78 @@
     "FlowOverviewBanner": {
       "showButton": "Xem tổng quan quy trình",
       "hideButton": "Ẩn sơ đồ"
+    },
+    "Step1": {
+      "Page": {
+        "bannerTitle": "Lộ trình thử đồ thông minh cá nhân hóa",
+        "bannerSubtitle": "Hệ thống phân tách bóc phông chuẩn Studio, hỗ trợ link sàn Shopee, Zara, TikTok Shop",
+        "bannerImageAlt": "Quy trình thử đồ ảo TwistFit 4 bước",
+        "stepBadge": "Step 01 / 04",
+        "tagline": "A little twist, a better fit",
+        "heading": "Tải lên hoặc Chọn Trang Phục Cần Thử",
+        "subheading": "Sử dụng ảnh flat-lay, ảnh treo móc đồ hoặc dán trực tiếp đường dẫn sản phẩm online. Thuật toán AI Vision tự động xóa nền phức tạp và giữ nguyên nếp vải thực tế.",
+        "modeTabs": {
+          "single": "Quần áo đơn lẻ",
+          "set": "Set đồ (Trên & Dưới)"
+        },
+        "backHome": "Quay lại trang chủ",
+        "autoSavedNote": "Đã lưu trang phục tự động vào phiên thử",
+        "continueButton": "Tiếp tục sang Bước 2: Chọn Người Mẫu"
+      },
+      "GarmentDropzone": {
+        "liveCanvasLabel": "Live AI Canvas",
+        "zoomTitle": "Phóng to",
+        "rotateTitle": "Xoay ảnh",
+        "resetTitle": "Đặt lại ảnh",
+        "bgRemovedBadge": "Đã tách nền sạch 100%",
+        "catalogNote": "TwistFit Studio Catalog · Vải tơ organza mềm",
+        "dragDropTitle": "Kéo thả hoặc Bấm để đổi ảnh",
+        "supportedFormats": "Hỗ trợ PNG, JPG, WEBP lên đến 15MB",
+        "uploadFromDevice": "Tải từ thiết bị",
+        "bgRemovalToggleLabel": "Tự động bóc nền AI (Background Removal)",
+        "ultraHdToggleLabel": "Chế độ sắc nét Ultra-HD"
+      },
+      "ProductUrlFetcher": {
+        "title": "Dán đường dẫn sản phẩm từ Sàn TMĐT",
+        "supportedStores": "Shopee · Zara · Uniqlo · TikTok Shop",
+        "placeholder": "https://shopee.vn/ao-peplum-voan-xep-ly-TF8821...",
+        "buttonLoading": "Đang bóc tách đồ...",
+        "buttonSuccess": "Đã nạp xong!",
+        "buttonIdle": "Lấy dữ liệu đồ"
+      },
+      "ColorHarmonyCard": {
+        "title": "Đánh Giá Hòa Sắc AI",
+        "matchBadge": "Match 98%",
+        "bestPaletteLabel": "Bảng màu phù hợp nhất:",
+        "bestPaletteValue": "Light Summer & Cool Winter",
+        "undertoneMatchLabel": "Độ tôn sắc da (Skin undertone match)",
+        "undertoneMatchValue": "Rất Cao",
+        "garmentTypeLabel": "Phân loại áo/quần",
+        "garmentTypes": {
+          "top": "Trên (Top / Áo sơ mi)",
+          "bottom": "Dưới (Bottom / Chân váy / Quần)",
+          "dress": "Đầm liền (Full Dress)",
+          "outerwear": "Áo khoác / Blazer (Outerwear)"
+        },
+        "fitLabel": "Độ ôm phom (Fit)",
+        "fitOptions": {
+          "slim": "Dáng ôm sát (Slim / Bodycon)",
+          "regular": "Dáng thường (Regular Fit)",
+          "loose": "Dáng thụng / Xòe (Loose / Peplum)",
+          "oversize": "Oversize phong cách Hàn"
+        },
+        "swatches": {
+          "blushPink": "Blush Pink",
+          "icyPastelBlue": "Icy Pastel Blue",
+          "softLilac": "Soft Lilac",
+          "pureIvory": "Pure Ivory",
+          "navyContrast": "Navy Contrast"
+        }
+      },
+      "RecentGarments": {
+        "title": "Mục Gần Đây Đã Thử",
+        "viewCloset": "Xem tủ đồ ➔"
+      }
     }
   }
 }

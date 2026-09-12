@@ -1,10 +1,12 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 type FetchStatus = 'idle' | 'loading' | 'success'
 
 export default function ProductUrlFetcher() {
+  const t = useTranslations('Outfit.Step1.ProductUrlFetcher')
   const [url, setUrl] = useState('')
   const [status, setStatus] = useState<FetchStatus>('idle')
   const [isInvalid, setIsInvalid] = useState(false)
@@ -24,7 +26,7 @@ export default function ProductUrlFetcher() {
   }
 
   const buttonLabel =
-    status === 'loading' ? 'Đang bóc tách đồ...' : status === 'success' ? 'Đã nạp xong!' : 'Lấy dữ liệu đồ'
+    status === 'loading' ? t('buttonLoading') : status === 'success' ? t('buttonSuccess') : t('buttonIdle')
   const buttonIcon = status === 'loading' ? 'refresh' : status === 'success' ? 'check' : 'cloud_sync'
 
   return (
@@ -32,11 +34,11 @@ export default function ProductUrlFetcher() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-space-xs">
           <span className="material-symbols-outlined text-[20px] text-primary">link</span>
-          <span className="text-label-lg font-semibold text-on-surface">Dán đường dẫn sản phẩm từ Sàn TMĐT</span>
+          <span className="text-label-lg font-semibold text-on-surface">{t('title')}</span>
         </div>
         <div className="flex items-center gap-space-xs text-body-sm text-outline">
           <span className="h-1.5 w-1.5 rounded-full bg-outline" />
-          <span>Shopee · Zara · Uniqlo · TikTok Shop</span>
+          <span>{t('supportedStores')}</span>
         </div>
       </div>
       <div className="flex items-center gap-space-sm">
@@ -47,7 +49,7 @@ export default function ProductUrlFetcher() {
             setUrl(event.target.value)
             setIsInvalid(false)
           }}
-          placeholder="https://shopee.vn/ao-peplum-voan-xep-ly-TF8821..."
+          placeholder={t('placeholder')}
           aria-invalid={isInvalid}
           className={`flex-1 rounded-xl px-space-md py-space-sm text-body-md text-on-surface shadow-inner transition-colors placeholder:text-outline focus:bg-surface-container-lowest focus:outline-none ${
             isInvalid ? 'bg-error-container/30' : 'bg-surface-container-low'
