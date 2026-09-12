@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import ResultPage from './page'
 
 describe('ResultPage', () => {
   it('renders the page heading and breadcrumbs', () => {
-    render(<ResultPage />)
+    renderWithIntl(<ResultPage />)
     expect(
       screen.getByRole('heading', { level: 1, name: 'KẾT QUẢ PHÂN TÍCH PERSONAL COLOR' })
     ).toBeInTheDocument()
@@ -16,7 +17,7 @@ describe('ResultPage', () => {
   })
 
   it('composes the profile card and insights sections', () => {
-    render(<ResultPage />)
+    renderWithIntl(<ResultPage />)
     expect(screen.getByRole('heading', { level: 3, name: 'Mùa Đông (Winter)' })).toBeInTheDocument()
     expect(screen.getByText('Chi tiết các chỉ số màu sắc')).toBeInTheDocument()
   })
