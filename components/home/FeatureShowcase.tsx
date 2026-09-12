@@ -174,39 +174,25 @@ function SmartOutfitPanel() {
 }
 
 const COLOR_TEST_STEPS = [
-  {
-    step: '1',
-    badge: 'bg-secondary-container text-on-secondary-fixed',
-    title: 'Quét mã QR bằng điện thoại',
-    body: 'Mở camera máy ảnh quét mã để lập tức kết nối bộ quét nhận diện khuôn mặt trực tiếp mà không cần cài đặt thêm ứng dụng.',
-  },
-  {
-    step: '2',
-    badge: 'bg-primary-fixed text-primary',
-    title: 'Căn chỉnh khuôn mặt trong 5 giây',
-    body: 'Hệ thống tự động bù trừ ánh sáng, đo undertone (ấm/lạnh), sắc tố lòng đen mắt và độ tương phản tự nhiên của làn da.',
-  },
-  {
-    step: '3',
-    badge: 'bg-tertiary-fixed text-on-tertiary-fixed',
-    title: 'Nhận báo cáo 12 trang cá nhân hoá',
-    body: 'Sở hữu cẩm nang chi tiết trọn đời: từ bảng màu "chân ái", màu son khử xỉn da đến loại trang sức giúp bạn tỏa sáng.',
-  },
-]
+  { step: '1', badge: 'bg-secondary-container text-on-secondary-fixed', key: 'scanQr' },
+  { step: '2', badge: 'bg-primary-fixed text-primary', key: 'alignFace' },
+  { step: '3', badge: 'bg-tertiary-fixed text-on-tertiary-fixed', key: 'getReport' },
+] as const
 
 const SPECTRUM_METRICS = [
-  { label: 'Độ sáng da', value: 68, color: 'bg-secondary' },
-  { label: 'Sắc độ (Tone Lạnh)', value: 84, color: 'bg-primary' },
-  { label: 'Độ tương phản tự nhiên', value: 76, color: 'bg-secondary-container' },
-]
+  { key: 'brightness', value: 68, color: 'bg-secondary' },
+  { key: 'coolTone', value: 84, color: 'bg-primary' },
+  { key: 'contrast', value: 76, color: 'bg-secondary-container' },
+] as const
 
 const SPECTRUM_RECOMMENDATIONS = [
-  { icon: 'checkroom', badge: 'bg-primary-fixed text-primary', title: 'Trang phục', body: 'Xanh coban, hồng thạch anh' },
-  { icon: 'brush', badge: 'bg-secondary-fixed text-secondary', title: 'Màu son', body: 'Hồng berry lạnh, đỏ mận' },
-  { icon: 'diamond', badge: 'bg-tertiary-fixed text-tertiary', title: 'Phụ kiện', body: 'Bạc bạch kim, ngọc trai' },
-]
+  { icon: 'checkroom', badge: 'bg-primary-fixed text-primary', key: 'outfit' },
+  { icon: 'brush', badge: 'bg-secondary-fixed text-secondary', key: 'lipstick' },
+  { icon: 'diamond', badge: 'bg-tertiary-fixed text-tertiary', key: 'accessory' },
+] as const
 
 function PersonalColorPanel() {
+  const t = useTranslations('Home.FeatureShowcase')
   const { openQrModal } = useQrModal()
 
   return (
@@ -215,19 +201,19 @@ function PersonalColorPanel() {
         <div className="flex items-center justify-between pb-4">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-secondary">palette</span>
-            <span className="text-label-lg font-bold text-on-surface">Kết Quả Đo Sắc Tố Thực Tế</span>
+            <span className="text-label-lg font-bold text-on-surface">{t('colorTestPanel.resultTitle')}</span>
           </div>
           <span className="inline-flex items-center gap-1 rounded-full bg-[#dcfce7] px-2.5 py-0.5 text-xs font-semibold text-[#16a34a]">
-            <span className="material-symbols-outlined text-[14px]">check_circle</span> Độ chính xác cao
+            <span className="material-symbols-outlined text-[14px]">check_circle</span> {t('colorTestPanel.accuracyBadge')}
           </span>
         </div>
         <div className="grid grid-cols-1 gap-4 pt-2 sm:grid-cols-2">
           <div className="space-y-3 rounded-2xl bg-surface-container-low p-4">
-            <h4 className="text-label-md font-bold text-on-surface">Chỉ số phân giải quang phổ</h4>
+            <h4 className="text-label-md font-bold text-on-surface">{t('colorTestPanel.spectrumHeading')}</h4>
             {SPECTRUM_METRICS.map((metric) => (
-              <div key={metric.label}>
+              <div key={metric.key}>
                 <div className="mb-1 flex justify-between text-xs font-medium">
-                  <span className="text-on-surface-variant">{metric.label}</span>
+                  <span className="text-on-surface-variant">{t(`colorTestPanel.metrics.${metric.key}`)}</span>
                   <span className="font-bold text-on-surface">{metric.value} / 100</span>
                 </div>
                 <div className="h-2 w-full overflow-hidden rounded-full bg-surface-container-highest">
@@ -237,15 +223,15 @@ function PersonalColorPanel() {
             ))}
           </div>
           <div className="space-y-3 rounded-2xl bg-surface-container-low p-4">
-            <h4 className="text-label-md font-bold text-on-surface">Gợi ý ứng dụng thực tiễn</h4>
+            <h4 className="text-label-md font-bold text-on-surface">{t('colorTestPanel.recommendationsHeading')}</h4>
             {SPECTRUM_RECOMMENDATIONS.map((item) => (
-              <div key={item.title} className="flex items-center gap-2 text-xs">
+              <div key={item.key} className="flex items-center gap-2 text-xs">
                 <div className={`flex h-6 w-6 items-center justify-center rounded font-bold ${item.badge}`}>
                   <span className="material-symbols-outlined text-[14px]">{item.icon}</span>
                 </div>
                 <div>
-                  <p className="font-bold text-on-surface">{item.title}</p>
-                  <p className="text-[11px] text-on-surface-variant">{item.body}</p>
+                  <p className="font-bold text-on-surface">{t(`colorTestPanel.recommendations.${item.key}.title`)}</p>
+                  <p className="text-[11px] text-on-surface-variant">{t(`colorTestPanel.recommendations.${item.key}.body`)}</p>
                 </div>
               </div>
             ))}
@@ -254,19 +240,15 @@ function PersonalColorPanel() {
         <div className="mt-4 flex items-center gap-3 rounded-2xl bg-secondary-fixed/50 p-3">
           <span className="material-symbols-outlined text-[24px] text-secondary">phonelink_ring</span>
           <p className="text-body-sm text-on-secondary-fixed-variant">
-            <strong>Gợi ý:</strong> Tính năng đạt kết quả tối ưu nhất khi sử dụng camera góc rộng trên điện
-            thoại thông minh dưới ánh sáng tự nhiên.
+            {t.rich('colorTestPanel.tip', { bold: (chunks) => <strong>{chunks}</strong> })}
           </p>
         </div>
       </div>
       <div className="flex flex-col space-y-6 lg:col-span-6">
         <div>
-          <span className="text-label-md font-bold uppercase tracking-wider text-secondary">Tính năng trọng tâm 02</span>
-          <h3 className="mt-1 text-headline-lg text-on-surface">Khám Phá Sắc Độ Mùa Cá Nhân</h3>
-          <p className="mt-2 text-body-md text-on-surface-variant">
-            Được bảo chứng bởi thuật toán phân tích màu sắc 12 mùa chuyên sâu từ Hàn Quốc kết hợp thị giác
-            máy tính hiện đại.
-          </p>
+          <span className="text-label-md font-bold uppercase tracking-wider text-secondary">{t('colorTestPanel.featureTag')}</span>
+          <h3 className="mt-1 text-headline-lg text-on-surface">{t('colorTestPanel.panelHeading')}</h3>
+          <p className="mt-2 text-body-md text-on-surface-variant">{t('colorTestPanel.panelBody')}</p>
         </div>
         <div className="space-y-4">
           {COLOR_TEST_STEPS.map((item) => (
@@ -275,8 +257,8 @@ function PersonalColorPanel() {
                 {item.step}
               </div>
               <div>
-                <h4 className="text-title-md font-bold text-on-surface">{item.title}</h4>
-                <p className="mt-1 text-body-md text-on-surface-variant">{item.body}</p>
+                <h4 className="text-title-md font-bold text-on-surface">{t(`colorTestPanel.steps.${item.key}.title`)}</h4>
+                <p className="mt-1 text-body-md text-on-surface-variant">{t(`colorTestPanel.steps.${item.key}.body`)}</p>
               </div>
             </div>
           ))}
@@ -288,7 +270,7 @@ function PersonalColorPanel() {
             className="inline-flex items-center gap-2 rounded-full bg-secondary px-8 py-3.5 text-label-lg text-on-secondary shadow-md transition-all hover:bg-secondary/90"
           >
             <span className="material-symbols-outlined text-[20px]">qr_code_2</span>
-            <span>Mở Quét QR / Test Ngay</span>
+            <span>{t('colorTestPanel.cta')}</span>
           </button>
         </div>
       </div>

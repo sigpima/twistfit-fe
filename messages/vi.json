@@ -120,6 +120,41 @@
           }
         },
         "cta": "Thử Tính Năng Phối Đồ"
+      },
+      "colorTestPanel": {
+        "resultTitle": "Kết Quả Đo Sắc Tố Thực Tế",
+        "accuracyBadge": "Độ chính xác cao",
+        "spectrumHeading": "Chỉ số phân giải quang phổ",
+        "metrics": {
+          "brightness": "Độ sáng da",
+          "coolTone": "Sắc độ (Tone Lạnh)",
+          "contrast": "Độ tương phản tự nhiên"
+        },
+        "recommendationsHeading": "Gợi ý ứng dụng thực tiễn",
+        "recommendations": {
+          "outfit": { "title": "Trang phục", "body": "Xanh coban, hồng thạch anh" },
+          "lipstick": { "title": "Màu son", "body": "Hồng berry lạnh, đỏ mận" },
+          "accessory": { "title": "Phụ kiện", "body": "Bạc bạch kim, ngọc trai" }
+        },
+        "tip": "<bold>Gợi ý:</bold> Tính năng đạt kết quả tối ưu nhất khi sử dụng camera góc rộng trên điện thoại thông minh dưới ánh sáng tự nhiên.",
+        "featureTag": "Tính năng trọng tâm 02",
+        "panelHeading": "Khám Phá Sắc Độ Mùa Cá Nhân",
+        "panelBody": "Được bảo chứng bởi thuật toán phân tích màu sắc 12 mùa chuyên sâu từ Hàn Quốc kết hợp thị giác máy tính hiện đại.",
+        "steps": {
+          "scanQr": {
+            "title": "Quét mã QR bằng điện thoại",
+            "body": "Mở camera máy ảnh quét mã để lập tức kết nối bộ quét nhận diện khuôn mặt trực tiếp mà không cần cài đặt thêm ứng dụng."
+          },
+          "alignFace": {
+            "title": "Căn chỉnh khuôn mặt trong 5 giây",
+            "body": "Hệ thống tự động bù trừ ánh sáng, đo undertone (ấm/lạnh), sắc tố lòng đen mắt và độ tương phản tự nhiên của làn da."
+          },
+          "getReport": {
+            "title": "Nhận báo cáo 12 trang cá nhân hoá",
+            "body": "Sở hữu cẩm nang chi tiết trọn đời: từ bảng màu \"chân ái\", màu son khử xỉn da đến loại trang sức giúp bạn tỏa sáng."
+          }
+        },
+        "cta": "Mở Quét QR / Test Ngay"
       }
     }
   }
