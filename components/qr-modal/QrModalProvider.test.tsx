@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import { QrModalProvider, useQrModal } from './QrModalProvider'
 
 function TestConsumer() {
@@ -14,7 +15,7 @@ function TestConsumer() {
 
 describe('QrModalProvider', () => {
   it('does not render the modal by default', () => {
-    render(
+    renderWithIntl(
       <QrModalProvider>
         <TestConsumer />
       </QrModalProvider>
@@ -23,7 +24,7 @@ describe('QrModalProvider', () => {
   })
 
   it('opens the modal when openQrModal is called', () => {
-    render(
+    renderWithIntl(
       <QrModalProvider>
         <TestConsumer />
       </QrModalProvider>
@@ -33,7 +34,7 @@ describe('QrModalProvider', () => {
   })
 
   it('closes the modal when the close button is clicked', () => {
-    render(
+    renderWithIntl(
       <QrModalProvider>
         <TestConsumer />
       </QrModalProvider>
@@ -44,7 +45,7 @@ describe('QrModalProvider', () => {
   })
 
   it('closes the modal when the backdrop is clicked', () => {
-    render(
+    renderWithIntl(
       <QrModalProvider>
         <TestConsumer />
       </QrModalProvider>

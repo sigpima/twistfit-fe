@@ -1,9 +1,15 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
+
 type QrModalProps = {
   isOpen: boolean
   onClose: () => void
 }
 
 export default function QrModal({ isOpen, onClose }: QrModalProps) {
+  const t = useTranslations('QrModal')
+
   if (!isOpen) return null
 
   return (
@@ -18,7 +24,7 @@ export default function QrModal({ isOpen, onClose }: QrModalProps) {
         <button
           type="button"
           onClick={onClose}
-          aria-label="Đóng"
+          aria-label={t('closeAriaLabel')}
           className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-surface-container text-on-surface transition-colors hover:bg-surface-container-highest"
         >
           <span className="material-symbols-outlined text-[20px]">close</span>
@@ -27,10 +33,8 @@ export default function QrModal({ isOpen, onClose }: QrModalProps) {
           <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-secondary-container text-secondary">
             <span className="material-symbols-outlined text-[32px]">qr_code_scanner</span>
           </div>
-          <h3 className="text-headline-sm font-bold text-on-surface">Kiểm Tra Personal Color</h3>
-          <p className="mt-2 max-w-xs text-body-md text-on-surface-variant">
-            Quét mã QR bằng Camera điện thoại để mở bộ quét AI thời gian thực với độ chính xác cao nhất.
-          </p>
+          <h3 className="text-headline-sm font-bold text-on-surface">{t('title')}</h3>
+          <p className="mt-2 max-w-xs text-body-md text-on-surface-variant">{t('description')}</p>
           <div className="relative mt-6 flex flex-col items-center rounded-2xl bg-surface-container-low p-4 shadow-inner">
             <svg className="h-48 w-48 text-on-surface" fill="currentColor" viewBox="0 0 100 100">
               <rect fill="none" height="26" rx="4" stroke="currentColor" strokeWidth="4" width="26" x="5" y="5" />
@@ -68,11 +72,9 @@ export default function QrModal({ isOpen, onClose }: QrModalProps) {
           <div className="mt-6 flex flex-col items-center gap-1">
             <span className="inline-flex items-center gap-1.5 text-label-md font-bold text-primary">
               <span className="material-symbols-outlined text-[18px]">photo_camera</span>
-              Tương thích iPhone & Android
+              {t('compatibility')}
             </span>
-            <p className="text-body-sm text-on-surface-variant">
-              Không cần tải app • Quét và nhận kết quả tức thì
-            </p>
+            <p className="text-body-sm text-on-surface-variant">{t('instructions')}</p>
           </div>
         </div>
       </div>

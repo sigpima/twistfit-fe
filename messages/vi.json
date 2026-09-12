@@ -34,5 +34,12 @@
     "address": "Quận 1, TP. Hồ Chí Minh",
     "copyright": "© 2026 TwistFit Vietnam. All rights reserved. Nền tảng ứng dụng định hình phong cách cá nhân.",
     "copyrightSecondary": "Bản quyền thuộc về TwistFit Fashion AI."
+  },
+  "QrModal": {
+    "closeAriaLabel": "Đóng",
+    "title": "Kiểm Tra Personal Color",
+    "description": "Quét mã QR bằng Camera điện thoại để mở bộ quét AI thời gian thực với độ chính xác cao nhất.",
+    "compatibility": "Tương thích iPhone & Android",
+    "instructions": "Không cần tải app • Quét và nhận kết quả tức thì"
   }
 }
