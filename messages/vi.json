@@ -155,6 +155,44 @@
           }
         },
         "cta": "Mở Quét QR / Test Ngay"
+      },
+      "communityPanel": {
+        "title": "Cộng Đồng TwistFit Style Club",
+        "hashtags": "#CoolSummer #WinterVibe",
+        "posts": {
+          "anNhien": {
+            "imageAlt": "Outfit đường phố trench coat xanh pastel tại Hà Nội",
+            "tag": "Mùa Hạ",
+            "author": "An Nhiên",
+            "caption": "Set đồ tone pastel nhẹ nhàng đi làm và cafe cuối tuần"
+          },
+          "minhKhue": {
+            "imageAlt": "Set đồ blazer màu mận chín và trang sức bạc",
+            "tag": "Mùa Đông",
+            "author": "Minh Khuê",
+            "caption": "Công thức son mận chín và áo dạ đen cho ngày trở lạnh"
+          }
+        },
+        "statsLabel": "Hơn 4,500 bài viết chia sẻ phong cách mỗi tháng",
+        "joinNow": "Tham gia ngay →",
+        "featureTag": "Tính năng trọng tâm 03",
+        "panelHeading": "Không Gian Kết Nối Hội Tín Đồ Mặc Đẹp",
+        "panelBody": "Học hỏi mẹo phối đồ từ những người bạn có cùng sắc thái da và cùng nhau xây dựng tủ đồ thông minh bền vững.",
+        "steps": {
+          "shareLookbook": {
+            "title": "Đăng tải lookbook & công thức outfit",
+            "body": "Tự tin chia sẻ những set đồ hàng ngày, đánh dấu nhãn sắc độ cá nhân để giúp bạn bè cùng tông màu dễ dàng tham khảo."
+          },
+          "getFeedback": {
+            "title": "Nhận feedback từ Stylist và cộng đồng",
+            "body": "Gửi câu hỏi tư vấn cách phối phụ kiện hoặc lựa chọn kiểu cổ áo tôn dáng, nhận phản hồi tức thì từ cộng đồng sành điệu."
+          },
+          "saveCollection": {
+            "title": "Lưu vào bộ sưu tập cá nhân trong 1 chạm",
+            "body": "Thả tim và gom những ý tưởng mix-match ưng ý vào album \"Bộ sưu tập đã lưu\" trên trang tài khoản của riêng bạn."
+          }
+        },
+        "cta": "Khám Phá Diễn Đàn"
       }
     }
   }

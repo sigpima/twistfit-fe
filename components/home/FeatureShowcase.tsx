@@ -279,94 +279,62 @@ function PersonalColorPanel() {
 }
 
 const COMMUNITY_POSTS = [
-  {
-    image: '/home/street-outfit-hanoi.jpg',
-    alt: 'Outfit đường phố trench coat xanh pastel tại Hà Nội',
-    tag: 'Mùa Hạ',
-    tagColor: 'text-primary',
-    author: 'An Nhiên',
-    likes: 428,
-    caption: 'Set đồ tone pastel nhẹ nhàng đi làm và cafe cuối tuần',
-  },
-  {
-    image: '/home/blazer-outfit.jpg',
-    alt: 'Set đồ blazer màu mận chín và trang sức bạc',
-    tag: 'Mùa Đông',
-    tagColor: 'text-secondary',
-    author: 'Minh Khuê',
-    likes: 852,
-    caption: 'Công thức son mận chín và áo dạ đen cho ngày trở lạnh',
-  },
-]
+  { key: 'anNhien', image: '/home/street-outfit-hanoi.jpg', tagColor: 'text-primary', likes: 428 },
+  { key: 'minhKhue', image: '/home/blazer-outfit.jpg', tagColor: 'text-secondary', likes: 852 },
+] as const
 
 const COMMUNITY_STEPS = [
-  {
-    step: '1',
-    badge: 'bg-secondary-container text-on-secondary-fixed',
-    title: 'Đăng tải lookbook & công thức outfit',
-    body: 'Tự tin chia sẻ những set đồ hàng ngày, đánh dấu nhãn sắc độ cá nhân để giúp bạn bè cùng tông màu dễ dàng tham khảo.',
-  },
-  {
-    step: '2',
-    badge: 'bg-primary-fixed text-primary',
-    title: 'Nhận feedback từ Stylist và cộng đồng',
-    body: 'Gửi câu hỏi tư vấn cách phối phụ kiện hoặc lựa chọn kiểu cổ áo tôn dáng, nhận phản hồi tức thì từ cộng đồng sành điệu.',
-  },
-  {
-    step: '3',
-    badge: 'bg-tertiary-fixed text-on-tertiary-fixed',
-    title: 'Lưu vào bộ sưu tập cá nhân trong 1 chạm',
-    body: 'Thả tim và gom những ý tưởng mix-match ưng ý vào album "Bộ sưu tập đã lưu" trên trang tài khoản của riêng bạn.',
-  },
-]
+  { step: '1', badge: 'bg-secondary-container text-on-secondary-fixed', key: 'shareLookbook' },
+  { step: '2', badge: 'bg-primary-fixed text-primary', key: 'getFeedback' },
+  { step: '3', badge: 'bg-tertiary-fixed text-on-tertiary-fixed', key: 'saveCollection' },
+] as const
 
 function CommunityPanel() {
+  const t = useTranslations('Home.FeatureShowcase')
+
   return (
     <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
       <div className="rounded-3xl bg-surface-container-lowest p-6 shadow-sm lg:col-span-6">
         <div className="flex items-center justify-between pb-4">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-tertiary">groups</span>
-            <span className="text-label-lg font-bold text-on-surface">Cộng Đồng TwistFit Style Club</span>
+            <span className="text-label-lg font-bold text-on-surface">{t('communityPanel.title')}</span>
           </div>
-          <span className="text-xs font-semibold text-primary">#CoolSummer #WinterVibe</span>
+          <span className="text-xs font-semibold text-primary">{t('communityPanel.hashtags')}</span>
         </div>
         <div className="grid grid-cols-2 gap-4">
           {COMMUNITY_POSTS.map((post) => (
-            <div key={post.author} className="overflow-hidden rounded-2xl bg-surface-container-low shadow-sm">
+            <div key={post.key} className="overflow-hidden rounded-2xl bg-surface-container-low shadow-sm">
               <div className="relative h-44 overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={post.image} alt={post.alt} className="h-full w-full object-cover" />
+                <img src={post.image} alt={t(`communityPanel.posts.${post.key}.imageAlt`)} className="h-full w-full object-cover" />
                 <span className={`absolute right-2 top-2 rounded-full bg-surface-container-lowest/80 px-2 py-0.5 text-[10px] font-bold ${post.tagColor}`}>
-                  {post.tag}
+                  {t(`communityPanel.posts.${post.key}.tag`)}
                 </span>
               </div>
               <div className="p-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-label-sm font-bold text-on-surface">{post.author}</span>
+                  <span className="text-label-sm font-bold text-on-surface">{t(`communityPanel.posts.${post.key}.author`)}</span>
                   <div className="flex items-center gap-1 text-xs text-secondary">
                     <span className="material-symbols-outlined text-[14px]">favorite</span>
                     <span>{post.likes}</span>
                   </div>
                 </div>
-                <p className="mt-1 line-clamp-1 text-[11px] text-on-surface-variant">{post.caption}</p>
+                <p className="mt-1 line-clamp-1 text-[11px] text-on-surface-variant">{t(`communityPanel.posts.${post.key}.caption`)}</p>
               </div>
             </div>
           ))}
         </div>
         <div className="mt-4 flex items-center justify-between rounded-2xl bg-surface-container p-3">
-          <span className="text-xs font-medium text-on-surface">Hơn 4,500 bài viết chia sẻ phong cách mỗi tháng</span>
-          <span className="text-xs font-bold text-primary">Tham gia ngay →</span>
+          <span className="text-xs font-medium text-on-surface">{t('communityPanel.statsLabel')}</span>
+          <span className="text-xs font-bold text-primary">{t('communityPanel.joinNow')}</span>
         </div>
       </div>
       <div className="flex flex-col space-y-6 lg:col-span-6">
         <div>
-          <span className="text-label-md font-bold uppercase tracking-wider text-tertiary">Tính năng trọng tâm 03</span>
-          <h3 className="mt-1 text-headline-lg text-on-surface">Không Gian Kết Nối Hội Tín Đồ Mặc Đẹp</h3>
-          <p className="mt-2 text-body-md text-on-surface-variant">
-            Học hỏi mẹo phối đồ từ những người bạn có cùng sắc thái da và cùng nhau xây dựng tủ đồ thông minh
-            bền vững.
-          </p>
+          <span className="text-label-md font-bold uppercase tracking-wider text-tertiary">{t('communityPanel.featureTag')}</span>
+          <h3 className="mt-1 text-headline-lg text-on-surface">{t('communityPanel.panelHeading')}</h3>
+          <p className="mt-2 text-body-md text-on-surface-variant">{t('communityPanel.panelBody')}</p>
         </div>
         <div className="space-y-4">
           {COMMUNITY_STEPS.map((item) => (
@@ -375,8 +343,8 @@ function CommunityPanel() {
                 {item.step}
               </div>
               <div>
-                <h4 className="text-title-md font-bold text-on-surface">{item.title}</h4>
-                <p className="mt-1 text-body-md text-on-surface-variant">{item.body}</p>
+                <h4 className="text-title-md font-bold text-on-surface">{t(`communityPanel.steps.${item.key}.title`)}</h4>
+                <p className="mt-1 text-body-md text-on-surface-variant">{t(`communityPanel.steps.${item.key}.body`)}</p>
               </div>
             </div>
           ))}
@@ -386,7 +354,7 @@ function CommunityPanel() {
             href="#"
             className="inline-flex items-center gap-2 rounded-full bg-tertiary px-8 py-3.5 text-label-lg text-on-tertiary shadow-md transition-all hover:bg-tertiary/90"
           >
-            <span>Khám Phá Diễn Đàn</span>
+            <span>{t('communityPanel.cta')}</span>
             <span className="material-symbols-outlined text-[18px]">explore</span>
           </a>
         </div>
