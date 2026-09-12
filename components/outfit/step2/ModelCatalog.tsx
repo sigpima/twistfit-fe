@@ -151,7 +151,7 @@ const MODELS: Model[] = [
   },
 ]
 
-const UNDERTONE_FILTERS: { id: 'all' | Undertone; key: string }[] = [
+const UNDERTONE_FILTERS: { id: 'all' | Undertone; key: 'all' | 'warm' | 'cool' | 'neutral' }[] = [
   { id: 'all', key: 'all' },
   { id: 'warm', key: 'warm' },
   { id: 'cool', key: 'cool' },
