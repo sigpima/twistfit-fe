@@ -1,15 +1,17 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { useQrModal } from '@/components/qr-modal/QrModalProvider'
 
 const TABS = [
-  { icon: 'styler', label: 'Phối Đồ Thông Minh' },
-  { icon: 'palette', label: 'Personal Color Test' },
-  { icon: 'forum', label: 'Diễn Đàn Phong Cách' },
+  { icon: 'styler', key: 'outfit' },
+  { icon: 'palette', key: 'colorTest' },
+  { icon: 'forum', key: 'community' },
 ] as const
 
 export default function FeatureShowcase() {
+  const t = useTranslations('Home.FeatureShowcase')
   const [activeTab, setActiveTab] = useState(0)
 
   return (
@@ -18,19 +20,16 @@ export default function FeatureShowcase() {
         <div className="mx-auto mb-12 flex max-w-3xl flex-col items-center text-center">
           <div className="mb-3 flex items-center gap-2 rounded-full bg-secondary-fixed px-3.5 py-1 text-label-sm text-on-secondary-fixed-variant">
             <span className="material-symbols-outlined text-[16px]">stars</span>
-            <span>Hệ Sinh Thái Thời Trang Cá Nhân Hoá</span>
+            <span>{t('badgePill')}</span>
           </div>
-          <h2 className="text-headline-lg text-on-surface">Ba Bước Đột Phá Nâng Tầm Phong Cách</h2>
-          <p className="mt-2 text-body-lg text-on-surface-variant">
-            Từ phân tích sinh trắc quang phổ đến trải nghiệm thử đồ ảo và kết nối hội những tín đồ mặc đẹp
-            cùng hệ sắc tố.
-          </p>
+          <h2 className="text-headline-lg text-on-surface">{t('heading')}</h2>
+          <p className="mt-2 text-body-lg text-on-surface-variant">{t('subheading')}</p>
         </div>
         <div className="mb-10 flex justify-center overflow-x-auto pb-2">
           <div role="tablist" className="inline-flex gap-1 rounded-full bg-surface-container p-1.5 shadow-inner">
             {TABS.map((tab, index) => (
               <button
-                key={tab.label}
+                key={tab.key}
                 type="button"
                 role="tab"
                 aria-selected={activeTab === index}
@@ -42,7 +41,7 @@ export default function FeatureShowcase() {
                 }`}
               >
                 <span className="material-symbols-outlined text-[18px]">{tab.icon}</span>
-                <span>{tab.label}</span>
+                <span>{t(`tabs.${tab.key}`)}</span>
               </button>
             ))}
           </div>
@@ -56,84 +55,77 @@ export default function FeatureShowcase() {
 }
 
 const OUTFIT_STEPS = [
-  {
-    step: '1',
-    badge: 'bg-secondary-container text-on-secondary-fixed',
-    title: 'Tải lên hoặc chọn items từ tủ đồ cá nhân',
-    body: 'Chụp hình trang phục bất kỳ, AI thông minh sẽ tự động tách nền siêu tốc và phân loại vào danh mục áo, quần, váy hoặc phụ kiện.',
-  },
-  {
-    step: '2',
-    badge: 'bg-primary-fixed text-primary',
-    title: 'Chọn người mẫu ảo theo vóc dáng',
-    body: 'Chọn từ kho 40+ mẫu có sẵn đa dạng số đo hoặc tự tải lên ảnh toàn thân của chính bạn để cá nhân hóa tỷ lệ cơ thể tuyệt đối.',
-  },
-  {
-    step: '3',
-    badge: 'bg-tertiary-fixed text-on-tertiary-fixed',
-    title: 'Xem mô phỏng AI & Lưu công thức mặc đẹp',
-    body: 'Chiêm ngưỡng outfit hiển thị sinh động, kiểm tra độ hòa hợp sắc thái và thêm ngay vào lookbook tuần để không bao giờ phải băn khoăn "Hôm nay mặc gì?".',
-  },
-]
+  { step: '1', badge: 'bg-secondary-container text-on-secondary-fixed', key: 'uploadItems' },
+  { step: '2', badge: 'bg-primary-fixed text-primary', key: 'chooseModel' },
+  { step: '3', badge: 'bg-tertiary-fixed text-on-tertiary-fixed', key: 'viewResult' },
+] as const
 
 function SmartOutfitPanel() {
+  const t = useTranslations('Home.FeatureShowcase')
+
   return (
     <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
       <div className="rounded-3xl bg-surface-container-low p-6 shadow-sm lg:col-span-6">
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-primary">auto_fix_high</span>
-            <h3 className="text-headline-sm text-on-surface">Studio Thử Đồ Ảo AI</h3>
+            <h3 className="text-headline-sm text-on-surface">{t('outfitPanel.studioTitle')}</h3>
           </div>
           <span className="rounded-full bg-secondary-container px-3 py-1 text-xs font-semibold text-on-secondary-container">
-            Tự động tách nền
+            {t('outfitPanel.autoBgRemovalBadge')}
           </span>
         </div>
         <div className="grid grid-cols-3 gap-3">
           <div className="flex flex-col items-center rounded-2xl bg-surface-container-lowest p-3">
-            <p className="mb-2 text-label-sm font-bold text-on-surface-variant">1. Chọn đồ</p>
+            <p className="mb-2 text-label-sm font-bold text-on-surface-variant">{t('outfitPanel.step1Label')}</p>
             <div className="mb-2 flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl bg-surface-container p-1">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/home/studio-outfit.jpg" alt="Áo peplum voan hồng pastel" className="h-full w-full object-contain" />
+              <img src="/home/studio-outfit.jpg" alt={t('outfitPanel.garmentAlt')} className="h-full w-full object-contain" />
             </div>
             <div className="grid w-full grid-cols-3 gap-1">
-              <div className="flex h-6 items-center justify-center rounded bg-primary-fixed text-[9px] font-bold text-primary">Áo</div>
-              <div className="flex h-6 items-center justify-center rounded bg-surface-container text-[9px] text-on-surface-variant">Váy</div>
-              <div className="flex h-6 items-center justify-center rounded bg-surface-container text-[9px] text-on-surface-variant">Kính</div>
+              <div className="flex h-6 items-center justify-center rounded bg-primary-fixed text-[9px] font-bold text-primary">
+                {t('outfitPanel.tagTop')}
+              </div>
+              <div className="flex h-6 items-center justify-center rounded bg-surface-container text-[9px] text-on-surface-variant">
+                {t('outfitPanel.tagDress')}
+              </div>
+              <div className="flex h-6 items-center justify-center rounded bg-surface-container text-[9px] text-on-surface-variant">
+                {t('outfitPanel.tagGlasses')}
+              </div>
             </div>
           </div>
           <div className="flex flex-col items-center rounded-2xl bg-surface-container-lowest p-3">
-            <p className="mb-2 text-label-sm font-bold text-on-surface-variant">2. Người mẫu</p>
+            <p className="mb-2 text-label-sm font-bold text-on-surface-variant">{t('outfitPanel.step2Label')}</p>
             <div className="grid w-full grid-cols-2 gap-1.5">
               <div className="aspect-square overflow-hidden rounded-lg bg-surface-container-highest p-0.5">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/home/model-short-hair.jpg" alt="Mẫu nữ tóc ngắn mặc áo phông trắng" className="h-full w-full rounded-md object-cover" />
+                <img src="/home/model-short-hair.jpg" alt={t('outfitPanel.modelShortHairAlt')} className="h-full w-full rounded-md object-cover" />
               </div>
               <div className="aspect-square overflow-hidden rounded-lg bg-surface-container-highest p-0.5">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/home/model-long-curl.jpg" alt="Mẫu nữ tóc dài xoăn nhẹ" className="h-full w-full rounded-md object-cover" />
+                <img src="/home/model-long-curl.jpg" alt={t('outfitPanel.modelLongCurlAlt')} className="h-full w-full rounded-md object-cover" />
               </div>
               <div className="aspect-square overflow-hidden rounded-lg bg-surface-container-highest p-0.5">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/home/model-tall.jpg" alt="Mẫu nữ dáng cao gầy phong cách năng động" className="h-full w-full rounded-md object-cover" />
+                <img src="/home/model-tall.jpg" alt={t('outfitPanel.modelTallAlt')} className="h-full w-full rounded-md object-cover" />
               </div>
               <div className="flex aspect-square flex-col items-center justify-center rounded-lg bg-secondary-fixed text-secondary">
                 <span className="material-symbols-outlined text-[18px]">add_a_photo</span>
-                <span className="mt-0.5 text-[8px] font-bold">Tải ảnh</span>
+                <span className="mt-0.5 text-[8px] font-bold">{t('outfitPanel.uploadPhoto')}</span>
               </div>
             </div>
           </div>
           <div className="flex flex-col items-center rounded-2xl bg-surface-container-lowest p-3">
-            <p className="mb-2 text-label-sm font-bold text-primary">3. Kết quả AI</p>
+            <p className="mb-2 text-label-sm font-bold text-primary">{t('outfitPanel.step3Label')}</p>
             <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl bg-surface-container shadow-sm">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/home/model-tryon-result.jpg"
-                alt="Người mẫu mặc thử áo lụa satin hồng pastel do AI ướm"
+                alt={t('outfitPanel.tryonResultAlt')}
                 className="h-full w-full object-cover"
               />
               <div className="absolute bottom-1 right-1 rounded bg-on-surface/80 px-1.5 py-0.5 text-[8px] text-surface-container-lowest">
-                Khớp 99%
+                {t('outfitPanel.matchBadge')}
               </div>
             </div>
           </div>
@@ -141,7 +133,7 @@ function SmartOutfitPanel() {
         <div className="mt-4 flex items-center justify-between rounded-2xl bg-surface-container-lowest px-2 pt-3">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-[20px] text-primary">hd</span>
-            <span className="text-label-sm text-on-surface">Chế độ hiển thị chất lượng cao HD</span>
+            <span className="text-label-sm text-on-surface">{t('outfitPanel.hdModeLabel')}</span>
           </div>
           <div className="flex h-5 w-10 items-center justify-end rounded-full bg-primary p-0.5">
             <div className="h-4 w-4 rounded-full bg-on-primary shadow-sm" />
@@ -150,12 +142,9 @@ function SmartOutfitPanel() {
       </div>
       <div className="flex flex-col space-y-6 lg:col-span-6">
         <div>
-          <span className="text-label-md font-bold uppercase tracking-wider text-primary">Tính năng trọng tâm 01</span>
-          <h3 className="mt-1 text-headline-lg text-on-surface">Phối Đồ Đa Năng Trong 3 Chạm</h3>
-          <p className="mt-2 text-body-md text-on-surface-variant">
-            Không còn nỗi lo mua quần áo online bị lệch form hay không hợp màu da. TwistFit tạo dựng phòng
-            thay đồ ảo chuẩn xác đến từng nếp vải.
-          </p>
+          <span className="text-label-md font-bold uppercase tracking-wider text-primary">{t('outfitPanel.featureTag')}</span>
+          <h3 className="mt-1 text-headline-lg text-on-surface">{t('outfitPanel.panelHeading')}</h3>
+          <p className="mt-2 text-body-md text-on-surface-variant">{t('outfitPanel.panelBody')}</p>
         </div>
         <div className="space-y-4">
           {OUTFIT_STEPS.map((item) => (
@@ -164,8 +153,8 @@ function SmartOutfitPanel() {
                 {item.step}
               </div>
               <div>
-                <h4 className="text-title-md font-bold text-on-surface">{item.title}</h4>
-                <p className="mt-1 text-body-md text-on-surface-variant">{item.body}</p>
+                <h4 className="text-title-md font-bold text-on-surface">{t(`outfitPanel.steps.${item.key}.title`)}</h4>
+                <p className="mt-1 text-body-md text-on-surface-variant">{t(`outfitPanel.steps.${item.key}.body`)}</p>
               </div>
             </div>
           ))}
@@ -175,7 +164,7 @@ function SmartOutfitPanel() {
             href="#"
             className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-label-lg text-on-primary shadow-md transition-all hover:bg-primary-container"
           >
-            <span>Thử Tính Năng Phối Đồ</span>
+            <span>{t('outfitPanel.cta')}</span>
             <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
           </a>
         </div>

@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import FeatureShowcase from './FeatureShowcase'
 import { QrModalProvider } from '@/components/qr-modal/QrModalProvider'
 
 describe('FeatureShowcase', () => {
   it('shows the Phối Đồ Thông Minh panel by default', () => {
-    render(
+    renderWithIntl(
       <QrModalProvider>
         <FeatureShowcase />
       </QrModalProvider>
@@ -14,7 +15,7 @@ describe('FeatureShowcase', () => {
   })
 
   it('switches to the Personal Color Test panel when its tab is clicked', () => {
-    render(
+    renderWithIntl(
       <QrModalProvider>
         <FeatureShowcase />
       </QrModalProvider>
@@ -25,7 +26,7 @@ describe('FeatureShowcase', () => {
   })
 
   it('switches to the Diễn Đàn Phong Cách panel when its tab is clicked', () => {
-    render(
+    renderWithIntl(
       <QrModalProvider>
         <FeatureShowcase />
       </QrModalProvider>
@@ -35,7 +36,7 @@ describe('FeatureShowcase', () => {
   })
 
   it('opens the QR modal from the Personal Color Test panel CTA', () => {
-    render(
+    renderWithIntl(
       <QrModalProvider>
         <FeatureShowcase />
       </QrModalProvider>

@@ -75,6 +75,52 @@
         "title": "Độ chính xác 98.4%",
         "subtitle": "Phân giải sắc tố da 3D"
       }
+    },
+    "FeatureShowcase": {
+      "badgePill": "Hệ Sinh Thái Thời Trang Cá Nhân Hoá",
+      "heading": "Ba Bước Đột Phá Nâng Tầm Phong Cách",
+      "subheading": "Từ phân tích sinh trắc quang phổ đến trải nghiệm thử đồ ảo và kết nối hội những tín đồ mặc đẹp cùng hệ sắc tố.",
+      "tabs": {
+        "outfit": "Phối Đồ Thông Minh",
+        "colorTest": "Personal Color Test",
+        "community": "Diễn Đàn Phong Cách"
+      },
+      "outfitPanel": {
+        "studioTitle": "Studio Thử Đồ Ảo AI",
+        "autoBgRemovalBadge": "Tự động tách nền",
+        "step1Label": "1. Chọn đồ",
+        "garmentAlt": "Áo peplum voan hồng pastel",
+        "tagTop": "Áo",
+        "tagDress": "Váy",
+        "tagGlasses": "Kính",
+        "step2Label": "2. Người mẫu",
+        "modelShortHairAlt": "Mẫu nữ tóc ngắn mặc áo phông trắng",
+        "modelLongCurlAlt": "Mẫu nữ tóc dài xoăn nhẹ",
+        "modelTallAlt": "Mẫu nữ dáng cao gầy phong cách năng động",
+        "uploadPhoto": "Tải ảnh",
+        "step3Label": "3. Kết quả AI",
+        "tryonResultAlt": "Người mẫu mặc thử áo lụa satin hồng pastel do AI ướm",
+        "matchBadge": "Khớp 99%",
+        "hdModeLabel": "Chế độ hiển thị chất lượng cao HD",
+        "featureTag": "Tính năng trọng tâm 01",
+        "panelHeading": "Phối Đồ Đa Năng Trong 3 Chạm",
+        "panelBody": "Không còn nỗi lo mua quần áo online bị lệch form hay không hợp màu da. TwistFit tạo dựng phòng thay đồ ảo chuẩn xác đến từng nếp vải.",
+        "steps": {
+          "uploadItems": {
+            "title": "Tải lên hoặc chọn items từ tủ đồ cá nhân",
+            "body": "Chụp hình trang phục bất kỳ, AI thông minh sẽ tự động tách nền siêu tốc và phân loại vào danh mục áo, quần, váy hoặc phụ kiện."
+          },
+          "chooseModel": {
+            "title": "Chọn người mẫu ảo theo vóc dáng",
+            "body": "Chọn từ kho 40+ mẫu có sẵn đa dạng số đo hoặc tự tải lên ảnh toàn thân của chính bạn để cá nhân hóa tỷ lệ cơ thể tuyệt đối."
+          },
+          "viewResult": {
+            "title": "Xem mô phỏng AI & Lưu công thức mặc đẹp",
+            "body": "Chiêm ngưỡng outfit hiển thị sinh động, kiểm tra độ hòa hợp sắc thái và thêm ngay vào lookbook tuần để không bao giờ phải băn khoăn \"Hôm nay mặc gì?\"."
+          }
+        },
+        "cta": "Thử Tính Năng Phối Đồ"
+      }
     }
   }
 }
