@@ -607,5 +607,181 @@
         "quizButton": "Làm Bài Test Personal Color"
       }
     }
+  },
+  "HowItWorks": {
+    "Hero": {
+      "badgeText": "Quy trình khoa học & công nghệ",
+      "heading": "Hành Trình Khám Phá Sắc Màu & Tủ Đồ Ảo Trong <highlight>3 Bước Đơn Giản</highlight>",
+      "subheading": "Chỉ với chiếc điện thoại thông minh, công nghệ AI quang phổ kết hợp cùng hệ thống 12 Mùa sắc thái quốc tế sẽ giúp bạn tìm ra bảng màu cá nhân chuẩn xác và thử trang phục không giới hạn.",
+      "primaryCta": "Thử nghiệm ngay (Miễn phí)",
+      "secondaryCta": "Xem video hướng dẫn",
+      "metrics": {
+        "spectrumPoints": { "value": "1024", "label": "Điểm đo quang phổ" },
+        "seasons": { "value": "12", "label": "Mùa sắc thái toàn diện" },
+        "accuracy": { "value": "98.4%", "label": "Độ chuẩn xác đối chiếu" },
+        "instantResult": { "value": "30s", "label": "Kết quả ngay lập tức" }
+      }
+    },
+    "ProcessSteps": {
+      "kicker": "Quy Trình Tinh Gọn",
+      "heading": "Chu trình 3 bước tái định hình phong cách cá nhân",
+      "step1": {
+        "title": "Chụp hoặc Tải Ảnh Khuôn Mặt",
+        "body": "AI Camera tự động kích hoạt tính năng tự cân bằng trắng thông minh, nhận diện góc nghiêng và độ phơi sáng nhằm bóc tách chuẩn xác ba chỉ số cốt lõi: <bold>Sắc tướng (Hue)</bold>, <bold>Độ sáng (Value)</bold> và <bold>Độ tinh rực rỡ (Chroma)</bold>.",
+        "tipTitle": "Mẹo chụp ảnh từ chuyên gia:",
+        "tipBody": "Để mặt mộc không trang điểm, đứng trước nguồn ánh sáng tự nhiên ban ngày (cạnh cửa sổ) và nhìn thẳng trực diện ống kính với khoảng cách 40-50cm.",
+        "checkAutoBg": "Tự động tách nền",
+        "checkPrivacy": "Bảo mật gương mặt 100%",
+        "calibratorLabel": "AI Camera Calibrator",
+        "calibratorSpec": "ISO 100 • 5600K Daylight",
+        "imageAlt": "AI Camera Calibrator quét gương mặt xác định sắc tố da",
+        "lockLabel": "Khóa 1,024 điểm quang phổ",
+        "undertoneLabel": "Undertone",
+        "undertoneValue": "Cool/Lạnh (84%)",
+        "contrastLabel": "Độ tương phản",
+        "contrastValue": "Cao (Clear)",
+        "pigmentLabel": "Sắc tố mắt/tóc",
+        "pigmentValue": "Đen khói thuần"
+      },
+      "step2": {
+        "title": "Phân Tích AI & Báo Cáo 12 Mùa Sắc Thái",
+        "body": "Thuật toán độc quyền đối chiếu đặc tính gương mặt với hệ thống phân loại 12 Season Color Palette quốc tế (Xuân Rạng Rỡ, Hè Dịu Dàng, Thu Ấm Áp, Đông Sắc Nét...). Bạn nhận được một cẩm nang màu toàn diện và độc bản.",
+        "bullet1Title": "36 Sắc màu vàng & Bảng màu bổ trợ:",
+        "bullet1Body": "Lọc chính xác những mã màu làm gương mặt bừng sáng và loại bỏ các sắc độ khiến da xỉn màu.",
+        "bullet2Title": "Chỉ dẫn Makeup & Màu tóc chuẩn:",
+        "bullet2Body": "Đề xuất màu son (Hồng lạnh, Cherry, Berry), sắc độ phấn mắt và tone màu nhuộm tóc lý tưởng nhất.",
+        "bullet3Title": "Trang sức kim loại tương thích:",
+        "bullet3Body": "Đánh giá tính phù hợp giữa Bạc sáng, Bạch kim, Vàng hồng hay Vàng tây nguyên chất.",
+        "resultLabel": "Kết Quả Phân Tích",
+        "resultSeason": "Mùa Đông (Cool Winter)",
+        "confidenceBadge": "Độ tin cậy: 99.2%",
+        "paletteHeading": "Bảng màu lý tưởng (Best Palette)",
+        "paletteCount": "30 màu tương thích",
+        "paletteSwatches": {
+          "navy": "Navy",
+          "cobalt": "Cobalt",
+          "berry": "Berry",
+          "magenta": "Magenta",
+          "teal": "Teal",
+          "ice": "Ice",
+          "noir": "Noir",
+          "violet": "Violet",
+          "ruby": "Ruby",
+          "steel": "Steel",
+          "frost": "Frost",
+          "lavender": "Lavender"
+        },
+        "lipstickLabel": "Màu son hoàn hảo",
+        "lipstickValue": "Đỏ mận, Hồng Ruby lạnh",
+        "jewelryLabel": "Trang sức khuyên dùng",
+        "jewelryValue": "Bạc & Bạch Kim sáng"
+      },
+      "step3": {
+        "title": "Thử Đồ Ảo 3D & Xây Dựng Capsule Wardrobe",
+        "body": "Tải ảnh trang phục yêu thích của bạn từ bất kỳ sàn TMĐT nào hoặc chọn trực tiếp từ tủ đồ số hóa. AI Virtual Fitting mô phỏng chính xác độ rủ sợi vải, phom dáng và sự hòa hợp màu sắc ngay trên vóc dáng cơ thể của bạn.",
+        "physicsTitle": "Smart Fit Physics",
+        "physicsBody": "Mô phỏng chân thực nếp gấp, độ co giãn và bóng sáng của vải lụa, denim, len.",
+        "mixMatchTitle": "Mix & Match Hàng Ngày",
+        "mixMatchBody": "Gợi ý 3 outfit mỗi sáng phối hợp từ những món sẵn có trong tủ đồ cá nhân.",
+        "selectedGarmentLabel": "Trang Phục Đã Chọn",
+        "garmentImageAlt": "Trang phục đã chọn: áo peplum voan hồng nhạt",
+        "garmentName": "Áo Peplum Voan Hồng Nhạt",
+        "garmentMatchBadge": "Chuẩn tông Mùa Đông 98%",
+        "resultImageAlt": "Kết quả thử đồ ảo AI với trang phục đã chọn",
+        "resultLabel": "Kết quả thử đồ AI",
+        "fitBadge": "Fit Size S • Rất hợp da"
+      }
+    },
+    "FeatureBento": {
+      "kicker": "Trải Nghiệm Trực Quan",
+      "heading": "Công nghệ AI đồng hành cùng phong cách của bạn",
+      "subheading": "Từ lúc mở điện thoại quét gương mặt đến khi tự tin diện outfit hoàn hảo đi làm hay dự tiệc, TwistFit tối ưu hóa mọi quyết định mua sắm của bạn.",
+      "card1": {
+        "title": "1. Số hóa tủ đồ thần tốc",
+        "body": "Chụp ảnh quần áo bạn có trong tủ. AI tự động tách nền, phân loại danh mục (Áo sơ mi, Chân váy, Blazer) và gán tag sắc độ màu tự động."
+      },
+      "card2": {
+        "title": "2. Phân tích quang phổ",
+        "body": "Công nghệ độc quyền giải mã sắc tố melanin và hemoglobin dưới da để tìm ra bảng màu cá nhân chính xác tuyệt đối mà không cần đặt lịch tốn kém.",
+        "contrastLabel": "Độ tương phản tự nhiên",
+        "contrastValue": "88/100",
+        "toneLabel": "Nhiệt độ sắc tố (Cool Undertone)",
+        "toneValue": "92/100"
+      },
+      "card3": {
+        "title": "3. Lên đồ thông minh mỗi ngày",
+        "body": "Không còn cảm giác \"không có gì để mặc\". TwistFit tự động gợi ý các set đồ phối sẵn theo thời tiết hôm nay và lịch trình cuộc hẹn.",
+        "weatherLabel": "Hà Nội, 26°C Nắng",
+        "suggestionBadge": "3 gợi ý outfit"
+      }
+    },
+    "ComparisonTable": {
+      "kicker": "Giá Trị Vượt Trội",
+      "heading": "Phương pháp truyền thống vs. TwistFit AI Color Test",
+      "subheading": "So sánh trải nghiệm tư vấn sắc thái cá nhân tại salon truyền thống và nền tảng thông minh TwistFit.",
+      "colCriteria": "Tiêu chí so sánh",
+      "colTraditional": "Tư vấn truyền thống",
+      "colTwistfit": "TwistFit AI Digital",
+      "rows": {
+        "cost": {
+          "label": "Chi phí mỗi lần test",
+          "traditional": "1.500.000đ - 3.500.000đ / buổi",
+          "twistfit": "Hoàn toàn miễn phí cơ bản (Nâng cao chỉ từ 49k)"
+        },
+        "time": {
+          "label": "Thời gian thực hiện",
+          "traditional": "Đặt lịch trước 1-2 tuần, mất 2 tiếng tại salon",
+          "twistfit": "30 giây trực tiếp trên điện thoại 24/7"
+        },
+        "objectivity": {
+          "label": "Tính khách quan",
+          "traditional": "Dễ bị ảnh hưởng bởi cảm quan chủ quan của stylist",
+          "twistfit": "Thuật toán quang phổ 1024 điểm ảnh khách quan"
+        },
+        "virtualTryOn": {
+          "label": "Tính năng Thử Đồ Ảo (Virtual Try-on)",
+          "traditional": "Không có (Chỉ dán vải mẫu lên người)",
+          "twistfit": "Thử đồ 3D không giới hạn với ảnh chụp hoặc link TMĐT"
+        },
+        "storage": {
+          "label": "Khả năng lưu trữ & Tái sử dụng",
+          "traditional": "Tập tài liệu giấy hoặc hình ảnh rời rạc dễ mất",
+          "twistfit": "Lưu vĩnh viễn trên App, tích hợp trực tiếp tủ đồ cá nhân"
+        }
+      }
+    },
+    "PreparationTips": {
+      "kicker": "Bí Quyết Chuẩn Xác",
+      "heading": "4 lời khuyên để có kết quả Personal Color chuẩn xác nhất",
+      "subheading": "Để thuật toán AI nhận diện sắc tố da tự nhiên không bị sai lệch, bạn hãy lưu ý các yếu tố sau khi chuẩn bị ảnh chụp.",
+      "tips": {
+        "naturalLight": {
+          "title": "Ánh sáng tự nhiên",
+          "body": "Ưu tiên chụp cạnh cửa sổ vào buổi sáng hoặc đầu giờ chiều. Tránh đèn huỳnh quang vàng hoặc ánh đèn neon làm lệch tone ấm/lạnh."
+        },
+        "angle90": {
+          "title": "Góc chụp 90 độ",
+          "body": "Giữ điện thoại ngang tầm mắt, nhìn thẳng trực diện ống kính. Tránh chụp góc xiên, hất từ dưới lên hoặc đổ bóng lên cằm và cổ."
+        },
+        "bareFace": {
+          "title": "Để mặt mộc tự nhiên",
+          "body": "Lớp phấn nền, kem chống nắng nâng tone hay son màu sẽ che lấp undertone thật. Hãy tẩy trang nhẹ nhàng để lộ sắc diện mộc tự nhiên."
+        },
+        "tieHair": {
+          "title": "Vén tóc gọn gàng",
+          "body": "Nếu tóc bạn đã nhuộm màu nhân tạo, hãy buộc hoặc kẹp gọn ra sau mang tai để tránh màu tóc nhuộm đánh lừa cảm biến màu da của AI."
+        }
+      }
+    },
+    "CtaBanner": {
+      "badge": "Khám phá bản thân ngay hôm nay",
+      "heading": "Sẵn sàng tìm ra phiên bản rạng rỡ nhất của chính bạn?",
+      "subheading": "Hàng nghìn người đã thoát khỏi nỗi lo mua đồ không hợp tone da. Hãy bắt đầu buổi test nhanh chỉ trong 30 giây!",
+      "primaryCta": "Bắt đầu Test Personal Color",
+      "secondaryCta": "Khám phá phòng thử đồ",
+      "trust1": "Không cần cài ứng dụng",
+      "trust2": "Bảo mật hình ảnh",
+      "trust3": "Có kết quả sau 30 giây"
+    }
   }
 }
