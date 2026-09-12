@@ -783,5 +783,82 @@
       "trust2": "Bảo mật hình ảnh",
       "trust3": "Có kết quả sau 30 giây"
     }
+  },
+  "About": {
+    "Hero": {
+      "badgeText": "Về chúng tôi • TwistFit Atelier",
+      "heading": "Định Hình Phong Cách Bằng<br></br><highlight>Khoa Học Màu Sắc</highlight> & Công Nghệ AI",
+      "subheading": "TwistFit ra đời từ niềm tin rằng mỗi cá nhân đều sở hữu một bản sắc thẩm mỹ độc bản. Với phương châm <tagline>\"A little twist, a better fit\"</tagline>, chúng tôi kết hợp phân tích Personal Color chuẩn quốc tế và công nghệ thử đồ ảo để biến tủ đồ của bạn thành nguồn cảm hứng bất tận.",
+      "stat1Label": "Lượt phân tích màu",
+      "stat2Value": "98.4%",
+      "stat2Label": "Độ chính xác AI",
+      "stat3Value": "40.000+",
+      "stat3Label": "Phối đồ thành công",
+      "stat4Value": "4.9/5",
+      "stat4Label": "Điểm hài lòng"
+    },
+    "MissionVisionGrid": {
+      "kicker": "Tầm Nhìn Tương Lai",
+      "heading": "Sứ Mệnh & Giá Trị Cốt Lõi",
+      "introText": "Chúng tôi xóa bỏ định kiến thời trang phải phức tạp hay tốn kém, mang phương pháp cố vấn hình ảnh cao cấp vào tầm tay bạn.",
+      "missionLabel": "Sứ mệnh của chúng tôi",
+      "missionTitle": "Giải Phóng Tự Do Thể Hiện Bản Thân",
+      "missionBody": "Giúp mọi người tự tin tỏa sáng qua việc thấu hiểu sắc tố tự nhiên của cơ thể. Bằng sự kết hợp chuẩn xác của khoa học sắc độ, TwistFit giúp người dùng tiết kiệm <bold>70% thời gian</bold> lựa chọn trang phục và cắt giảm những khoản chi tiêu mua sắm sai lầm do trang phục không hợp tone.",
+      "missionFooterNote": "Tối ưu chi tiêu cá nhân và giảm thiểu lãng phí may mặc thời trang nhanh.",
+      "visionLabel": "Tầm nhìn 2030",
+      "visionTitle": "Nền Tảng Thời Trang Cá Nhân Hóa Hàng Đầu",
+      "visionBody": "Trở thành nền tảng thời trang thông minh cá nhân hóa hàng đầu Đông Nam Á. Chúng tôi tiên phong thúc đẩy lối sống thời trang bền vững (Sustainable Fashion), giúp mỗi người xây dựng một tủ đồ capsule tinh giản, chuẩn sắc và không bao giờ lỗi mốt.",
+      "visionFooterLabel": "Tiêu chí xanh",
+      "visionFooterValue": "Eco-Fashion Impact",
+      "visionFooterTag": "Zero-Waste Mindset",
+      "coreValues": {
+        "personalization": {
+          "title": "Cá Nhân Hóa Tối Đa",
+          "tag": "Personalized Perfection",
+          "body": "Không rập khuôn tiêu chuẩn chung. Phong cách là tấm gương phản chiếu sắc vóc riêng biệt và cá tính nội tâm của chính bạn."
+        },
+        "science": {
+          "title": "Khoa Học & Chính Xác",
+          "tag": "Science-backed AI",
+          "body": "Dựa trên lý thuyết phân tích sắc ký 12 mùa (12-Season Color Analysis) được mã hóa bằng mô hình thị giác máy tính chính xác cao."
+        },
+        "sustainability": {
+          "title": "Bền Vững & Tối Ưu",
+          "tag": "Conscious Closet",
+          "body": "Mua sắm có chủ đích, mặc nhiều lần và tái tổ chức tủ quần áo thông minh để bảo vệ tài nguyên môi trường toàn cầu."
+        }
+      }
+    },
+    "StorySection": {
+      "kicker": "Câu Chuyện Thương Hiệu",
+      "headingPrefix": "Bắt Đầu Từ Nỗi Băn Khoăn:<br></br><quote>\"Tủ Đồ Đầy Ắp Nhưng Không Có Gì Để Mặc\"</quote>",
+      "paragraph1": "Đã bao nhiêu lần bạn đứng trước chiếc tủ quần áo chật ních nhưng vẫn thở dài bất lực? Đã bao lần bạn mua một chiếc váy đắt đỏ vì người mẫu mặc quá đẹp, nhưng khi khoác lên mình lại cảm thấy làn da bị xỉn màu và kém sắc?",
+      "paragraph2": "Đó chính là thực trạng chung mà đội ngũ sáng lập TwistFit từng trải qua. Chúng tôi nhận thấy rào cản lớn nhất của đa số mọi người không nằm ở việc thiếu quần áo, mà nằm ở sự <bold>lệch pha giữa màu sắc trang phục và quang phổ sắc tố cơ thể (undertone, value & chroma)</bold>.",
+      "paragraph3": "Để giải quyết bài toán này, dự án TwistFit Atelier đã ra đời. Chúng tôi dành hơn 2 năm nghiên cứu cùng các Image Consultant quốc tế, tích hợp công nghệ AI Camera nhận diện quang phổ ánh sáng da thực tế dưới các điều kiện môi trường khác nhau. Từ một thuật toán thử nghiệm tại phòng lab, TwistFit nay đã trở thành người bạn đồng hành phong cách của hàng trăm nghìn bạn trẻ.",
+      "milestones": {
+        "founding": { "year": "2023", "label": "Khởi sinh thuật toán quang phổ da" },
+        "partnership": { "year": "2024", "label": "Hợp tác 20+ Master Stylists" },
+        "current": { "year": "Hiện tại", "label": "120K+ người dùng tại Việt Nam" }
+      },
+      "imageAlt": "Phân Tích Draping Vải Truyền Thống trong atelier TwistFit",
+      "imageCaptionLabel": "Atelier Studio",
+      "imageCaptionTitle": "Phân Tích Draping Vải Truyền Thống",
+      "aiCoreLabel": "TwistFit AI Camera Core",
+      "aiCoreBody": "Quét 1.024 điểm sắc tố gương mặt để bóc tách 3 thuộc tính: Hue, Value và Saturation chuẩn khoa học.",
+      "spectrumLabel": "Quang phổ tương thích",
+      "spectrumValue": "Cool Summer"
+    },
+    "TeamGrid": {
+      "kicker": "Đội Ngũ Chuyên Gia",
+      "heading": "Những Nhà Kiến Tạo Tại TwistFit",
+      "subheading": "Sự giao thoa hoàn hảo giữa cảm quan thẩm mỹ thời trang cao cấp và năng lực nghiên cứu trí tuệ nhân tạo."
+    },
+    "CtaBanner": {
+      "badge": "Khởi đầu chuyển hóa phong cách",
+      "heading": "Bắt đầu hành trình tìm kiếm sắc màu của riêng bạn ngay hôm nay.",
+      "subheading": "Chỉ với 3 phút trải nghiệm bài test AI, bạn sẽ nhận được bản đồ bảng màu cá nhân hóa toàn diện và tự do thử nghiệm các outfits trong phòng thử đồ ảo.",
+      "primaryCta": "Làm bài test Personal Color",
+      "secondaryCta": "Khám phá phòng thử đồ ảo"
+    }
   }
 }

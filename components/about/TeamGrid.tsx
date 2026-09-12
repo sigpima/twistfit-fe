@@ -1,3 +1,7 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
+
 const TEAM = [
   {
     id: 'mai-anh',
@@ -38,20 +42,19 @@ const TEAM = [
 ]
 
 export default function TeamGrid() {
+  const t = useTranslations('About.TeamGrid')
+
   return (
     <section className="w-full px-margin-desktop py-space-xl">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto mb-space-xl max-w-2xl text-center">
           <div className="mb-space-sm inline-flex items-center gap-space-xs rounded-full bg-secondary-fixed/50 px-space-md py-space-xs">
             <span className="text-label-sm font-semibold uppercase tracking-wider text-on-secondary-fixed">
-              Đội Ngũ Chuyên Gia
+              {t('kicker')}
             </span>
           </div>
-          <h2 className="text-headline-lg text-on-surface">Những Nhà Kiến Tạo Tại TwistFit</h2>
-          <p className="mt-space-xs text-body-md text-on-surface-variant">
-            Sự giao thoa hoàn hảo giữa cảm quan thẩm mỹ thời trang cao cấp và năng lực nghiên cứu trí tuệ
-            nhân tạo.
-          </p>
+          <h2 className="text-headline-lg text-on-surface">{t('heading')}</h2>
+          <p className="mt-space-xs text-body-md text-on-surface-variant">{t('subheading')}</p>
         </div>
         <div className="grid grid-cols-1 gap-space-lg md:grid-cols-3">
           {TEAM.map((member) => (

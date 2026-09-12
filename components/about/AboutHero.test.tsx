@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
-import { render, screen, act } from '@testing-library/react'
+import { screen, act } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import AboutHero from './AboutHero'
 
 describe('AboutHero', () => {
@@ -12,7 +13,7 @@ describe('AboutHero', () => {
   })
 
   it('renders the headline and starts the counter at 100.000+', () => {
-    render(<AboutHero />)
+    renderWithIntl(<AboutHero />)
     expect(
       screen.getByRole('heading', { level: 1, name: /Định Hình Phong Cách Bằng/ })
     ).toBeInTheDocument()
@@ -20,7 +21,7 @@ describe('AboutHero', () => {
   })
 
   it('animates the counter up to 120.000+ and stops', () => {
-    render(<AboutHero />)
+    renderWithIntl(<AboutHero />)
     act(() => {
       vi.advanceTimersByTime(1000)
     })

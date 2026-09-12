@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import MissionVisionGrid from './MissionVisionGrid'
 
 describe('MissionVisionGrid', () => {
   it('renders the mission, vision and 3 core values', () => {
-    render(<MissionVisionGrid />)
+    renderWithIntl(<MissionVisionGrid />)
     expect(screen.getByText('Giải Phóng Tự Do Thể Hiện Bản Thân')).toBeInTheDocument()
     expect(screen.getByText('Nền Tảng Thời Trang Cá Nhân Hóa Hàng Đầu')).toBeInTheDocument()
     expect(screen.getByText('Cá Nhân Hóa Tối Đa')).toBeInTheDocument()

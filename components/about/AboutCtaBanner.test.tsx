@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import AboutCtaBanner from './AboutCtaBanner'
 
 describe('AboutCtaBanner', () => {
   it('links the two CTAs to the quiz and the outfit flow', () => {
-    render(<AboutCtaBanner />)
+    renderWithIntl(<AboutCtaBanner />)
     expect(screen.getByRole('link', { name: /Làm bài test Personal Color/ })).toHaveAttribute(
       'href',
       '/personal-color/quiz'
