@@ -22,18 +22,53 @@ export const DEFAULT_GARMENT: Garment = {
   type: 'Top',
 }
 
+export type Undertone = 'warm' | 'cool' | 'neutral'
+
+export type Model = {
+  id: string
+  name: string
+  image: string
+  dossierImage: string
+  poseCount: number
+  tagline: string
+  undertone: Undertone
+  height: string
+  bodyShape: string
+  waist: string
+  personalColor: string
+}
+
+export const DEFAULT_MODEL: Model = {
+  id: 'carmen',
+  name: 'Carmen',
+  image: '/outfit/models/carmen-card.jpg',
+  dossierImage: '/outfit/models/carmen-dossier.jpg',
+  poseCount: 15,
+  tagline: 'Tông da: Warm Neutral',
+  undertone: 'neutral',
+  height: '1m65',
+  bodyShape: 'Đồng hồ cát',
+  waist: '64cm',
+  personalColor: 'Autumn Soft',
+}
+
 type OutfitFlowContextValue = {
   selectedGarment: Garment
   setSelectedGarment: (garment: Garment) => void
+  selectedModel: Model
+  setSelectedModel: (model: Model) => void
 }
 
 const OutfitFlowContext = createContext<OutfitFlowContextValue | null>(null)
 
 export function OutfitFlowProvider({ children }: { children: ReactNode }) {
   const [selectedGarment, setSelectedGarment] = useState<Garment>(DEFAULT_GARMENT)
+  const [selectedModel, setSelectedModel] = useState<Model>(DEFAULT_MODEL)
 
   return (
-    <OutfitFlowContext.Provider value={{ selectedGarment, setSelectedGarment }}>
+    <OutfitFlowContext.Provider
+      value={{ selectedGarment, setSelectedGarment, selectedModel, setSelectedModel }}
+    >
       {children}
     </OutfitFlowContext.Provider>
   )
