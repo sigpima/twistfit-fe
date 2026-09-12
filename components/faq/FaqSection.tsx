@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useMemo, useState } from 'react'
 import FaqSearchBar from './FaqSearchBar'
 import FaqCategoryTabs from './FaqCategoryTabs'
@@ -171,6 +172,7 @@ const FAQ_ITEMS: FaqItem[] = [
 ]
 
 export default function FaqSection() {
+  const t = useTranslations('Faq.Section')
   const [activeCategory, setActiveCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [openItemId, setOpenItemId] = useState<string | null>(null)
@@ -191,15 +193,14 @@ export default function FaqSection() {
           <div className="inline-flex items-center gap-space-xs rounded-full bg-surface-container px-space-md py-space-xs shadow-sm">
             <span className="material-symbols-outlined text-[16px] text-primary">live_help</span>
             <span className="text-label-sm font-semibold uppercase tracking-wider text-primary">
-              Trung Tâm Trợ Giúp &amp; Hỏi Đáp
+              {t('badgeText')}
             </span>
           </div>
           <h1 className="mt-space-md text-display-lg font-bold tracking-tight text-on-surface">
-            Chúng Tôi Có Thể Giúp Gì Cho Bạn?
+            {t('heading')}
           </h1>
           <p className="mt-space-sm max-w-2xl text-body-lg leading-relaxed text-on-surface-variant">
-            Tìm câu trả lời nhanh chóng cho các thắc mắc về phân tích Personal Color, phòng thử đồ ảo AI và
-            tài khoản TwistFit.
+            {t('subheading')}
           </p>
           <FaqSearchBar
             value={searchQuery}
@@ -225,11 +226,9 @@ export default function FaqSection() {
             <div className="mt-space-md rounded-xl bg-surface-container-lowest py-space-xl text-center shadow-sm">
               <span className="material-symbols-outlined text-[48px] text-outline">search_off</span>
               <h4 className="mt-space-xs text-headline-sm font-semibold text-on-surface">
-                Không tìm thấy câu hỏi phù hợp
+                {t('noResultsTitle')}
               </h4>
-              <p className="mt-1 text-body-md text-on-surface-variant">
-                Hãy thử tìm kiếm với các từ khóa ngắn gọn hơn hoặc gửi yêu cầu trực tiếp bên dưới.
-              </p>
+              <p className="mt-1 text-body-md text-on-surface-variant">{t('noResultsBody')}</p>
             </div>
           )}
         </div>

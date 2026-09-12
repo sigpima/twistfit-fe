@@ -1,9 +1,13 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
+
 export const FAQ_CATEGORIES = [
-  { id: 'all', label: 'Tất cả' },
-  { id: 'personal-color', label: 'Trắc nghiệm Personal Color' },
-  { id: 'fitting-room', label: 'Phòng thử đồ ảo (Fitting Room)' },
-  { id: 'account', label: 'Tài khoản & Dữ liệu' },
-  { id: 'stylist', label: 'Tư vấn Stylist & Mua sắm' },
+  { id: 'all', key: 'all' },
+  { id: 'personal-color', key: 'personalColor' },
+  { id: 'fitting-room', key: 'fittingRoom' },
+  { id: 'account', key: 'account' },
+  { id: 'stylist', key: 'stylist' },
 ] as const
 
 type FaqCategoryTabsProps = {
@@ -12,6 +16,8 @@ type FaqCategoryTabsProps = {
 }
 
 export default function FaqCategoryTabs({ active, onChange }: FaqCategoryTabsProps) {
+  const t = useTranslations('Faq.CategoryTabs')
+
   return (
     <div className="flex items-center gap-space-xs overflow-x-auto pb-space-sm md:justify-center">
       {FAQ_CATEGORIES.map((category) => (
@@ -25,7 +31,7 @@ export default function FaqCategoryTabs({ active, onChange }: FaqCategoryTabsPro
               : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'
           }`}
         >
-          {category.label}
+          {t(`categories.${category.key}`)}
         </button>
       ))}
     </div>

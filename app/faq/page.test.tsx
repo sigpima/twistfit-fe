@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import FaqPage from './page'
 
 describe('FaqPage', () => {
   it('renders the hero heading and the support banner', () => {
-    render(<FaqPage />)
+    renderWithIntl(<FaqPage />)
     expect(
       screen.getByRole('heading', { level: 1, name: 'Chúng Tôi Có Thể Giúp Gì Cho Bạn?' })
     ).toBeInTheDocument()

@@ -860,5 +860,41 @@
       "primaryCta": "Làm bài test Personal Color",
       "secondaryCta": "Khám phá phòng thử đồ ảo"
     }
+  },
+  "Faq": {
+    "Section": {
+      "badgeText": "Trung Tâm Trợ Giúp & Hỏi Đáp",
+      "heading": "Chúng Tôi Có Thể Giúp Gì Cho Bạn?",
+      "subheading": "Tìm câu trả lời nhanh chóng cho các thắc mắc về phân tích Personal Color, phòng thử đồ ảo AI và tài khoản TwistFit.",
+      "noResultsTitle": "Không tìm thấy câu hỏi phù hợp",
+      "noResultsBody": "Hãy thử tìm kiếm với các từ khóa ngắn gọn hơn hoặc gửi yêu cầu trực tiếp bên dưới."
+    },
+    "CategoryTabs": {
+      "categories": {
+        "all": "Tất cả",
+        "personalColor": "Trắc nghiệm Personal Color",
+        "fittingRoom": "Phòng thử đồ ảo (Fitting Room)",
+        "account": "Tài khoản & Dữ liệu",
+        "stylist": "Tư vấn Stylist & Mua sắm"
+      }
+    },
+    "SearchBar": {
+      "placeholder": "Tìm kiếm thắc mắc (ví dụ: chụp ảnh như thế nào, độ chính xác...)",
+      "searchButton": "Tìm kiếm",
+      "suggestedLabel": "Gợi ý tìm kiếm:",
+      "tags": {
+        "light": "#ÁnhSáng",
+        "security": "#BảoMật",
+        "tryOn": "#ThửĐồẢo",
+        "exportPdf": "#XuấtPDF"
+      }
+    },
+    "SupportBanner": {
+      "badge": "Hỗ Trợ 1 - 1",
+      "heading": "Vẫn Còn Câu Hỏi Chưa Được Giải Đáp?",
+      "body": "Đội ngũ Stylist và chuyên gia công nghệ của TwistFit luôn sẵn sàng hỗ trợ bạn qua kênh trò chuyện trực tuyến hoặc giải đáp phản hồi chi tiết.",
+      "contactButton": "Liên hệ hỗ trợ ngay",
+      "feedbackButton": "Gửi phản hồi"
+    }
   }
 }
