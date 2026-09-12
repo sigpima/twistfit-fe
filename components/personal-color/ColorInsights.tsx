@@ -3,7 +3,12 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
-const METRICS = [
+const METRICS: {
+  key: 'skinBrightness' | 'warmCoolTone' | 'vividness'
+  value: number
+  gradient: string
+  noteClass?: string
+}[] = [
   {
     key: 'skinBrightness',
     value: 62,
@@ -21,7 +26,7 @@ const METRICS = [
     gradient: 'from-purple-400 to-[#9F72E8]',
     noteClass: 'font-medium text-purple-600',
   },
-] as const
+]
 
 const RECOMMENDATIONS = [
   {
