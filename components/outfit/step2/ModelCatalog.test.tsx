@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import ModelCatalog from './ModelCatalog'
 import { OutfitFlowProvider, useOutfitFlow } from '../OutfitFlowProvider'
 
@@ -18,7 +19,7 @@ describe('ModelCatalog', () => {
   })
 
   it('renders all 12 models and marks Carmen as selected by default', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <ModelCatalog />
       </OutfitFlowProvider>
@@ -29,7 +30,7 @@ describe('ModelCatalog', () => {
   })
 
   it('updates the shared selected model when a card is clicked', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <SelectedModelName />
         <ModelCatalog />
@@ -40,7 +41,7 @@ describe('ModelCatalog', () => {
   })
 
   it('filters the grid by undertone', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <ModelCatalog />
       </OutfitFlowProvider>
@@ -54,7 +55,7 @@ describe('ModelCatalog', () => {
   })
 
   it('creates and selects a custom model from an uploaded photo', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <SelectedModelName />
         <ModelCatalog />

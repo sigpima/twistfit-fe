@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import SelectedGarmentBanner from './SelectedGarmentBanner'
 import { OutfitFlowProvider, DEFAULT_GARMENT } from '../OutfitFlowProvider'
 
 describe('SelectedGarmentBanner', () => {
   it('shows the garment selected in step 1 and a link back to change it', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <SelectedGarmentBanner />
       </OutfitFlowProvider>

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import ModelDossier from './ModelDossier'
 import { OutfitFlowProvider, useOutfitFlow } from '../OutfitFlowProvider'
 
@@ -30,7 +31,7 @@ function SwitchToKenji() {
 
 describe('ModelDossier', () => {
   it('shows the default selected model profile', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <ModelDossier />
       </OutfitFlowProvider>
@@ -41,7 +42,7 @@ describe('ModelDossier', () => {
   })
 
   it('updates when the selected model changes', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <SwitchToKenji />
         <ModelDossier />
@@ -53,7 +54,7 @@ describe('ModelDossier', () => {
   })
 
   it('toggles the HD quality switch', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <ModelDossier />
       </OutfitFlowProvider>

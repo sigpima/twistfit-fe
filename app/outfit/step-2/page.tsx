@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -8,11 +9,12 @@ import ModelCatalog from '@/components/outfit/step2/ModelCatalog'
 import ModelDossier from '@/components/outfit/step2/ModelDossier'
 
 const MODE_TABS = [
-  { id: 'our-models', icon: 'group', label: 'Mẫu của chúng tôi (TwistFit AI)', badge: '18 Sẵn có' },
-  { id: 'user-model', icon: 'add_a_photo', label: 'Mẫu của bạn (Tải ảnh cá nhân)', badge: 'Chính chủ' },
+  { id: 'our-models', icon: 'group', key: 'ourModels' },
+  { id: 'user-model', icon: 'add_a_photo', key: 'userModel' },
 ] as const
 
 export default function Step2Page() {
+  const t = useTranslations('Outfit.Step2.Page')
   const router = useRouter()
   const [activeMode, setActiveMode] = useState<(typeof MODE_TABS)[number]['id']>('our-models')
 
@@ -27,15 +29,10 @@ export default function Step2Page() {
           <div>
             <div className="flex items-center gap-space-xs text-label-md font-semibold uppercase tracking-wider text-secondary">
               <span className="material-symbols-outlined text-[18px]">face_retouching_natural</span>
-              Cá nhân hoá hình tượng
+              {t('eyebrow')}
             </div>
-            <h1 className="mt-1 text-headline-lg tracking-tight text-on-surface">
-              Bước 2: Chọn Người Mẫu Hoặc Tải Ảnh Cá Nhân
-            </h1>
-            <p className="mt-1 text-body-md text-on-surface-variant">
-              Lựa chọn vóc dáng và thần thái phù hợp nhất để công nghệ AI render trang phục chuẩn xác theo tỷ lệ
-              cơ thể thực tế.
-            </p>
+            <h1 className="mt-1 text-headline-lg tracking-tight text-on-surface">{t('heading')}</h1>
+            <p className="mt-1 text-body-md text-on-surface-variant">{t('subheading')}</p>
           </div>
           <SelectedGarmentBanner />
         </div>
@@ -56,9 +53,9 @@ export default function Step2Page() {
                   }`}
                 >
                   <span className="material-symbols-outlined text-[20px]">{tab.icon}</span>
-                  <span>{tab.label}</span>
+                  <span>{t(`modeTabs.${tab.key}.label`)}</span>
                   <span className="rounded-full bg-primary-fixed px-2 py-0.5 text-label-sm text-on-primary-fixed">
-                    {tab.badge}
+                    {t(`modeTabs.${tab.key}.badge`)}
                   </span>
                 </button>
               ))}
@@ -77,14 +74,14 @@ export default function Step2Page() {
             className="flex w-full items-center justify-center gap-space-xs rounded-full bg-surface-container-high px-space-lg py-3 text-label-lg text-on-surface transition-colors hover:bg-surface-container-highest sm:w-auto"
           >
             <span className="material-symbols-outlined text-[18px]">arrow_back</span>
-            Quay lại Bước 1 (Chọn đồ)
+            {t('backButton')}
           </Link>
           <button
             type="button"
             onClick={handleContinue}
             className="flex w-full items-center justify-center gap-space-sm rounded-full bg-primary px-space-xl py-3.5 text-label-lg text-on-primary shadow-md transition-all hover:bg-primary-container hover:shadow-lg sm:w-auto"
           >
-            <span>Xác nhận người mẫu & Tiếp tục sang Bước 3</span>
+            <span>{t('continueButton')}</span>
             <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
           </button>
         </div>

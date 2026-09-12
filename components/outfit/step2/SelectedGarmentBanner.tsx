@@ -1,9 +1,11 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useOutfitFlow } from '../OutfitFlowProvider'
 
 export default function SelectedGarmentBanner() {
+  const t = useTranslations('Outfit.Step2.SelectedGarmentBanner')
   const { selectedGarment } = useOutfitFlow()
 
   return (
@@ -16,15 +18,15 @@ export default function SelectedGarmentBanner() {
         </span>
       </div>
       <div className="flex flex-col">
-        <span className="text-label-sm uppercase tracking-wider text-outline">Trang phục đã chọn (B1)</span>
+        <span className="text-label-sm uppercase tracking-wider text-outline">{t('selectedLabel')}</span>
         <span className="line-clamp-1 text-title-md text-on-surface">{selectedGarment.name}</span>
         <div className="mt-0.5 flex items-center gap-space-xs">
           <span className="h-2.5 w-2.5 rounded-full bg-secondary-fixed" />
-          <span className="text-body-sm text-on-surface-variant">Bảng màu {selectedGarment.tone}</span>
+          <span className="text-body-sm text-on-surface-variant">{t('paletteNote', { tone: selectedGarment.tone })}</span>
         </div>
       </div>
       <Link href="/outfit/step-1" className="ml-2 text-label-sm text-primary underline hover:text-primary-container">
-        Đổi áo
+        {t('changeLink')}
       </Link>
     </div>
   )

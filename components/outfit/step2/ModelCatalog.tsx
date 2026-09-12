@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useState, type ChangeEvent } from 'react'
 import { useOutfitFlow, DEFAULT_MODEL, type Model, type Undertone } from '../OutfitFlowProvider'
 
@@ -150,14 +151,15 @@ const MODELS: Model[] = [
   },
 ]
 
-const UNDERTONE_FILTERS: { id: 'all' | Undertone; label: string }[] = [
-  { id: 'all', label: 'Tất cả' },
-  { id: 'warm', label: 'Warm' },
-  { id: 'cool', label: 'Cool' },
-  { id: 'neutral', label: 'Neutral' },
+const UNDERTONE_FILTERS: { id: 'all' | Undertone; key: string }[] = [
+  { id: 'all', key: 'all' },
+  { id: 'warm', key: 'warm' },
+  { id: 'cool', key: 'cool' },
+  { id: 'neutral', key: 'neutral' },
 ]
 
 export default function ModelCatalog() {
+  const t = useTranslations('Outfit.Step2.ModelCatalog')
   const { selectedModel, setSelectedModel } = useOutfitFlow()
   const [undertoneFilter, setUndertoneFilter] = useState<'all' | Undertone>('all')
 
@@ -171,11 +173,11 @@ export default function ModelCatalog() {
     const imageUrl = URL.createObjectURL(file)
     setSelectedModel({
       id: 'custom-upload',
-      name: 'Ảnh của bạn',
+      name: t('customUploadName'),
       image: imageUrl,
       dossierImage: imageUrl,
       poseCount: 1,
-      tagline: 'Ảnh cá nhân tự tải lên',
+      tagline: t('customUploadTagline'),
       undertone: 'neutral',
       height: '—',
       bodyShape: '—',
@@ -190,11 +192,11 @@ export default function ModelCatalog() {
         <div className="flex flex-wrap items-center justify-between gap-space-sm">
           <span className="flex items-center gap-space-xs text-label-lg font-semibold text-on-surface">
             <span className="material-symbols-outlined text-[18px] text-primary">tune</span>
-            Bộ lọc đặc tính cơ thể
+            {t('filterHeading')}
           </span>
         </div>
         <div className="flex flex-col gap-1.5">
-          <label className="text-label-sm font-medium text-on-surface-variant">Tông da (Undertone)</label>
+          <label className="text-label-sm font-medium text-on-surface-variant">{t('undertoneLabel')}</label>
           <div className="flex items-center gap-1.5 rounded-xl bg-surface-container-low p-1">
             {UNDERTONE_FILTERS.map((filter) => (
               <button
@@ -207,7 +209,7 @@ export default function ModelCatalog() {
                     : 'text-on-surface-variant hover:text-on-surface'
                 }`}
               >
-                {filter.label}
+                {t(`undertoneFilters.${filter.key}`)}
               </button>
             ))}
           </div>
@@ -216,9 +218,9 @@ export default function ModelCatalog() {
       <div className="flex flex-col gap-space-sm">
         <div className="flex items-center justify-between">
           <span className="text-label-lg font-semibold text-on-surface">
-            Danh sách AI Model thế hệ mới ({MODELS.length} lựa chọn)
+            {t('listHeading', { count: MODELS.length })}
           </span>
-          <span className="text-body-sm text-outline">Click vào ảnh để đổi người mẫu</span>
+          <span className="text-body-sm text-outline">{t('clickHint')}</span>
         </div>
         <div className="grid grid-cols-2 gap-space-md sm:grid-cols-3 md:grid-cols-4">
           <label
@@ -228,10 +230,10 @@ export default function ModelCatalog() {
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-surface-container-lowest text-primary shadow-sm transition-all group-hover:scale-110 group-hover:bg-primary group-hover:text-on-primary">
               <span className="material-symbols-outlined text-[26px]">add</span>
             </div>
-            <span className="mt-space-sm font-semibold text-label-lg text-on-surface">Tải ảnh mặt / dáng</span>
-            <p className="mt-1 px-1 text-body-sm text-outline">Chụp thẳng hoặc tải từ thư viện ảnh</p>
+            <span className="mt-space-sm font-semibold text-label-lg text-on-surface">{t('uploadTitle')}</span>
+            <p className="mt-1 px-1 text-body-sm text-outline">{t('uploadHint')}</p>
             <span className="mt-2 rounded-full bg-surface-container-lowest px-2 py-0.5 text-label-sm text-secondary">
-              Tuỳ biến 100%
+              {t('uploadBadge')}
             </span>
           </label>
           <input
@@ -258,7 +260,7 @@ export default function ModelCatalog() {
                       <span className="material-symbols-outlined text-[18px]">check</span>
                     </div>
                     <div className="absolute left-2 top-2 z-10 rounded-full bg-surface-container-lowest/90 px-2 py-0.5 text-label-sm font-bold text-primary shadow-xs backdrop-blur-md">
-                      Đang chọn
+                      {t('selectedBadge')}
                     </div>
                   </>
                 )}
@@ -278,7 +280,7 @@ export default function ModelCatalog() {
                       {model.name}
                     </span>
                     <span className={`text-label-sm ${isSelected ? 'font-semibold text-primary' : 'text-outline'}`}>
-                      {model.poseCount} dáng
+                      {t('poseCount', { count: model.poseCount })}
                     </span>
                   </div>
                   <span className="mt-0.5 text-body-sm text-on-surface-variant">{model.tagline}</span>
