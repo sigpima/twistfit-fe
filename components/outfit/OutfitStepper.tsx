@@ -1,10 +1,13 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 const STEPS = [
-  { step: 1, label: 'Chọn Quần Áo', href: '/outfit/step-1' },
-  { step: 2, label: 'Dáng & Khuôn Mặt', href: '/outfit/step-2' },
-  { step: 3, label: 'Tư Thế & Góc Nhìn', href: '/outfit/step-3' },
-  { step: 4, label: 'Xem Kết Quả 3D', href: '/outfit/step-4' },
+  { step: 1, key: 'chooseGarment', href: '/outfit/step-1' },
+  { step: 2, key: 'modelAndFace', href: '/outfit/step-2' },
+  { step: 3, key: 'poseAndAngle', href: '/outfit/step-3' },
+  { step: 4, key: 'viewResult', href: '/outfit/step-4' },
 ] as const
 
 export default function OutfitStepper({
@@ -14,20 +17,20 @@ export default function OutfitStepper({
   currentStep: 1 | 2 | 3 | 4
   maxStepReached?: 1 | 2 | 3 | 4
 }) {
+  const t = useTranslations('Outfit.Stepper')
+
   return (
     <section className="sticky top-20 z-40 w-full bg-surface-container-low/80 px-margin-desktop py-space-lg shadow-sm backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl flex-col gap-space-md">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-space-xs text-on-surface-variant">
-            <span className="text-label-sm font-bold uppercase tracking-widest text-primary">
-              Virtual Fitting Studio
-            </span>
+            <span className="text-label-sm font-bold uppercase tracking-widest text-primary">{t('kicker')}</span>
             <span className="material-symbols-outlined text-[14px]">chevron_right</span>
-            <span className="text-label-sm font-medium">Quy trình 4 bước</span>
+            <span className="text-label-sm font-medium">{t('kickerSuffix')}</span>
           </div>
           <div className="flex items-center gap-space-xs rounded-full bg-secondary-container/60 px-space-sm py-0.5 text-label-sm text-on-secondary-container">
             <span className="material-symbols-outlined text-[15px]">auto_awesome</span>
-            <span>AI Segmentation 4.0 Online</span>
+            <span>{t('badge')}</span>
           </div>
         </div>
         <div className="grid grid-cols-1 gap-space-md pt-space-xs md:grid-cols-4">
@@ -59,17 +62,17 @@ export default function OutfitStepper({
                     }`}
                   >
                     {isCurrent
-                      ? `Bước ${item.step} · Đang chọn`
+                      ? t('statusCurrent', { step: item.step })
                       : isReachable
-                        ? `Bước ${item.step} · Đã xong`
-                        : `Bước ${item.step} · Sắp tới`}
+                        ? t('statusDone', { step: item.step })
+                        : t('statusUpcoming', { step: item.step })}
                   </span>
                   <span
                     className={`truncate text-title-md font-semibold ${
                       isCurrent ? 'text-on-surface' : 'text-on-surface-variant'
                     }`}
                   >
-                    {item.label}
+                    {t(`steps.${item.key}`)}
                   </span>
                 </div>
               </>

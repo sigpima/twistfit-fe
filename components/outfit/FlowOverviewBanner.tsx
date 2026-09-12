@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 type FlowOverviewBannerProps = {
@@ -10,6 +11,7 @@ type FlowOverviewBannerProps = {
 }
 
 export default function FlowOverviewBanner({ title, subtitle, image, imageAlt }: FlowOverviewBannerProps) {
+  const t = useTranslations('Outfit.FlowOverviewBanner')
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -30,7 +32,7 @@ export default function FlowOverviewBanner({ title, subtitle, image, imageAlt }:
           <span className="material-symbols-outlined text-[16px]">
             {isOpen ? 'visibility_off' : 'visibility'}
           </span>
-          <span>{isOpen ? 'Ẩn sơ đồ' : 'Xem tổng quan quy trình'}</span>
+          <span>{isOpen ? t('hideButton') : t('showButton')}</span>
         </button>
       </div>
       {isOpen && (

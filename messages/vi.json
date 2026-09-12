@@ -325,5 +325,25 @@
         "downloadPdfButton": "Tải Báo Cáo PDF"
       }
     }
+  },
+  "Outfit": {
+    "Stepper": {
+      "kicker": "Virtual Fitting Studio",
+      "kickerSuffix": "Quy trình 4 bước",
+      "badge": "AI Segmentation 4.0 Online",
+      "steps": {
+        "chooseGarment": "Chọn Quần Áo",
+        "modelAndFace": "Dáng & Khuôn Mặt",
+        "poseAndAngle": "Tư Thế & Góc Nhìn",
+        "viewResult": "Xem Kết Quả 3D"
+      },
+      "statusCurrent": "Bước {step} · Đang chọn",
+      "statusDone": "Bước {step} · Đã xong",
+      "statusUpcoming": "Bước {step} · Sắp tới"
+    },
+    "FlowOverviewBanner": {
+      "showButton": "Xem tổng quan quy trình",
+      "hideButton": "Ẩn sơ đồ"
+    }
   }
 }

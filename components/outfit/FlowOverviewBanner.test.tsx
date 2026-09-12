@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import FlowOverviewBanner from './FlowOverviewBanner'
 
 describe('FlowOverviewBanner', () => {
   it('hides the overview image until toggled open', () => {
-    render(
+    renderWithIntl(
       <FlowOverviewBanner
         title="Lộ trình thử đồ thông minh cá nhân hóa"
         subtitle="Hệ thống phân tách bóc phông chuẩn Studio, hỗ trợ link sàn Shopee, Zara, TikTok Shop"
