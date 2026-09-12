@@ -1,0 +1,12 @@
+{
+  "Header": {
+    "nav": {
+      "about": "About us",
+      "howItWorks": "How it works",
+      "faq": "FAQ",
+      "blog": "Blog"
+    },
+    "checkPersonalColor": "Kiểm tra Personal Color",
+    "accountAriaLabel": "Tài khoản"
+  }
+}

@@ -1,16 +1,18 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useQrModal } from '@/components/qr-modal/QrModalProvider'
 
 const NAV_LINKS = [
-  { href: '/about', label: 'About us' },
-  { href: '/how-it-works', label: 'How it works' },
-  { href: '/faq', label: 'FAQ' },
-  { href: '/blog', label: 'Blog' },
-]
+  { href: '/about', key: 'about' },
+  { href: '/how-it-works', key: 'howItWorks' },
+  { href: '/faq', key: 'faq' },
+  { href: '/blog', key: 'blog' },
+] as const
 
 export default function Header() {
+  const t = useTranslations('Header')
   const { openQrModal } = useQrModal()
 
   return (
@@ -27,7 +29,7 @@ export default function Header() {
               href={link.href}
               className="text-sm font-medium text-[#304461] transition-colors hover:text-[#7b89ba]"
             >
-              {link.label}
+              {t(`nav.${link.key}`)}
             </Link>
           ))}
         </nav>
@@ -45,11 +47,11 @@ export default function Header() {
                 d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
               />
             </svg>
-            <span>Kiểm tra Personal Color</span>
+            <span>{t('checkPersonalColor')}</span>
           </button>
           <button
             type="button"
-            aria-label="Tài khoản"
+            aria-label={t('accountAriaLabel')}
             className="flex h-10 w-10 items-center justify-center rounded-full bg-[#f0f3ff] text-[#304461] transition-colors hover:bg-[#e2e8f0]"
           >
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
