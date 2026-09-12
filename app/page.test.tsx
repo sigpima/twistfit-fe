@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import HomePage from './page'
 import { QrModalProvider } from '@/components/qr-modal/QrModalProvider'
 
 describe('HomePage', () => {
   it('renders the hero headline', () => {
-    render(
+    renderWithIntl(
       <QrModalProvider>
         <HomePage />
       </QrModalProvider>
@@ -14,7 +15,7 @@ describe('HomePage', () => {
   })
 
   it('opens the QR modal from the hero CTA', () => {
-    render(
+    renderWithIntl(
       <QrModalProvider>
         <HomePage />
       </QrModalProvider>
