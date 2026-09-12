@@ -1,6 +1,11 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 export default function BlogQuizCallout() {
+  const t = useTranslations('Blog.QuizCallout')
+
   return (
     <div className="mb-space-xl flex flex-col items-center justify-between gap-space-lg rounded-3xl bg-gradient-to-r from-primary-fixed to-secondary-fixed/70 p-space-lg md:flex-row md:p-space-xl">
       <div className="flex items-center gap-space-md">
@@ -43,10 +48,8 @@ export default function BlogQuizCallout() {
           </div>
         </div>
         <div>
-          <h4 className="text-headline-sm font-bold text-on-surface">Chưa biết mình thuộc hệ màu nào?</h4>
-          <p className="text-body-md text-on-surface-variant">
-            Làm bài trắc nghiệm thông minh chỉ trong 60 giây và nhận bảng gợi ý trang phục chuẩn xác.
-          </p>
+          <h4 className="text-headline-sm font-bold text-on-surface">{t('title')}</h4>
+          <p className="text-body-md text-on-surface-variant">{t('body')}</p>
         </div>
       </div>
       <Link
@@ -54,7 +57,7 @@ export default function BlogQuizCallout() {
         className="flex items-center gap-space-xs whitespace-nowrap rounded-full bg-on-surface px-space-lg py-space-sm text-label-lg text-surface shadow-md transition-all hover:bg-primary"
       >
         <span className="material-symbols-outlined text-[18px]">psychology</span>
-        <span>Test Personal Color Ngay</span>
+        <span>{t('ctaButton')}</span>
       </Link>
     </div>
   )

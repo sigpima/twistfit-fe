@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import BlogNewsletterSection from './BlogNewsletterSection'
 
 describe('BlogNewsletterSection', () => {
   it('shows a confirmation message after subscribing', () => {
-    render(<BlogNewsletterSection />)
+    renderWithIntl(<BlogNewsletterSection />)
     fireEvent.change(screen.getByPlaceholderText('Nhập địa chỉ email của bạn...'), {
       target: { value: 'linhdan@gmail.com' },
     })

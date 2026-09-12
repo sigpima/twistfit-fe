@@ -896,5 +896,58 @@
       "contactButton": "Liên hệ hỗ trợ ngay",
       "feedbackButton": "Gửi phản hồi"
     }
+  },
+  "Blog": {
+    "Hero": {
+      "breadcrumbHome": "Trang chủ",
+      "breadcrumbCurrent": "Blog & Tạp chí phong cách",
+      "editorialBadge": "TwistFit Editorial",
+      "heading": "Tạp Chí Phong Cách TwistFit",
+      "subheading": "Khám phá bí quyết định hình bản sắc, giải mã bảng màu cá nhân và cập nhật xu hướng thời trang ứng dụng mới nhất.",
+      "editionLabel": "Ấn bản phong cách",
+      "articleCount": "120+ Bài Viết"
+    },
+    "FeaturedArticle": {
+      "featuredBadge": "Tiêu điểm tháng",
+      "readMoreButton": "Đọc tiếp",
+      "bookmarkTitle": "Lưu bài viết"
+    },
+    "ArticleGrid": {
+      "categories": {
+        "all": "Tất cả bài viết",
+        "personalColor": "Personal Color",
+        "styling": "Phối đồ & Vóc dáng",
+        "sustainable": "Lối sống xanh & Bền vững",
+        "beauty": "Làm đẹp & Makeup",
+        "community": "Cộng đồng TwistFit"
+      },
+      "searchPlaceholder": "Tìm kiếm bài viết...",
+      "sortNewest": "Mới nhất",
+      "sortPopular": "Xem nhiều nhất",
+      "sortTrending": "Thịnh hành 2026",
+      "sectionKicker": "Chuyên Mục Chọn Lọc",
+      "sectionHeading": "Bài Viết Mới Cập Nhật",
+      "noResultsTitle": "Không tìm thấy bài viết phù hợp",
+      "noResultsBody": "Hãy thử một từ khóa hoặc chuyên mục khác.",
+      "bookmarkAriaLabel": "Lưu bài viết",
+      "viewsSuffix": "xem",
+      "readNowLink": "Đọc ngay",
+      "nextButton": "Tiếp theo"
+    },
+    "QuizCallout": {
+      "title": "Chưa biết mình thuộc hệ màu nào?",
+      "body": "Làm bài trắc nghiệm thông minh chỉ trong 60 giây và nhận bảng gợi ý trang phục chuẩn xác.",
+      "ctaButton": "Test Personal Color Ngay"
+    },
+    "NewsletterSection": {
+      "heading": "Nhận Cẩm Nang Thời Trang Hàng Tuần",
+      "body": "Đăng ký nhận cẩm nang thời trang & mẹo màu sắc độc quyền hàng tuần vào hộp thư của bạn. Hoàn toàn miễn phí, hủy đăng ký bất kỳ lúc nào.",
+      "emailPlaceholder": "Nhập địa chỉ email của bạn...",
+      "submitButton": "Đăng ký",
+      "successMessage": "Cảm ơn bạn đã đăng ký theo dõi TwistFit!",
+      "noSpam": "Không spam",
+      "dataSecurity": "Bảo mật dữ liệu",
+      "readersCount": "15,000+ Readers"
+    }
   }
 }

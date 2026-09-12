@@ -1,14 +1,15 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useMemo, useState } from 'react'
 
 const CATEGORIES = [
-  { id: 'all', label: 'Tất cả bài viết' },
-  { id: 'personal-color', label: 'Personal Color' },
-  { id: 'styling', label: 'Phối đồ & Vóc dáng' },
-  { id: 'sustainable', label: 'Lối sống xanh & Bền vững' },
-  { id: 'beauty', label: 'Làm đẹp & Makeup' },
-  { id: 'community', label: 'Cộng đồng TwistFit' },
+  { id: 'all', key: 'all' },
+  { id: 'personal-color', key: 'personalColor' },
+  { id: 'styling', key: 'styling' },
+  { id: 'sustainable', key: 'sustainable' },
+  { id: 'beauty', key: 'beauty' },
+  { id: 'community', key: 'community' },
 ] as const
 
 const ARTICLES = [
@@ -93,6 +94,7 @@ const ARTICLES = [
 ]
 
 export default function BlogArticleGrid() {
+  const t = useTranslations('Blog.ArticleGrid')
   const [activeCategory, setActiveCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [bookmarked, setBookmarked] = useState<Record<string, boolean>>({})
@@ -121,7 +123,7 @@ export default function BlogArticleGrid() {
                   : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
               }`}
             >
-              {category.label}
+              {t(`categories.${category.key}`)}
             </button>
           ))}
         </div>
@@ -134,15 +136,15 @@ export default function BlogArticleGrid() {
               type="text"
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder="Tìm kiếm bài viết..."
+              placeholder={t('searchPlaceholder')}
               className="w-full rounded-full bg-surface-container-low/80 py-space-xs pl-9 pr-space-md text-body-md text-on-surface transition-all placeholder:text-on-surface-variant/70 focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary/40"
             />
           </div>
           <div className="relative">
             <select className="cursor-pointer appearance-none rounded-full bg-surface-container-low/80 py-space-xs pl-space-md pr-8 text-label-md text-on-surface focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary/40">
-              <option value="newest">Mới nhất</option>
-              <option value="popular">Xem nhiều nhất</option>
-              <option value="trending">Thịnh hành 2026</option>
+              <option value="newest">{t('sortNewest')}</option>
+              <option value="popular">{t('sortPopular')}</option>
+              <option value="trending">{t('sortTrending')}</option>
             </select>
             <span className="material-symbols-outlined pointer-events-none absolute right-space-xs top-1/2 -translate-y-1/2 text-[18px] text-on-surface-variant">
               expand_more
@@ -154,9 +156,9 @@ export default function BlogArticleGrid() {
       <div className="mb-space-lg flex items-center justify-between">
         <div>
           <span className="text-label-sm font-bold uppercase tracking-widest text-primary">
-            Chuyên Mục Chọn Lọc
+            {t('sectionKicker')}
           </span>
-          <h3 className="text-headline-md font-bold text-on-surface">Bài Viết Mới Cập Nhật</h3>
+          <h3 className="text-headline-md font-bold text-on-surface">{t('sectionHeading')}</h3>
         </div>
       </div>
 
@@ -164,9 +166,9 @@ export default function BlogArticleGrid() {
         <div className="rounded-2xl bg-surface-container-lowest py-space-xl text-center shadow-sm">
           <span className="material-symbols-outlined text-[48px] text-outline">search_off</span>
           <h4 className="mt-space-xs text-headline-sm font-semibold text-on-surface">
-            Không tìm thấy bài viết phù hợp
+            {t('noResultsTitle')}
           </h4>
-          <p className="mt-1 text-body-md text-on-surface-variant">Hãy thử một từ khóa hoặc chuyên mục khác.</p>
+          <p className="mt-1 text-body-md text-on-surface-variant">{t('noResultsBody')}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-space-lg md:grid-cols-2 lg:grid-cols-3">
@@ -193,7 +195,7 @@ export default function BlogArticleGrid() {
                   </div>
                   <button
                     type="button"
-                    aria-label="Lưu bài viết"
+                    aria-label={t('bookmarkAriaLabel')}
                     aria-pressed={isBookmarked}
                     onClick={() =>
                       setBookmarked((current) => ({ ...current, [article.id]: !current[article.id] }))
@@ -226,13 +228,13 @@ export default function BlogArticleGrid() {
                   <div className="mt-space-sm flex items-center justify-between pt-space-md">
                     <span className="flex items-center gap-1 text-label-sm text-on-surface-variant">
                       <span className="material-symbols-outlined text-[14px]">visibility</span>
-                      {article.views} xem
+                      {article.views} {t('viewsSuffix')}
                     </span>
                     <a
                       href="#"
                       className="inline-flex items-center gap-0.5 text-label-md font-semibold text-primary hover:underline"
                     >
-                      Đọc ngay <span className="material-symbols-outlined text-[14px]">chevron_right</span>
+                      {t('readNowLink')} <span className="material-symbols-outlined text-[14px]">chevron_right</span>
                     </a>
                   </div>
                 </div>
@@ -260,7 +262,7 @@ export default function BlogArticleGrid() {
           10
         </button>
         <button className="flex h-10 items-center gap-space-xs rounded-full bg-surface-container-low px-space-md font-semibold text-primary transition-colors hover:bg-surface-container">
-          <span>Tiếp theo</span>
+          <span>{t('nextButton')}</span>
           <span className="material-symbols-outlined text-[18px]">chevron_right</span>
         </button>
       </div>

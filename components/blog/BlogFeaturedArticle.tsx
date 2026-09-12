@@ -1,4 +1,10 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
+
 export default function BlogFeaturedArticle() {
+  const t = useTranslations('Blog.FeaturedArticle')
+
   return (
     <section className="mb-space-xl">
       <div className="group grid grid-cols-1 overflow-hidden rounded-3xl bg-surface-container-lowest/90 shadow-md backdrop-blur-xl transition-all duration-300 hover:shadow-xl lg:grid-cols-12">
@@ -13,7 +19,7 @@ export default function BlogFeaturedArticle() {
           <div className="absolute left-space-md top-space-md flex flex-wrap gap-space-xs">
             <span className="flex items-center gap-space-xs rounded-full bg-secondary px-space-md py-space-xs text-label-md text-on-secondary shadow-sm">
               <span className="material-symbols-outlined text-[16px]">stars</span>
-              Tiêu điểm tháng
+              {t('featuredBadge')}
             </span>
             <span className="rounded-full bg-surface-container-lowest/80 px-space-md py-space-xs text-label-md text-primary shadow-sm backdrop-blur-md">
               Personal Color
@@ -54,7 +60,7 @@ export default function BlogFeaturedArticle() {
               <div className="flex items-center gap-space-xs">
                 <button
                   type="button"
-                  title="Lưu bài viết"
+                  title={t('bookmarkTitle')}
                   className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-container text-on-surface-variant transition-colors hover:bg-secondary-container hover:text-secondary"
                 >
                   <span className="material-symbols-outlined text-[20px]">bookmark</span>
@@ -63,7 +69,7 @@ export default function BlogFeaturedArticle() {
                   href="#"
                   className="inline-flex items-center gap-space-xs rounded-full bg-primary px-space-md py-space-xs text-label-lg text-on-primary shadow-sm transition-all hover:bg-primary-container"
                 >
-                  <span>Đọc tiếp</span>
+                  <span>{t('readMoreButton')}</span>
                   <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
                 </a>
               </div>

@@ -1,8 +1,10 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useState, type FormEvent } from 'react'
 
 export default function BlogNewsletterSection() {
+  const t = useTranslations('Blog.NewsletterSection')
   const [submitted, setSubmitted] = useState(false)
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -19,11 +21,10 @@ export default function BlogNewsletterSection() {
             <span className="material-symbols-outlined text-[24px]">mark_email_read</span>
           </div>
           <h3 className="mb-space-xs text-headline-md font-bold tracking-tight text-on-surface md:text-headline-lg">
-            Nhận Cẩm Nang Thời Trang Hàng Tuần
+            {t('heading')}
           </h3>
           <p className="mb-space-lg max-w-lg text-body-md text-on-surface-variant md:text-body-lg">
-            Đăng ký nhận cẩm nang thời trang &amp; mẹo màu sắc độc quyền hàng tuần vào hộp thư của bạn. Hoàn
-            toàn miễn phí, hủy đăng ký bất kỳ lúc nào.
+            {t('body')}
           </p>
           <form className="flex w-full max-w-md flex-col gap-space-xs sm:flex-row" onSubmit={handleSubmit}>
             <div className="relative flex-1">
@@ -33,7 +34,7 @@ export default function BlogNewsletterSection() {
               <input
                 type="email"
                 required
-                placeholder="Nhập địa chỉ email của bạn..."
+                placeholder={t('emailPlaceholder')}
                 className="w-full rounded-full bg-surface-container-low/90 py-space-sm pl-11 pr-space-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50"
               />
             </div>
@@ -41,29 +42,27 @@ export default function BlogNewsletterSection() {
               type="submit"
               className="flex items-center justify-center gap-space-xs rounded-full bg-primary px-space-lg py-space-sm text-label-lg text-on-primary shadow-md transition-all hover:bg-primary-container"
             >
-              <span>Đăng ký</span>
+              <span>{t('submitButton')}</span>
               <span className="material-symbols-outlined text-[16px]">send</span>
             </button>
           </form>
           {submitted && (
-            <p className="mt-space-sm text-label-md font-semibold text-primary">
-              Cảm ơn bạn đã đăng ký theo dõi TwistFit!
-            </p>
+            <p className="mt-space-sm text-label-md font-semibold text-primary">{t('successMessage')}</p>
           )}
           <div className="mt-space-md flex items-center gap-space-md text-label-sm text-outline">
             <span className="flex items-center gap-1">
-              <span className="material-symbols-outlined text-[16px] text-primary">verified</span> Không
-              spam
+              <span className="material-symbols-outlined text-[16px] text-primary">verified</span>{' '}
+              {t('noSpam')}
             </span>
             <span>•</span>
             <span className="flex items-center gap-1">
-              <span className="material-symbols-outlined text-[16px] text-primary">lock</span> Bảo mật dữ
-              liệu
+              <span className="material-symbols-outlined text-[16px] text-primary">lock</span>{' '}
+              {t('dataSecurity')}
             </span>
             <span>•</span>
             <span className="flex items-center gap-1">
-              <span className="material-symbols-outlined text-[16px] text-primary">diamond</span> 15,000+
-              Readers
+              <span className="material-symbols-outlined text-[16px] text-primary">diamond</span>{' '}
+              {t('readersCount')}
             </span>
           </div>
         </div>
