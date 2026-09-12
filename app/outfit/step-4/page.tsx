@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useOutfitFlow } from '@/components/outfit/OutfitFlowProvider'
 import ResultPreview from '@/components/outfit/step4/ResultPreview'
@@ -8,6 +9,7 @@ import GarmentSummaryPanel from '@/components/outfit/step4/GarmentSummaryPanel'
 import CapsuleWardrobe from '@/components/outfit/step4/CapsuleWardrobe'
 
 export default function Step4Page() {
+  const t = useTranslations('Outfit.Step4.Page')
   const router = useRouter()
   const { selectedModel } = useOutfitFlow()
 
@@ -19,12 +21,11 @@ export default function Step4Page() {
             <div>
               <div className="mb-space-xs inline-flex items-center gap-space-xs rounded-full bg-secondary-fixed px-space-sm py-1 text-label-sm text-on-secondary-fixed">
                 <span className="material-symbols-outlined text-[15px]">verified</span>
-                Khởi tạo hoàn tất với công nghệ TwistFit AI Physics™
+                {t('readyBadge')}
               </div>
-              <h1 className="text-headline-lg tracking-tight text-on-surface">Kết Quả Thử Đồ Ảo AI FitRoom HD</h1>
+              <h1 className="text-headline-lg tracking-tight text-on-surface">{t('heading')}</h1>
               <p className="mt-1 text-body-md text-on-surface-variant">
-                Mô phỏng phom dáng thực tế cho người mẫu <strong>{selectedModel.name}</strong> kết hợp phân
-                tích tương thích sắc tố cá nhân.
+                {t.rich('subheading', { name: selectedModel.name, strong: (chunks) => <strong>{chunks}</strong> })}
               </p>
             </div>
             <div className="flex shrink-0 items-center gap-space-sm">
@@ -33,7 +34,7 @@ export default function Step4Page() {
                 className="inline-flex items-center gap-space-xs rounded-full bg-surface-container-lowest px-space-md py-space-sm text-label-md text-on-surface shadow-sm transition-all hover:bg-surface-container"
               >
                 <span className="material-symbols-outlined text-[18px]">style</span>
-                Gợi ý Capsule Phối Đồ
+                {t('capsuleLinkText')}
               </a>
               <button
                 type="button"
@@ -41,7 +42,7 @@ export default function Step4Page() {
                 className="inline-flex items-center gap-space-xs rounded-full bg-surface-container-high px-space-md py-space-sm text-label-md text-on-surface-variant transition-all hover:text-on-surface"
               >
                 <span className="material-symbols-outlined text-[18px]">refresh</span>
-                Làm Mới
+                {t('refreshButton')}
               </button>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import Step4Page from './page'
 import { OutfitFlowProvider } from '@/components/outfit/OutfitFlowProvider'
 
@@ -15,7 +16,7 @@ describe('Step4Page', () => {
   })
 
   it('renders the result heading', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <Step4Page />
       </OutfitFlowProvider>
@@ -24,7 +25,7 @@ describe('Step4Page', () => {
   })
 
   it('restarts the flow at step 1 when clicking Làm Mới', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <Step4Page />
       </OutfitFlowProvider>
@@ -34,7 +35,7 @@ describe('Step4Page', () => {
   })
 
   it('links to the capsule wardrobe section', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <Step4Page />
       </OutfitFlowProvider>

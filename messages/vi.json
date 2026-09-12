@@ -540,6 +540,72 @@
       "QuickSelectionSummary": {
         "modelPrefix": "Người mẫu {name}"
       }
+    },
+    "Step4": {
+      "Page": {
+        "readyBadge": "Khởi tạo hoàn tất với công nghệ TwistFit AI Physics™",
+        "heading": "Kết Quả Thử Đồ Ảo AI FitRoom HD",
+        "subheading": "Mô phỏng phom dáng thực tế cho người mẫu <strong>{name}</strong> kết hợp phân tích tương thích sắc tố cá nhân.",
+        "capsuleLinkText": "Gợi ý Capsule Phối Đồ",
+        "refreshButton": "Làm Mới"
+      },
+      "ResultPreview": {
+        "studioBadge": "FitRoom Studio HD",
+        "physicsBadge": "TwistFit AI Physics 2.4",
+        "zoomTitle": "Phóng to",
+        "rotateTitle": "Góc xoay 360",
+        "rotationStatus": "Đang tải mô hình không gian xoay 360 độ TwistFit AI...",
+        "resultImageAlt": "Kết quả thử đồ ảo cho người mẫu {name}",
+        "renderCompleteLabel": "Cột 4: Render Hoàn Chỉnh HD",
+        "modelInfo": "Người mẫu: <bold>{name} ({height})</bold>",
+        "garmentToneInfo": "Mã màu đồ: <bold>{tone}</bold>",
+        "peplumNote": "Chiết eo Peplum tôn dáng đồng hồ cát",
+        "shareButton": "Chia sẻ",
+        "fullscreenButton": "Toàn màn hình",
+        "aiReviewTitle": "✨ Đánh Giá Cá Nhân Hoá AI Personal Color",
+        "matchBadge": "Độ Hợp: 96% (Rất Hợp)",
+        "aiReviewBody": "Phân loại sắc thái: <bold>Summer Soft (Mùa Hè Dịu)</bold>. Sắc hồng phấn pastel tạo độ cân bằng quang học làm bật tone da mặt thêm <bold>15%</bold>. Cấu trúc peplum thắt eo tự nhiên giải quyết triệt để khuyết điểm phần hông, mang lại tỉ lệ vóc dáng cân đối và thanh thoát.",
+        "toneTag": "Tone da: Sáng lạnh (Cool-undertone)",
+        "contrastTag": "Độ tương phản: Trung bình dịu",
+        "ratioTag": "Tỷ lệ vai/hông: Chuẩn 0.72"
+      },
+      "ResultActionsPanel": {
+        "title": "Thao Tác Kết Quả Thử Đồ",
+        "subtitle": "Lưu trữ bản render độ phân giải cao hoặc đổi góc nhìn và cử động của mẫu ngay lập tức.",
+        "downloadButton": "📥 Tải xuống ảnh HD (FitRoom 4K)",
+        "saveButton": "💖 Lưu Vào Tủ Đồ Ảo (Smart Closet)",
+        "changePoseButton": "🔄 Đổi Tư Thế Mẫu",
+        "rotateViewButton": "Góc Nhìn Xoay Nghiêng",
+        "mobileAppTitle": "TwistFit Mobile App",
+        "mobileAppDetail": "Quét AR & Trải nghiệm thời gian thực",
+        "downloadAppButton": "📲 Tải app"
+      },
+      "GarmentSummaryPanel": {
+        "title": "Thông Số Trang Phục Đang Thử",
+        "inStockBadge": "In-Stock",
+        "materialNote": "Chất liệu: Chiffon cao cấp 2 lớp",
+        "price": "589.000 ₫",
+        "buyButton": "Mua Ngay",
+        "formLabel": "Form dáng",
+        "formValue": "Slim Peplum Fit",
+        "seasonLabel": "Mùa phù hợp",
+        "seasonValue": "Xuân - Hè - Thu",
+        "tryMoreTitle": "Thử thêm món đồ khác?",
+        "tryMoreDetail": "Tải ảnh trang phục mới của bạn vào phòng thử",
+        "tryNewButton": "➕ Thử Mới"
+      },
+      "CapsuleWardrobe": {
+        "badgePill": "Gợi Ý Phối Đồ Capsule Thông Minh",
+        "heading": "3 Set Đồ Hoàn Hảo Cùng Áo Peplum Hồng",
+        "subheading": "Thiết kế riêng theo bảng màu Summer Soft cá nhân và tỉ lệ dáng người để tối ưu phong cách mỗi ngày.",
+        "timeSavedNote": "Tiết kiệm thời gian phối đồ 80%",
+        "toneLabel": "Tone: {tone}",
+        "tryOutfitButton": "Thử set phối này ngay",
+        "viewProductButton": "Xem link mua sản phẩm",
+        "moreQuizTitle": "Bạn muốn khám phá thêm 12 nhóm Bảng Màu Cá Nhân?",
+        "moreQuizBody": "Kiểm tra chi tiết sắc thái mùa Thu ấm, mùa Đông sắc nét để tìm ra những gam màu dành riêng cho tủ đồ của bạn.",
+        "quizButton": "Làm Bài Test Personal Color"
+      }
     }
   }
 }

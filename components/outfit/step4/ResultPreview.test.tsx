@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import ResultPreview from './ResultPreview'
 import { OutfitFlowProvider } from '../OutfitFlowProvider'
 
 describe('ResultPreview', () => {
   it('shows the selected model and garment tone', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <ResultPreview />
       </OutfitFlowProvider>
@@ -15,7 +16,7 @@ describe('ResultPreview', () => {
   })
 
   it('zooms the preview image when the zoom button is clicked', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <ResultPreview />
       </OutfitFlowProvider>
@@ -27,7 +28,7 @@ describe('ResultPreview', () => {
   })
 
   it('shows a status message when toggling the 360 view', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <ResultPreview />
       </OutfitFlowProvider>

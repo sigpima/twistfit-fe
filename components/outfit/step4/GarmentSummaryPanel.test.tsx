@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import GarmentSummaryPanel from './GarmentSummaryPanel'
 import { OutfitFlowProvider, DEFAULT_GARMENT } from '../OutfitFlowProvider'
 
@@ -15,7 +16,7 @@ describe('GarmentSummaryPanel', () => {
   })
 
   it('shows the garment selected in step 1', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <GarmentSummaryPanel />
       </OutfitFlowProvider>
@@ -24,7 +25,7 @@ describe('GarmentSummaryPanel', () => {
   })
 
   it('restarts the flow at step 1 when trying something new', () => {
-    render(
+    renderWithIntl(
       <OutfitFlowProvider>
         <GarmentSummaryPanel />
       </OutfitFlowProvider>
