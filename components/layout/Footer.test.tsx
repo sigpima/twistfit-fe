@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import Footer from './Footer'
 
 describe('Footer', () => {
   it('links footer nav items to the expected routes', () => {
-    render(<Footer />)
+    renderWithIntl(<Footer />)
     expect(screen.getByRole('link', { name: 'Về chúng tôi (About us)' })).toHaveAttribute('href', '/about')
     expect(screen.getByRole('link', { name: 'Cách hoạt động (How it works)' })).toHaveAttribute(
       'href',
@@ -15,7 +16,7 @@ describe('Footer', () => {
   })
 
   it('renders the copyright line', () => {
-    render(<Footer />)
+    renderWithIntl(<Footer />)
     expect(screen.getByText(/2026 TwistFit Vietnam/)).toBeInTheDocument()
   })
 })

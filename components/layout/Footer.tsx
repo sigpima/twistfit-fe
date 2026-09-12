@@ -1,3 +1,6 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 const SOCIAL_LINKS = [
@@ -24,75 +27,80 @@ const SOCIAL_LINKS = [
 ]
 
 export default function Footer() {
+  const t = useTranslations('Footer')
+
   return (
     <footer className="mt-20 w-full border-t border-[#e2e8f0] bg-white pb-8 pt-14">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-1 gap-10 border-b border-[#f1f5f9] pb-12 md:grid-cols-4">
           <div className="space-y-4">
-            <h3 className="font-serif text-2xl font-black tracking-tight text-[#304461]">TwistFit</h3>
-            <p className="text-xs italic text-[#7b89ba]">&quot;A little twist, a better fit&quot;</p>
-            <p className="text-xs leading-relaxed text-[#64748b]">
-              Nền tảng ứng dụng công nghệ AI Personal Color &amp; Virtual Fitting tiên phong, giúp bạn khám
-              phá vẻ đẹp tự nhiên và nâng tầm phong cách thời trang cá nhân hóa.
-            </p>
+            <h3 className="font-serif text-2xl font-black tracking-tight text-[#304461]">{t('brand')}</h3>
+            <p className="text-xs italic text-[#7b89ba]">{t('tagline')}</p>
+            <p className="text-xs leading-relaxed text-[#64748b]">{t('description')}</p>
           </div>
           <div>
-            <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-[#304461]">Tính năng chính</h4>
+            <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-[#304461]">
+              {t('featuresHeading')}
+            </h4>
             <ul className="space-y-2.5 text-xs text-[#64748b]">
               <li>
                 <a href="#" className="transition-colors hover:text-[#304461]">
-                  Trắc nghiệm Personal Color AI
+                  {t('features.colorTest')}
                 </a>
               </li>
               <li>
                 <a href="#" className="transition-colors hover:text-[#304461]">
-                  Phòng thử đồ ảo TwistFit
+                  {t('features.virtualFitting')}
                 </a>
               </li>
               <li>
                 <a href="#" className="transition-colors hover:text-[#304461]">
-                  Phối đồ theo vóc dáng
+                  {t('features.outfitByBodyShape')}
                 </a>
               </li>
               <li>
                 <a href="#" className="transition-colors hover:text-[#304461]">
-                  Bản tin xu hướng thời trang
+                  {t('features.newsletter')}
                 </a>
               </li>
             </ul>
           </div>
           <div>
-            <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-[#304461]">Hỗ trợ &amp; thông tin</h4>
+            <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-[#304461]">
+              {t('supportHeading')}
+            </h4>
             <ul className="space-y-2.5 text-xs text-[#64748b]">
               <li>
                 <Link href="/about" className="transition-colors hover:text-[#304461]">
-                  Về chúng tôi (About us)
+                  {t('support.about')}
                 </Link>
               </li>
               <li>
                 <Link href="/how-it-works" className="transition-colors hover:text-[#304461]">
-                  Cách hoạt động (How it works)
+                  {t('support.howItWorks')}
                 </Link>
               </li>
               <li>
                 <Link href="/faq" className="transition-colors hover:text-[#304461]">
-                  Câu hỏi thường gặp (FAQ)
+                  {t('support.faq')}
                 </Link>
               </li>
               <li>
                 <Link href="/blog" className="transition-colors hover:text-[#304461]">
-                  Tạp chí phong cách (Blog)
+                  {t('support.blog')}
                 </Link>
               </li>
               <li>
                 <a href="#" className="transition-colors hover:text-[#304461]">
-                  Chính sách bảo mật
+                  {t('support.privacy')}
                 </a>
               </li>
             </ul>
           </div>
           <div>
-            <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-[#304461]">Liên hệ &amp; hợp tác</h4>
+            <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-[#304461]">
+              {t('contactHeading')}
+            </h4>
             <ul className="mb-5 space-y-2.5 text-xs text-[#64748b]">
               <li className="flex items-center gap-2">
                 <svg className="h-4 w-4 text-[#7b89ba]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,7 +111,7 @@ export default function Footer() {
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   />
                 </svg>
-                <span>support@twistfit.vn</span>
+                <span>{t('email')}</span>
               </li>
               <li className="flex items-center gap-2">
                 <svg className="h-4 w-4 text-[#7b89ba]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -114,7 +122,7 @@ export default function Footer() {
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   />
                 </svg>
-                <span>Hotline: 1900 8899</span>
+                <span>{t('hotline')}</span>
               </li>
               <li className="flex items-center gap-2">
                 <svg className="h-4 w-4 text-[#7b89ba]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,7 +134,7 @@ export default function Footer() {
                   />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <span>Quận 1, TP. Hồ Chí Minh</span>
+                <span>{t('address')}</span>
               </li>
             </ul>
             <div className="flex items-center gap-3 text-[#7b89ba]">
@@ -146,8 +154,8 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 pt-8 text-xs text-[#94a3b8] md:flex-row">
-          <p>© 2026 TwistFit Vietnam. All rights reserved. Nền tảng ứng dụng định hình phong cách cá nhân.</p>
-          <p>Bản quyền thuộc về TwistFit Fashion AI.</p>
+          <p>{t('copyright')}</p>
+          <p>{t('copyrightSecondary')}</p>
         </div>
       </div>
     </footer>
