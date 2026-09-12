@@ -14,13 +14,12 @@ describe('Step4Page', () => {
     pushMock.mockClear()
   })
 
-  it('renders the stepper on step 4 and the result heading', () => {
+  it('renders the result heading', () => {
     render(
       <OutfitFlowProvider>
         <Step4Page />
       </OutfitFlowProvider>
     )
-    expect(screen.getByText('Bước 4 · Đang chọn')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Kết Quả Thử Đồ Ảo AI FitRoom HD' })).toBeInTheDocument()
   })
 

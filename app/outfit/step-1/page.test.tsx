@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent, act } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import Step1Page from './page'
 import { OutfitFlowProvider } from '@/components/outfit/OutfitFlowProvider'
 
@@ -12,16 +12,14 @@ vi.mock('next/navigation', () => ({
 describe('Step1Page', () => {
   beforeEach(() => {
     pushMock.mockClear()
-    vi.useFakeTimers()
   })
 
-  it('renders the stepper on step 1 and the step heading', () => {
+  it('renders the step heading', () => {
     render(
       <OutfitFlowProvider>
         <Step1Page />
       </OutfitFlowProvider>
     )
-    expect(screen.getByText('Bước 1 · Đang chọn')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Tải lên hoặc Chọn Trang Phục Cần Thử' })).toBeInTheDocument()
   })
 
@@ -41,9 +39,6 @@ describe('Step1Page', () => {
       </OutfitFlowProvider>
     )
     fireEvent.click(screen.getByRole('button', { name: /Tiếp tục sang Bước 2/ }))
-    act(() => {
-      vi.runAllTimers()
-    })
     expect(pushMock).toHaveBeenCalledWith('/outfit/step-2')
   })
 })

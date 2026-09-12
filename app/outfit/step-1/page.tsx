@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import OutfitStepper from '@/components/outfit/OutfitStepper'
 import FlowOverviewBanner from '@/components/outfit/FlowOverviewBanner'
 import GarmentDropzone from '@/components/outfit/step1/GarmentDropzone'
 import ProductUrlFetcher from '@/components/outfit/step1/ProductUrlFetcher'
@@ -18,18 +17,13 @@ const MODE_TABS = [
 export default function Step1Page() {
   const router = useRouter()
   const [activeMode, setActiveMode] = useState<(typeof MODE_TABS)[number]['id']>('single')
-  const [isContinuing, setIsContinuing] = useState(false)
 
   function handleContinue() {
-    setIsContinuing(true)
-    setTimeout(() => {
-      router.push('/outfit/step-2')
-    }, 700)
+    router.push('/outfit/step-2')
   }
 
   return (
     <div className="flex w-full flex-col pb-space-xl">
-      <OutfitStepper currentStep={1} />
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-space-lg px-margin-desktop pt-space-md">
         <div className="pt-space-lg">
           <FlowOverviewBanner
@@ -100,10 +94,8 @@ export default function Step1Page() {
               onClick={handleContinue}
               className="flex w-full items-center justify-center gap-space-sm rounded-2xl bg-primary px-space-xl py-space-md font-bold text-headline-sm text-on-primary shadow-lg shadow-primary/25 transition-all hover:bg-primary-container hover:shadow-xl sm:w-auto"
             >
-              <span>{isContinuing ? 'Đang chuyển dữ liệu...' : 'Tiếp tục sang Bước 2: Chọn Người Mẫu'}</span>
-              <span className="material-symbols-outlined text-[22px]">
-                {isContinuing ? 'hourglass_top' : 'arrow_forward'}
-              </span>
+              <span>Tiếp tục sang Bước 2: Chọn Người Mẫu</span>
+              <span className="material-symbols-outlined text-[22px]">arrow_forward</span>
             </button>
           </div>
         </div>

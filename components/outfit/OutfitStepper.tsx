@@ -7,9 +7,15 @@ const STEPS = [
   { step: 4, label: 'Xem Kết Quả 3D', href: '/outfit/step-4' },
 ] as const
 
-export default function OutfitStepper({ currentStep }: { currentStep: 1 | 2 | 3 | 4 }) {
+export default function OutfitStepper({
+  currentStep,
+  maxStepReached = currentStep,
+}: {
+  currentStep: 1 | 2 | 3 | 4
+  maxStepReached?: 1 | 2 | 3 | 4
+}) {
   return (
-    <section className="w-full bg-surface-container-low/80 px-margin-desktop py-space-lg shadow-sm backdrop-blur-md">
+    <section className="sticky top-20 z-40 w-full bg-surface-container-low/80 px-margin-desktop py-space-lg shadow-sm backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl flex-col gap-space-md">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-space-xs text-on-surface-variant">
@@ -27,19 +33,20 @@ export default function OutfitStepper({ currentStep }: { currentStep: 1 | 2 | 3 
         <div className="grid grid-cols-1 gap-space-md pt-space-xs md:grid-cols-4">
           {STEPS.map((item) => {
             const isCurrent = item.step === currentStep
-            const isCompleted = item.step < currentStep
+            const isVisited = item.step <= maxStepReached
+            const isReachable = isVisited && !isCurrent
             const content = (
               <>
                 <div
                   className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-headline-sm font-bold ${
                     isCurrent
                       ? 'bg-primary text-on-primary shadow-[0_0_0_4px_rgba(219,225,255,0.7)]'
-                      : isCompleted
+                      : isReachable
                         ? 'bg-primary-fixed text-primary'
                         : 'bg-surface-container-highest text-on-surface-variant'
                   }`}
                 >
-                  {isCompleted ? (
+                  {isReachable ? (
                     <span className="material-symbols-outlined text-[20px]">check</span>
                   ) : (
                     item.step
@@ -53,7 +60,7 @@ export default function OutfitStepper({ currentStep }: { currentStep: 1 | 2 | 3 
                   >
                     {isCurrent
                       ? `Bước ${item.step} · Đang chọn`
-                      : isCompleted
+                      : isReachable
                         ? `Bước ${item.step} · Đã xong`
                         : `Bước ${item.step} · Sắp tới`}
                   </span>
@@ -71,12 +78,12 @@ export default function OutfitStepper({ currentStep }: { currentStep: 1 | 2 | 3 
             const className = `flex items-center gap-space-sm rounded-xl p-space-sm transition-all ${
               isCurrent
                 ? 'bg-surface-container-lowest shadow-md'
-                : isCompleted
+                : isReachable
                   ? 'bg-surface-container-lowest/60 hover:bg-surface-container-lowest'
                   : 'bg-surface-container/60 opacity-70'
             }`
 
-            if (isCompleted) {
+            if (isReachable) {
               return (
                 <Link key={item.step} href={item.href} className={className}>
                   {content}

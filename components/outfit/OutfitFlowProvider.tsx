@@ -59,6 +59,8 @@ export type Pose = {
 
 export const DEFAULT_POSE: Pose = { id: 'front', label: 'Đứng thẳng phía trước' }
 
+export type FlowStep = 1 | 2 | 3 | 4
+
 type OutfitFlowContextValue = {
   selectedGarment: Garment
   setSelectedGarment: (garment: Garment) => void
@@ -66,6 +68,8 @@ type OutfitFlowContextValue = {
   setSelectedModel: (model: Model) => void
   selectedPose: Pose
   setSelectedPose: (pose: Pose) => void
+  maxStepReached: FlowStep
+  markStepVisited: (step: FlowStep) => void
 }
 
 const OutfitFlowContext = createContext<OutfitFlowContextValue | null>(null)
@@ -74,6 +78,11 @@ export function OutfitFlowProvider({ children }: { children: ReactNode }) {
   const [selectedGarment, setSelectedGarment] = useState<Garment>(DEFAULT_GARMENT)
   const [selectedModel, setSelectedModel] = useState<Model>(DEFAULT_MODEL)
   const [selectedPose, setSelectedPose] = useState<Pose>(DEFAULT_POSE)
+  const [maxStepReached, setMaxStepReached] = useState<FlowStep>(1)
+
+  function markStepVisited(step: FlowStep) {
+    setMaxStepReached((current) => (step > current ? step : current))
+  }
 
   return (
     <OutfitFlowContext.Provider
@@ -84,6 +93,8 @@ export function OutfitFlowProvider({ children }: { children: ReactNode }) {
         setSelectedModel,
         selectedPose,
         setSelectedPose,
+        maxStepReached,
+        markStepVisited,
       }}
     >
       {children}

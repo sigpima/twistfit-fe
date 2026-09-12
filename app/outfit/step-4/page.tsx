@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation'
 import { useOutfitFlow } from '@/components/outfit/OutfitFlowProvider'
-import OutfitStepper from '@/components/outfit/OutfitStepper'
 import ResultPreview from '@/components/outfit/step4/ResultPreview'
 import ResultActionsPanel from '@/components/outfit/step4/ResultActionsPanel'
 import GarmentSummaryPanel from '@/components/outfit/step4/GarmentSummaryPanel'
@@ -14,7 +13,6 @@ export default function Step4Page() {
 
   return (
     <div className="flex w-full flex-col">
-      <OutfitStepper currentStep={4} />
       <section className="w-full bg-gradient-to-b from-surface-container-high/40 via-background to-surface-container-low/60 pb-space-xl">
         <div className="mx-auto max-w-7xl px-margin pt-space-lg md:px-margin-desktop">
           <div className="mb-space-lg flex flex-col justify-between gap-space-sm md:flex-row md:items-end">

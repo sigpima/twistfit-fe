@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import OutfitStepper from '@/components/outfit/OutfitStepper'
 import SelectedGarmentBanner from '@/components/outfit/step2/SelectedGarmentBanner'
 import ModelCatalog from '@/components/outfit/step2/ModelCatalog'
 import ModelDossier from '@/components/outfit/step2/ModelDossier'
@@ -16,18 +15,13 @@ const MODE_TABS = [
 export default function Step2Page() {
   const router = useRouter()
   const [activeMode, setActiveMode] = useState<(typeof MODE_TABS)[number]['id']>('our-models')
-  const [isContinuing, setIsContinuing] = useState(false)
 
   function handleContinue() {
-    setIsContinuing(true)
-    setTimeout(() => {
-      router.push('/outfit/step-3')
-    }, 700)
+    router.push('/outfit/step-3')
   }
 
   return (
     <div className="flex w-full flex-col">
-      <OutfitStepper currentStep={2} />
       <section className="w-full bg-surface-container-low px-margin-desktop py-space-lg">
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-space-md lg:flex-row lg:items-center">
           <div>
@@ -90,12 +84,8 @@ export default function Step2Page() {
             onClick={handleContinue}
             className="flex w-full items-center justify-center gap-space-sm rounded-full bg-primary px-space-xl py-3.5 text-label-lg text-on-primary shadow-md transition-all hover:bg-primary-container hover:shadow-lg sm:w-auto"
           >
-            <span>
-              {isContinuing ? 'Đang chuyển dữ liệu...' : 'Xác nhận người mẫu & Tiếp tục sang Bước 3'}
-            </span>
-            <span className="material-symbols-outlined text-[20px]">
-              {isContinuing ? 'hourglass_top' : 'arrow_forward'}
-            </span>
+            <span>Xác nhận người mẫu & Tiếp tục sang Bước 3</span>
+            <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
           </button>
         </div>
       </section>

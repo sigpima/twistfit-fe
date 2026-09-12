@@ -1,8 +1,6 @@
 'use client'
 
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import OutfitStepper from '@/components/outfit/OutfitStepper'
 import FlowOverviewBanner from '@/components/outfit/FlowOverviewBanner'
 import QuickSelectionSummary from '@/components/outfit/step3/QuickSelectionSummary'
 import PoseSelector from '@/components/outfit/step3/PoseSelector'
@@ -11,18 +9,13 @@ import BodyMeasurements from '@/components/outfit/step3/BodyMeasurements'
 
 export default function Step3Page() {
   const router = useRouter()
-  const [isGenerating, setIsGenerating] = useState(false)
 
   function handleGenerate() {
-    setIsGenerating(true)
-    setTimeout(() => {
-      router.push('/outfit/step-4')
-    }, 700)
+    router.push('/outfit/step-4')
   }
 
   return (
     <div className="flex w-full flex-col pb-space-xl">
-      <OutfitStepper currentStep={3} />
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-space-lg px-margin-desktop pt-space-lg">
         <div className="flex flex-col justify-between gap-space-md md:flex-row md:items-end">
           <div className="flex flex-col gap-space-xs">
@@ -65,9 +58,7 @@ export default function Step3Page() {
                   <span className="material-symbols-outlined text-[26px] transition-transform group-hover:rotate-12">
                     bolt
                   </span>
-                  <span>
-                    {isGenerating ? 'Đang khởi tạo...' : '⚡ Tạo Đồ Ảo Ngay (Nhanh - 1 credit)'}
-                  </span>
+                  <span>⚡ Tạo Đồ Ảo Ngay (Nhanh - 1 credit)</span>
                 </button>
                 <button
                   type="button"

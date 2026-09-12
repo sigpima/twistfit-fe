@@ -9,13 +9,24 @@ import {
 } from './OutfitFlowProvider'
 
 function TestConsumer() {
-  const { selectedGarment, setSelectedGarment, selectedModel, setSelectedModel, selectedPose, setSelectedPose } =
-    useOutfitFlow()
+  const {
+    selectedGarment,
+    setSelectedGarment,
+    selectedModel,
+    setSelectedModel,
+    selectedPose,
+    setSelectedPose,
+    maxStepReached,
+    markStepVisited,
+  } = useOutfitFlow()
   return (
     <div>
       <span>{selectedGarment.name}</span>
       <span>{selectedModel.name}</span>
       <span>{selectedPose.label}</span>
+      <span>Max: {maxStepReached}</span>
+      <button onClick={() => markStepVisited(3)}>mark step 3</button>
+      <button onClick={() => markStepVisited(2)}>mark step 2</button>
       <button onClick={() => setSelectedPose({ id: 'side', label: 'Nghiêng cạnh bên' })}>select side pose</button>
       <button
         onClick={() =>
@@ -95,5 +106,35 @@ describe('OutfitFlowProvider', () => {
     )
     fireEvent.click(screen.getByText('select kenji'))
     expect(screen.getByText('Kenji')).toBeInTheDocument()
+  })
+
+  it('starts with the furthest step reached at 1', () => {
+    render(
+      <OutfitFlowProvider>
+        <TestConsumer />
+      </OutfitFlowProvider>
+    )
+    expect(screen.getByText('Max: 1')).toBeInTheDocument()
+  })
+
+  it('advances the furthest step reached when markStepVisited is called with a later step', () => {
+    render(
+      <OutfitFlowProvider>
+        <TestConsumer />
+      </OutfitFlowProvider>
+    )
+    fireEvent.click(screen.getByText('mark step 3'))
+    expect(screen.getByText('Max: 3')).toBeInTheDocument()
+  })
+
+  it('does not lower the furthest step reached when marking an earlier step', () => {
+    render(
+      <OutfitFlowProvider>
+        <TestConsumer />
+      </OutfitFlowProvider>
+    )
+    fireEvent.click(screen.getByText('mark step 3'))
+    fireEvent.click(screen.getByText('mark step 2'))
+    expect(screen.getByText('Max: 3')).toBeInTheDocument()
   })
 })
