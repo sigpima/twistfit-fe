@@ -303,6 +303,26 @@
           "midnightBlue": "Midnight Blue",
           "pureOnyxBlack": "Pure Onyx Black"
         }
+      },
+      "Insights": {
+        "srHeading": "Chỉ số chi tiết và Gợi ý ứng dụng",
+        "metricsHeading": "Chi tiết các chỉ số màu sắc",
+        "metrics": {
+          "skinBrightness": { "label": "Độ sáng da", "note": "Trung bình - sáng" },
+          "warmCoolTone": { "label": "Sắc độ ấm – lạnh", "note": "Lạnh" },
+          "vividness": { "label": "Độ tươi rực rỡ", "note": "Rực rỡ" }
+        },
+        "recommendationsHeading": "Gợi ý ứng dụng",
+        "recommendations": {
+          "outfitColor": { "title": "Màu trang phục", "body": "Ưu tiên các tông lạnh, sáng, rõ nét như xanh cobalt, hồng lạnh, tím, trắng..." },
+          "lipstickColor": { "title": "Màu son", "body": "Hồng lạnh, đỏ lạnh, berry, hồng tím..." },
+          "hairColor": { "title": "Màu tóc", "body": "Đen tự nhiên, nâu lạnh, nâu khói..." },
+          "accessoryColor": { "title": "Màu phụ kiện", "body": "Bạc, bạch kim, xanh sapphire, tím, hồng lạnh..." }
+        },
+        "ctaBannerTitle": "Bạn thuộc Mùa Đông!",
+        "ctaBannerSubtitle": "Khám phá thế giới màu sắc giúp bạn tỏa sáng mỗi ngày ✨",
+        "tryOutfitButton": "Thử Phối Đồ Ngay (AI Fitting)",
+        "downloadPdfButton": "Tải Báo Cáo PDF"
       }
     }
   }
