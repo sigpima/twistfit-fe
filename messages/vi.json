@@ -253,6 +253,9 @@
         "rejected": "Bị từ chối",
         "hidden": "Đã ẩn"
       }
+    },
+    "Edit": {
+      "notFoundBody": "Bài viết này không tồn tại hoặc bạn không có quyền sửa."
     }
   },
   "Login": {
