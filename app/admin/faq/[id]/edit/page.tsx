@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import AdminGate from '@/components/auth/AdminGate'
 import FaqForm from '@/components/admin/FaqForm'
+import { apiFetch } from '@/lib/apiClient'
 import type { FaqItem } from '@/lib/faq'
 
 export default function EditFaqPage({ params }: { params: Promise<{ id: string }> }) {
@@ -10,7 +11,7 @@ export default function EditFaqPage({ params }: { params: Promise<{ id: string }
 
   useEffect(() => {
     params.then(({ id }) => {
-      fetch(`/api/faq/${id}`)
+      apiFetch(`/faq/${id}`)
         .then((response) => response.json())
         .then(setItem)
     })

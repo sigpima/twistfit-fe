@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import { FAQ_CATEGORIES, FAQ_HIGHLIGHT_ICONS, type FaqCategory, type FaqHighlightIcon, type FaqItem } from '@/lib/faq'
 
 const inputClass =
@@ -50,7 +51,7 @@ export default function FaqForm({ initialItem }: { initialItem?: FaqItem }) {
       highlightText: highlightText.trim() || null,
     }
 
-    const response = await fetch(isEditing ? `/api/faq/${initialItem!.id}` : '/api/faq', {
+    const response = await apiFetch(isEditing ? `/faq/${initialItem!.id}` : '/faq', {
       method: isEditing ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -58,14 +59,13 @@ export default function FaqForm({ initialItem }: { initialItem?: FaqItem }) {
 
     setSubmitting(false)
 
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 403) {
       setErrors({ form: t('unauthorizedError') })
       return
     }
 
     if (!response.ok) {
-      const data = await response.json().catch(() => ({}))
-      setErrors(data.errors ?? { form: t('genericError') })
+      setErrors({ form: t('genericError') })
       return
     }
 

@@ -2,7 +2,6 @@ import Database from 'better-sqlite3'
 import { existsSync, mkdirSync } from 'node:fs'
 import path from 'node:path'
 import { initSchema, seedIfEmpty } from './db'
-import { initSchema as initFaqSchema, seedIfEmpty as seedFaqIfEmpty } from './faq'
 import { initSchema as initModelCatalogSchema, seedIfEmpty as seedModelCatalogIfEmpty } from './modelCatalog'
 import { initSchema as initCapsuleSchema, seedIfEmpty as seedCapsuleIfEmpty } from './capsuleWardrobe'
 import { initSchema as initTeamSchema, seedIfEmpty as seedTeamIfEmpty } from './team'
@@ -25,8 +24,6 @@ export function getDb(): Database.Database {
   const db = new Database(dbPath)
   initSchema(db)
   seedIfEmpty(db)
-  initFaqSchema(db)
-  seedFaqIfEmpty(db)
   initModelCatalogSchema(db)
   seedModelCatalogIfEmpty(db)
   initCapsuleSchema(db)

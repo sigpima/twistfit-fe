@@ -1,10 +1,11 @@
 import FaqSection from '@/components/faq/FaqSection'
 import FaqSupportBanner from '@/components/faq/FaqSupportBanner'
-import { getFaqItems } from '@/lib/faq'
-import { getDb } from '@/lib/getDb'
+import { apiFetch } from '@/lib/apiClient'
+import type { FaqItem } from '@/lib/faq'
 
-export default function FaqPage() {
-  const items = getFaqItems(getDb())
+export default async function FaqPage() {
+  const response = await apiFetch('/faq', { cache: 'no-store' })
+  const items = response.ok ? ((await response.json()) as FaqItem[]) : []
 
   return (
     <main className="w-full bg-surface">

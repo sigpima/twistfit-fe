@@ -1,7 +1,8 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import type { FaqItem } from '@/lib/faq'
+import FaqPage from './page'
 
 const ITEMS: FaqItem[] = [
   {
@@ -16,17 +17,15 @@ const ITEMS: FaqItem[] = [
   },
 ]
 
-vi.mock('@/lib/getDb', () => ({ getDb: () => ({}) }))
-vi.mock('@/lib/faq', async () => {
-  const actual = await vi.importActual<typeof import('@/lib/faq')>('@/lib/faq')
-  return { ...actual, getFaqItems: () => ITEMS }
-})
+describe('FaqPage', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
 
-describe('FaqPage', async () => {
-  const { default: FaqPage } = await import('./page')
-
-  it('renders the FAQ heading and the seeded question', () => {
-    renderWithIntl(<FaqPage />)
+  it('renders the FAQ heading and the seeded question', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ITEMS }))
+    const page = await FaqPage()
+    renderWithIntl(page)
     expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
     expect(screen.getByText('Câu hỏi seed test?')).toBeInTheDocument()
   })

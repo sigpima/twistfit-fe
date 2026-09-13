@@ -41,6 +41,6 @@ describe('EditFaqPage', () => {
       </AuthProvider>
     )
     await waitFor(() => expect(screen.getByLabelText('Câu hỏi')).toHaveValue('Câu hỏi cần sửa?'))
-    expect(fetch).toHaveBeenCalledWith('/api/faq/7')
+    expect(fetch).toHaveBeenCalledWith('/faq/7', { credentials: 'include' })
   })
 })

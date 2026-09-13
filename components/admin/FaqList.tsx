@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import type { FaqItem } from '@/lib/faq'
 
 export default function FaqList() {
@@ -10,14 +11,14 @@ export default function FaqList() {
   const [items, setItems] = useState<FaqItem[] | null>(null)
 
   useEffect(() => {
-    fetch('/api/faq')
+    apiFetch('/faq')
       .then((response) => response.json())
       .then(setItems)
   }, [])
 
   async function handleDelete(id: number) {
     if (!window.confirm(t('deleteConfirm'))) return
-    await fetch(`/api/faq/${id}`, { method: 'DELETE' })
+    await apiFetch(`/faq/${id}`, { method: 'DELETE' })
     setItems((current) => current?.filter((item) => item.id !== id) ?? null)
   }
 
