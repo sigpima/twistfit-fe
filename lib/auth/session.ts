@@ -1,5 +1,5 @@
 import { createHmac, timingSafeEqual } from 'node:crypto'
-import type { Role } from '@/lib/auth/mockAccounts'
+import type { Role } from '@/lib/auth/users'
 
 export const SESSION_COOKIE_NAME = 'twistfit_session'
 const SESSION_TTL_MS = 1000 * 60 * 60 * 24 * 7
