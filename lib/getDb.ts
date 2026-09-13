@@ -8,6 +8,7 @@ import { initSchema as initCapsuleSchema, seedIfEmpty as seedCapsuleIfEmpty } fr
 import { initSchema as initTeamSchema, seedIfEmpty as seedTeamIfEmpty } from './team'
 import { initSchema as initUsersSchema, seedIfEmpty as seedUsersIfEmpty } from './auth/users'
 import { initSchema as initForumSchema, seedIfEmpty as seedForumIfEmpty } from './forum'
+import { initSchema as initContactSchema, seedIfEmpty as seedContactIfEmpty } from './contact'
 
 let singleton: Database.Database | null = null
 
@@ -35,6 +36,8 @@ export function getDb(): Database.Database {
   seedUsersIfEmpty(db)
   initForumSchema(db)
   seedForumIfEmpty(db)
+  initContactSchema(db)
+  seedContactIfEmpty(db)
   singleton = db
   return db
 }
