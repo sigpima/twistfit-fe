@@ -263,6 +263,11 @@
       "subtitle": "Nơi chia sẻ và xin tư vấn phối đồ cùng cộng đồng TwistFit.",
       "loading": "Đang tải...",
       "emptyState": "Chưa có bài viết nào trong chuyên mục này."
+    },
+    "Detail": {
+      "backLink": "← Quay lại Diễn đàn",
+      "notFoundTitle": "Không tìm thấy bài viết",
+      "notFoundBody": "Bài viết này không tồn tại hoặc bạn không có quyền xem."
     }
   },
   "Login": {
