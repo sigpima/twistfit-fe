@@ -1,4 +1,4 @@
-import type { Season } from './personalColorQuiz'
+import type { Season } from './db'
 
 // Placeholder scoring: majority vote across answers, ties broken by the
 // season that reaches the max count first. Replace with the real scoring

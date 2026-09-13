@@ -3,19 +3,17 @@
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { QUIZ_QUESTIONS, type Season } from '@/lib/personalColorQuiz'
+import type { QuizQuestion, Season } from '@/lib/db'
 import { computeSeasonResult } from '@/lib/computeSeasonResult'
 
-export default function QuizFlow() {
+export default function QuizFlow({ questions }: { questions: QuizQuestion[] }) {
   const t = useTranslations('PersonalColor.Quiz')
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(0)
-  const [answers, setAnswers] = useState<(Season | null)[]>(
-    () => Array(QUIZ_QUESTIONS.length).fill(null)
-  )
+  const [answers, setAnswers] = useState<(Season | null)[]>(() => Array(questions.length).fill(null))
 
-  const totalSteps = QUIZ_QUESTIONS.length
-  const question = QUIZ_QUESTIONS[currentStep]
+  const totalSteps = questions.length
+  const question = questions[currentStep]
   const selectedSeason = answers[currentStep]
   const isLastStep = currentStep === totalSteps - 1
 
@@ -47,7 +45,7 @@ export default function QuizFlow() {
           />
         </div>
       </div>
-      <h2 className="text-headline-sm font-bold text-on-surface">{question.question}</h2>
+      <h2 className="text-headline-sm font-bold text-on-surface">{question.questionText}</h2>
       <div className="mt-5 space-y-3">
         {question.options.map((option) => {
           const isSelected = selectedSeason === option.season
