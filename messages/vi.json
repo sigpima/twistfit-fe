@@ -6,8 +6,72 @@
       "faq": "FAQ",
       "blog": "Blog"
     },
-    "checkPersonalColor": "Kiểm tra Personal Color",
-    "accountAriaLabel": "Tài khoản"
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "accountAriaLabel": "Tài khoản",
+    "logout": "Đăng xuất"
+  },
+  "Admin": {
+    "checkingAccess": "Đang kiểm tra quyền truy cập...",
+    "title": "Trang Quản Trị",
+    "welcome": "Xin chào, {name}",
+    "blogCardTitle": "Quản lý Blog",
+    "blogCardDescription": "Tạo, sửa và xóa bài viết hiển thị trên trang Blog.",
+    "quizCardTitle": "Quản lý câu hỏi Quiz",
+    "quizCardDescription": "Tạo, sửa và sắp xếp thứ tự câu hỏi trong bài trắc nghiệm Personal Color."
+  },
+  "Login": {
+    "title": "Đăng Nhập TwistFit",
+    "subtitle": "Đăng nhập để tiếp tục hành trình khám phá Personal Color của bạn.",
+    "fields": {
+      "email": {
+        "label": "Địa chỉ Email *",
+        "placeholder": "linhdan@gmail.com"
+      },
+      "password": {
+        "label": "Mật khẩu *",
+        "placeholder": "Nhập mật khẩu"
+      }
+    },
+    "errors": {
+      "invalidCredentials": "Email hoặc mật khẩu không đúng. Vui lòng thử lại."
+    },
+    "showPassword": "Hiện mật khẩu",
+    "hidePassword": "Ẩn mật khẩu",
+    "submit": "ĐĂNG NHẬP",
+    "noAccount": "Chưa có tài khoản?",
+    "registerLink": "Đăng ký ngay"
+  },
+  "Register": {
+    "title": "Tạo Tài Khoản TwistFit",
+    "subtitle": "Tham gia TwistFit để khám phá Personal Color và phối đồ thông minh dành riêng cho bạn.",
+    "fields": {
+      "name": {
+        "label": "Họ và tên *",
+        "placeholder": "Ví dụ: Nguyễn Linh Đan"
+      },
+      "email": {
+        "label": "Địa chỉ Email *",
+        "placeholder": "linhdan@gmail.com"
+      },
+      "password": {
+        "label": "Mật khẩu *",
+        "placeholder": "Tối thiểu 8 ký tự"
+      },
+      "confirmPassword": {
+        "label": "Xác nhận mật khẩu *",
+        "placeholder": "Nhập lại mật khẩu"
+      }
+    },
+    "errors": {
+      "passwordMismatch": "Mật khẩu xác nhận không khớp"
+    },
+    "showPassword": "Hiện mật khẩu",
+    "hidePassword": "Ẩn mật khẩu",
+    "submit": "ĐĂNG KÝ",
+    "comingSoon": "Tính năng đăng ký đang được hoàn thiện. Vui lòng quay lại sau hoặc liên hệ đội ngũ TwistFit để được hỗ trợ tạo tài khoản.",
+    "haveAccount": "Đã có tài khoản?",
+    "loginLink": "Đăng nhập ngay"
   },
   "Footer": {
     "brand": "TwistFit",
