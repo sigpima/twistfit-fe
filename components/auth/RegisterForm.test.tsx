@@ -70,16 +70,7 @@ describe('RegisterForm', () => {
   it('registers, logs in, and redirects to the homepage on success', async () => {
     vi.stubGlobal(
       'fetch',
-      vi.fn(async (url: string) => {
-        if (url === '/api/auth/register') {
-          return {
-            ok: true,
-            status: 201,
-            json: async () => ({ id: 1, name: 'Linh Đan', email: 'linhdan@gmail.com', role: 'user' }),
-          }
-        }
-        return { ok: true, json: async () => ({ name: 'Linh Đan', email: 'linhdan@gmail.com', role: 'user' }) }
-      })
+      vi.fn().mockResolvedValue({ ok: true, json: async () => ({ name: 'Linh Đan', email: 'linhdan@gmail.com', role: 'user' }) })
     )
     renderRegisterForm()
     fillValidForm()

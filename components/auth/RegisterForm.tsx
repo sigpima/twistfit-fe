@@ -44,15 +44,6 @@ export default function RegisterForm() {
       return
     }
 
-    // Mirror the new user into the legacy SQLite users table (unmodified
-    // /api/auth/register route) so forum — which still queries that table
-    // directly — can resolve this user after registration.
-    void fetch('/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, password }),
-    }).catch(() => {})
-
     setFormError(null)
     const account = await login(email, password)
     if (account) {
