@@ -238,6 +238,21 @@
       "submitEdit": "Lưu thay đổi",
       "unauthorizedError": "Bạn không có quyền thực hiện thao tác này.",
       "genericError": "Có lỗi xảy ra, vui lòng thử lại."
+    },
+    "MyPosts": {
+      "title": "Bài viết của tôi",
+      "newButton": "Đăng bài mới",
+      "emptyState": "Bạn chưa đăng bài nào.",
+      "loading": "Đang tải...",
+      "editButton": "Sửa",
+      "deleteButton": "Xóa",
+      "deleteConfirm": "Xóa bài viết này?",
+      "status": {
+        "pending": "Chờ duyệt",
+        "published": "Đã duyệt",
+        "rejected": "Bị từ chối",
+        "hidden": "Đã ẩn"
+      }
     }
   },
   "Login": {
