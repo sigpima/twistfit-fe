@@ -27,5 +27,6 @@ describe('AdminDashboard', () => {
       'href',
       '/admin/capsule-wardrobe'
     )
+    expect(screen.getByRole('link', { name: /Quản lý Team/ })).toHaveAttribute('href', '/admin/team')
   })
 })
