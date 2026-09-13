@@ -38,7 +38,7 @@ export type Model = {
   personalColor: string
 }
 
-export const DEFAULT_MODEL: Model = {
+export const FALLBACK_MODEL: Model = {
   id: 'carmen',
   name: 'Carmen',
   image: '/outfit/models/carmen-card.jpg',
@@ -74,9 +74,15 @@ type OutfitFlowContextValue = {
 
 const OutfitFlowContext = createContext<OutfitFlowContextValue | null>(null)
 
-export function OutfitFlowProvider({ children }: { children: ReactNode }) {
+export function OutfitFlowProvider({
+  children,
+  initialModel,
+}: {
+  children: ReactNode
+  initialModel?: Model
+}) {
   const [selectedGarment, setSelectedGarment] = useState<Garment>(DEFAULT_GARMENT)
-  const [selectedModel, setSelectedModel] = useState<Model>(DEFAULT_MODEL)
+  const [selectedModel, setSelectedModel] = useState<Model>(initialModel ?? FALLBACK_MODEL)
   const [selectedPose, setSelectedPose] = useState<Pose>(DEFAULT_POSE)
   const [maxStepReached, setMaxStepReached] = useState<FlowStep>(1)
 

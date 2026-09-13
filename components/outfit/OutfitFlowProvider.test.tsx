@@ -4,7 +4,7 @@ import {
   OutfitFlowProvider,
   useOutfitFlow,
   DEFAULT_GARMENT,
-  DEFAULT_MODEL,
+  FALLBACK_MODEL,
   DEFAULT_POSE,
 } from './OutfitFlowProvider'
 
@@ -74,7 +74,7 @@ describe('OutfitFlowProvider', () => {
       </OutfitFlowProvider>
     )
     expect(screen.getByText(DEFAULT_GARMENT.name)).toBeInTheDocument()
-    expect(screen.getByText(DEFAULT_MODEL.name)).toBeInTheDocument()
+    expect(screen.getByText(FALLBACK_MODEL.name)).toBeInTheDocument()
     expect(screen.getByText(DEFAULT_POSE.label)).toBeInTheDocument()
   })
 
