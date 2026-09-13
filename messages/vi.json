@@ -225,6 +225,7 @@
       "personal-color": "Personal Color",
       "sustainable-swap": "Trao đổi đồ cũ"
     },
+    "categoryAll": "Tất cả",
     "AuthGate": {
       "checkingAccess": "Đang kiểm tra đăng nhập..."
     },
@@ -256,6 +257,12 @@
     },
     "Edit": {
       "notFoundBody": "Bài viết này không tồn tại hoặc bạn không có quyền sửa."
+    },
+    "Public": {
+      "title": "Diễn đàn TwistFit",
+      "subtitle": "Nơi chia sẻ và xin tư vấn phối đồ cùng cộng đồng TwistFit.",
+      "loading": "Đang tải...",
+      "emptyState": "Chưa có bài viết nào trong chuyên mục này."
     }
   },
   "Login": {
