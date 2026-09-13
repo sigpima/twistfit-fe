@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import AdminDashboard from './AdminDashboard'
@@ -7,10 +7,24 @@ import { AuthProvider } from './AuthProvider'
 describe('AdminDashboard', () => {
   beforeEach(() => {
     window.localStorage.clear()
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          blogPosts: { total: 0, new30d: 0 },
+          forumPosts: { total: 0, new30d: 0 },
+          users: { total: 0, new30d: 0 },
+          quizAttempts: { total: 0, new30d: 0 },
+          contactMessages: { total: 0, unread: 0 },
+        }),
+      })
+    )
   })
 
   afterEach(() => {
     window.localStorage.clear()
+    vi.unstubAllGlobals()
   })
 
   it('links to the blog and quiz admin sections', () => {

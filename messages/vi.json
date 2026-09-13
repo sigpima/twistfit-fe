@@ -237,6 +237,16 @@
       "loading": "Đang tải...",
       "detailEmailLabel": "Email",
       "detailPhoneLabel": "Số điện thoại"
+    },
+    "StatsOverview": {
+      "loading": "Đang tải số liệu...",
+      "blogTitle": "Bài viết Blog",
+      "forumTitle": "Bài viết Diễn đàn",
+      "usersTitle": "Người dùng",
+      "quizTitle": "Lượt làm quiz",
+      "contactTitle": "Tin nhắn liên hệ",
+      "new30d": "+{count} trong 30 ngày qua",
+      "unread": "{count} chưa đọc"
     }
   },
   "Forum": {

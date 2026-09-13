@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useAuth } from '@/components/auth/AuthProvider'
+import AdminStatsOverview from '@/components/admin/AdminStatsOverview'
 
 export default function AdminDashboard() {
   const t = useTranslations('Admin')
@@ -13,6 +14,7 @@ export default function AdminDashboard() {
       <div className="rounded-3xl bg-surface-container-lowest p-8 shadow-[0_12px_36px_rgba(4,28,55,0.08)] lg:p-10">
         <h1 className="text-headline-md font-bold text-on-surface">{t('title')}</h1>
         {user && <p className="mt-1 text-body-sm text-on-surface-variant">{t('welcome', { name: user.name })}</p>}
+        <AdminStatsOverview />
         <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
           <Link
             href="/admin/blog"
