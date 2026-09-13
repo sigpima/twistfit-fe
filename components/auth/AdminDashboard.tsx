@@ -56,6 +56,13 @@ export default function AdminDashboard() {
             <h2 className="text-title-md font-bold text-on-surface">{t('teamCardTitle')}</h2>
             <p className="mt-1 text-body-sm text-on-surface-variant">{t('teamCardDescription')}</p>
           </Link>
+          <Link
+            href="/admin/forum"
+            className="rounded-2xl border border-outline-variant p-6 transition-colors hover:border-primary hover:bg-surface-container-low"
+          >
+            <h2 className="text-title-md font-bold text-on-surface">{t('forumCardTitle')}</h2>
+            <p className="mt-1 text-body-sm text-on-surface-variant">{t('forumCardDescription')}</p>
+          </Link>
         </div>
       </div>
     </section>

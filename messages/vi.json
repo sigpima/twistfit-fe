@@ -27,6 +27,8 @@
     "capsuleCardDescription": "Tạo, sửa và xóa set đồ gợi ý hiển thị ở kết quả thử đồ ảo.",
     "teamCardTitle": "Quản lý Team",
     "teamCardDescription": "Tạo, sửa và xóa thành viên hiển thị trên trang Giới thiệu.",
+    "forumCardTitle": "Quản lý Diễn đàn",
+    "forumCardDescription": "Duyệt bài đăng và xử lý báo cáo vi phạm từ người dùng.",
     "BlogForm": {
       "fields": {
         "title": "Tiêu đề",
