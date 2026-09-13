@@ -275,6 +275,21 @@
       "submitButton": "Gửi báo cáo",
       "successMessage": "Đã gửi báo cáo, cảm ơn bạn.",
       "genericError": "Có lỗi xảy ra, vui lòng thử lại."
+    },
+    "Moderation": {
+      "title": "Kiểm duyệt Diễn đàn",
+      "pendingTitle": "Bài chờ duyệt",
+      "approveButton": "Duyệt",
+      "rejectButton": "Từ chối",
+      "pendingEmptyState": "Không có bài nào chờ duyệt.",
+      "loading": "Đang tải...",
+      "reportsTitle": "Báo cáo",
+      "resolveButton": "Đánh dấu đã xử lý",
+      "hideButton": "Ẩn bài",
+      "deleteButton": "Xóa bài",
+      "deleteConfirm": "Xóa bài viết này?",
+      "reportsEmptyState": "Không có báo cáo nào đang mở.",
+      "reasonLabel": "Lý do"
     }
   },
   "Login": {
