@@ -54,6 +54,23 @@
       "deleteConfirm": "Xóa bài viết này?",
       "emptyState": "Chưa có bài viết nào.",
       "loading": "Đang tải..."
+    },
+    "QuizForm": {
+      "questionLabel": "Nội dung câu hỏi",
+      "optionLabel": "Lựa chọn",
+      "seasonLabel": "Mùa tương ứng",
+      "addOption": "Thêm lựa chọn",
+      "removeOption": "Xóa lựa chọn",
+      "submitCreate": "Tạo câu hỏi",
+      "submitEdit": "Lưu thay đổi",
+      "unauthorizedError": "Bạn cần đăng nhập với quyền quản trị.",
+      "genericError": "Có lỗi xảy ra, vui lòng thử lại.",
+      "seasons": {
+        "spring": "Mùa Xuân",
+        "summer": "Mùa Hạ",
+        "autumn": "Mùa Thu",
+        "winter": "Mùa Đông"
+      }
     }
   },
   "Login": {
