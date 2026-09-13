@@ -2,14 +2,22 @@
 
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
-import type { AdminStats } from '@/lib/stats'
+import { apiFetch } from '@/lib/apiClient'
+
+export type AdminStats = {
+  blogPosts: { total: number; new30d: number }
+  forumPosts: { total: number; new30d: number }
+  users: { total: number; new30d: number }
+  quizAttempts: { total: number; new30d: number }
+  contactMessages: { total: number; unread: number }
+}
 
 export default function AdminStatsOverview() {
   const t = useTranslations('Admin.StatsOverview')
   const [stats, setStats] = useState<AdminStats | null>(null)
 
   useEffect(() => {
-    fetch('/api/admin/stats')
+    apiFetch('/admin/stats')
       .then((response) => response.json())
       .then(setStats)
   }, [])

@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { screen, waitFor } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import AdminStatsOverview from './AdminStatsOverview'
-import type { AdminStats } from '@/lib/stats'
+import type { AdminStats } from './AdminStatsOverview'
 
 const STATS: AdminStats = {
   blogPosts: { total: 7, new30d: 2 },
@@ -22,7 +22,7 @@ describe('AdminStatsOverview', () => {
     renderWithIntl(<AdminStatsOverview />)
 
     await waitFor(() => expect(screen.getByText('7')).toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/api/admin/stats')
+    expect(fetch).toHaveBeenCalledWith('/admin/stats', { credentials: 'include' })
     expect(screen.getByText('Bài viết Blog')).toBeInTheDocument()
     expect(screen.getByText('+2 trong 30 ngày qua')).toBeInTheDocument()
     expect(screen.getByText('20')).toBeInTheDocument()
