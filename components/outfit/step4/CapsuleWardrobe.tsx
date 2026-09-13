@@ -2,59 +2,10 @@
 
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
+import type { CapsuleSet } from '@/lib/capsuleWardrobe'
+import { TAG_VARIANT_CLASSES } from './tagPresentation'
 
-const CAPSULE_SETS = [
-  {
-    id: 'office',
-    image: '/outfit/capsule-set-office.jpg',
-    alt: 'Set đồ công sở thanh lịch với áo peplum hồng, quần ống suông trắng ngà và túi xách minimalist',
-    tag: 'Set 1 • Thanh Lịch',
-    tagClass: 'bg-surface-container-lowest/90 text-primary',
-    fitFor: 'Phù hợp: Office & Meeting',
-    title: 'Thanh Lịch Công Sở',
-    tone: 'Warm Cream',
-    description:
-      'Áo Peplum Voan Hồng + Quần Ống Suông Trắng Ngà + Túi xách Minimalist. Tối ưu chiều dài chân và tạo nét chuyên nghiệp, nhã nhặn.',
-    items: [
-      { label: 'Quần ống suông ngà:', price: '490.000 ₫' },
-      { label: 'Túi xách Minimalist:', price: '720.000 ₫' },
-    ],
-  },
-  {
-    id: 'date',
-    image: '/outfit/capsule-set-date.jpg',
-    alt: 'Set đồ dạo phố với áo peplum hồng, chân váy midi xám bạc và giày slingback',
-    tag: 'Set 2 • Dạo Phố',
-    tagClass: 'bg-secondary-fixed text-on-secondary-fixed',
-    fitFor: 'Phù hợp: Dating & Weekend',
-    title: 'Hẹn Hò & Dạo Phố',
-    tone: 'Soft Silver',
-    description:
-      'Áo Peplum + Chân Váy Xòe Midi Xám Bạc tôn vẻ nữ tính dịu dàng. Màu xám bạc lạnh làm nổi bật sắc hồng thanh khiết của áo.',
-    items: [
-      { label: 'Chân váy midi xám bạc:', price: '530.000 ₫' },
-      { label: 'Giày Slingback Satin:', price: '650.000 ₫' },
-    ],
-  },
-  {
-    id: 'accessories',
-    image: '/outfit/capsule-set-accessories.jpg',
-    alt: 'Phụ kiện khuyên tai bạc và túi pastel lilac bổ trợ cho set đồ',
-    tag: 'Set 3 • Điểm Nhấn',
-    tagClass: 'bg-surface-container-highest text-on-surface',
-    fitFor: 'Phù hợp: Điểm Nhấn Cao Cấp',
-    title: 'Phụ Kiện Tối Ưu',
-    tone: 'Pastel Lilac',
-    description:
-      'Khuyên Tai Bạc Silver + Túi Pastel Lilac ánh tím. Bổ trợ hoàn hảo cho nhóm màu Summer Soft mà không làm lu mờ sắc áo chính.',
-    items: [
-      { label: 'Khuyên tai bạc Ý 925:', price: '320.000 ₫' },
-      { label: 'Túi Pastel Lilac:', price: '580.000 ₫' },
-    ],
-  },
-]
-
-export default function CapsuleWardrobe() {
+export default function CapsuleWardrobe({ sets }: { sets: CapsuleSet[] }) {
   const t = useTranslations('Outfit.Step4.CapsuleWardrobe')
 
   return (
@@ -75,7 +26,7 @@ export default function CapsuleWardrobe() {
           </div>
         </div>
         <div className="grid grid-cols-1 gap-gutter-desktop md:grid-cols-3">
-          {CAPSULE_SETS.map((set) => (
+          {sets.map((set) => (
             <div
               key={set.id}
               className="flex flex-col justify-between rounded-2xl bg-surface-container-lowest p-space-md shadow-md transition-all duration-300 hover:shadow-xl"
@@ -84,8 +35,10 @@ export default function CapsuleWardrobe() {
                 <div className="relative mb-space-md aspect-[4/5] w-full overflow-hidden rounded-xl bg-surface-container">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={set.image} alt={set.alt} className="h-full w-full object-cover" />
-                  <div className={`absolute left-3 top-3 rounded-full px-2.5 py-1 text-label-sm font-bold backdrop-blur-md ${set.tagClass}`}>
-                    {set.tag}
+                  <div
+                    className={`absolute left-3 top-3 rounded-full px-2.5 py-1 text-label-sm font-bold backdrop-blur-md ${TAG_VARIANT_CLASSES[set.tagVariant]}`}
+                  >
+                    {set.tagLabel}
                   </div>
                   <div className="absolute bottom-3 right-3 rounded bg-inverse-surface/85 px-2 py-0.5 text-label-sm text-inverse-on-surface backdrop-blur-md">
                     {set.fitFor}
