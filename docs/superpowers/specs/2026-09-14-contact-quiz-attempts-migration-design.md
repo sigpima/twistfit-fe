@@ -147,20 +147,31 @@ the latter crashing `getAdminStats`.
 
 Following the pattern established in Phase 3 for `blog_posts`:
 `lib/contact.ts` and `lib/quizAttempts.ts` are trimmed down to legacy
-shims containing only their `initSchema` functions (tables created,
-never written to or seeded). No other file in the frontend imports
-`ContactMessage`/`ContactSubject`/`CONTACT_SUBJECTS`/`QuizAttempt` for
-anything other than the API-facing components being cut over in this
-phase (verified by grep during exploration), so those types are deleted
-along with the rest — the implementation plan must re-grep before
-deleting each type, per the standing lesson that leftover consumers have
-been found late in every prior phase. `lib/getDb.ts` keeps calling
-`initContactSchema`/`initQuizAttemptsSchema` but the
-`seedContactIfEmpty`/`seedQuizAttemptsIfEmpty` calls and the functions
-themselves are deleted, since they were already no-ops. All real CRUD
-functions and row types are deleted, along with the `.test.ts` files
-that exercise them. `/admin/stats` will report `0` for
-`contactMessages` and `quizAttempts` from this phase until Phase 6.
+shims. Unlike the Phase 3 write-up's "only `initSchema`" framing, a
+closer look at `lib/stats.test.ts` (done while writing the implementation
+plan) shows it exercises `getAdminStats` against real rows, not just an
+empty schema — it calls `createContactMessage`/`createQuizAttempt` to
+insert fixture rows and then asserts the counts — exactly the same shape
+of dependency that forced `createBlogPost` to survive Phase 3's
+`lib/db.ts` trim. So each shim keeps two things: `initSchema` (table
+created, never seeded) and its single `create*` function (never called
+by production code post-cutover, only by `lib/stats.test.ts`'s
+fixtures). The `ContactMessage` type also survives in `lib/contact.ts`,
+since `ContactMessageList.tsx` keeps using it to type the JSON returned
+by `apiFetch` after cutover — mirroring `BlogPost` surviving in
+`lib/db.ts` for the same reason. `QuizAttempt`'s type has no surviving
+consumer (`QuizFlow.tsx` ignores the response body), so it is dropped.
+Everything else — `getContactMessages`, `getContactMessageById`,
+`setContactMessageRead`, `deleteContactMessage`, `ContactSubject`,
+`CONTACT_SUBJECTS`, and their row types — has no consumer left once
+`app/api/contact/*` is deleted (verified by grep), so all of it is
+deleted along with the real `.test.ts` files that exercise it
+(`lib/contact.test.ts`, `lib/quizAttempts.test.ts` — both confirmed to
+exist). `lib/getDb.ts` keeps calling `initContactSchema`/
+`initQuizAttemptsSchema` and drops the `seedContactIfEmpty`/
+`seedQuizAttemptsIfEmpty` calls and function definitions, since they were
+already no-ops. `/admin/stats` will report `0` for `contactMessages` and
+`quizAttempts` from this phase until Phase 6.
 
 ## Frontend integration
 
