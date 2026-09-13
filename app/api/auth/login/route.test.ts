@@ -1,6 +1,18 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, beforeEach, vi } from 'vitest'
+import { getDb } from '@/lib/getDb'
 import { POST } from './route'
 import { verifySessionCookieValue, SESSION_COOKIE_NAME } from '@/lib/auth/session'
+
+vi.mock('@/lib/getDb', async () => {
+  const { initSchema, seedIfEmpty } = await vi.importActual<typeof import('@/lib/auth/users')>(
+    '@/lib/auth/users'
+  )
+  const Database = (await import('better-sqlite3')).default
+  const testDb = new Database(':memory:')
+  initSchema(testDb)
+  seedIfEmpty(testDb)
+  return { getDb: () => testDb }
+})
 
 describe('POST /api/auth/login', () => {
   it('sets a signed session cookie for valid admin credentials', async () => {
@@ -10,6 +22,7 @@ describe('POST /api/auth/login', () => {
     })
     const response = await POST(request)
     expect(response.status).toBe(200)
+    expect((await response.json()).name).toBe('Quản trị viên Test')
 
     const cookie = response.cookies.get(SESSION_COOKIE_NAME)
     expect(cookie).toBeDefined()
