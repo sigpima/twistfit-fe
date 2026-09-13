@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest'
-import { getDb, createQuizQuestion } from '@/lib/db'
+import { getDb, createQuizQuestion, type QuizQuestionInput } from '@/lib/db'
 import { GET, PUT, DELETE } from './route'
 import { createSessionCookieValue, SESSION_COOKIE_NAME } from '@/lib/auth/session'
 
@@ -16,7 +16,7 @@ function adminCookieHeader() {
   return `${SESSION_COOKIE_NAME}=${encodeURIComponent(value)}`
 }
 
-const validBody = {
+const validBody: QuizQuestionInput = {
   questionText: 'Câu hỏi test?',
   sortOrder: 0,
   options: [

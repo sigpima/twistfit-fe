@@ -34,7 +34,7 @@ describe('BlogPostPage', async () => {
 
   it('renders the post title and markdown content when the slug exists', async () => {
     const ui = await BlogPostPage({ params: Promise.resolve({ slug: 'mua-dong-2026' }) })
-    renderWithIntl(ui)
+    renderWithIntl(ui!)
     expect(
       screen.getByRole('heading', { name: 'Bí quyết chọn trang phục tôn da chuẩn tone Mùa Đông' })
     ).toBeInTheDocument()

@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest'
-import { getDb, createBlogPost } from '@/lib/db'
+import { getDb, createBlogPost, type BlogPostInput } from '@/lib/db'
 import { GET, PUT, DELETE } from './route'
 import { createSessionCookieValue, SESSION_COOKIE_NAME } from '@/lib/auth/session'
 
@@ -16,7 +16,7 @@ function adminCookieHeader() {
   return `${SESSION_COOKIE_NAME}=${encodeURIComponent(value)}`
 }
 
-const validBody = {
+const validBody: BlogPostInput = {
   slug: 'bai-viet-test',
   title: 'Bài viết test',
   excerpt: 'Mô tả ngắn',
