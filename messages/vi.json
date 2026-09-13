@@ -23,6 +23,8 @@
     "faqCardDescription": "Tạo, sửa và xóa câu hỏi thường gặp hiển thị trên trang FAQ.",
     "modelCardTitle": "Quản lý Model Catalog",
     "modelCardDescription": "Tạo, sửa và xóa người mẫu hiển thị trong bước chọn người mẫu thử đồ ảo.",
+    "capsuleCardTitle": "Quản lý Capsule Wardrobe",
+    "capsuleCardDescription": "Tạo, sửa và xóa set đồ gợi ý hiển thị ở kết quả thử đồ ảo.",
     "BlogForm": {
       "fields": {
         "title": "Tiêu đề",
@@ -143,6 +145,41 @@
       "deleteButton": "Xóa",
       "deleteConfirm": "Xóa người mẫu này?",
       "emptyState": "Chưa có người mẫu nào.",
+      "loading": "Đang tải..."
+    },
+    "CapsuleForm": {
+      "fields": {
+        "image": "Ảnh (URL)",
+        "alt": "Mô tả ảnh (alt text)",
+        "tagVariant": "Màu nhãn",
+        "tagLabel": "Nhãn (vd: Set 1 • Thanh Lịch)",
+        "fitFor": "Phù hợp với",
+        "title": "Tiêu đề",
+        "tone": "Tông màu",
+        "description": "Mô tả"
+      },
+      "tagVariants": {
+        "primary": "Primary",
+        "secondary": "Secondary",
+        "tertiary": "Tertiary"
+      },
+      "itemLabel": "Món đồ",
+      "itemPrice": "Giá",
+      "addItem": "Thêm món đồ",
+      "removeItem": "Xóa món đồ",
+      "submitCreate": "Tạo set đồ",
+      "submitEdit": "Lưu thay đổi",
+      "unauthorizedError": "Bạn cần đăng nhập với quyền quản trị.",
+      "genericError": "Có lỗi xảy ra, vui lòng thử lại."
+    },
+    "CapsuleList": {
+      "title": "Quản lý Capsule Wardrobe",
+      "newButton": "Thêm set đồ",
+      "columnTitle": "Tiêu đề",
+      "editButton": "Sửa",
+      "deleteButton": "Xóa",
+      "deleteConfirm": "Xóa set đồ này?",
+      "emptyState": "Chưa có set đồ nào.",
       "loading": "Đang tải..."
     }
   },
