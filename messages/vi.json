@@ -218,8 +218,26 @@
     }
   },
   "Forum": {
+    "categories": {
+      "general": "Thảo luận chung",
+      "outfit-showcase": "Khoe đồ",
+      "styling-help": "Xin tư vấn phối đồ",
+      "personal-color": "Personal Color",
+      "sustainable-swap": "Trao đổi đồ cũ"
+    },
     "AuthGate": {
       "checkingAccess": "Đang kiểm tra đăng nhập..."
+    },
+    "PostForm": {
+      "fields": {
+        "title": "Tiêu đề",
+        "category": "Chuyên mục",
+        "body": "Nội dung"
+      },
+      "submitCreate": "Đăng bài",
+      "submitEdit": "Lưu thay đổi",
+      "unauthorizedError": "Bạn không có quyền thực hiện thao tác này.",
+      "genericError": "Có lỗi xảy ra, vui lòng thử lại."
     }
   },
   "Login": {
