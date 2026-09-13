@@ -268,6 +268,13 @@
       "backLink": "← Quay lại Diễn đàn",
       "notFoundTitle": "Không tìm thấy bài viết",
       "notFoundBody": "Bài viết này không tồn tại hoặc bạn không có quyền xem."
+    },
+    "Report": {
+      "reportButton": "Báo cáo bài viết",
+      "reasonPlaceholder": "Mô tả lý do báo cáo...",
+      "submitButton": "Gửi báo cáo",
+      "successMessage": "Đã gửi báo cáo, cảm ơn bạn.",
+      "genericError": "Có lỗi xảy ra, vui lòng thử lại."
     }
   },
   "Login": {

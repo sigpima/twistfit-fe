@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { screen, waitFor } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
+import { AuthProvider } from '@/components/auth/AuthProvider'
 import ForumPostPage from './page'
 import type { ForumPost } from '@/lib/forum'
 
@@ -22,7 +23,11 @@ describe('ForumPostPage', () => {
 
   it('resolves params and renders the post detail', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POST }))
-    renderWithIntl(<ForumPostPage params={Promise.resolve({ id: '4' })} />)
+    renderWithIntl(
+      <AuthProvider>
+        <ForumPostPage params={Promise.resolve({ id: '4' })} />
+      </AuthProvider>
+    )
     await waitFor(() => expect(screen.getByText('Bài test route')).toBeInTheDocument())
   })
 })
