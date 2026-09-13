@@ -3,7 +3,8 @@ import BlogFeaturedArticle from '@/components/blog/BlogFeaturedArticle'
 import BlogArticleGrid from '@/components/blog/BlogArticleGrid'
 import BlogQuizCallout from '@/components/blog/BlogQuizCallout'
 import BlogNewsletterSection from '@/components/blog/BlogNewsletterSection'
-import { getDb, getBlogPosts } from '@/lib/db'
+import { getBlogPosts } from '@/lib/db'
+import { getDb } from '@/lib/getDb'
 
 export default function BlogPage() {
   const posts = getBlogPosts(getDb())

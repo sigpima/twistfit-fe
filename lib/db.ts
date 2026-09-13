@@ -1,6 +1,4 @@
-import Database from 'better-sqlite3'
-import { existsSync, mkdirSync } from 'node:fs'
-import path from 'node:path'
+import type Database from 'better-sqlite3'
 
 export type Season = 'spring' | 'summer' | 'autumn' | 'winter'
 export const SEASONS: Season[] = ['spring', 'summer', 'autumn', 'winter']
@@ -457,20 +455,3 @@ export function seedIfEmpty(db: Database.Database): void {
   SEED_QUIZ_QUESTIONS.forEach((question) => createQuizQuestion(db, question))
 }
 
-let singleton: Database.Database | null = null
-
-export function getDb(): Database.Database {
-  if (singleton) return singleton
-
-  const dbPath = path.join(process.cwd(), 'data', 'twistfit.db')
-  const dir = path.dirname(dbPath)
-  if (!existsSync(dir)) {
-    mkdirSync(dir, { recursive: true })
-  }
-
-  const db = new Database(dbPath)
-  initSchema(db)
-  seedIfEmpty(db)
-  singleton = db
-  return db
-}

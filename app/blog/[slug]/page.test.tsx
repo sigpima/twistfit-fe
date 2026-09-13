@@ -25,9 +25,10 @@ vi.mock('next/navigation', () => ({
 }))
 
 vi.mock('@/lib/db', () => ({
-  getDb: () => ({}),
   getBlogPostBySlug: (_db: unknown, slug: string) => (slug === POST.slug ? POST : null),
 }))
+
+vi.mock('@/lib/getDb', () => ({ getDb: () => ({}) }))
 
 describe('BlogPostPage', async () => {
   const { default: BlogPostPage } = await import('./page')

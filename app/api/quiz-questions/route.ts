@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { getDb, getQuizQuestions, createQuizQuestion } from '@/lib/db'
+import { getQuizQuestions, createQuizQuestion } from '@/lib/db'
+import { getDb } from '@/lib/getDb'
 import { getAdminSessionFromCookieHeader } from '@/lib/auth/session'
 import { validateQuizQuestionBody } from './validate'
 

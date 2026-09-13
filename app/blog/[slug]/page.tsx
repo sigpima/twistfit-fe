@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getDb, getBlogPostBySlug } from '@/lib/db'
+import { getBlogPostBySlug } from '@/lib/db'
+import { getDb } from '@/lib/getDb'
 import { renderMarkdown } from '@/lib/markdown'
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {

@@ -36,8 +36,10 @@ const POSTS: BlogPost[] = [
 
 vi.mock('@/lib/db', async () => {
   const actual = await vi.importActual<typeof import('@/lib/db')>('@/lib/db')
-  return { ...actual, getDb: () => ({}), getBlogPosts: () => POSTS }
+  return { ...actual, getBlogPosts: () => POSTS }
 })
+
+vi.mock('@/lib/getDb', () => ({ getDb: () => ({}) }))
 
 describe('BlogPage', async () => {
   const { default: BlogPage } = await import('./page')

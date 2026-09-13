@@ -18,9 +18,10 @@ const QUESTIONS: QuizQuestion[] = Array.from({ length: 5 }, (_, index) => ({
 }))
 
 vi.mock('@/lib/db', () => ({
-  getDb: () => ({}),
   getQuizQuestions: () => QUESTIONS,
 }))
+
+vi.mock('@/lib/getDb', () => ({ getDb: () => ({}) }))
 
 describe('QuizPage', async () => {
   const { default: QuizPage } = await import('./page')

@@ -1,14 +1,14 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest'
-import { getDb } from '@/lib/db'
+import { getDb } from '@/lib/getDb'
 import { GET, POST } from './route'
 import { createSessionCookieValue, SESSION_COOKIE_NAME } from '@/lib/auth/session'
 
-vi.mock('@/lib/db', async () => {
-  const actual = await vi.importActual<typeof import('@/lib/db')>('@/lib/db')
+vi.mock('@/lib/getDb', async () => {
+  const { initSchema } = await vi.importActual<typeof import('@/lib/db')>('@/lib/db')
   const Database = (await import('better-sqlite3')).default
   const testDb = new Database(':memory:')
-  actual.initSchema(testDb)
-  return { ...actual, getDb: () => testDb }
+  initSchema(testDb)
+  return { getDb: () => testDb }
 })
 
 function adminCookieHeader() {

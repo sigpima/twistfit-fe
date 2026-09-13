@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { getDb, getBlogPostById, updateBlogPost, deleteBlogPost } from '@/lib/db'
+import { getBlogPostById, updateBlogPost, deleteBlogPost } from '@/lib/db'
+import { getDb } from '@/lib/getDb'
 import { getAdminSessionFromCookieHeader } from '@/lib/auth/session'
 import { validateBlogPostBody } from '../validate'
 
