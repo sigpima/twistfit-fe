@@ -5,7 +5,7 @@ import { initSchema as initBlogSchema } from './db'
 import { initSchema as initUsersSchema, seedIfEmpty as seedUsersIfEmpty } from './auth/users'
 import { initSchema as initForumSchema, seedIfEmpty as seedForumIfEmpty } from './forum'
 import { initSchema as initContactSchema } from './contact'
-import { initSchema as initQuizAttemptsSchema, seedIfEmpty as seedQuizAttemptsIfEmpty } from './quizAttempts'
+import { initSchema as initQuizAttemptsSchema } from './quizAttempts'
 
 let singleton: Database.Database | null = null
 
@@ -28,7 +28,6 @@ export function getDb(): Database.Database {
   seedForumIfEmpty(db)
   initContactSchema(db)
   initQuizAttemptsSchema(db)
-  seedQuizAttemptsIfEmpty(db)
   singleton = db
   return db
 }

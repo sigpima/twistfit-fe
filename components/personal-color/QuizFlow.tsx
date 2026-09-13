@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { apiFetch } from '@/lib/apiClient'
 import type { QuizQuestion, Season } from '@/lib/db'
 import { computeSeasonResult } from '@/lib/computeSeasonResult'
 
@@ -25,7 +26,7 @@ export default function QuizFlow({ questions }: { questions: QuizQuestion[] }) {
     if (isLastStep) {
       const finalAnswers = answers.filter((value): value is Season => value !== null)
       const season = computeSeasonResult(finalAnswers)
-      void fetch('/api/quiz-attempts', {
+      void apiFetch('/quiz-attempts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ season }),

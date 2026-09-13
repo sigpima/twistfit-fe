@@ -72,7 +72,10 @@ describe('QuizFlow', () => {
     completeQuiz()
 
     await waitFor(() =>
-      expect(fetch).toHaveBeenCalledWith('/api/quiz-attempts', expect.objectContaining({ method: 'POST' }))
+      expect(fetch).toHaveBeenCalledWith(
+        '/quiz-attempts',
+        expect.objectContaining({ method: 'POST', credentials: 'include' })
+      )
     )
     const [, init] = (fetch as ReturnType<typeof vi.fn>).mock.calls[0]
     const sentBody = JSON.parse(init.body as string) as { season: string }

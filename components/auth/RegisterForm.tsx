@@ -45,8 +45,8 @@ export default function RegisterForm() {
     }
 
     // Mirror the new user into the legacy SQLite users table (unmodified
-    // /api/auth/register route) so forum and quiz-attempts — which still
-    // query that table directly — can resolve this user after registration.
+    // /api/auth/register route) so forum — which still queries that table
+    // directly — can resolve this user after registration.
     void fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
