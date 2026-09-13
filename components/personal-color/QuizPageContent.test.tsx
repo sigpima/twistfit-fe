@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
+import QuizPageContent from './QuizPageContent'
 import type { QuizQuestion } from '@/lib/db'
 
 vi.mock('next/navigation', () => ({
@@ -17,16 +18,9 @@ const QUESTIONS: QuizQuestion[] = Array.from({ length: 5 }, (_, index) => ({
   ],
 }))
 
-vi.mock('@/lib/db', () => ({
-  getDb: () => ({}),
-  getQuizQuestions: () => QUESTIONS,
-}))
-
-describe('QuizPage', async () => {
-  const { default: QuizPage } = await import('./page')
-
+describe('QuizPageContent', () => {
   it('renders the quiz heading and first question', () => {
-    renderWithIntl(<QuizPage />)
+    renderWithIntl(<QuizPageContent questions={QUESTIONS} />)
     expect(screen.getByRole('heading', { level: 1, name: 'Kiểm Tra Personal Color' })).toBeInTheDocument()
     expect(screen.getByText('Câu hỏi 1/5')).toBeInTheDocument()
   })
