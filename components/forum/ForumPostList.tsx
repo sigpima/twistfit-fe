@@ -14,7 +14,6 @@ export default function ForumPostList() {
 
   useEffect(() => {
     const query = category === 'all' ? '' : `?category=${category}`
-    setPosts(null)
     fetch(`/api/forum/posts${query}`)
       .then((response) => response.json())
       .then(setPosts)

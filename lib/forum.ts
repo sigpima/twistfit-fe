@@ -127,9 +127,8 @@ export function deleteForumPost(db: Database.Database, id: number): boolean {
   return result.changes > 0
 }
 
-export function seedIfEmpty(_db: Database.Database): void {
-  // Deliberately a no-op: unlike the other CMS tables, forum content only
-  // makes sense once real users post it, so there is nothing to seed. Kept
-  // as a function so lib/getDb.ts's init/seed call sequence stays uniform
-  // across every domain module.
-}
+// Deliberately a no-op: unlike the other CMS tables, forum content only makes sense
+// once real users post it, so there is nothing to seed. Kept as a function (accepting
+// but ignoring `db`) so lib/getDb.ts's init/seed call sequence stays uniform across
+// every domain module.
+export function seedIfEmpty(_db: Database.Database): void {}
