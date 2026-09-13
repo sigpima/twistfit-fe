@@ -3,6 +3,7 @@ import { existsSync, mkdirSync } from 'node:fs'
 import path from 'node:path'
 import { initSchema, seedIfEmpty } from './db'
 import { initSchema as initFaqSchema, seedIfEmpty as seedFaqIfEmpty } from './faq'
+import { initSchema as initModelCatalogSchema, seedIfEmpty as seedModelCatalogIfEmpty } from './modelCatalog'
 
 let singleton: Database.Database | null = null
 
@@ -20,6 +21,8 @@ export function getDb(): Database.Database {
   seedIfEmpty(db)
   initFaqSchema(db)
   seedFaqIfEmpty(db)
+  initModelCatalogSchema(db)
+  seedModelCatalogIfEmpty(db)
   singleton = db
   return db
 }
