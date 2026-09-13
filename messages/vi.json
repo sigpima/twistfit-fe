@@ -71,6 +71,17 @@
         "autumn": "Mùa Thu",
         "winter": "Mùa Đông"
       }
+    },
+    "QuizList": {
+      "title": "Quản lý câu hỏi Quiz",
+      "newButton": "Thêm câu hỏi",
+      "editButton": "Sửa",
+      "deleteButton": "Xóa",
+      "deleteConfirm": "Xóa câu hỏi này?",
+      "moveUp": "Lên",
+      "moveDown": "Xuống",
+      "emptyState": "Chưa có câu hỏi nào.",
+      "loading": "Đang tải..."
     }
   },
   "Login": {
