@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import type { Role } from '@/lib/auth/users'
 
 const STORAGE_KEY = 'twistfit.auth'
@@ -40,7 +41,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   async function login(email: string, password: string): Promise<AuthUser | null> {
-    const response = await fetch('/api/auth/login', {
+    const response = await apiFetch('/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -55,7 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   function logout() {
     setUser(null)
     window.localStorage.removeItem(STORAGE_KEY)
-    void fetch('/api/auth/logout', { method: 'POST' }).catch(() => {})
+    void apiFetch('/auth/logout', { method: 'POST' }).catch(() => {})
   }
 
   return <AuthContext.Provider value={{ user, isHydrated, login, logout }}>{children}</AuthContext.Provider>

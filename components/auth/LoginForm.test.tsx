@@ -67,10 +67,11 @@ describe('LoginForm', () => {
     submit('user@twistfit.vn', 'user1234')
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/'))
     expect(fetch).toHaveBeenCalledWith(
-      '/api/auth/login',
+      '/auth/login',
       expect.objectContaining({
         method: 'POST',
         body: JSON.stringify({ email: 'user@twistfit.vn', password: 'user1234' }),
+        credentials: 'include',
       })
     )
   })

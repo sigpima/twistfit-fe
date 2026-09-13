@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 import { useAuth } from '@/components/auth/AuthProvider'
+import { apiFetch } from '@/lib/apiClient'
 
 export default function RegisterForm() {
   const t = useTranslations('Register')
@@ -31,7 +32,7 @@ export default function RegisterForm() {
     }
     setConfirmError(false)
 
-    const response = await fetch('/api/auth/register', {
+    const response = await apiFetch('/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, password }),
@@ -42,6 +43,15 @@ export default function RegisterForm() {
       setFormError(data.error === 'EMAIL_TAKEN' ? t('errors.emailTaken') : t('errors.generic'))
       return
     }
+
+    // Mirror the new user into the legacy SQLite users table (unmodified
+    // /api/auth/register route) so forum and quiz-attempts — which still
+    // query that table directly — can resolve this user after registration.
+    void fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password }),
+    }).catch(() => {})
 
     setFormError(null)
     const account = await login(email, password)
