@@ -217,6 +217,24 @@
       "deleteConfirm": "Xóa thành viên này?",
       "emptyState": "Chưa có thành viên nào.",
       "loading": "Đang tải..."
+    },
+    "ContactList": {
+      "title": "Hộp thư liên hệ",
+      "subjects": {
+        "color-test": "Hỏi về kết quả Personal Color",
+        "virtual-fitting": "Góp ý tính năng Phòng Thử Đồ Ảo",
+        "stylist": "Đăng ký hợp tác Stylist / Fashion KOL",
+        "other": "Ý kiến đóng góp khác"
+      },
+      "unreadBadge": "Chưa đọc",
+      "markReadButton": "Đánh dấu đã đọc",
+      "markUnreadButton": "Đánh dấu chưa đọc",
+      "deleteButton": "Xóa",
+      "deleteConfirm": "Xóa tin nhắn này?",
+      "emptyState": "Chưa có tin nhắn nào.",
+      "loading": "Đang tải...",
+      "detailEmailLabel": "Email",
+      "detailPhoneLabel": "Số điện thoại"
     }
   },
   "Forum": {
