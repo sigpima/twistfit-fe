@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
-import { findMockAccount, type Role } from '@/lib/auth/mockAccounts'
+import type { Role } from '@/lib/auth/users'
 
 const STORAGE_KEY = 'twistfit.auth'
 
@@ -17,7 +17,7 @@ type AuthContextValue = {
   // page must wait for this before redirecting on `user === null`, or it
   // will bounce an already-logged-in visitor during that first render.
   isHydrated: boolean
-  login: (email: string, password: string) => AuthUser | null
+  login: (email: string, password: string) => Promise<AuthUser | null>
   logout: () => void
 }
 
@@ -39,15 +39,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsHydrated(true)
   }, [])
 
-  function login(email: string, password: string) {
-    const account = findMockAccount(email, password)
-    if (!account) {
-      return null
-    }
-    const nextUser: AuthUser = { name: account.name, email: account.email, role: account.role }
-    setUser(nextUser)
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextUser))
-    return nextUser
+  async function login(email: string, password: string): Promise<AuthUser | null> {
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    })
+    if (!response.ok) return null
+    const account = (await response.json()) as AuthUser
+    setUser(account)
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(account))
+    return account
   }
 
   function logout() {
