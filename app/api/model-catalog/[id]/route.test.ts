@@ -1,6 +1,6 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest'
 import { getDb } from '@/lib/getDb'
-import { createModel } from '@/lib/modelCatalog'
+import { createModel, type CatalogModelInput } from '@/lib/modelCatalog'
 import { GET, PUT, DELETE } from './route'
 import { createSessionCookieValue, SESSION_COOKIE_NAME } from '@/lib/auth/session'
 
@@ -17,7 +17,7 @@ function adminCookieHeader() {
   return `${SESSION_COOKIE_NAME}=${encodeURIComponent(value)}`
 }
 
-const validBody = {
+const validBody: CatalogModelInput = {
   name: 'Model Test',
   image: '/outfit/models/test.jpg',
   dossierImage: '/outfit/models/test-dossier.jpg',
