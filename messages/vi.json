@@ -18,7 +18,31 @@
     "blogCardTitle": "Quản lý Blog",
     "blogCardDescription": "Tạo, sửa và xóa bài viết hiển thị trên trang Blog.",
     "quizCardTitle": "Quản lý câu hỏi Quiz",
-    "quizCardDescription": "Tạo, sửa và sắp xếp thứ tự câu hỏi trong bài trắc nghiệm Personal Color."
+    "quizCardDescription": "Tạo, sửa và sắp xếp thứ tự câu hỏi trong bài trắc nghiệm Personal Color.",
+    "BlogForm": {
+      "fields": {
+        "title": "Tiêu đề",
+        "slug": "Đường dẫn (slug)",
+        "excerpt": "Mô tả ngắn",
+        "content": "Nội dung (Markdown)",
+        "coverImageUrl": "Ảnh bìa (URL)",
+        "category": "Chuyên mục",
+        "authorName": "Tác giả (không bắt buộc)",
+        "publishedAt": "Ngày đăng",
+        "isFeatured": "Đặt làm bài nổi bật"
+      },
+      "categories": {
+        "personal-color": "Personal Color",
+        "styling": "Phối đồ & Vóc dáng",
+        "sustainable": "Lối sống xanh & Bền vững",
+        "beauty": "Làm đẹp & Makeup",
+        "community": "Cộng đồng TwistFit"
+      },
+      "submitCreate": "Tạo bài viết",
+      "submitEdit": "Lưu thay đổi",
+      "unauthorizedError": "Bạn cần đăng nhập với quyền quản trị.",
+      "genericError": "Có lỗi xảy ra, vui lòng thử lại."
+    }
   },
   "Login": {
     "title": "Đăng Nhập TwistFit",
