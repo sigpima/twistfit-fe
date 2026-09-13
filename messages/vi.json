@@ -217,6 +217,11 @@
       "loading": "Đang tải..."
     }
   },
+  "Forum": {
+    "AuthGate": {
+      "checkingAccess": "Đang kiểm tra đăng nhập..."
+    }
+  },
   "Login": {
     "title": "Đăng Nhập TwistFit",
     "subtitle": "Đăng nhập để tiếp tục hành trình khám phá Personal Color của bạn.",
