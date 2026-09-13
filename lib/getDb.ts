@@ -4,6 +4,7 @@ import path from 'node:path'
 import { initSchema, seedIfEmpty } from './db'
 import { initSchema as initFaqSchema, seedIfEmpty as seedFaqIfEmpty } from './faq'
 import { initSchema as initModelCatalogSchema, seedIfEmpty as seedModelCatalogIfEmpty } from './modelCatalog'
+import { initSchema as initCapsuleSchema, seedIfEmpty as seedCapsuleIfEmpty } from './capsuleWardrobe'
 
 let singleton: Database.Database | null = null
 
@@ -23,6 +24,8 @@ export function getDb(): Database.Database {
   seedFaqIfEmpty(db)
   initModelCatalogSchema(db)
   seedModelCatalogIfEmpty(db)
+  initCapsuleSchema(db)
+  seedCapsuleIfEmpty(db)
   singleton = db
   return db
 }
