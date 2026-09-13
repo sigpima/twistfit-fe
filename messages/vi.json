@@ -261,12 +261,13 @@
       }
     },
     "errors": {
-      "passwordMismatch": "Mật khẩu xác nhận không khớp"
+      "passwordMismatch": "Mật khẩu xác nhận không khớp",
+      "emailTaken": "Email này đã được đăng ký",
+      "generic": "Có lỗi xảy ra, vui lòng thử lại."
     },
     "showPassword": "Hiện mật khẩu",
     "hidePassword": "Ẩn mật khẩu",
     "submit": "ĐĂNG KÝ",
-    "comingSoon": "Tính năng đăng ký đang được hoàn thiện. Vui lòng quay lại sau hoặc liên hệ đội ngũ TwistFit để được hỗ trợ tạo tài khoản.",
     "haveAccount": "Đã có tài khoản?",
     "loginLink": "Đăng nhập ngay"
   },
