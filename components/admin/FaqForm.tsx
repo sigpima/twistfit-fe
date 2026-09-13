@@ -8,7 +8,9 @@ import { FAQ_CATEGORIES, FAQ_HIGHLIGHT_ICONS, type FaqCategory, type FaqHighligh
 const inputClass =
   'w-full rounded-xl bg-surface px-4 py-3 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none'
 
-const CATEGORY_LABEL_KEYS: Record<FaqCategory, string> = {
+type FaqCategoryTranslationKey = 'personalColor' | 'fittingRoom' | 'account' | 'stylist'
+
+const CATEGORY_LABEL_KEYS: Record<FaqCategory, FaqCategoryTranslationKey> = {
   'personal-color': 'personalColor',
   'fitting-room': 'fittingRoom',
   account: 'account',

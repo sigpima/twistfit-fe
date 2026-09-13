@@ -1,6 +1,6 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest'
 import { getDb } from '@/lib/getDb'
-import { createFaqItem } from '@/lib/faq'
+import { createFaqItem, type FaqItemInput } from '@/lib/faq'
 import { GET, PUT, DELETE } from './route'
 import { createSessionCookieValue, SESSION_COOKIE_NAME } from '@/lib/auth/session'
 
@@ -17,7 +17,7 @@ function adminCookieHeader() {
   return `${SESSION_COOKIE_NAME}=${encodeURIComponent(value)}`
 }
 
-const validBody = {
+const validBody: FaqItemInput = {
   categories: ['personal-color'],
   question: 'Câu hỏi test?',
   answerMarkdown: 'Nội dung trả lời.',
