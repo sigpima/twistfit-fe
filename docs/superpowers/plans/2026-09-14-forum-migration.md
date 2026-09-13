@@ -627,14 +627,20 @@ def _promote_to_admin_and_relogin(client, db_session, email: str) -> None:
 VALID_BODY = {"title": "Bài test", "body": "Nội dung", "category": "general"}
 
 
+def _publish(db_session, post_id: int) -> None:
+    from app.domains.forum.models import ForumPost
+
+    db_session.query(ForumPost).filter(ForumPost.id == post_id).update({"status": "published"})
+    db_session.commit()
+
+
 def test_list_posts_is_public_and_only_returns_published(client, db_session):
     _register_and_login(client, "forum-author@example.com")
     post = client.post("/forum/posts", json=VALID_BODY).json()
 
     assert client.get("/forum/posts").json() == []
 
-    _promote_to_admin_and_relogin(client, db_session, "forum-author@example.com")
-    client.patch(f"/forum/posts/{post['id']}", json={"status": "published"})
+    _publish(db_session, post["id"])
 
     published = client.get("/forum/posts").json()
     assert [p["id"] for p in published] == [post["id"]]
@@ -644,9 +650,8 @@ def test_list_posts_filters_by_category(client, db_session):
     _register_and_login(client, "forum-cat@example.com")
     general = client.post("/forum/posts", json=VALID_BODY).json()
     styling = client.post("/forum/posts", json={**VALID_BODY, "category": "styling-help"}).json()
-    _promote_to_admin_and_relogin(client, db_session, "forum-cat@example.com")
-    client.patch(f"/forum/posts/{general['id']}", json={"status": "published"})
-    client.patch(f"/forum/posts/{styling['id']}", json={"status": "published"})
+    _publish(db_session, general["id"])
+    _publish(db_session, styling["id"])
 
     response = client.get("/forum/posts?category=styling-help")
     assert [p["id"] for p in response.json()] == [styling["id"]]
@@ -655,8 +660,7 @@ def test_list_posts_filters_by_category(client, db_session):
 def test_list_posts_ignores_an_invalid_category_filter(client, db_session):
     _register_and_login(client, "forum-cat2@example.com")
     post = client.post("/forum/posts", json=VALID_BODY).json()
-    _promote_to_admin_and_relogin(client, db_session, "forum-cat2@example.com")
-    client.patch(f"/forum/posts/{post['id']}", json={"status": "published"})
+    _publish(db_session, post["id"])
 
     response = client.get("/forum/posts?category=not-a-real-category")
     assert [p["id"] for p in response.json()] == [post["id"]]
@@ -733,8 +737,7 @@ def test_update_post_requires_ownership(client):
 def test_update_post_resets_status_to_pending_even_from_published(client, db_session):
     _register_and_login(client, "forum-owner5@example.com")
     post = client.post("/forum/posts", json=VALID_BODY).json()
-    _promote_to_admin_and_relogin(client, db_session, "forum-owner5@example.com")
-    client.patch(f"/forum/posts/{post['id']}", json={"status": "published"})
+    _publish(db_session, post["id"])
 
     updated = client.put(f"/forum/posts/{post['id']}", json={**VALID_BODY, "title": "Đã sửa"})
     assert updated.status_code == 200
