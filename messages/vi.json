@@ -42,6 +42,18 @@
       "submitEdit": "Lưu thay đổi",
       "unauthorizedError": "Bạn cần đăng nhập với quyền quản trị.",
       "genericError": "Có lỗi xảy ra, vui lòng thử lại."
+    },
+    "BlogList": {
+      "title": "Quản lý Blog",
+      "newButton": "Viết bài mới",
+      "columnTitle": "Tiêu đề",
+      "columnCategory": "Chuyên mục",
+      "columnDate": "Ngày đăng",
+      "editButton": "Sửa",
+      "deleteButton": "Xóa",
+      "deleteConfirm": "Xóa bài viết này?",
+      "emptyState": "Chưa có bài viết nào.",
+      "loading": "Đang tải..."
     }
   },
   "Login": {
