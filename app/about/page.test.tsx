@@ -1,7 +1,8 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import type { TeamMember } from '@/lib/team'
+import AboutPage from './page'
 
 const MEMBERS: TeamMember[] = [
   {
@@ -19,17 +20,15 @@ const MEMBERS: TeamMember[] = [
   },
 ]
 
-vi.mock('@/lib/getDb', () => ({ getDb: () => ({}) }))
-vi.mock('@/lib/team', async () => {
-  const actual = await vi.importActual<typeof import('@/lib/team')>('@/lib/team')
-  return { ...actual, getTeamMembers: () => MEMBERS }
-})
+describe('AboutPage', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
 
-describe('AboutPage', async () => {
-  const { default: AboutPage } = await import('./page')
-
-  it('renders the seeded team member', () => {
-    renderWithIntl(<AboutPage />)
+  it('renders the seeded team member', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => MEMBERS }))
+    const page = await AboutPage()
+    renderWithIntl(page)
     expect(screen.getByText('Thành viên seed test')).toBeInTheDocument()
   })
 })

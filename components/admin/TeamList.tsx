@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import type { TeamMember } from '@/lib/team'
 
 export default function TeamList() {
@@ -10,14 +11,14 @@ export default function TeamList() {
   const [members, setMembers] = useState<TeamMember[] | null>(null)
 
   useEffect(() => {
-    fetch('/api/team')
+    apiFetch('/team')
       .then((response) => response.json())
       .then(setMembers)
   }, [])
 
   async function handleDelete(id: number) {
     if (!window.confirm(t('deleteConfirm'))) return
-    await fetch(`/api/team/${id}`, { method: 'DELETE' })
+    await apiFetch(`/team/${id}`, { method: 'DELETE' })
     setMembers((current) => current?.filter((member) => member.id !== id) ?? null)
   }
 

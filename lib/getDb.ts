@@ -4,7 +4,6 @@ import path from 'node:path'
 import { initSchema, seedIfEmpty } from './db'
 import { initSchema as initModelCatalogSchema, seedIfEmpty as seedModelCatalogIfEmpty } from './modelCatalog'
 import { initSchema as initCapsuleSchema, seedIfEmpty as seedCapsuleIfEmpty } from './capsuleWardrobe'
-import { initSchema as initTeamSchema, seedIfEmpty as seedTeamIfEmpty } from './team'
 import { initSchema as initUsersSchema, seedIfEmpty as seedUsersIfEmpty } from './auth/users'
 import { initSchema as initForumSchema, seedIfEmpty as seedForumIfEmpty } from './forum'
 import { initSchema as initContactSchema, seedIfEmpty as seedContactIfEmpty } from './contact'
@@ -28,8 +27,6 @@ export function getDb(): Database.Database {
   seedModelCatalogIfEmpty(db)
   initCapsuleSchema(db)
   seedCapsuleIfEmpty(db)
-  initTeamSchema(db)
-  seedTeamIfEmpty(db)
   initUsersSchema(db)
   seedUsersIfEmpty(db)
   initForumSchema(db)

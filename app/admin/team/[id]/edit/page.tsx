@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import AdminGate from '@/components/auth/AdminGate'
 import TeamForm from '@/components/admin/TeamForm'
+import { apiFetch } from '@/lib/apiClient'
 import type { TeamMember } from '@/lib/team'
 
 export default function EditTeamMemberPage({ params }: { params: Promise<{ id: string }> }) {
@@ -10,7 +11,7 @@ export default function EditTeamMemberPage({ params }: { params: Promise<{ id: s
 
   useEffect(() => {
     params.then(({ id }) => {
-      fetch(`/api/team/${id}`)
+      apiFetch(`/team/${id}`)
         .then((response) => response.json())
         .then(setMember)
     })

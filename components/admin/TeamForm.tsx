@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import { COLOR_VARIANTS, type ColorVariant, type TeamMember } from '@/lib/team'
 
 const inputClass =
@@ -31,7 +32,7 @@ export default function TeamForm({ initialMember }: { initialMember?: TeamMember
 
     const body = { image, name, role, bio, badgeVariant, roleVariant, footerIcon, footerLabel }
 
-    const response = await fetch(isEditing ? `/api/team/${initialMember!.id}` : '/api/team', {
+    const response = await apiFetch(isEditing ? `/team/${initialMember!.id}` : '/team', {
       method: isEditing ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -39,14 +40,13 @@ export default function TeamForm({ initialMember }: { initialMember?: TeamMember
 
     setSubmitting(false)
 
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 403) {
       setErrors({ form: t('unauthorizedError') })
       return
     }
 
     if (!response.ok) {
-      const data = await response.json().catch(() => ({}))
-      setErrors(data.errors ?? { form: t('genericError') })
+      setErrors({ form: t('genericError') })
       return
     }
 

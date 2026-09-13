@@ -3,11 +3,12 @@ import MissionVisionGrid from '@/components/about/MissionVisionGrid'
 import StorySection from '@/components/about/StorySection'
 import TeamGrid from '@/components/about/TeamGrid'
 import AboutCtaBanner from '@/components/about/AboutCtaBanner'
-import { getTeamMembers } from '@/lib/team'
-import { getDb } from '@/lib/getDb'
+import { apiFetch } from '@/lib/apiClient'
+import type { TeamMember } from '@/lib/team'
 
-export default function AboutPage() {
-  const members = getTeamMembers(getDb())
+export default async function AboutPage() {
+  const response = await apiFetch('/team', { cache: 'no-store' })
+  const members = response.ok ? ((await response.json()) as TeamMember[]) : []
 
   return (
     <main className="w-full bg-surface">
