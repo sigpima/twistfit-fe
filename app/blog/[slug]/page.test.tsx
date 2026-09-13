@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import type { BlogPost } from '@/lib/db'
@@ -24,16 +24,15 @@ vi.mock('next/navigation', () => ({
   notFound: () => notFoundMock(),
 }))
 
-vi.mock('@/lib/db', () => ({
-  getBlogPostBySlug: (_db: unknown, slug: string) => (slug === POST.slug ? POST : null),
-}))
-
-vi.mock('@/lib/getDb', () => ({ getDb: () => ({}) }))
-
-describe('BlogPostPage', async () => {
-  const { default: BlogPostPage } = await import('./page')
+describe('BlogPostPage', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals()
+    notFoundMock.mockClear()
+  })
 
   it('renders the post title and markdown content when the slug exists', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POST }))
+    const { default: BlogPostPage } = await import('./page')
     const ui = await BlogPostPage({ params: Promise.resolve({ slug: 'mua-dong-2026' }) })
     renderWithIntl(ui!)
     expect(
@@ -44,6 +43,8 @@ describe('BlogPostPage', async () => {
   })
 
   it('calls notFound() when the slug does not exist', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 404 }))
+    const { default: BlogPostPage } = await import('./page')
     await BlogPostPage({ params: Promise.resolve({ slug: 'khong-ton-tai' }) })
     expect(notFoundMock).toHaveBeenCalled()
   })

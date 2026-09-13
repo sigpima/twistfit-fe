@@ -1,7 +1,8 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import type { BlogPost } from '@/lib/db'
+import BlogPage from './page'
 
 const POSTS: BlogPost[] = [
   {
@@ -34,18 +35,15 @@ const POSTS: BlogPost[] = [
   },
 ]
 
-vi.mock('@/lib/db', async () => {
-  const actual = await vi.importActual<typeof import('@/lib/db')>('@/lib/db')
-  return { ...actual, getBlogPosts: () => POSTS }
-})
+describe('BlogPage', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
 
-vi.mock('@/lib/getDb', () => ({ getDb: () => ({}) }))
-
-describe('BlogPage', async () => {
-  const { default: BlogPage } = await import('./page')
-
-  it('renders the hero heading, featured article and article grid', () => {
-    renderWithIntl(<BlogPage />)
+  it('renders the hero heading, featured article and article grid', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POSTS }))
+    const page = await BlogPage()
+    renderWithIntl(page)
     expect(screen.getByRole('heading', { level: 1, name: 'Tạp Chí Phong Cách TwistFit' })).toBeInTheDocument()
     expect(screen.getByText('Bởi Stylist Mai Anh')).toBeInTheDocument()
     expect(screen.getByText(/Top 5 thỏi son kinh điển/)).toBeInTheDocument()

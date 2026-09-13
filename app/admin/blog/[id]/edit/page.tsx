@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import AdminGate from '@/components/auth/AdminGate'
 import BlogPostForm from '@/components/admin/BlogPostForm'
+import { apiFetch } from '@/lib/apiClient'
 import type { BlogPost } from '@/lib/db'
 
 export default function EditBlogPostPage({ params }: { params: Promise<{ id: string }> }) {
@@ -10,7 +11,7 @@ export default function EditBlogPostPage({ params }: { params: Promise<{ id: str
 
   useEffect(() => {
     params.then(({ id }) => {
-      fetch(`/api/blog/${id}`)
+      apiFetch(`/blog/${id}`)
         .then((response) => response.json())
         .then(setPost)
     })

@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import type { BlogPost } from '@/lib/db'
 
 export default function BlogPostList() {
@@ -10,14 +11,14 @@ export default function BlogPostList() {
   const [posts, setPosts] = useState<BlogPost[] | null>(null)
 
   useEffect(() => {
-    fetch('/api/blog')
+    apiFetch('/blog')
       .then((response) => response.json())
       .then(setPosts)
   }, [])
 
   async function handleDelete(id: number) {
     if (!window.confirm(t('deleteConfirm'))) return
-    await fetch(`/api/blog/${id}`, { method: 'DELETE' })
+    await apiFetch(`/blog/${id}`, { method: 'DELETE' })
     setPosts((current) => current?.filter((post) => post.id !== id) ?? null)
   }
 

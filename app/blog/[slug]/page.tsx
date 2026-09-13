@@ -1,17 +1,19 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getBlogPostBySlug } from '@/lib/db'
-import { getDb } from '@/lib/getDb'
+import { apiFetch } from '@/lib/apiClient'
 import { renderMarkdown } from '@/lib/markdown'
+import type { BlogPost } from '@/lib/db'
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const post = getBlogPostBySlug(getDb(), slug)
+  const response = await apiFetch(`/blog/slug/${slug}`, { cache: 'no-store' })
 
-  if (!post) {
+  if (!response.ok) {
     notFound()
     return null
   }
+
+  const post = (await response.json()) as BlogPost
 
   return (
     <main className="w-full bg-surface">

@@ -63,7 +63,7 @@ describe('BlogPostForm', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Tạo bài viết' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/blog'))
-    expect(fetch).toHaveBeenCalledWith('/api/blog', expect.objectContaining({ method: 'POST' }))
+    expect(fetch).toHaveBeenCalledWith('/blog', expect.objectContaining({ method: 'POST', credentials: 'include' }))
   })
 
   it('pre-fills fields and PUTs to /api/blog/{id} when editing', async () => {
@@ -76,22 +76,15 @@ describe('BlogPostForm', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Lưu thay đổi' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/blog'))
-    expect(fetch).toHaveBeenCalledWith('/api/blog/42', expect.objectContaining({ method: 'PUT' }))
+    expect(fetch).toHaveBeenCalledWith('/blog/42', expect.objectContaining({ method: 'PUT', credentials: 'include' }))
   })
 
-  it('shows field errors returned by the API instead of redirecting', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockResolvedValue({
-        ok: false,
-        status: 400,
-        json: async () => ({ errors: { title: 'Tiêu đề không được để trống' } }),
-      })
-    )
+  it('shows a generic error and does not redirect when the API rejects the submission', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 422, json: async () => ({ detail: [] }) }))
     renderWithIntl(<BlogPostForm />)
     fireEvent.click(screen.getByRole('button', { name: 'Tạo bài viết' }))
 
-    await waitFor(() => expect(screen.getByText('Tiêu đề không được để trống')).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText('Có lỗi xảy ra, vui lòng thử lại.')).toBeInTheDocument())
     expect(pushMock).not.toHaveBeenCalled()
   })
 })

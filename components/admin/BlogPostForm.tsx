@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import { BLOG_CATEGORIES, type BlogCategory, type BlogPost } from '@/lib/db'
 import { slugify } from '@/lib/slugify'
 
@@ -51,7 +52,7 @@ export default function BlogPostForm({ initialPost }: { initialPost?: BlogPost }
       publishedAt,
     }
 
-    const response = await fetch(isEditing ? `/api/blog/${initialPost!.id}` : '/api/blog', {
+    const response = await apiFetch(isEditing ? `/blog/${initialPost!.id}` : '/blog', {
       method: isEditing ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -59,14 +60,13 @@ export default function BlogPostForm({ initialPost }: { initialPost?: BlogPost }
 
     setSubmitting(false)
 
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 403) {
       setErrors({ form: t('unauthorizedError') })
       return
     }
 
     if (!response.ok) {
-      const data = await response.json().catch(() => ({}))
-      setErrors(data.errors ?? { form: t('genericError') })
+      setErrors({ form: t('genericError') })
       return
     }
 
