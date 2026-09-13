@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import AdminGate from '@/components/auth/AdminGate'
 import CapsuleForm from '@/components/admin/CapsuleForm'
+import { apiFetch } from '@/lib/apiClient'
 import type { CapsuleSet } from '@/lib/capsuleWardrobe'
 
 export default function EditCapsuleSetPage({ params }: { params: Promise<{ id: string }> }) {
@@ -10,7 +11,7 @@ export default function EditCapsuleSetPage({ params }: { params: Promise<{ id: s
 
   useEffect(() => {
     params.then(({ id }) => {
-      fetch(`/api/capsule-wardrobe/${id}`)
+      apiFetch(`/capsule-wardrobe/${id}`)
         .then((response) => response.json())
         .then(setSet)
     })

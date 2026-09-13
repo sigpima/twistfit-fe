@@ -1,8 +1,9 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import { OutfitFlowProvider } from '@/components/outfit/OutfitFlowProvider'
 import type { CapsuleSet } from '@/lib/capsuleWardrobe'
+import Step4Page from './page'
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: vi.fn() }),
@@ -25,21 +26,15 @@ const SETS: CapsuleSet[] = [
   },
 ]
 
-vi.mock('@/lib/getDb', () => ({ getDb: () => ({}) }))
-vi.mock('@/lib/capsuleWardrobe', async () => {
-  const actual = await vi.importActual<typeof import('@/lib/capsuleWardrobe')>('@/lib/capsuleWardrobe')
-  return { ...actual, getCapsuleSets: () => SETS }
-})
+describe('Step4Page', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
 
-describe('Step4Page', async () => {
-  const { default: Step4Page } = await import('./page')
-
-  it('renders the result heading with capsule sets loaded from the database', () => {
-    renderWithIntl(
-      <OutfitFlowProvider>
-        <Step4Page />
-      </OutfitFlowProvider>
-    )
+  it('renders the result heading with capsule sets loaded from the database', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => SETS }))
+    const page = await Step4Page()
+    renderWithIntl(<OutfitFlowProvider>{page}</OutfitFlowProvider>)
     expect(screen.getByRole('heading', { name: 'Kết Quả Thử Đồ Ảo AI FitRoom HD' })).toBeInTheDocument()
   })
 })

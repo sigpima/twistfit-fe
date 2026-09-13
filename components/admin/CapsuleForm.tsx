@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import { TAG_VARIANTS, type CapsuleItem, type CapsuleSet, type TagVariant } from '@/lib/capsuleWardrobe'
 
 const inputClass =
@@ -52,8 +53,8 @@ export default function CapsuleForm({ initialSet }: { initialSet?: CapsuleSet })
 
     const body = { image, alt, tagVariant, tagLabel, fitFor, title, tone, description, items }
 
-    const response = await fetch(
-      isEditing ? `/api/capsule-wardrobe/${initialSet!.id}` : '/api/capsule-wardrobe',
+    const response = await apiFetch(
+      isEditing ? `/capsule-wardrobe/${initialSet!.id}` : '/capsule-wardrobe',
       {
         method: isEditing ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -63,14 +64,13 @@ export default function CapsuleForm({ initialSet }: { initialSet?: CapsuleSet })
 
     setSubmitting(false)
 
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 403) {
       setErrors({ form: t('unauthorizedError') })
       return
     }
 
     if (!response.ok) {
-      const data = await response.json().catch(() => ({}))
-      setErrors(data.errors ?? { form: t('genericError') })
+      setErrors({ form: t('genericError') })
       return
     }
 

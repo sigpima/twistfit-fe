@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import type { CapsuleSet } from '@/lib/capsuleWardrobe'
 
 export default function CapsuleList() {
@@ -10,14 +11,14 @@ export default function CapsuleList() {
   const [sets, setSets] = useState<CapsuleSet[] | null>(null)
 
   useEffect(() => {
-    fetch('/api/capsule-wardrobe')
+    apiFetch('/capsule-wardrobe')
       .then((response) => response.json())
       .then(setSets)
   }, [])
 
   async function handleDelete(id: number) {
     if (!window.confirm(t('deleteConfirm'))) return
-    await fetch(`/api/capsule-wardrobe/${id}`, { method: 'DELETE' })
+    await apiFetch(`/capsule-wardrobe/${id}`, { method: 'DELETE' })
     setSets((current) => current?.filter((set) => set.id !== id) ?? null)
   }
 
