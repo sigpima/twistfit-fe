@@ -2,35 +2,67 @@ import { describe, expect, it } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import BlogArticleGrid from './BlogArticleGrid'
+import type { BlogPost } from '@/lib/db'
+
+const POSTS: BlogPost[] = [
+  {
+    id: 1,
+    slug: 'bai-a',
+    title: 'Bài viết A về Personal Color',
+    excerpt: 'Mô tả A',
+    content: 'Nội dung A',
+    coverImageUrl: '/blog/a.jpg',
+    category: 'personal-color',
+    authorName: null,
+    isFeatured: false,
+    publishedAt: '2026-01-01',
+    createdAt: '2026-01-01',
+    updatedAt: '2026-01-01',
+  },
+  {
+    id: 2,
+    slug: 'bai-b',
+    title: 'Bài viết B về Phối đồ',
+    excerpt: 'Mô tả B',
+    content: 'Nội dung B',
+    coverImageUrl: '/blog/b.jpg',
+    category: 'styling',
+    authorName: null,
+    isFeatured: false,
+    publishedAt: '2026-01-02',
+    createdAt: '2026-01-02',
+    updatedAt: '2026-01-02',
+  },
+]
 
 describe('BlogArticleGrid', () => {
-  it('renders all 6 articles by default', () => {
-    renderWithIntl(<BlogArticleGrid />)
-    expect(screen.getByText(/Top 5 thỏi son kinh điển/)).toBeInTheDocument()
-    expect(screen.getByText(/Sức hút ấm áp từ bảng màu Mùa Thu/)).toBeInTheDocument()
+  it('renders every post with a link to its detail page', () => {
+    renderWithIntl(<BlogArticleGrid posts={POSTS} />)
+    expect(screen.getByText('Bài viết A về Personal Color')).toBeInTheDocument()
+    expect(screen.getByText('Bài viết B về Phối đồ')).toBeInTheDocument()
+    const links = screen.getAllByRole('link', { name: /Đọc ngay/ })
+    expect(links[0]).toHaveAttribute('href', '/blog/bai-a')
   })
 
-  it('filters articles by category', () => {
-    renderWithIntl(<BlogArticleGrid />)
-    fireEvent.click(screen.getByRole('button', { name: 'Làm đẹp & Makeup' }))
-    expect(screen.getByText(/Top 5 thỏi son kinh điển/)).toBeInTheDocument()
-    expect(screen.queryByText(/Tủ đồ con nhộng/)).not.toBeInTheDocument()
+  it('filters by category', () => {
+    renderWithIntl(<BlogArticleGrid posts={POSTS} />)
+    fireEvent.click(screen.getByRole('button', { name: 'Phối đồ & Vóc dáng' }))
+    expect(screen.queryByText('Bài viết A về Personal Color')).not.toBeInTheDocument()
+    expect(screen.getByText('Bài viết B về Phối đồ')).toBeInTheDocument()
   })
 
-  it('filters articles by search text', () => {
-    renderWithIntl(<BlogArticleGrid />)
+  it('filters by search query', () => {
+    renderWithIntl(<BlogArticleGrid posts={POSTS} />)
+    fireEvent.change(screen.getByPlaceholderText('Tìm kiếm bài viết...'), { target: { value: 'Phối đồ' } })
+    expect(screen.queryByText('Bài viết A về Personal Color')).not.toBeInTheDocument()
+    expect(screen.getByText('Bài viết B về Phối đồ')).toBeInTheDocument()
+  })
+
+  it('shows an empty state message when nothing matches', () => {
+    renderWithIntl(<BlogArticleGrid posts={POSTS} />)
     fireEvent.change(screen.getByPlaceholderText('Tìm kiếm bài viết...'), {
-      target: { value: 'chính xác tại nhà' },
+      target: { value: 'khong-ton-tai' },
     })
-    expect(screen.getByText(/Warm Undertone vs Cool Undertone/)).toBeInTheDocument()
-    expect(screen.queryByText(/Top 5 thỏi son kinh điển/)).not.toBeInTheDocument()
-  })
-
-  it('toggles the bookmark state of an individual article card', () => {
-    renderWithIntl(<BlogArticleGrid />)
-    const bookmarkButtons = screen.getAllByLabelText('Lưu bài viết')
-    fireEvent.click(bookmarkButtons[0])
-    expect(bookmarkButtons[0]).toHaveAttribute('aria-pressed', 'true')
-    expect(bookmarkButtons[1]).toHaveAttribute('aria-pressed', 'false')
+    expect(screen.getByText('Không tìm thấy bài viết phù hợp')).toBeInTheDocument()
   })
 })
