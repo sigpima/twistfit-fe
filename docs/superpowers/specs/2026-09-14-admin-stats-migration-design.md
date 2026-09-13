@@ -96,12 +96,20 @@ Response shape (matching `lib/stats.ts`'s `AdminStats` type exactly):
 ```
 
 Two nested Pydantic schemas cover the two shapes here: `CountStats`
-(`total`, `new_30d` — Pydantic's `to_camel` alias generator turns
-`new_30d` into `new30d`, matching the frontend type without any special
-casing) for the four total/new-in-30-days pairs, and `ContactStats`
-(`total`, `unread`) for the one total/unread pair. "New in 30 days" is
-computed the same way `lib/stats.ts` computed it: rows with
-`created_at >= now - 30 days`.
+(`total`, `new_30d`) for the four total/new-in-30-days pairs, and
+`ContactStats` (`total`, `unread`) for the one total/unread pair.
+"New in 30 days" is computed the same way `lib/stats.ts` computed it:
+rows with `created_at >= now - 30 days`.
+
+`CountStats.new_30d` needs an explicit `Field(alias="new30d")` —
+verified directly against the installed Pydantic version that the
+model's `to_camel` alias generator turns `new_30d` into `new30D`
+(capital `D`, since `to_camel` capitalizes the first letter after each
+underscore, digits included), not `new30d`. Left to the generator, this
+would silently break the JSON contract with the frontend's `new30d`
+field. The explicit alias overrides the generator for this one field
+only; every other field on every schema in this phase keeps relying on
+the generator as normal.
 
 ## Frontend integration
 
