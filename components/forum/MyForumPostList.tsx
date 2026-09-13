@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import type { ForumPost } from '@/lib/forum'
 
 export default function MyForumPostList() {
@@ -10,14 +11,14 @@ export default function MyForumPostList() {
   const [posts, setPosts] = useState<ForumPost[] | null>(null)
 
   useEffect(() => {
-    fetch('/api/forum/posts/mine')
+    apiFetch('/forum/posts/mine')
       .then((response) => response.json())
       .then(setPosts)
   }, [])
 
   async function handleDelete(id: number) {
     if (!window.confirm(t('MyPosts.deleteConfirm'))) return
-    await fetch(`/api/forum/posts/${id}`, { method: 'DELETE' })
+    await apiFetch(`/forum/posts/${id}`, { method: 'DELETE' })
     setPosts((current) => current?.filter((post) => post.id !== id) ?? null)
   }
 

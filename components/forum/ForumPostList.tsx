@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import { FORUM_CATEGORIES, type ForumCategory, type ForumPost } from '@/lib/forum'
 
 type CategoryFilter = 'all' | ForumCategory
@@ -14,7 +15,7 @@ export default function ForumPostList() {
 
   useEffect(() => {
     const query = category === 'all' ? '' : `?category=${category}`
-    fetch(`/api/forum/posts${query}`)
+    apiFetch(`/forum/posts${query}`)
       .then((response) => response.json())
       .then(setPosts)
   }, [category])

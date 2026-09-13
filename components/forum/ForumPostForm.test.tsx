@@ -27,7 +27,7 @@ describe('ForumPostForm', () => {
     vi.unstubAllGlobals()
   })
 
-  it('POSTs to /api/forum/posts when creating and redirects to my-posts', async () => {
+  it('POSTs to /forum/posts when creating and redirects to my-posts', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 201, json: async () => ({ id: 1 }) }))
     renderWithIntl(<ForumPostForm />)
     fireEvent.change(screen.getByLabelText('Tiêu đề'), { target: { value: 'Bài mới' } })
@@ -35,32 +35,27 @@ describe('ForumPostForm', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Đăng bài' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/forum/my-posts'))
-    expect(fetch).toHaveBeenCalledWith('/api/forum/posts', expect.objectContaining({ method: 'POST' }))
+    expect(fetch).toHaveBeenCalledWith('/forum/posts', expect.objectContaining({ method: 'POST', credentials: 'include' }))
   })
 
-  it('pre-fills fields and PUTs to /api/forum/posts/{id} when editing', async () => {
+  it('pre-fills fields and PUTs to /forum/posts/{id} when editing', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => EXISTING_POST }))
     renderWithIntl(<ForumPostForm initialPost={EXISTING_POST} />)
     expect(screen.getByLabelText('Tiêu đề')).toHaveValue('Bài hiện có')
     fireEvent.click(screen.getByRole('button', { name: 'Lưu thay đổi' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/forum/my-posts'))
-    expect(fetch).toHaveBeenCalledWith('/api/forum/posts/7', expect.objectContaining({ method: 'PUT' }))
+    expect(fetch).toHaveBeenCalledWith('/forum/posts/7', expect.objectContaining({ method: 'PUT', credentials: 'include' }))
   })
 
-  it('shows field errors returned by the API instead of redirecting', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockResolvedValue({
-        ok: false,
-        status: 400,
-        json: async () => ({ errors: { title: 'Tiêu đề không được để trống' } }),
-      })
-    )
+  it('shows a generic error and does not redirect when the API rejects the submission', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 422, json: async () => ({ detail: [] }) }))
     renderWithIntl(<ForumPostForm />)
+    fireEvent.change(screen.getByLabelText('Tiêu đề'), { target: { value: 'Bài mới' } })
+    fireEvent.change(screen.getByLabelText('Nội dung'), { target: { value: 'Nội dung mới' } })
     fireEvent.click(screen.getByRole('button', { name: 'Đăng bài' }))
 
-    await waitFor(() => expect(screen.getByText('Tiêu đề không được để trống')).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText('Có lỗi xảy ra, vui lòng thử lại.')).toBeInTheDocument())
     expect(pushMock).not.toHaveBeenCalled()
   })
 

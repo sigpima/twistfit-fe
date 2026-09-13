@@ -27,7 +27,7 @@ describe('ForumPostList', () => {
     renderWithIntl(<ForumPostList />)
 
     await waitFor(() => expect(screen.getByText('Bài công khai')).toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/api/forum/posts')
+    expect(fetch).toHaveBeenCalledWith('/forum/posts', { credentials: 'include' })
     expect(screen.getByRole('link', { name: 'Bài công khai' })).toHaveAttribute('href', '/forum/1')
   })
 
@@ -37,7 +37,9 @@ describe('ForumPostList', () => {
     await waitFor(() => expect(screen.getByText('Bài công khai')).toBeInTheDocument())
 
     fireEvent.click(screen.getByRole('button', { name: 'Xin tư vấn phối đồ' }))
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith('/api/forum/posts?category=styling-help'))
+    await waitFor(() =>
+      expect(fetch).toHaveBeenCalledWith('/forum/posts?category=styling-help', { credentials: 'include' })
+    )
   })
 
   it('shows an empty state when there are no posts', async () => {

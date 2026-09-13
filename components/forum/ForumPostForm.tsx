@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import { FORUM_CATEGORIES, type ForumCategory, type ForumPost } from '@/lib/forum'
 
 const inputClass =
@@ -26,7 +27,7 @@ export default function ForumPostForm({ initialPost }: { initialPost?: ForumPost
 
     const requestBody = { title, body, category }
 
-    const response = await fetch(isEditing ? `/api/forum/posts/${initialPost!.id}` : '/api/forum/posts', {
+    const response = await apiFetch(isEditing ? `/forum/posts/${initialPost!.id}` : '/forum/posts', {
       method: isEditing ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestBody),
@@ -40,8 +41,7 @@ export default function ForumPostForm({ initialPost }: { initialPost?: ForumPost
     }
 
     if (!response.ok) {
-      const data = await response.json().catch(() => ({}))
-      setErrors(data.errors ?? { form: t('PostForm.genericError') })
+      setErrors({ form: t('PostForm.genericError') })
       return
     }
 

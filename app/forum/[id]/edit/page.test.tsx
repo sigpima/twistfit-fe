@@ -41,7 +41,7 @@ describe('EditForumPostPage', () => {
       </AuthProvider>
     )
     await waitFor(() => expect(screen.getByLabelText('Tiêu đề')).toHaveValue('Bài cần sửa'))
-    expect(fetch).toHaveBeenCalledWith('/api/forum/posts/3')
+    expect(fetch).toHaveBeenCalledWith('/forum/posts/3', { credentials: 'include' })
   })
 
   it('shows a not-found message when the post cannot be fetched', async () => {

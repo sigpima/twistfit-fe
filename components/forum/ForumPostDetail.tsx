@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/components/auth/AuthProvider'
+import { apiFetch } from '@/lib/apiClient'
 import type { ForumPost } from '@/lib/forum'
 
 export default function ForumPostDetail({ id }: { id: string }) {
@@ -16,7 +17,7 @@ export default function ForumPostDetail({ id }: { id: string }) {
   const [reportMessage, setReportMessage] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch(`/api/forum/posts/${id}`).then((response) => {
+    apiFetch(`/forum/posts/${id}`).then((response) => {
       if (!response.ok) {
         setNotFound(true)
         return
@@ -26,7 +27,7 @@ export default function ForumPostDetail({ id }: { id: string }) {
   }, [id])
 
   async function handleSubmitReport() {
-    const response = await fetch(`/api/forum/posts/${id}/report`, {
+    const response = await apiFetch(`/forum/posts/${id}/report`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ reason }),

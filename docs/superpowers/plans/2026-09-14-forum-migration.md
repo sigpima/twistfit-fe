@@ -1176,6 +1176,7 @@ git commit -m "feat: add forum moderation and reports endpoints"
 - Modify: `frontend/components/forum/MyForumPostList.test.tsx`
 - Modify: `frontend/app/forum/[id]/edit/page.tsx`
 - Modify: `frontend/app/forum/[id]/edit/page.test.tsx`
+- Modify: `frontend/app/forum/page.test.tsx` (missed during planning — asserts `ForumPostList`'s fetch call directly)
 
 **Interfaces:**
 - Consumes: `apiFetch` (Phase 1), the FastAPI `/forum/posts*` endpoints (Task 3).
@@ -1387,7 +1388,23 @@ Expected: PASS (2 tests).
 - [ ] **Step 16: Run the full frontend test suite**
 
 Run: `cd frontend && npm test`
-Expected: all tests pass — this still includes the admin moderation component tests and `app/api/forum/**` tests, which are untouched until Task 6.
+Expected: one failure — `app/forum/page.test.tsx` asserts `fetch` was called with `'/api/forum/posts'` directly (it doesn't mock `ForumPostList`, so it exercises the real component). Fix its assertion:
+
+```typescript
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith('/forum/posts', { credentials: 'include' }))
+```
+
+Also update the two stale test descriptions in `ForumPostForm.test.tsx` (cosmetic — they still say `/api/forum/...`):
+
+```typescript
+  it('POSTs to /forum/posts when creating and redirects to my-posts', async () => {
+```
+
+```typescript
+  it('pre-fills fields and PUTs to /forum/posts/{id} when editing', async () => {
+```
+
+Run `npm test` again — this still includes the admin moderation component tests and `app/api/forum/**` tests, which are untouched until Task 6.
 
 - [ ] **Step 17: Commit**
 
@@ -1398,6 +1415,7 @@ git add components/forum/ForumPostDetail.tsx components/forum/ForumPostDetail.te
 git add components/forum/ForumPostForm.tsx components/forum/ForumPostForm.test.tsx
 git add components/forum/MyForumPostList.tsx components/forum/MyForumPostList.test.tsx
 git add "app/forum/[id]/edit/page.tsx" "app/forum/[id]/edit/page.test.tsx"
+git add app/forum/page.test.tsx
 git commit -m "feat: cut public and user-facing forum components over to FastAPI"
 ```
 

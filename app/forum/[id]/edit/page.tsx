@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 import AuthGate from '@/components/auth/AuthGate'
 import ForumPostForm from '@/components/forum/ForumPostForm'
+import { apiFetch } from '@/lib/apiClient'
 import type { ForumPost } from '@/lib/forum'
 
 export default function EditForumPostPage({ params }: { params: Promise<{ id: string }> }) {
@@ -13,7 +14,7 @@ export default function EditForumPostPage({ params }: { params: Promise<{ id: st
 
   useEffect(() => {
     params.then(({ id }) => {
-      fetch(`/api/forum/posts/${id}`).then((response) => {
+      apiFetch(`/forum/posts/${id}`).then((response) => {
         if (!response.ok) {
           setNotFound(true)
           return

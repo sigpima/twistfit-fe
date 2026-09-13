@@ -38,7 +38,7 @@ describe('ForumPostDetail', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POST }))
     renderDetail()
     await waitFor(() => expect(screen.getByText('Bài chi tiết')).toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/api/forum/posts/9')
+    expect(fetch).toHaveBeenCalledWith('/forum/posts/9', { credentials: 'include' })
   })
 
   it('shows a not-found message when the fetch fails', async () => {
@@ -76,8 +76,8 @@ describe('ForumPostDetail', () => {
 
     await waitFor(() => expect(screen.getByText('Đã gửi báo cáo, cảm ơn bạn.')).toBeInTheDocument())
     expect(fetch).toHaveBeenCalledWith(
-      '/api/forum/posts/9/report',
-      expect.objectContaining({ method: 'POST', body: JSON.stringify({ reason: 'Spam' }) })
+      '/forum/posts/9/report',
+      expect.objectContaining({ method: 'POST', credentials: 'include', body: JSON.stringify({ reason: 'Spam' }) })
     )
   })
 })

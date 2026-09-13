@@ -12,6 +12,6 @@ describe('ForumPage', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => [] }))
     renderWithIntl(<ForumPage />)
     expect(screen.getByRole('heading', { name: 'Diễn đàn TwistFit' })).toBeInTheDocument()
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith('/api/forum/posts'))
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith('/forum/posts', { credentials: 'include' }))
   })
 })
