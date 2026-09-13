@@ -27,7 +27,7 @@ describe('ContactMessageList', () => {
     renderWithIntl(<ContactMessageList />)
 
     await waitFor(() => expect(screen.getByText('Nguyễn Văn A')).toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/api/contact')
+    expect(fetch).toHaveBeenCalledWith('/contact', { credentials: 'include' })
     expect(screen.getByText('Đăng ký hợp tác Stylist / Fashion KOL')).toBeInTheDocument()
     expect(screen.getByLabelText('Chưa đọc')).toBeInTheDocument()
   })
@@ -49,8 +49,8 @@ describe('ContactMessageList', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Đánh dấu đã đọc' }))
     await waitFor(() =>
       expect(fetch).toHaveBeenCalledWith(
-        '/api/contact/1',
-        expect.objectContaining({ method: 'PATCH', body: JSON.stringify({ isRead: true }) })
+        '/contact/1',
+        expect.objectContaining({ method: 'PATCH', credentials: 'include', body: JSON.stringify({ isRead: true }) })
       )
     )
   })
@@ -68,7 +68,7 @@ describe('ContactMessageList', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Xóa' }))
 
     await waitFor(() => expect(screen.queryByText('Nguyễn Văn A')).not.toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/api/contact/1', { method: 'DELETE' })
+    expect(fetch).toHaveBeenCalledWith('/contact/1', { method: 'DELETE', credentials: 'include' })
   })
 
   it('shows an empty state when there are no messages', async () => {

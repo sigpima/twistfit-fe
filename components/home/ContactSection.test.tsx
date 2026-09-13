@@ -23,9 +23,10 @@ describe('ContactSection', () => {
 
     await waitFor(() => expect(screen.getByText(/Cảm ơn bạn/)).toBeInTheDocument())
     expect(fetch).toHaveBeenCalledWith(
-      '/api/contact',
+      '/contact',
       expect.objectContaining({
         method: 'POST',
+        credentials: 'include',
         body: JSON.stringify({
           name: 'Linh Đan',
           email: 'linhdan@gmail.com',

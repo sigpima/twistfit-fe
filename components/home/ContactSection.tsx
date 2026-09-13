@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { useState, type FormEvent } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 
 export default function ContactSection() {
   const t = useTranslations('Home.ContactSection')
@@ -19,7 +20,7 @@ export default function ContactSection() {
       message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
     }
 
-    const response = await fetch('/api/contact', {
+    const response = await apiFetch('/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),

@@ -1,8 +1,15 @@
 import type Database from 'better-sqlite3'
 
-export type ContactSubject = 'color-test' | 'virtual-fitting' | 'stylist' | 'other'
+// Legacy SQLite shim, kept only for admin/stats (lib/stats.ts), which still
+// counts rows in `contact_messages` directly against the shared SQLite
+// database and has not been migrated to FastAPI yet (planned for Phase 6).
+// Contact's real data now lives in Postgres via the FastAPI backend; this
+// table is intentionally never written to in production, so admin/stats
+// reports 0 contact messages until that migration happens, rather than
+// silently showing stale data. `createContactMessage` is kept only because
+// lib/stats.test.ts calls it to build fixture rows for its count assertions.
 
-export const CONTACT_SUBJECTS: ContactSubject[] = ['color-test', 'virtual-fitting', 'stylist', 'other']
+export type ContactSubject = 'color-test' | 'virtual-fitting' | 'stylist' | 'other'
 
 export type ContactMessage = {
   id: number
@@ -62,12 +69,7 @@ export function initSchema(db: Database.Database): void {
   `)
 }
 
-export function getContactMessages(db: Database.Database): ContactMessage[] {
-  const rows = db.prepare('SELECT * FROM contact_messages ORDER BY id DESC').all() as ContactMessageRow[]
-  return rows.map(rowToContactMessage)
-}
-
-export function getContactMessageById(db: Database.Database, id: number): ContactMessage | null {
+function getContactMessageById(db: Database.Database, id: number): ContactMessage | null {
   const row = db.prepare('SELECT * FROM contact_messages WHERE id = ?').get(id) as
     | ContactMessageRow
     | undefined
@@ -87,26 +89,4 @@ export function createContactMessage(db: Database.Database, input: ContactMessag
     throw new Error('Failed to read back created contact message')
   }
   return created
-}
-
-export function setContactMessageRead(
-  db: Database.Database,
-  id: number,
-  isRead: boolean
-): ContactMessage | null {
-  const existing = getContactMessageById(db, id)
-  if (!existing) return null
-  db.prepare('UPDATE contact_messages SET is_read = ? WHERE id = ?').run(isRead ? 1 : 0, id)
-  return getContactMessageById(db, id)
-}
-
-export function deleteContactMessage(db: Database.Database, id: number): boolean {
-  const result = db.prepare('DELETE FROM contact_messages WHERE id = ?').run(id)
-  return result.changes > 0
-}
-
-export function seedIfEmpty(_db: Database.Database): void {
-  // Deliberately a no-op: contact messages are real visitor submissions, never
-  // seeded demo data. Kept as a function so lib/getDb.ts's init/seed call
-  // sequence stays uniform across every domain module.
 }

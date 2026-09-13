@@ -4,7 +4,7 @@ import path from 'node:path'
 import { initSchema as initBlogSchema } from './db'
 import { initSchema as initUsersSchema, seedIfEmpty as seedUsersIfEmpty } from './auth/users'
 import { initSchema as initForumSchema, seedIfEmpty as seedForumIfEmpty } from './forum'
-import { initSchema as initContactSchema, seedIfEmpty as seedContactIfEmpty } from './contact'
+import { initSchema as initContactSchema } from './contact'
 import { initSchema as initQuizAttemptsSchema, seedIfEmpty as seedQuizAttemptsIfEmpty } from './quizAttempts'
 
 let singleton: Database.Database | null = null
@@ -27,7 +27,6 @@ export function getDb(): Database.Database {
   initForumSchema(db)
   seedForumIfEmpty(db)
   initContactSchema(db)
-  seedContactIfEmpty(db)
   initQuizAttemptsSchema(db)
   seedQuizAttemptsIfEmpty(db)
   singleton = db

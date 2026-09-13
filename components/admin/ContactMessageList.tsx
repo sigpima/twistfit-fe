@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import type { ContactMessage } from '@/lib/contact'
 
 export default function ContactMessageList() {
@@ -10,13 +11,13 @@ export default function ContactMessageList() {
   const [expandedId, setExpandedId] = useState<number | null>(null)
 
   useEffect(() => {
-    fetch('/api/contact')
+    apiFetch('/contact')
       .then((response) => response.json())
       .then(setMessages)
   }, [])
 
   async function handleToggleRead(message: ContactMessage) {
-    const response = await fetch(`/api/contact/${message.id}`, {
+    const response = await apiFetch(`/contact/${message.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ isRead: !message.isRead }),
@@ -27,7 +28,7 @@ export default function ContactMessageList() {
 
   async function handleDelete(id: number) {
     if (!window.confirm(t('deleteConfirm'))) return
-    await fetch(`/api/contact/${id}`, { method: 'DELETE' })
+    await apiFetch(`/contact/${id}`, { method: 'DELETE' })
     setMessages((current) => current?.filter((item) => item.id !== id) ?? null)
   }
 
