@@ -155,6 +155,30 @@ access-token validation is stateless (no DB hit). This is acceptable at
 this project's scale; the refresh endpoint always re-checks `is_active`,
 so the lock is fully effective within one refresh cycle at most.
 
+## Legacy session cookie bridge (transition period)
+
+The 10 domains explicitly out of scope for this phase (blog, forum, contact,
+team, model-catalog, capsule-wardrobe, quiz-questions, quiz-attempts,
+admin-stats) each call `getAdminSessionFromCookieHeader` from
+`frontend/lib/auth/session.ts` directly to authorize their admin write
+routes, keyed on the `twistfit_session` HMAC cookie that only the old
+`POST /api/auth/login` route issues. If FastAPI's login fully replaces that
+route and only sets the new `access_token`/`refresh_token` cookies, every
+one of those 10 still-Next.js-hosted domains loses admin write access the
+moment this phase ships, even though this phase never touches their code.
+
+To avoid that, FastAPI's `/auth/login` **also** sets the legacy
+`twistfit_session` cookie (same HMAC-SHA256 scheme, same
+`AUTH_COOKIE_SECRET` value, ported to Python) alongside the new JWT
+cookies, and `/auth/logout` clears all three cookies. This is a deliberate,
+temporary bridge: it lets every not-yet-migrated domain keep working
+unchanged throughout the multi-phase migration, at the cost of carrying one
+legacy code path in FastAPI until the last of the 10 remaining domains is
+migrated, at which point the bridge is deleted in that final phase's plan.
+`AUTH_COOKIE_SECRET` must therefore be set to the same value in both
+`frontend/.env` (already read by the old signing code, still present there
+until all 10 domains migrate) and `backend/.env`.
+
 ## Frontend integration
 
 - New env var `NEXT_PUBLIC_API_BASE_URL=https://api.twistfit.vn`.
@@ -206,8 +230,15 @@ so the lock is fully effective within one refresh cycle at most.
 3. Update Next.js auth call sites (`/login`, `/register`, `AdminGate`,
    any header/session read) to call FastAPI directly; verify manually
    (login, logout, admin gate, token refresh, locked-user behavior).
-4. Delete the old `app/api/auth/*` Route Handlers and
-   `frontend/lib/auth/*` once step 3 is verified.
+4. Delete the old `app/api/auth/register/*`, `app/api/auth/login/*`,
+   `app/api/auth/logout/*` Route Handlers and `frontend/lib/auth/users.ts`
+   once step 3 is verified. **`frontend/lib/auth/session.ts` is not
+   deleted** — the 10 not-yet-migrated domains still import
+   `getAdminSessionFromCookieHeader`/`getSessionFromCookieHeader` from it
+   to authorize their own admin routes against the legacy
+   `twistfit_session` cookie (see "Legacy session cookie bridge" above).
+   It gets deleted only in the future phase that migrates the last of
+   those domains.
 5. Build the `faq` domain fully (public list, admin CRUD), with tests.
 6. Update the public FAQ page and `admin/faq/*` pages to call FastAPI
    directly; verify manually.
