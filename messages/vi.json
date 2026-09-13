@@ -25,6 +25,8 @@
     "modelCardDescription": "Tạo, sửa và xóa người mẫu hiển thị trong bước chọn người mẫu thử đồ ảo.",
     "capsuleCardTitle": "Quản lý Capsule Wardrobe",
     "capsuleCardDescription": "Tạo, sửa và xóa set đồ gợi ý hiển thị ở kết quả thử đồ ảo.",
+    "teamCardTitle": "Quản lý Team",
+    "teamCardDescription": "Tạo, sửa và xóa thành viên hiển thị trên trang Giới thiệu.",
     "BlogForm": {
       "fields": {
         "title": "Tiêu đề",
@@ -180,6 +182,38 @@
       "deleteButton": "Xóa",
       "deleteConfirm": "Xóa set đồ này?",
       "emptyState": "Chưa có set đồ nào.",
+      "loading": "Đang tải..."
+    },
+    "TeamForm": {
+      "fields": {
+        "image": "Ảnh (URL)",
+        "name": "Họ tên",
+        "role": "Vai trò",
+        "bio": "Tiểu sử",
+        "badgeVariant": "Màu badge",
+        "roleVariant": "Màu vai trò",
+        "footerIcon": "Icon cuối thẻ",
+        "footerLabel": "Nhãn cuối thẻ"
+      },
+      "colorVariants": {
+        "primary": "Primary",
+        "secondary": "Secondary",
+        "tertiary": "Tertiary"
+      },
+      "submitCreate": "Tạo thành viên",
+      "submitEdit": "Lưu thay đổi",
+      "unauthorizedError": "Bạn cần đăng nhập với quyền quản trị.",
+      "genericError": "Có lỗi xảy ra, vui lòng thử lại."
+    },
+    "TeamList": {
+      "title": "Quản lý Team",
+      "newButton": "Thêm thành viên",
+      "columnName": "Họ tên",
+      "columnRole": "Vai trò",
+      "editButton": "Sửa",
+      "deleteButton": "Xóa",
+      "deleteConfirm": "Xóa thành viên này?",
+      "emptyState": "Chưa có thành viên nào.",
       "loading": "Đang tải..."
     }
   },
