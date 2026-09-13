@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { QrModalProvider } from '@/components/qr-modal/QrModalProvider'
+import { AuthProvider } from '@/components/auth/AuthProvider'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import './globals.css'
@@ -31,11 +32,13 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       </head>
       <body className="flex min-h-screen flex-col bg-surface text-on-surface">
         <NextIntlClientProvider>
-          <QrModalProvider>
-            <Header />
-            {children}
-            <Footer />
-          </QrModalProvider>
+          <AuthProvider>
+            <QrModalProvider>
+              <Header />
+              {children}
+              <Footer />
+            </QrModalProvider>
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

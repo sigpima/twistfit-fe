@@ -132,7 +132,9 @@
 }
 
 body {
-  background: var(--color-surface);
+  background:
+    url('/backgrounds/pattern.png') center / cover no-repeat fixed,
+    var(--color-surface);
   color: var(--color-on-surface);
   font-family: var(--font-montserrat), system-ui, sans-serif;
 }
