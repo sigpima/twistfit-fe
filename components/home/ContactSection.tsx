@@ -6,11 +6,34 @@ import { useState, type FormEvent } from 'react'
 export default function ContactSection() {
   const t = useTranslations('Home.ContactSection')
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState(false)
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    const form = event.currentTarget
+    const body = {
+      name: (form.elements.namedItem('name') as HTMLInputElement).value,
+      email: (form.elements.namedItem('email') as HTMLInputElement).value,
+      phone: (form.elements.namedItem('phone') as HTMLInputElement).value,
+      subject: (form.elements.namedItem('subject') as HTMLSelectElement).value,
+      message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
+    }
+
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+
+    if (!response.ok) {
+      setSubmitted(false)
+      setError(true)
+      return
+    }
+
+    setError(false)
     setSubmitted(true)
-    event.currentTarget.reset()
+    form.reset()
   }
 
   return (
@@ -63,6 +86,7 @@ export default function ContactSection() {
                     </label>
                     <input
                       id="contact-name"
+                      name="name"
                       type="text"
                       required
                       placeholder={t('placeholders.name')}
@@ -75,6 +99,7 @@ export default function ContactSection() {
                     </label>
                     <input
                       id="contact-email"
+                      name="email"
                       type="email"
                       required
                       placeholder={t('placeholders.email')}
@@ -89,6 +114,7 @@ export default function ContactSection() {
                     </label>
                     <input
                       id="contact-phone"
+                      name="phone"
                       type="tel"
                       placeholder={t('placeholders.phone')}
                       className="w-full rounded-xl bg-surface px-4 py-3 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none"
@@ -100,6 +126,7 @@ export default function ContactSection() {
                     </label>
                     <select
                       id="contact-subject"
+                      name="subject"
                       required
                       defaultValue=""
                       className="w-full rounded-xl bg-surface px-4 py-3 text-body-md text-on-surface transition-colors focus:bg-surface-container-high focus:outline-none"
@@ -120,6 +147,7 @@ export default function ContactSection() {
                   </label>
                   <textarea
                     id="contact-message"
+                    name="message"
                     required
                     rows={4}
                     placeholder={t('placeholders.message')}
@@ -127,7 +155,9 @@ export default function ContactSection() {
                   />
                 </div>
                 <div className="flex items-center justify-between pt-2">
-                  <span className="text-label-sm text-primary">{submitted ? t('successMessage') : ''}</span>
+                  {submitted && <span className="text-label-sm text-primary">{t('successMessage')}</span>}
+                  {error && <span className="text-label-sm text-error">{t('errorMessage')}</span>}
+                  {!submitted && !error && <span />}
                   <button
                     type="submit"
                     className="flex w-full items-center justify-center gap-2 rounded-full bg-primary px-9 py-3.5 text-label-lg text-on-primary shadow-md transition-all hover:bg-primary-container sm:w-auto"
