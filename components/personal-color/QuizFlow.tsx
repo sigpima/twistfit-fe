@@ -24,7 +24,12 @@ export default function QuizFlow({ questions }: { questions: QuizQuestion[] }) {
   function handleAdvance() {
     if (isLastStep) {
       const finalAnswers = answers.filter((value): value is Season => value !== null)
-      computeSeasonResult(finalAnswers)
+      const season = computeSeasonResult(finalAnswers)
+      void fetch('/api/quiz-attempts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ season }),
+      }).catch(() => {})
       router.push('/personal-color/result')
       return
     }
