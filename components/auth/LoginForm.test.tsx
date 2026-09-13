@@ -24,14 +24,30 @@ function submit(email: string, password: string) {
   fireEvent.click(screen.getByRole('button', { name: 'ĐĂNG NHẬP' }))
 }
 
+function stubLoginFetch() {
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async (_url: string, init?: RequestInit) => {
+      const body = JSON.parse((init?.body as string) ?? '{}') as { email: string; password: string }
+      if (body.email === 'user@twistfit.vn' && body.password === 'user1234') {
+        return { ok: true, json: async () => ({ name: 'Người dùng Test', email: 'user@twistfit.vn', role: 'user' }) }
+      }
+      if (body.email === 'admin@twistfit.vn' && body.password === 'admin1234') {
+        return {
+          ok: true,
+          json: async () => ({ name: 'Quản trị viên Test', email: 'admin@twistfit.vn', role: 'admin' }),
+        }
+      }
+      return { ok: false, status: 401, json: async () => ({ error: 'Email hoặc mật khẩu không đúng' }) }
+    })
+  )
+}
+
 describe('LoginForm', () => {
   beforeEach(() => {
     pushMock.mockClear()
     window.localStorage.clear()
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockResolvedValue({ ok: true, json: async () => ({}) })
-    )
+    stubLoginFetch()
   })
 
   afterEach(() => {
@@ -65,10 +81,12 @@ describe('LoginForm', () => {
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin'))
   })
 
-  it('shows an error and does not redirect for invalid credentials', () => {
+  it('shows an error and does not redirect for invalid credentials', async () => {
     renderLoginForm()
     submit('user@twistfit.vn', 'wrongpass')
-    expect(screen.getByText('Email hoặc mật khẩu không đúng. Vui lòng thử lại.')).toBeInTheDocument()
+    await waitFor(() =>
+      expect(screen.getByText('Email hoặc mật khẩu không đúng. Vui lòng thử lại.')).toBeInTheDocument()
+    )
     expect(pushMock).not.toHaveBeenCalled()
   })
 })

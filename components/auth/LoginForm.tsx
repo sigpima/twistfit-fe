@@ -19,18 +19,13 @@ export default function LoginForm() {
     const email = (form.elements.namedItem('email') as HTMLInputElement).value
     const password = (form.elements.namedItem('password') as HTMLInputElement).value
 
-    const account = login(email, password)
+    const account = await login(email, password)
     if (!account) {
       setError(true)
       return
     }
 
     setError(false)
-    await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    })
     router.push(account.role === 'admin' ? '/admin' : '/')
   }
 
