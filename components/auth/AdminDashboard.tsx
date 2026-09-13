@@ -35,6 +35,13 @@ export default function AdminDashboard() {
             <h2 className="text-title-md font-bold text-on-surface">{t('faqCardTitle')}</h2>
             <p className="mt-1 text-body-sm text-on-surface-variant">{t('faqCardDescription')}</p>
           </Link>
+          <Link
+            href="/admin/model-catalog"
+            className="rounded-2xl border border-outline-variant p-6 transition-colors hover:border-primary hover:bg-surface-container-low"
+          >
+            <h2 className="text-title-md font-bold text-on-surface">{t('modelCardTitle')}</h2>
+            <p className="mt-1 text-body-sm text-on-surface-variant">{t('modelCardDescription')}</p>
+          </Link>
         </div>
       </div>
     </section>

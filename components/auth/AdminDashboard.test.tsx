@@ -22,5 +22,6 @@ describe('AdminDashboard', () => {
     expect(screen.getByRole('link', { name: /Quản lý Blog/ })).toHaveAttribute('href', '/admin/blog')
     expect(screen.getByRole('link', { name: /Quản lý câu hỏi Quiz/ })).toHaveAttribute('href', '/admin/quiz')
     expect(screen.getByRole('link', { name: /Quản lý FAQ/ })).toHaveAttribute('href', '/admin/faq')
+    expect(screen.getByRole('link', { name: /Quản lý Model Catalog/ })).toHaveAttribute('href', '/admin/model-catalog')
   })
 })
