@@ -1,5 +1,17 @@
 import type Database from 'better-sqlite3'
-import type { Role } from '@/lib/auth/users'
+
+// Legacy SQLite shim, kept only for admin/stats (lib/stats.ts), which still
+// counts rows in `forum_posts` directly against the shared SQLite database
+// and has not been migrated to FastAPI yet (planned for Phase 6). Forum's
+// real data now lives in Postgres via the FastAPI backend; this table is
+// intentionally never written to in production, so admin/stats reports 0
+// forum posts until that migration happens, rather than silently showing
+// stale data. `createForumPost` is kept only because lib/stats.test.ts
+// calls it to build fixture rows for its count assertions.
+//
+// The types and constants below are NOT part of the legacy shim — they are
+// the shared shapes still used by the (unchanged) forum Client Components
+// after cutover, since apiFetch responses are typed against them directly.
 
 export type ForumCategory =
   | 'general'
@@ -84,23 +96,7 @@ export function initSchema(db: Database.Database): void {
   `)
 }
 
-export function getPublishedForumPosts(db: Database.Database, category?: ForumCategory): ForumPost[] {
-  const rows = category
-    ? (db
-        .prepare("SELECT * FROM forum_posts WHERE status = 'published' AND category = ? ORDER BY id DESC")
-        .all(category) as ForumPostRow[])
-    : (db.prepare("SELECT * FROM forum_posts WHERE status = 'published' ORDER BY id DESC").all() as ForumPostRow[])
-  return rows.map(rowToForumPost)
-}
-
-export function getForumPostsByAuthorId(db: Database.Database, authorId: number): ForumPost[] {
-  const rows = db
-    .prepare('SELECT * FROM forum_posts WHERE author_id = ? ORDER BY id DESC')
-    .all(authorId) as ForumPostRow[]
-  return rows.map(rowToForumPost)
-}
-
-export function getForumPostById(db: Database.Database, id: number): ForumPost | null {
+function getForumPostById(db: Database.Database, id: number): ForumPost | null {
   const row = db.prepare('SELECT * FROM forum_posts WHERE id = ?').get(id) as ForumPostRow | undefined
   return row ? rowToForumPost(row) : null
 }
@@ -120,51 +116,6 @@ export function createForumPost(db: Database.Database, authorId: number, input: 
   return created
 }
 
-export function updateForumPost(db: Database.Database, id: number, input: ForumPostInput): ForumPost | null {
-  const existing = getForumPostById(db, id)
-  if (!existing) return null
-
-  const now = new Date().toISOString()
-  db.prepare(
-    `UPDATE forum_posts SET
-      title = @title, body = @body, category = @category, status = 'pending', updated_at = @updatedAt
-     WHERE id = @id`
-  ).run({ ...input, id, updatedAt: now })
-  return getForumPostById(db, id)
-}
-
-export function deleteForumPost(db: Database.Database, id: number): boolean {
-  const result = db.prepare('DELETE FROM forum_posts WHERE id = ?').run(id)
-  return result.changes > 0
-}
-
-export function getPendingForumPosts(db: Database.Database): ForumPost[] {
-  const rows = db
-    .prepare("SELECT * FROM forum_posts WHERE status = 'pending' ORDER BY id ASC")
-    .all() as ForumPostRow[]
-  return rows.map(rowToForumPost)
-}
-
-export function setForumPostStatus(
-  db: Database.Database,
-  id: number,
-  status: ForumPostStatus
-): ForumPost | null {
-  const existing = getForumPostById(db, id)
-  if (!existing) return null
-
-  const now = new Date().toISOString()
-  db.prepare('UPDATE forum_posts SET status = ?, updated_at = ? WHERE id = ?').run(status, now, id)
-  return getForumPostById(db, id)
-}
-
-export function canViewForumPost(post: ForumPost, viewerId: number | null, viewerRole: Role | null): boolean {
-  if (post.status === 'published') return true
-  if (viewerId !== null && viewerId === post.authorId) return true
-  if (viewerRole === 'admin') return true
-  return false
-}
-
 export type ForumReportStatus = 'open' | 'resolved'
 
 export type ForumReport = {
@@ -177,83 +128,3 @@ export type ForumReport = {
   status: ForumReportStatus
   createdAt: string
 }
-
-type ForumReportRow = {
-  id: number
-  post_id: number
-  post_title: string
-  post_status: string
-  reporter_id: number
-  reason: string
-  status: string
-  created_at: string
-}
-
-function rowToForumReport(row: ForumReportRow): ForumReport {
-  return {
-    id: row.id,
-    postId: row.post_id,
-    postTitle: row.post_title,
-    postStatus: row.post_status as ForumPostStatus,
-    reporterId: row.reporter_id,
-    reason: row.reason,
-    status: row.status as ForumReportStatus,
-    createdAt: row.created_at,
-  }
-}
-
-const FORUM_REPORT_SELECT = `
-  SELECT forum_reports.id AS id, forum_reports.post_id AS post_id,
-         forum_posts.title AS post_title, forum_posts.status AS post_status,
-         forum_reports.reporter_id AS reporter_id, forum_reports.reason AS reason,
-         forum_reports.status AS status, forum_reports.created_at AS created_at
-  FROM forum_reports
-  JOIN forum_posts ON forum_posts.id = forum_reports.post_id
-`
-
-export function getForumReportById(db: Database.Database, id: number): ForumReport | null {
-  const row = db.prepare(`${FORUM_REPORT_SELECT} WHERE forum_reports.id = ?`).get(id) as
-    | ForumReportRow
-    | undefined
-  return row ? rowToForumReport(row) : null
-}
-
-export function getOpenForumReports(db: Database.Database): ForumReport[] {
-  const rows = db
-    .prepare(`${FORUM_REPORT_SELECT} WHERE forum_reports.status = 'open' ORDER BY forum_reports.id ASC`)
-    .all() as ForumReportRow[]
-  return rows.map(rowToForumReport)
-}
-
-export function createForumReport(
-  db: Database.Database,
-  postId: number,
-  reporterId: number,
-  reason: string
-): ForumReport {
-  const now = new Date().toISOString()
-  const result = db
-    .prepare(
-      `INSERT INTO forum_reports (post_id, reporter_id, reason, status, created_at)
-       VALUES (?, ?, ?, 'open', ?)`
-    )
-    .run(postId, reporterId, reason, now)
-  const created = getForumReportById(db, Number(result.lastInsertRowid))
-  if (!created) {
-    throw new Error('Failed to read back created forum report')
-  }
-  return created
-}
-
-export function resolveForumReport(db: Database.Database, id: number): ForumReport | null {
-  const existing = getForumReportById(db, id)
-  if (!existing) return null
-  db.prepare("UPDATE forum_reports SET status = 'resolved' WHERE id = ?").run(id)
-  return getForumReportById(db, id)
-}
-
-// Deliberately a no-op: unlike the other CMS tables, forum content only makes sense
-// once real users post it, so there is nothing to seed. Kept as a function (accepting
-// but ignoring `db`) so lib/getDb.ts's init/seed call sequence stays uniform across
-// every domain module.
-export function seedIfEmpty(_db: Database.Database): void {}

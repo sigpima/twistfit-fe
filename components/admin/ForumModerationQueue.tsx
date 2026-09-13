@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import type { ForumPost } from '@/lib/forum'
 
 export default function ForumModerationQueue() {
@@ -9,13 +10,13 @@ export default function ForumModerationQueue() {
   const [posts, setPosts] = useState<ForumPost[] | null>(null)
 
   useEffect(() => {
-    fetch('/api/forum/moderation/pending')
+    apiFetch('/forum/moderation/pending')
       .then((response) => response.json())
       .then(setPosts)
   }, [])
 
   async function handleDecision(id: number, status: 'published' | 'rejected') {
-    await fetch(`/api/forum/posts/${id}`, {
+    await apiFetch(`/forum/posts/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status }),

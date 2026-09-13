@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import type { ForumReport } from '@/lib/forum'
 
 export default function ForumReportQueue() {
@@ -9,18 +10,18 @@ export default function ForumReportQueue() {
   const [reports, setReports] = useState<ForumReport[] | null>(null)
 
   useEffect(() => {
-    fetch('/api/forum/moderation/reports')
+    apiFetch('/forum/moderation/reports')
       .then((response) => response.json())
       .then(setReports)
   }, [])
 
   async function handleResolve(id: number) {
-    await fetch(`/api/forum/reports/${id}`, { method: 'PATCH' })
+    await apiFetch(`/forum/reports/${id}`, { method: 'PATCH' })
     setReports((current) => current?.filter((report) => report.id !== id) ?? null)
   }
 
   async function handleHide(report: ForumReport) {
-    await fetch(`/api/forum/posts/${report.postId}`, {
+    await apiFetch(`/forum/posts/${report.postId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status: 'hidden' }),
@@ -33,7 +34,7 @@ export default function ForumReportQueue() {
 
   async function handleDelete(report: ForumReport) {
     if (!window.confirm(t('deleteConfirm'))) return
-    await fetch(`/api/forum/posts/${report.postId}`, { method: 'DELETE' })
+    await apiFetch(`/forum/posts/${report.postId}`, { method: 'DELETE' })
     setReports((current) => current?.filter((item) => item.postId !== report.postId) ?? null)
   }
 

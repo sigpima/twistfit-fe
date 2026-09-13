@@ -3,7 +3,7 @@ import { existsSync, mkdirSync } from 'node:fs'
 import path from 'node:path'
 import { initSchema as initBlogSchema } from './db'
 import { initSchema as initUsersSchema, seedIfEmpty as seedUsersIfEmpty } from './auth/users'
-import { initSchema as initForumSchema, seedIfEmpty as seedForumIfEmpty } from './forum'
+import { initSchema as initForumSchema } from './forum'
 import { initSchema as initContactSchema } from './contact'
 import { initSchema as initQuizAttemptsSchema } from './quizAttempts'
 
@@ -25,7 +25,6 @@ export function getDb(): Database.Database {
   initUsersSchema(db)
   seedUsersIfEmpty(db)
   initForumSchema(db)
-  seedForumIfEmpty(db)
   initContactSchema(db)
   initQuizAttemptsSchema(db)
   singleton = db

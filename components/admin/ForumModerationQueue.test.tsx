@@ -27,7 +27,7 @@ describe('ForumModerationQueue', () => {
     renderWithIntl(<ForumModerationQueue />)
 
     await waitFor(() => expect(screen.getByText('Bài chờ duyệt')).toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/api/forum/moderation/pending')
+    expect(fetch).toHaveBeenCalledWith('/forum/moderation/pending', { credentials: 'include' })
     expect(screen.getByRole('button', { name: 'Duyệt' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Từ chối' })).toBeInTheDocument()
   })
@@ -44,8 +44,8 @@ describe('ForumModerationQueue', () => {
 
     await waitFor(() => expect(screen.queryByText('Bài chờ duyệt')).not.toBeInTheDocument())
     expect(fetch).toHaveBeenCalledWith(
-      '/api/forum/posts/1',
-      expect.objectContaining({ method: 'PATCH', body: JSON.stringify({ status: 'published' }) })
+      '/forum/posts/1',
+      expect.objectContaining({ method: 'PATCH', credentials: 'include', body: JSON.stringify({ status: 'published' }) })
     )
   })
 
