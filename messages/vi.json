@@ -19,6 +19,8 @@
     "blogCardDescription": "Tạo, sửa và xóa bài viết hiển thị trên trang Blog.",
     "quizCardTitle": "Quản lý câu hỏi Quiz",
     "quizCardDescription": "Tạo, sửa và sắp xếp thứ tự câu hỏi trong bài trắc nghiệm Personal Color.",
+    "faqCardTitle": "Quản lý FAQ",
+    "faqCardDescription": "Tạo, sửa và xóa câu hỏi thường gặp hiển thị trên trang FAQ.",
     "BlogForm": {
       "fields": {
         "title": "Tiêu đề",
@@ -80,6 +82,30 @@
       "deleteConfirm": "Xóa câu hỏi này?",
       "moveUp": "Lên",
       "moveDown": "Xuống",
+      "emptyState": "Chưa có câu hỏi nào.",
+      "loading": "Đang tải..."
+    },
+    "FaqForm": {
+      "fields": {
+        "question": "Câu hỏi",
+        "answerMarkdown": "Câu trả lời (Markdown)",
+        "categories": "Chuyên mục (chọn ít nhất 1)",
+        "highlightIcon": "Icon khung nổi bật (không bắt buộc)",
+        "highlightIconNone": "(Không có)",
+        "highlightText": "Nội dung khung nổi bật"
+      },
+      "submitCreate": "Tạo câu hỏi",
+      "submitEdit": "Lưu thay đổi",
+      "unauthorizedError": "Bạn cần đăng nhập với quyền quản trị.",
+      "genericError": "Có lỗi xảy ra, vui lòng thử lại."
+    },
+    "FaqList": {
+      "title": "Quản lý FAQ",
+      "newButton": "Thêm câu hỏi",
+      "columnQuestion": "Câu hỏi",
+      "editButton": "Sửa",
+      "deleteButton": "Xóa",
+      "deleteConfirm": "Xóa câu hỏi này?",
       "emptyState": "Chưa có câu hỏi nào.",
       "loading": "Đang tải..."
     }
