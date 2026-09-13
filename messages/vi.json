@@ -21,6 +21,8 @@
     "quizCardDescription": "Tạo, sửa và sắp xếp thứ tự câu hỏi trong bài trắc nghiệm Personal Color.",
     "faqCardTitle": "Quản lý FAQ",
     "faqCardDescription": "Tạo, sửa và xóa câu hỏi thường gặp hiển thị trên trang FAQ.",
+    "modelCardTitle": "Quản lý Model Catalog",
+    "modelCardDescription": "Tạo, sửa và xóa người mẫu hiển thị trong bước chọn người mẫu thử đồ ảo.",
     "BlogForm": {
       "fields": {
         "title": "Tiêu đề",
@@ -107,6 +109,40 @@
       "deleteButton": "Xóa",
       "deleteConfirm": "Xóa câu hỏi này?",
       "emptyState": "Chưa có câu hỏi nào.",
+      "loading": "Đang tải..."
+    },
+    "ModelForm": {
+      "fields": {
+        "name": "Tên người mẫu",
+        "image": "Ảnh đại diện (URL)",
+        "dossierImage": "Ảnh hồ sơ (URL)",
+        "poseCount": "Số dáng chụp",
+        "tagline": "Tagline",
+        "undertone": "Undertone",
+        "height": "Chiều cao",
+        "bodyShape": "Dáng người",
+        "waist": "Số đo vòng eo",
+        "personalColor": "Personal Color"
+      },
+      "undertones": {
+        "warm": "Warm",
+        "cool": "Cool",
+        "neutral": "Neutral"
+      },
+      "submitCreate": "Tạo người mẫu",
+      "submitEdit": "Lưu thay đổi",
+      "unauthorizedError": "Bạn cần đăng nhập với quyền quản trị.",
+      "genericError": "Có lỗi xảy ra, vui lòng thử lại."
+    },
+    "ModelList": {
+      "title": "Quản lý Model Catalog",
+      "newButton": "Thêm người mẫu",
+      "columnName": "Tên",
+      "columnUndertone": "Undertone",
+      "editButton": "Sửa",
+      "deleteButton": "Xóa",
+      "deleteConfirm": "Xóa người mẫu này?",
+      "emptyState": "Chưa có người mẫu nào.",
       "loading": "Đang tải..."
     }
   },
