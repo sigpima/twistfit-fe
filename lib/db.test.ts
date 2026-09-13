@@ -9,7 +9,14 @@ import {
   updateBlogPost,
   deleteBlogPost,
   isBlogSlugTaken,
+  createQuizQuestion,
+  getQuizQuestions,
+  getQuizQuestionById,
+  updateQuizQuestion,
+  deleteQuizQuestion,
+  seedIfEmpty,
   type BlogPostInput,
+  type QuizQuestionInput,
 } from './db'
 
 let db: Database.Database
@@ -77,5 +84,68 @@ describe('Blog CRUD', () => {
     expect(isBlogSlugTaken(db, 'mua-dong-2026')).toBe(true)
     expect(isBlogSlugTaken(db, 'mua-dong-2026', created.id)).toBe(false)
     expect(isBlogSlugTaken(db, 'khong-ton-tai')).toBe(false)
+  })
+})
+
+const sampleQuestion: QuizQuestionInput = {
+  questionText: 'Tĩnh mạch ở cổ tay bạn có màu gì khi nhìn dưới ánh sáng tự nhiên?',
+  sortOrder: 0,
+  options: [
+    { label: 'Xanh lá hoặc xanh ô liu', season: 'autumn' },
+    { label: 'Xanh dương hoặc tím', season: 'winter' },
+    { label: 'Xanh dương nhạt, khó phân biệt', season: 'summer' },
+    { label: 'Xanh lá nhạt, ánh vàng', season: 'spring' },
+  ],
+}
+
+describe('Quiz CRUD', () => {
+  it('creates a question with its options in order', () => {
+    const created = createQuizQuestion(db, sampleQuestion)
+    expect(created.options).toHaveLength(4)
+    expect(created.options[0]).toMatchObject({ label: 'Xanh lá hoặc xanh ô liu', season: 'autumn' })
+  })
+
+  it('lists questions ordered by sortOrder', () => {
+    createQuizQuestion(db, { ...sampleQuestion, questionText: 'Câu 2', sortOrder: 1 })
+    createQuizQuestion(db, { ...sampleQuestion, questionText: 'Câu 1', sortOrder: 0 })
+    const questions = getQuizQuestions(db)
+    expect(questions.map((q) => q.questionText)).toEqual(['Câu 1', 'Câu 2'])
+  })
+
+  it('replaces all options on update', () => {
+    const created = createQuizQuestion(db, sampleQuestion)
+    const updated = updateQuizQuestion(db, created.id, {
+      ...sampleQuestion,
+      options: [
+        { label: 'Lựa chọn mới A', season: 'spring' },
+        { label: 'Lựa chọn mới B', season: 'summer' },
+      ],
+    })
+    expect(updated?.options).toHaveLength(2)
+    expect(updated?.options.map((o) => o.label)).toEqual(['Lựa chọn mới A', 'Lựa chọn mới B'])
+  })
+
+  it('deletes a question and cascades its options', () => {
+    const created = createQuizQuestion(db, sampleQuestion)
+    expect(deleteQuizQuestion(db, created.id)).toBe(true)
+    expect(getQuizQuestionById(db, created.id)).toBeNull()
+    const remainingOptions = db.prepare('SELECT COUNT(*) AS count FROM quiz_options').get() as {
+      count: number
+    }
+    expect(remainingOptions.count).toBe(0)
+  })
+})
+
+describe('seedIfEmpty', () => {
+  it('seeds 7 blog posts and 5 quiz questions into an empty database', () => {
+    seedIfEmpty(db)
+    expect(getBlogPosts(db)).toHaveLength(7)
+    expect(getQuizQuestions(db)).toHaveLength(5)
+  })
+
+  it('does nothing if blog_posts already has rows', () => {
+    createBlogPost(db, samplePost)
+    seedIfEmpty(db)
+    expect(getBlogPosts(db)).toHaveLength(1)
   })
 })
