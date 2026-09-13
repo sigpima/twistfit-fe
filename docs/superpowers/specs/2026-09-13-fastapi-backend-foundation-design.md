@@ -179,6 +179,34 @@ migrated, at which point the bridge is deleted in that final phase's plan.
 `frontend/.env` (already read by the old signing code, still present there
 until all 10 domains migrate) and `backend/.env`.
 
+## Legacy user record mirroring (transition period)
+
+Beyond the cookie, `frontend/lib/auth/users.ts`'s SQLite `users` table is a
+shared dependency deeper than auth itself: `app/api/forum/posts/route.ts`,
+`app/api/forum/posts/[id]/route.ts`, `app/api/forum/posts/mine/route.ts`,
+`app/api/forum/posts/[id]/report/route.ts`, and `app/api/quiz-attempts/route.ts`
+all call `getUserByEmail(db, session.email)` directly against that table to
+resolve the acting user's id/name for attributing posts and quiz attempts.
+None of those domains are in scope for this phase, so their code is not
+touched — but if new registrations only land in Postgres, any user who
+registers after this phase ships would resolve to `null` in that lookup,
+breaking forum posting and quiz-attempt tracking for every new user.
+
+Resolution: `frontend/lib/auth/users.ts` and
+`app/api/auth/register/route.ts` are **not deleted**. After a successful
+`POST {API_BASE_URL}/auth/register` against FastAPI, the frontend also
+fire-and-forget calls the existing (unmodified) `POST /api/auth/register`
+Next.js route — the same `void fetch(...).catch(() => {})` idiom already
+used for quiz-attempt tracking (`components/personal-color/QuizFlow.tsx`)
+— to mirror the new user into the local SQLite `users` table under the
+same email. The two seeded demo accounts already exist in both stores by
+construction (each side seeds them independently), so this only matters
+for registrations after cutover. This mirror write is deleted in whichever
+future phase finally migrates forum and quiz-attempts off SQLite. Only the
+old `app/api/auth/login/*` and `app/api/auth/logout/*` routes are deleted
+in this phase, since nothing calls them once `AuthProvider` talks to
+FastAPI directly.
+
 ## Frontend integration
 
 - New env var `NEXT_PUBLIC_API_BASE_URL=https://api.twistfit.vn`.
@@ -230,15 +258,17 @@ until all 10 domains migrate) and `backend/.env`.
 3. Update Next.js auth call sites (`/login`, `/register`, `AdminGate`,
    any header/session read) to call FastAPI directly; verify manually
    (login, logout, admin gate, token refresh, locked-user behavior).
-4. Delete the old `app/api/auth/register/*`, `app/api/auth/login/*`,
-   `app/api/auth/logout/*` Route Handlers and `frontend/lib/auth/users.ts`
-   once step 3 is verified. **`frontend/lib/auth/session.ts` is not
-   deleted** — the 10 not-yet-migrated domains still import
-   `getAdminSessionFromCookieHeader`/`getSessionFromCookieHeader` from it
-   to authorize their own admin routes against the legacy
-   `twistfit_session` cookie (see "Legacy session cookie bridge" above).
-   It gets deleted only in the future phase that migrates the last of
-   those domains.
+4. Delete only the old `app/api/auth/login/*` and `app/api/auth/logout/*`
+   Route Handlers once step 3 is verified — nothing calls them anymore.
+   **`frontend/lib/auth/session.ts`, `frontend/lib/auth/users.ts`, and
+   `app/api/auth/register/*` are not deleted**: the 10 not-yet-migrated
+   domains still import `getAdminSessionFromCookieHeader`/
+   `getSessionFromCookieHeader` from `session.ts` to authorize their own
+   admin routes against the legacy `twistfit_session` cookie, and forum/
+   quiz-attempts still call `getUserByEmail` against the SQLite `users`
+   table (see "Legacy session cookie bridge" and "Legacy user record
+   mirroring" above). They get deleted only in the future phase that
+   migrates the last of those domains.
 5. Build the `faq` domain fully (public list, admin CRUD), with tests.
 6. Update the public FAQ page and `admin/faq/*` pages to call FastAPI
    directly; verify manually.
