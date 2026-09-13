@@ -49,7 +49,7 @@ export function verifySessionCookieValue(value: string | undefined | null): Sess
   return payload
 }
 
-export function getAdminSessionFromCookieHeader(cookieHeader: string | null): SessionPayload | null {
+export function getSessionFromCookieHeader(cookieHeader: string | null): SessionPayload | null {
   if (!cookieHeader) return null
 
   const match = cookieHeader
@@ -59,7 +59,10 @@ export function getAdminSessionFromCookieHeader(cookieHeader: string | null): Se
   if (!match) return null
 
   const rawValue = match.slice(SESSION_COOKIE_NAME.length + 1)
-  const session = verifySessionCookieValue(decodeURIComponent(rawValue))
-  if (!session || session.role !== 'admin') return null
-  return session
+  return verifySessionCookieValue(decodeURIComponent(rawValue))
+}
+
+export function getAdminSessionFromCookieHeader(cookieHeader: string | null): SessionPayload | null {
+  const session = getSessionFromCookieHeader(cookieHeader)
+  return session?.role === 'admin' ? session : null
 }

@@ -4,6 +4,7 @@ import {
   createSessionCookieValue,
   verifySessionCookieValue,
   getAdminSessionFromCookieHeader,
+  getSessionFromCookieHeader,
   SESSION_COOKIE_NAME,
   type SessionPayload,
 } from './session'
@@ -51,5 +52,25 @@ describe('getAdminSessionFromCookieHeader', () => {
   it('returns null when the header is missing the cookie or is null', () => {
     expect(getAdminSessionFromCookieHeader('other=1')).toBeNull()
     expect(getAdminSessionFromCookieHeader(null)).toBeNull()
+  })
+})
+
+describe('getSessionFromCookieHeader', () => {
+  it('returns the session for a valid cookie regardless of role', () => {
+    const value = createSessionCookieValue('user@twistfit.vn', 'user')
+    const header = `${SESSION_COOKIE_NAME}=${encodeURIComponent(value)}`
+    expect(getSessionFromCookieHeader(header)?.email).toBe('user@twistfit.vn')
+    expect(getSessionFromCookieHeader(header)?.role).toBe('user')
+  })
+
+  it('returns null when the header is missing the cookie or is null', () => {
+    expect(getSessionFromCookieHeader('other=1')).toBeNull()
+    expect(getSessionFromCookieHeader(null)).toBeNull()
+  })
+
+  it('returns null for a tampered cookie', () => {
+    const value = createSessionCookieValue('user@twistfit.vn', 'user')
+    const tampered = value.slice(0, -1) + (value.at(-1) === 'a' ? 'b' : 'a')
+    expect(getSessionFromCookieHeader(`${SESSION_COOKIE_NAME}=${encodeURIComponent(tampered)}`)).toBeNull()
   })
 })
