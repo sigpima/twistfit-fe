@@ -1,6 +1,6 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest'
 import { getDb } from '@/lib/getDb'
-import { GET, PUT, DELETE } from './route'
+import { GET, PUT, PATCH, DELETE } from './route'
 import { createUser } from '@/lib/auth/users'
 import { createForumPost, type ForumPostInput } from '@/lib/forum'
 import { createSessionCookieValue, SESSION_COOKIE_NAME } from '@/lib/auth/session'
@@ -190,5 +190,71 @@ describe('DELETE /api/forum/posts/[id]', () => {
     })
     const response = await DELETE(request, params(post.id))
     expect(response.status).toBe(403)
+  })
+})
+
+describe('PATCH /api/forum/posts/[id]', () => {
+  it('rejects requests without an admin session', async () => {
+    const db = getDb()
+    const author = createUser(db, { name: 'Tác giả', email: 'author@twistfit.vn', password: 'password123' })
+    const post = createForumPost(db, author.id, validInput)
+    const request = new Request('http://localhost', {
+      method: 'PATCH',
+      body: JSON.stringify({ status: 'published' }),
+    })
+    const response = await PATCH(request, params(post.id))
+    expect(response.status).toBe(401)
+  })
+
+  it('rejects a non-admin session', async () => {
+    const db = getDb()
+    const author = createUser(db, { name: 'Tác giả', email: 'author@twistfit.vn', password: 'password123' })
+    const post = createForumPost(db, author.id, validInput)
+    const request = new Request('http://localhost', {
+      method: 'PATCH',
+      headers: { cookie: cookieFor('author@twistfit.vn', 'user') },
+      body: JSON.stringify({ status: 'published' }),
+    })
+    const response = await PATCH(request, params(post.id))
+    expect(response.status).toBe(401)
+  })
+
+  it('approves a pending post', async () => {
+    const db = getDb()
+    const author = createUser(db, { name: 'Tác giả', email: 'author@twistfit.vn', password: 'password123' })
+    const post = createForumPost(db, author.id, validInput)
+
+    const request = new Request('http://localhost', {
+      method: 'PATCH',
+      headers: { cookie: cookieFor('admin@twistfit.vn', 'admin') },
+      body: JSON.stringify({ status: 'published' }),
+    })
+    const response = await PATCH(request, params(post.id))
+    expect(response.status).toBe(200)
+    expect((await response.json()).status).toBe('published')
+  })
+
+  it('rejects an invalid transition', async () => {
+    const db = getDb()
+    const author = createUser(db, { name: 'Tác giả', email: 'author@twistfit.vn', password: 'password123' })
+    const post = createForumPost(db, author.id, validInput)
+
+    const request = new Request('http://localhost', {
+      method: 'PATCH',
+      headers: { cookie: cookieFor('admin@twistfit.vn', 'admin') },
+      body: JSON.stringify({ status: 'hidden' }),
+    })
+    const response = await PATCH(request, params(post.id))
+    expect(response.status).toBe(400)
+  })
+
+  it('returns 404 for a non-existent post', async () => {
+    const request = new Request('http://localhost', {
+      method: 'PATCH',
+      headers: { cookie: cookieFor('admin@twistfit.vn', 'admin') },
+      body: JSON.stringify({ status: 'published' }),
+    })
+    const response = await PATCH(request, params(999999))
+    expect(response.status).toBe(404)
   })
 })

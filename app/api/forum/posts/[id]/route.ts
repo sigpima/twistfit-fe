@@ -1,9 +1,16 @@
 import { NextResponse } from 'next/server'
-import { getForumPostById, updateForumPost, deleteForumPost } from '@/lib/forum'
+import {
+  getForumPostById,
+  updateForumPost,
+  deleteForumPost,
+  setForumPostStatus,
+  canViewForumPost,
+} from '@/lib/forum'
 import { getDb } from '@/lib/getDb'
 import { getUserByEmail } from '@/lib/auth/users'
-import { getSessionFromCookieHeader } from '@/lib/auth/session'
+import { getSessionFromCookieHeader, getAdminSessionFromCookieHeader } from '@/lib/auth/session'
 import { validateForumPostBody } from '../validate'
+import { validateStatusChangeBody } from './validateStatus'
 
 type RouteContext = { params: Promise<{ id: string }> }
 
@@ -15,15 +22,9 @@ export async function GET(request: Request, { params }: RouteContext) {
     return NextResponse.json({ error: 'Không tìm thấy bài viết' }, { status: 404 })
   }
 
-  if (post.status === 'published') {
-    return NextResponse.json(post)
-  }
-
   const session = getSessionFromCookieHeader(request.headers.get('cookie'))
   const viewer = session ? getUserByEmail(db, session.email) : null
-  const isOwner = viewer?.id === post.authorId
-  const isAdmin = session?.role === 'admin'
-  if (!isOwner && !isAdmin) {
+  if (!canViewForumPost(post, viewer?.id ?? null, session?.role ?? null)) {
     return NextResponse.json({ error: 'Không tìm thấy bài viết' }, { status: 404 })
   }
   return NextResponse.json(post)
@@ -54,6 +55,29 @@ export async function PUT(request: Request, { params }: RouteContext) {
   }
 
   const updated = updateForumPost(db, post.id, result.data)
+  return NextResponse.json(updated)
+}
+
+export async function PATCH(request: Request, { params }: RouteContext) {
+  const session = getAdminSessionFromCookieHeader(request.headers.get('cookie'))
+  if (!session) {
+    return NextResponse.json({ error: 'Yêu cầu quyền quản trị' }, { status: 401 })
+  }
+
+  const db = getDb()
+  const { id } = await params
+  const post = getForumPostById(db, Number(id))
+  if (!post) {
+    return NextResponse.json({ error: 'Không tìm thấy bài viết' }, { status: 404 })
+  }
+
+  const body = await request.json().catch(() => null)
+  const result = validateStatusChangeBody(body, post.status)
+  if ('error' in result) {
+    return NextResponse.json({ error: result.error }, { status: 400 })
+  }
+
+  const updated = setForumPostStatus(db, post.id, result.data.status)
   return NextResponse.json(updated)
 }
 
