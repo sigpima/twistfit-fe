@@ -47,7 +47,7 @@ describe('QuizQuestionForm', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Tạo câu hỏi' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/quiz'))
-    expect(fetch).toHaveBeenCalledWith('/api/quiz-questions', expect.objectContaining({ method: 'POST' }))
+    expect(fetch).toHaveBeenCalledWith('/quiz-questions', expect.objectContaining({ method: 'POST', credentials: 'include' }))
   })
 
   it('pre-fills fields and PUTs to /api/quiz-questions/{id} when editing', async () => {
@@ -58,24 +58,15 @@ describe('QuizQuestionForm', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Lưu thay đổi' }))
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/quiz'))
-    expect(fetch).toHaveBeenCalledWith('/api/quiz-questions/9', expect.objectContaining({ method: 'PUT' }))
+    expect(fetch).toHaveBeenCalledWith('/quiz-questions/9', expect.objectContaining({ method: 'PUT', credentials: 'include' }))
   })
 
-  it('shows field errors returned by the API instead of redirecting', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockResolvedValue({
-        ok: false,
-        status: 400,
-        json: async () => ({ errors: { questionText: 'Nội dung câu hỏi không được để trống' } }),
-      })
-    )
+  it('shows a generic error and does not redirect when the API rejects the submission', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 422, json: async () => ({ detail: [] }) }))
     renderWithIntl(<QuizQuestionForm />)
     fireEvent.click(screen.getByRole('button', { name: 'Tạo câu hỏi' }))
 
-    await waitFor(() =>
-      expect(screen.getByText('Nội dung câu hỏi không được để trống')).toBeInTheDocument()
-    )
+    await waitFor(() => expect(screen.getByText('Có lỗi xảy ra, vui lòng thử lại.')).toBeInTheDocument())
     expect(pushMock).not.toHaveBeenCalled()
   })
 })

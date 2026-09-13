@@ -1,8 +1,9 @@
 import QuizPageContent from '@/components/personal-color/QuizPageContent'
-import { getQuizQuestions } from '@/lib/db'
-import { getDb } from '@/lib/getDb'
+import { apiFetch } from '@/lib/apiClient'
+import type { QuizQuestion } from '@/lib/db'
 
-export default function QuizPage() {
-  const questions = getQuizQuestions(getDb())
+export default async function QuizPage() {
+  const response = await apiFetch('/quiz-questions', { cache: 'no-store' })
+  const questions = response.ok ? ((await response.json()) as QuizQuestion[]) : []
   return <QuizPageContent questions={questions} />
 }

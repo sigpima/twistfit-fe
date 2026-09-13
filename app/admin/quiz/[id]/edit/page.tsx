@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import AdminGate from '@/components/auth/AdminGate'
 import QuizQuestionForm from '@/components/admin/QuizQuestionForm'
+import { apiFetch } from '@/lib/apiClient'
 import type { QuizQuestion } from '@/lib/db'
 
 export default function EditQuizQuestionPage({ params }: { params: Promise<{ id: string }> }) {
@@ -10,7 +11,7 @@ export default function EditQuizQuestionPage({ params }: { params: Promise<{ id:
 
   useEffect(() => {
     params.then(({ id }) => {
-      fetch(`/api/quiz-questions/${id}`)
+      apiFetch(`/quiz-questions/${id}`)
         .then((response) => response.json())
         .then(setQuestion)
     })

@@ -1,7 +1,7 @@
 import Database from 'better-sqlite3'
 import { existsSync, mkdirSync } from 'node:fs'
 import path from 'node:path'
-import { initSchema, seedIfEmpty } from './db'
+import { initSchema as initBlogSchema } from './db'
 import { initSchema as initUsersSchema, seedIfEmpty as seedUsersIfEmpty } from './auth/users'
 import { initSchema as initForumSchema, seedIfEmpty as seedForumIfEmpty } from './forum'
 import { initSchema as initContactSchema, seedIfEmpty as seedContactIfEmpty } from './contact'
@@ -19,8 +19,9 @@ export function getDb(): Database.Database {
   }
 
   const db = new Database(dbPath)
-  initSchema(db)
-  seedIfEmpty(db)
+  // blog_posts is created (but not seeded) only because lib/stats.ts still
+  // counts it directly against SQLite — see the comment in lib/db.ts.
+  initBlogSchema(db)
   initUsersSchema(db)
   seedUsersIfEmpty(db)
   initForumSchema(db)

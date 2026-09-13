@@ -37,6 +37,6 @@ describe('EditQuizQuestionPage', () => {
       </AuthProvider>
     )
     await waitFor(() => expect(screen.getByLabelText('Nội dung câu hỏi')).toHaveValue('Câu hỏi cần sửa?'))
-    expect(fetch).toHaveBeenCalledWith('/api/quiz-questions/3')
+    expect(fetch).toHaveBeenCalledWith('/quiz-questions/3', { credentials: 'include' })
   })
 })

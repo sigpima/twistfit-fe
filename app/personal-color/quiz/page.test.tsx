@@ -1,7 +1,8 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import type { QuizQuestion } from '@/lib/db'
+import QuizPage from './page'
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: vi.fn() }),
@@ -17,17 +18,15 @@ const QUESTIONS: QuizQuestion[] = Array.from({ length: 5 }, (_, index) => ({
   ],
 }))
 
-vi.mock('@/lib/db', () => ({
-  getQuizQuestions: () => QUESTIONS,
-}))
+describe('QuizPage', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
 
-vi.mock('@/lib/getDb', () => ({ getDb: () => ({}) }))
-
-describe('QuizPage', async () => {
-  const { default: QuizPage } = await import('./page')
-
-  it('renders the quiz heading and first question', () => {
-    renderWithIntl(<QuizPage />)
+  it('renders the quiz heading and first question', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => QUESTIONS }))
+    const page = await QuizPage()
+    renderWithIntl(page)
     expect(screen.getByRole('heading', { level: 1, name: 'Kiểm Tra Personal Color' })).toBeInTheDocument()
     expect(screen.getByText('Câu hỏi 1/5')).toBeInTheDocument()
   })

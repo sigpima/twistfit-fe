@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import { SEASONS, type QuizQuestion, type Season } from '@/lib/db'
 
 const inputClass =
@@ -55,8 +56,8 @@ export default function QuizQuestionForm({ initialQuestion }: { initialQuestion?
       options,
     }
 
-    const response = await fetch(
-      isEditing ? `/api/quiz-questions/${initialQuestion!.id}` : '/api/quiz-questions',
+    const response = await apiFetch(
+      isEditing ? `/quiz-questions/${initialQuestion!.id}` : '/quiz-questions',
       {
         method: isEditing ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -66,14 +67,13 @@ export default function QuizQuestionForm({ initialQuestion }: { initialQuestion?
 
     setSubmitting(false)
 
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 403) {
       setErrors({ form: t('unauthorizedError') })
       return
     }
 
     if (!response.ok) {
-      const data = await response.json().catch(() => ({}))
-      setErrors(data.errors ?? { form: t('genericError') })
+      setErrors({ form: t('genericError') })
       return
     }
 

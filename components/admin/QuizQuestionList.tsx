@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import type { QuizQuestion } from '@/lib/db'
 
 export default function QuizQuestionList() {
@@ -10,19 +11,19 @@ export default function QuizQuestionList() {
   const [questions, setQuestions] = useState<QuizQuestion[] | null>(null)
 
   useEffect(() => {
-    fetch('/api/quiz-questions')
+    apiFetch('/quiz-questions')
       .then((response) => response.json())
       .then(setQuestions)
   }, [])
 
   async function persistOrder(a: QuizQuestion, b: QuizQuestion) {
     await Promise.all([
-      fetch(`/api/quiz-questions/${a.id}`, {
+      apiFetch(`/quiz-questions/${a.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ questionText: a.questionText, sortOrder: b.sortOrder, options: a.options }),
       }),
-      fetch(`/api/quiz-questions/${b.id}`, {
+      apiFetch(`/quiz-questions/${b.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ questionText: b.questionText, sortOrder: a.sortOrder, options: b.options }),
@@ -50,7 +51,7 @@ export default function QuizQuestionList() {
 
   async function handleDelete(id: number) {
     if (!window.confirm(t('deleteConfirm'))) return
-    await fetch(`/api/quiz-questions/${id}`, { method: 'DELETE' })
+    await apiFetch(`/quiz-questions/${id}`, { method: 'DELETE' })
     setQuestions((current) => current?.filter((question) => question.id !== id) ?? null)
   }
 
