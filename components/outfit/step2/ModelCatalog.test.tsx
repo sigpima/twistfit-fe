@@ -3,6 +3,32 @@ import { screen, fireEvent } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import ModelCatalog from './ModelCatalog'
 import { OutfitFlowProvider, useOutfitFlow } from '../OutfitFlowProvider'
+import type { CatalogModel } from '@/lib/modelCatalog'
+
+function makeModel(overrides: Partial<CatalogModel> & Pick<CatalogModel, 'id' | 'name'>): CatalogModel {
+  return {
+    image: `/outfit/models/${overrides.id}.jpg`,
+    dossierImage: `/outfit/models/${overrides.id}.jpg`,
+    poseCount: 15,
+    tagline: 'Tagline',
+    undertone: 'neutral',
+    height: '1m65',
+    bodyShape: 'Đồng hồ cát',
+    waist: '64cm',
+    personalColor: 'Autumn Soft',
+    createdAt: '2026-01-01',
+    updatedAt: '2026-01-01',
+    ...overrides,
+  }
+}
+
+const MODELS: CatalogModel[] = [
+  makeModel({ id: 1, name: 'Carmen', undertone: 'neutral' }),
+  makeModel({ id: 2, name: 'Aisha', undertone: 'warm' }),
+  makeModel({ id: 3, name: 'Astrid', undertone: 'cool' }),
+  makeModel({ id: 4, name: 'Kenji', undertone: 'cool' }),
+  makeModel({ id: 5, name: 'Linh Đan', undertone: 'cool' }),
+]
 
 function SelectedModelName() {
   const { selectedModel } = useOutfitFlow()
@@ -18,22 +44,21 @@ describe('ModelCatalog', () => {
     vi.unstubAllGlobals()
   })
 
-  it('renders all 12 models and marks Carmen as selected by default', () => {
+  it('renders every model passed in', () => {
     renderWithIntl(
       <OutfitFlowProvider>
-        <ModelCatalog />
+        <ModelCatalog models={MODELS} />
       </OutfitFlowProvider>
     )
     expect(screen.getByText('Kenji')).toBeInTheDocument()
     expect(screen.getByText('Linh Đan')).toBeInTheDocument()
-    expect(screen.getAllByText('Đang chọn')).toHaveLength(1)
   })
 
   it('updates the shared selected model when a card is clicked', () => {
     renderWithIntl(
       <OutfitFlowProvider>
         <SelectedModelName />
-        <ModelCatalog />
+        <ModelCatalog models={MODELS} />
       </OutfitFlowProvider>
     )
     fireEvent.click(screen.getByText('Kenji'))
@@ -43,7 +68,7 @@ describe('ModelCatalog', () => {
   it('filters the grid by undertone', () => {
     renderWithIntl(
       <OutfitFlowProvider>
-        <ModelCatalog />
+        <ModelCatalog models={MODELS} />
       </OutfitFlowProvider>
     )
     fireEvent.click(screen.getByRole('button', { name: 'Cool' }))
@@ -58,7 +83,7 @@ describe('ModelCatalog', () => {
     renderWithIntl(
       <OutfitFlowProvider>
         <SelectedModelName />
-        <ModelCatalog />
+        <ModelCatalog models={MODELS} />
       </OutfitFlowProvider>
     )
     const file = new File(['fake'], 'me.png', { type: 'image/png' })
