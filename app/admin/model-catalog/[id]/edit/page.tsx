@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import AdminGate from '@/components/auth/AdminGate'
 import ModelForm from '@/components/admin/ModelForm'
+import { apiFetch } from '@/lib/apiClient'
 import type { CatalogModel } from '@/lib/modelCatalog'
 
 export default function EditModelPage({ params }: { params: Promise<{ id: string }> }) {
@@ -10,7 +11,7 @@ export default function EditModelPage({ params }: { params: Promise<{ id: string
 
   useEffect(() => {
     params.then(({ id }) => {
-      fetch(`/api/model-catalog/${id}`)
+      apiFetch(`/model-catalog/${id}`)
         .then((response) => response.json())
         .then(setModel)
     })

@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import { UNDERTONES, type CatalogModel, type Undertone } from '@/lib/modelCatalog'
 
 const inputClass =
@@ -44,7 +45,7 @@ export default function ModelForm({ initialModel }: { initialModel?: CatalogMode
       personalColor,
     }
 
-    const response = await fetch(isEditing ? `/api/model-catalog/${initialModel!.id}` : '/api/model-catalog', {
+    const response = await apiFetch(isEditing ? `/model-catalog/${initialModel!.id}` : '/model-catalog', {
       method: isEditing ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -52,14 +53,13 @@ export default function ModelForm({ initialModel }: { initialModel?: CatalogMode
 
     setSubmitting(false)
 
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 403) {
       setErrors({ form: t('unauthorizedError') })
       return
     }
 
     if (!response.ok) {
-      const data = await response.json().catch(() => ({}))
-      setErrors(data.errors ?? { form: t('genericError') })
+      setErrors({ form: t('genericError') })
       return
     }
 

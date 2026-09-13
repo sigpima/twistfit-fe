@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { apiFetch } from '@/lib/apiClient'
 import type { CatalogModel } from '@/lib/modelCatalog'
 
 export default function ModelList() {
@@ -10,14 +11,14 @@ export default function ModelList() {
   const [models, setModels] = useState<CatalogModel[] | null>(null)
 
   useEffect(() => {
-    fetch('/api/model-catalog')
+    apiFetch('/model-catalog')
       .then((response) => response.json())
       .then(setModels)
   }, [])
 
   async function handleDelete(id: number) {
     if (!window.confirm(t('deleteConfirm'))) return
-    await fetch(`/api/model-catalog/${id}`, { method: 'DELETE' })
+    await apiFetch(`/model-catalog/${id}`, { method: 'DELETE' })
     setModels((current) => current?.filter((model) => model.id !== id) ?? null)
   }
 

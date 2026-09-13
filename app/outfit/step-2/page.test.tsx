@@ -1,8 +1,9 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import { OutfitFlowProvider } from '@/components/outfit/OutfitFlowProvider'
 import type { CatalogModel } from '@/lib/modelCatalog'
+import Step2Page from './page'
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: vi.fn() }),
@@ -26,21 +27,15 @@ const MODELS: CatalogModel[] = [
   },
 ]
 
-vi.mock('@/lib/getDb', () => ({ getDb: () => ({}) }))
-vi.mock('@/lib/modelCatalog', async () => {
-  const actual = await vi.importActual<typeof import('@/lib/modelCatalog')>('@/lib/modelCatalog')
-  return { ...actual, getModels: () => MODELS }
-})
+describe('Step2Page', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
 
-describe('Step2Page', async () => {
-  const { default: Step2Page } = await import('./page')
-
-  it('renders the step heading with models loaded from the database', () => {
-    renderWithIntl(
-      <OutfitFlowProvider>
-        <Step2Page />
-      </OutfitFlowProvider>
-    )
+  it('renders the step heading with models loaded from the database', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => MODELS }))
+    const page = await Step2Page()
+    renderWithIntl(<OutfitFlowProvider>{page}</OutfitFlowProvider>)
     expect(
       screen.getByRole('heading', { name: 'Bước 2: Chọn Người Mẫu Hoặc Tải Ảnh Cá Nhân' })
     ).toBeInTheDocument()

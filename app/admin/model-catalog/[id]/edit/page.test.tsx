@@ -46,6 +46,6 @@ describe('EditModelPage', () => {
       </AuthProvider>
     )
     await waitFor(() => expect(screen.getByLabelText('Tên người mẫu')).toHaveValue('Model cần sửa'))
-    expect(fetch).toHaveBeenCalledWith('/api/model-catalog/3')
+    expect(fetch).toHaveBeenCalledWith('/model-catalog/3', { credentials: 'include' })
   })
 })
