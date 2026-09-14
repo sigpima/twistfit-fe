@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/components/auth/AuthProvider'
+import { useLoginRequiredModal } from '@/components/auth/LoginRequiredModalProvider'
 
 const FEATURE_LINKS = [
   { href: '/personal-color/quiz', key: 'personalColorTest' },
@@ -50,6 +51,7 @@ const SOCIAL_LINKS = [
 export default function Header() {
   const t = useTranslations('Header')
   const { user, logout } = useAuth()
+  const { openLoginRequiredModal } = useLoginRequiredModal()
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -115,6 +117,12 @@ export default function Header() {
                       <Link
                         key={item.href}
                         href={item.href}
+                        onClick={(event) => {
+                          if (item.key === 'outfitStyling' && !user) {
+                            event.preventDefault()
+                            openLoginRequiredModal()
+                          }
+                        }}
                         className="block rounded-xl px-4 py-2.5 text-sm font-medium text-[#3c4a63] transition-colors hover:bg-[#fdf3d3]"
                       >
                         {t(`features.${item.key}`)}

@@ -3,11 +3,14 @@ import { screen, fireEvent } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import Header from './Header'
 import { AuthProvider } from '@/components/auth/AuthProvider'
+import { LoginRequiredModalProvider } from '@/components/auth/LoginRequiredModalProvider'
 
 function renderHeader() {
   return renderWithIntl(
     <AuthProvider>
-      <Header />
+      <LoginRequiredModalProvider>
+        <Header />
+      </LoginRequiredModalProvider>
     </AuthProvider>
   )
 }
@@ -92,5 +95,27 @@ describe('Header', () => {
 
     expect(screen.getByRole('link', { name: 'Đăng nhập' })).toBeInTheDocument()
     expect(window.localStorage.getItem('twistfit.auth')).toBeNull()
+  })
+})
+
+describe('Header — outfit link auth guard', () => {
+  afterEach(() => {
+    window.localStorage.clear()
+  })
+
+  it('opens the login-required modal instead of navigating when signed out', () => {
+    renderHeader()
+    fireEvent.click(screen.getByText('Phối đồ'))
+    expect(screen.getByText('Bạn cần đăng nhập')).toBeInTheDocument()
+  })
+
+  it('does not open the modal when signed in', () => {
+    window.localStorage.setItem(
+      'twistfit.auth',
+      JSON.stringify({ name: 'Test', email: 'user@twistfit.vn', role: 'user' })
+    )
+    renderHeader()
+    fireEvent.click(screen.getByText('Phối đồ'))
+    expect(screen.queryByText('Bạn cần đăng nhập')).not.toBeInTheDocument()
   })
 })
