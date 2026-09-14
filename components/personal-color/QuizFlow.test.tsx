@@ -44,6 +44,7 @@ describe('QuizFlow', () => {
 
   afterEach(() => {
     vi.unstubAllGlobals()
+    window.sessionStorage.clear()
   })
 
   it('shows the first question with the Tiếp theo button disabled until an option is picked', () => {
@@ -87,5 +88,13 @@ describe('QuizFlow', () => {
     renderWithIntl(<QuizFlow questions={QUESTIONS} />)
     completeQuiz()
     expect(pushMock).toHaveBeenCalledWith('/personal-color/result')
+  })
+
+  it('saves the computed season to sessionStorage before navigating, even if the request fails', () => {
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('network down')))
+    renderWithIntl(<QuizFlow questions={QUESTIONS} />)
+    completeQuiz()
+    const stored = JSON.parse(window.sessionStorage.getItem('twistfit.quizResult') ?? 'null')
+    expect(stored?.season).toBe('spring')
   })
 })

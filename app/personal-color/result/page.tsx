@@ -2,11 +2,47 @@
 
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { apiFetch } from '@/lib/apiClient'
+import { useAuth } from '@/components/auth/AuthProvider'
+import { getAnonymousQuizResult } from '@/lib/quizResultStorage'
 import ColorProfileCard from '@/components/personal-color/ColorProfileCard'
 import ColorInsights from '@/components/personal-color/ColorInsights'
+import AnonymousResultBanner from '@/components/personal-color/AnonymousResultBanner'
+
+type ResultState = 'loading' | 'empty' | 'found'
 
 export default function ResultPage() {
   const t = useTranslations('PersonalColor.Result.Page')
+  const { user, isHydrated } = useAuth()
+  const [state, setState] = useState<ResultState>('loading')
+
+  useEffect(() => {
+    if (!isHydrated) return
+    let cancelled = false
+
+    async function loadResult() {
+      if (user) {
+        const response = await apiFetch('/quiz-attempts/me')
+        if (cancelled) return
+        if (response.ok) {
+          const data = (await response.json()) as { season: string } | null
+          if (data) {
+            setState('found')
+            return
+          }
+        }
+      }
+      if (!cancelled) {
+        setState(getAnonymousQuizResult() ? 'found' : 'empty')
+      }
+    }
+
+    loadResult()
+    return () => {
+      cancelled = true
+    }
+  }, [user, isHydrated])
 
   return (
     <main className="mx-auto w-full max-w-7xl flex-grow px-4 py-8 sm:px-6 lg:px-8">
@@ -40,10 +76,28 @@ export default function ResultPage() {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-12 lg:gap-8">
-        <ColorProfileCard />
-        <ColorInsights />
-      </div>
+      {state === 'loading' && (
+        <p className="text-center text-sm text-[#304461]/70">{t('loadingResult')}</p>
+      )}
+      {state === 'empty' && (
+        <div className="flex flex-col items-center gap-3 rounded-3xl border border-[#7b89ba]/15 bg-white p-10 text-center shadow-sm">
+          <h2 className="text-lg font-bold text-[#304461]">{t('emptyStateTitle')}</h2>
+          <p className="max-w-md text-sm text-[#304461]/75">{t('emptyStateBody')}</p>
+          <Link
+            href="/personal-color/quiz"
+            className="mt-2 flex items-center gap-2 rounded-2xl bg-[#304461] px-5 py-3 text-sm font-bold text-white shadow-md transition-all hover:bg-[#233247]"
+          >
+            {t('emptyStateCta')}
+          </Link>
+        </div>
+      )}
+      {state === 'found' && (
+        <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-12 lg:gap-8">
+          {!user && <AnonymousResultBanner />}
+          <ColorProfileCard />
+          <ColorInsights />
+        </div>
+      )}
     </main>
   )
 }

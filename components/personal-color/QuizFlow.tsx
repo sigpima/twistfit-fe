@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { apiFetch } from '@/lib/apiClient'
 import type { QuizQuestion, Season } from '@/lib/db'
 import { computeSeasonResult } from '@/lib/computeSeasonResult'
+import { saveAnonymousQuizResult } from '@/lib/quizResultStorage'
 
 export default function QuizFlow({ questions }: { questions: QuizQuestion[] }) {
   const t = useTranslations('PersonalColor.Quiz')
@@ -26,6 +27,7 @@ export default function QuizFlow({ questions }: { questions: QuizQuestion[] }) {
     if (isLastStep) {
       const finalAnswers = answers.filter((value): value is Season => value !== null)
       const season = computeSeasonResult(finalAnswers)
+      saveAnonymousQuizResult(season)
       void apiFetch('/quiz-attempts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
