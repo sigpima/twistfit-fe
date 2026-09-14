@@ -10,6 +10,7 @@ const MODELS: CatalogModel[] = [
     name: 'Model A',
     image: '/outfit/models/a.jpg',
     dossierImage: '/outfit/models/a.jpg',
+    sideImage: null,
     poseCount: 15,
     tagline: 'Tagline A',
     undertone: 'warm',

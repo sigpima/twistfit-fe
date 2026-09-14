@@ -29,6 +29,7 @@ export type Model = {
   name: string
   image: string
   dossierImage: string
+  sideImage: string | null
   poseCount: number
   tagline: string
   undertone: Undertone
@@ -43,6 +44,7 @@ export const FALLBACK_MODEL: Model = {
   name: 'Carmen',
   image: '/outfit/models/carmen-card.jpg',
   dossierImage: '/outfit/models/carmen-dossier.jpg',
+  sideImage: null,
   poseCount: 15,
   tagline: 'Tông da: Warm Neutral',
   undertone: 'neutral',
@@ -61,6 +63,10 @@ export const DEFAULT_POSE: Pose = { id: 'front', label: 'Đứng thẳng phía t
 
 export type FlowStep = 1 | 2 | 3 | 4
 
+export type OccasionTag = 'hang-ngay' | 'di-lam' | 'du-tiec' | 'di-bien'
+export type StyleTag = 'casual' | 'minimalist' | 'street' | 'formal'
+export type OccasionStyleMode = 'occasion' | 'style'
+
 type OutfitFlowContextValue = {
   selectedGarment: Garment
   setSelectedGarment: (garment: Garment) => void
@@ -70,6 +76,14 @@ type OutfitFlowContextValue = {
   setSelectedPose: (pose: Pose) => void
   maxStepReached: FlowStep
   markStepVisited: (step: FlowStep) => void
+  occasionStyleMode: OccasionStyleMode
+  setOccasionStyleMode: (mode: OccasionStyleMode) => void
+  selectedOccasion: OccasionTag
+  setSelectedOccasion: (tag: OccasionTag) => void
+  selectedStyle: StyleTag
+  setSelectedStyle: (tag: StyleTag) => void
+  jobId: number | null
+  setJobId: (id: number | null) => void
 }
 
 const OutfitFlowContext = createContext<OutfitFlowContextValue | null>(null)
@@ -85,6 +99,10 @@ export function OutfitFlowProvider({
   const [selectedModel, setSelectedModel] = useState<Model>(initialModel ?? FALLBACK_MODEL)
   const [selectedPose, setSelectedPose] = useState<Pose>(DEFAULT_POSE)
   const [maxStepReached, setMaxStepReached] = useState<FlowStep>(1)
+  const [occasionStyleMode, setOccasionStyleMode] = useState<OccasionStyleMode>('occasion')
+  const [selectedOccasion, setSelectedOccasion] = useState<OccasionTag>('hang-ngay')
+  const [selectedStyle, setSelectedStyle] = useState<StyleTag>('casual')
+  const [jobId, setJobId] = useState<number | null>(null)
 
   function markStepVisited(step: FlowStep) {
     setMaxStepReached((current) => (step > current ? step : current))
@@ -101,6 +119,14 @@ export function OutfitFlowProvider({
         setSelectedPose,
         maxStepReached,
         markStepVisited,
+        occasionStyleMode,
+        setOccasionStyleMode,
+        selectedOccasion,
+        setSelectedOccasion,
+        selectedStyle,
+        setSelectedStyle,
+        jobId,
+        setJobId,
       }}
     >
       {children}

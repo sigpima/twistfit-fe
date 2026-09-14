@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
+import { renderHook, act } from '@testing-library/react'
 import {
   OutfitFlowProvider,
   useOutfitFlow,
@@ -50,6 +51,7 @@ function TestConsumer() {
             name: 'Kenji',
             image: '/outfit/models/kenji.jpg',
             dossierImage: '/outfit/models/kenji.jpg',
+            sideImage: null,
             poseCount: 12,
             tagline: 'Tokyo Street • Tối giản',
             undertone: 'cool',
@@ -136,5 +138,31 @@ describe('OutfitFlowProvider', () => {
     fireEvent.click(screen.getByText('mark step 3'))
     fireEvent.click(screen.getByText('mark step 2'))
     expect(screen.getByText('Max: 3')).toBeInTheDocument()
+  })
+})
+
+function wrapper({ children }: { children: React.ReactNode }) {
+  return <OutfitFlowProvider>{children}</OutfitFlowProvider>
+}
+
+describe('OutfitFlowProvider — occasion/style/job state', () => {
+  it('defaults to occasion mode, "hang-ngay", "casual", and no job', () => {
+    const { result } = renderHook(() => useOutfitFlow(), { wrapper })
+    expect(result.current.occasionStyleMode).toBe('occasion')
+    expect(result.current.selectedOccasion).toBe('hang-ngay')
+    expect(result.current.selectedStyle).toBe('casual')
+    expect(result.current.jobId).toBeNull()
+  })
+
+  it('updates occasion, style, mode, and job id', () => {
+    const { result } = renderHook(() => useOutfitFlow(), { wrapper })
+    act(() => result.current.setOccasionStyleMode('style'))
+    act(() => result.current.setSelectedStyle('formal'))
+    act(() => result.current.setSelectedOccasion('du-tiec'))
+    act(() => result.current.setJobId(42))
+    expect(result.current.occasionStyleMode).toBe('style')
+    expect(result.current.selectedStyle).toBe('formal')
+    expect(result.current.selectedOccasion).toBe('du-tiec')
+    expect(result.current.jobId).toBe(42)
   })
 })

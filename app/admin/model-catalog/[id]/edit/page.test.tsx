@@ -14,6 +14,7 @@ const MODEL: CatalogModel = {
   name: 'Model cần sửa',
   image: '/outfit/models/x.jpg',
   dossierImage: '/outfit/models/x.jpg',
+  sideImage: null,
   poseCount: 15,
   tagline: 'Tagline',
   undertone: 'neutral',

@@ -9,6 +9,7 @@ function makeModel(overrides: Partial<CatalogModel> & Pick<CatalogModel, 'id' | 
   return {
     image: `/outfit/models/${overrides.id}.jpg`,
     dossierImage: `/outfit/models/${overrides.id}.jpg`,
+    sideImage: null,
     poseCount: 15,
     tagline: 'Tagline',
     undertone: 'neutral',

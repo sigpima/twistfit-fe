@@ -6,6 +6,7 @@ export type CatalogModel = {
   name: string
   image: string
   dossierImage: string
+  sideImage: string | null
   poseCount: number
   tagline: string
   undertone: Undertone

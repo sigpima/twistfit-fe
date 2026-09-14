@@ -17,6 +17,7 @@ const MODELS: CatalogModel[] = [
     name: 'Carmen',
     image: '/outfit/models/carmen-card.jpg',
     dossierImage: '/outfit/models/carmen-dossier.jpg',
+    sideImage: null,
     poseCount: 15,
     tagline: 'Tông da: Warm Neutral',
     undertone: 'neutral',

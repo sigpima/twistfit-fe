@@ -15,6 +15,7 @@ const EXISTING_MODEL: CatalogModel = {
   name: 'Model hiện có',
   image: '/outfit/models/existing.jpg',
   dossierImage: '/outfit/models/existing-dossier.jpg',
+  sideImage: null,
   poseCount: 12,
   tagline: 'Tagline hiện có',
   undertone: 'cool',
