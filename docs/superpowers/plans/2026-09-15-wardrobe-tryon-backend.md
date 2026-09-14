@@ -164,10 +164,14 @@ def _client() -> BlobServiceClient:
 
 
 def ensure_container(container: str) -> None:
+    # public_access="blob" allows anonymous reads of individual blobs (not
+    # container listing) — fine here since wardrobe/result images aren't
+    # sensitive; writes still require a signed SAS URL (see
+    # generate_upload_sas_url).
     client = _client()
     container_client = client.get_container_client(container)
     if not container_client.exists():
-        container_client.create_container()
+        container_client.create_container(public_access="blob")
 
 
 def blob_public_url(container: str, blob_path: str) -> str:
@@ -692,8 +696,20 @@ def test_extracts_the_dominant_color_of_a_solid_image():
     assert colors == ["#ff0000"]
 
 
+def _two_tone_image_bytes(top: tuple[int, int, int], bottom: tuple[int, int, int]) -> bytes:
+    image = Image.new("RGB", (32, 32), top)
+    for y in range(16, 32):
+        for x in range(32):
+            image.putpixel((x, y), bottom)
+    buffer = io.BytesIO()
+    image.save(buffer, format="PNG")
+    return buffer.getvalue()
+
+
 def test_returns_the_requested_number_of_colors():
-    colors = extract_dominant_colors(_solid_image_bytes((0, 255, 0)), count=2)
+    # A solid-color image only ever has one dominant color, however many
+    # are requested — use a genuinely two-toned image here instead.
+    colors = extract_dominant_colors(_two_tone_image_bytes((0, 255, 0), (0, 0, 255)), count=2)
     assert len(colors) == 2
     assert all(c.startswith("#") and len(c) == 7 for c in colors)
 ```
@@ -911,7 +927,7 @@ Create `backend/tests/domains/wardrobe/test_upload_flow.py`:
 import uuid
 
 from app.core.blob_storage import ensure_container, upload_bytes
-from app.domains.wardrobe import gemini_client
+from app.domains.wardrobe import router as wardrobe_router
 
 
 def _login(client, email: str):
@@ -949,8 +965,12 @@ def test_suggest_tags_combines_gemini_and_color_extraction(client, monkeypatch):
     Image.new("RGB", (16, 16), (255, 0, 0)).save(buffer, format="PNG")
     upload_bytes("wardrobe", blob_path, buffer.getvalue())
 
+    # Patch the name as bound in the router module (where `from
+    # gemini_client import suggest_tags` copied the reference at import
+    # time) — patching gemini_client.suggest_tags itself wouldn't affect
+    # what the router already imported.
     monkeypatch.setattr(
-        gemini_client,
+        wardrobe_router,
         "suggest_tags",
         lambda image_bytes: {"category": "ao-thun", "styleTags": ["casual"], "occasionTags": ["hang-ngay"]},
     )
