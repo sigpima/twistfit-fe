@@ -400,10 +400,13 @@ Not modified. `app/pipeline.py` imports `model.pipeline.CatVTONPipeline`
 and `model.cloth_masker.AutoMasker` from here — this directory must stay
 on `sys.path` (handled by `app/pipeline.py`).
 
-If `runwayml/stable-diffusion-inpainting` (the default base checkpoint)
-is no longer available on Hugging Face when you set this up, check
-https://github.com/Zheng-Chong/CatVTON for the currently recommended
-base model and update `BASE_MODEL_PATH` in `app/pipeline.py`.
+The base checkpoint is `booksforcharlie/stable-diffusion-inpainting` —
+a copy of `runwayml/stable-diffusion-inpainting`, which CatVTON's own
+`app.py` notes was deleted by runwayml upstream. If
+`booksforcharlie/stable-diffusion-inpainting` is ever unavailable too,
+check `vendor/CatVTON/app.py`'s `--base_model_path` default for the
+currently recommended value and update `BASE_MODEL_PATH` in
+`app/pipeline.py` to match.
 ```
 
 - [ ] **Step 2: Add CatVTON's own dependencies**
@@ -442,7 +445,7 @@ from model.cloth_masker import AutoMasker  # noqa: E402
 from model.pipeline import CatVTONPipeline  # noqa: E402
 from utils import init_weight_dtype, resize_and_crop, resize_and_padding  # noqa: E402
 
-BASE_MODEL_PATH = "runwayml/stable-diffusion-inpainting"
+BASE_MODEL_PATH = "booksforcharlie/stable-diffusion-inpainting"
 RESUME_REPO_ID = "zhengchong/CatVTON"
 WIDTH = 768
 HEIGHT = 1024
