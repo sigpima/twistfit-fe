@@ -409,21 +409,66 @@ currently recommended value and update `BASE_MODEL_PATH` in
 `app/pipeline.py` to match.
 ```
 
+Vendoring the full CatVTON repo also pulls in its own `test_*.py` files
+(e.g. under `vendor/CatVTON/densepose/` and `.../detectron2/`) — pytest's
+default discovery would otherwise try to collect those too and fail on
+missing unrelated dependencies. Restrict discovery to our own tests by
+adding to `catvton-service/pytest.ini`:
+
+```ini
+[pytest]
+pythonpath = .
+testpaths = tests
+```
+
 - [ ] **Step 2: Add CatVTON's own dependencies**
 
-Append to `catvton-service/requirements.txt`:
+Append to `catvton-service/requirements.txt` — based on CatVTON's actual
+`vendor/CatVTON/requirements.txt` (its `AutoMasker`/DensePose masking
+needs the full computer-vision stack, not just the diffusion libs;
+`gradio` is dropped since we don't use its demo UI), with two
+deliberate deviations discovered during real deployment (see below):
 
 ```
-torch==2.4.0
-diffusers==0.30.0
-transformers==4.44.0
-accelerate==0.33.0
-huggingface_hub==0.24.5
+# torch/torchvision are intentionally NOT pinned here — they must
+# already be provided by the GPU host's base image. Many Vast.ai
+# PyTorch templates ship a recent torch+CUDA build already (e.g.
+# 2.11.0+cu128) that's far newer than CatVTON's own torch==2.4.0 pin;
+# forcing that exact pin triggers a multi-GB reinstall/downgrade of a
+# working, CUDA-matched torch for no real benefit.
+accelerate==0.31.0
+# Unpinned (PyPI release, not git HEAD) — pinning to
+# git+https://github.com/huggingface/diffusers.git once resolved to a
+# dev build requiring huggingface-hub>=1.31.0, which conflicts with
+# transformers==4.46.3's huggingface-hub<1.0 requirement (a hard,
+# unresolvable pip conflict). Leaving diffusers unpinned lets pip's
+# resolver pick a release compatible with everything else here.
+diffusers
+matplotlib==3.9.1
+numpy==1.26.4
+opencv_python==4.10.0.84
+pillow==10.3.0
+PyYAML==6.0.1
+scipy==1.13.1
+setuptools==51.0.0
+scikit-image==0.24.0
+tqdm==4.66.4
+transformers==4.46.3
+fvcore==0.1.5.post20221221
+cloudpickle==3.0.0
+omegaconf==2.3.0
+pycocotools==2.0.8
+av==12.3.0
+peft>=0.17.0
+huggingface_hub
+torchvision
 ```
 
-(These match the floors CatVTON's own `requirements.txt`, in
-`vendor/CatVTON/requirements.txt`, specifies — check that file at setup
-time and adjust versions here if it has since changed.)
+Note this replaces the earlier `pillow==11.0.0` pin from Task 3 with
+CatVTON's `pillow==10.3.0` — reconcile to whichever version installs
+successfully with everything else at setup time (check
+`vendor/CatVTON/requirements.txt` directly, since this list is a
+snapshot and the repo may have changed since this plan was written).
 
 - [ ] **Step 3: Implement the pipeline wrapper**
 
@@ -617,12 +662,23 @@ for the full design.
    work), using a template with CUDA + PyTorch preinstalled. When
    creating the instance, map a container port (e.g. 8000) to a public
    port.
-2. SSH into the instance:
+2. SSH into the instance. Many Vast.ai PyTorch templates (e.g.
+   `vastai/pytorch`) already activate a virtualenv with a working,
+   CUDA-matched torch on login (prompt shows `(main)`). Check before
+   creating a new venv:
+   ```bash
+   python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
+   ```
+   If that prints a version and `True`, skip creating a venv and
+   install straight into the active one — `requirements.txt`
+   deliberately doesn't pin torch/torchvision for exactly this reason.
+   If there's no working torch+CUDA already, create a venv first
+   (`python3 -m venv venv && source venv/bin/activate`) and install a
+   CUDA-matched torch build before the steps below.
    ```bash
    git clone <this-catvton-service-repo-url>
    cd catvton-service
    git clone https://github.com/Zheng-Chong/CatVTON vendor/CatVTON
-   python3 -m venv venv && source venv/bin/activate
    pip install -r requirements.txt
    export CATVTON_API_KEY="<choose a long random secret>"
    uvicorn app.main:app --host 0.0.0.0 --port 8000
