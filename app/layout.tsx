@@ -3,6 +3,7 @@ import { Montserrat } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { QrModalProvider } from '@/components/qr-modal/QrModalProvider'
 import { AuthProvider } from '@/components/auth/AuthProvider'
+import { LoginRequiredModalProvider } from '@/components/auth/LoginRequiredModalProvider'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import './globals.css'
@@ -34,9 +35,11 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         <NextIntlClientProvider>
           <AuthProvider>
             <QrModalProvider>
-              <Header />
-              {children}
-              <Footer />
+              <LoginRequiredModalProvider>
+                <Header />
+                {children}
+                <Footer />
+              </LoginRequiredModalProvider>
             </QrModalProvider>
           </AuthProvider>
         </NextIntlClientProvider>

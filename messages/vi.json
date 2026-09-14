@@ -422,6 +422,12 @@
     "compatibility": "Tương thích iPhone & Android",
     "instructions": "Không cần tải app • Quét và nhận kết quả tức thì"
   },
+  "LoginRequiredModal": {
+    "title": "Bạn cần đăng nhập",
+    "description": "Đăng nhập để sử dụng tính năng phối đồ và lưu tủ đồ của riêng bạn.",
+    "loginButton": "Đăng nhập ngay",
+    "closeAriaLabel": "Đóng"
+  },
   "Home": {
     "Hero": {
       "versionBadge": "Phiên bản nâng cấp TwistFit AI 2026",
