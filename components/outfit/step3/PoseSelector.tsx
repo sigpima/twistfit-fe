@@ -5,14 +5,7 @@ import { useOutfitFlow } from '../OutfitFlowProvider'
 
 const POSES = [
   { id: 'front', icon: 'man', key: 'front' },
-  { id: '45deg', icon: 'person', key: 'angle45' },
   { id: 'side', icon: 'directions_walk', key: 'side' },
-  { id: 'hand-hip', icon: 'dry_cleaning', key: 'handHip' },
-  { id: 'arms-crossed', icon: 'accessibility', key: 'armsCrossed' },
-  { id: 'runway-walk', icon: 'transfer_within_a_station', key: 'runwayWalk' },
-  { id: 'seated', icon: 'chair', key: 'seated' },
-  { id: 'back-view', icon: 'flip', key: 'backView' },
-  { id: 'dress-spin', icon: 'motion_sensor_active', key: 'dressSpin' },
 ] as const
 
 export default function PoseSelector() {
@@ -31,7 +24,7 @@ export default function PoseSelector() {
         </span>
       </div>
       <p className="text-body-sm text-on-surface-variant">{t('description')}</p>
-      <div className="grid grid-cols-3 gap-space-sm pt-space-xs">
+      <div className="grid grid-cols-2 gap-space-sm pt-space-xs">
         {POSES.map((pose) => {
           const isSelected = selectedPose.id === pose.id
           const label = t(`poses.${pose.key}.label`)

@@ -21,7 +21,7 @@ describe('Step1Page', () => {
         <Step1Page />
       </OutfitFlowProvider>
     )
-    expect(screen.getByRole('heading', { name: 'Tải lên hoặc Chọn Trang Phục Cần Thử' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Chọn Trang Phục Cho Buổi Thử Đồ' })).toBeInTheDocument()
   })
 
   it('links back to the home page', () => {

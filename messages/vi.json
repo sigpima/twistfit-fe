@@ -575,6 +575,12 @@
         "cta": "Khám Phá Diễn Đàn"
       }
     },
+    "FaqPreview": {
+      "badge": "Trung Tâm Trợ Giúp",
+      "heading": "Câu Hỏi Thường Gặp",
+      "subheading": "Chọn đúng chủ đề bạn quan tâm để tìm câu trả lời nhanh nhất.",
+      "viewAll": "Xem tất cả câu hỏi"
+    },
     "ContactSection": {
       "brandTagline": "A little twist, a better fit",
       "logoAlt": "Logo TwistFit",
@@ -733,11 +739,11 @@
         "bannerImageAlt": "Quy trình thử đồ ảo TwistFit 4 bước",
         "stepBadge": "Step 01 / 04",
         "tagline": "A little twist, a better fit",
-        "heading": "Tải lên hoặc Chọn Trang Phục Cần Thử",
-        "subheading": "Sử dụng ảnh flat-lay, ảnh treo móc đồ hoặc dán trực tiếp đường dẫn sản phẩm online. Thuật toán AI Vision tự động xóa nền phức tạp và giữ nguyên nếp vải thực tế.",
+        "heading": "Chọn Trang Phục Cho Buổi Thử Đồ",
+        "subheading": "Chọn từ tủ đồ cá nhân đã lưu, hoặc tải ảnh/dán link sản phẩm để thêm trang phục mới trước khi thử đồ.",
         "modeTabs": {
-          "single": "Quần áo đơn lẻ",
-          "set": "Set đồ (Trên & Dưới)"
+          "closet": "Tủ đồ của tôi ({count})",
+          "upload": "Upload mới"
         },
         "backHome": "Quay lại trang chủ",
         "autoSavedNote": "Đã lưu trang phục tự động vào phiên thử",
@@ -793,9 +799,31 @@
           "navyContrast": "Navy Contrast"
         }
       },
-      "RecentGarments": {
-        "title": "Mục Gần Đây Đã Thử",
-        "viewCloset": "Xem tủ đồ ➔"
+      "WardrobeLibrary": {
+        "sortLabel": "Sắp xếp",
+        "sortByCategory": "Theo loại áo quần",
+        "matchBadge": "Phối đồ ({count})",
+        "suggestExternalLabel": "Đề xuất thêm đồ ngoài",
+        "personalColorLabel": "Phối đồ theo kết quả đánh giá personal color",
+        "personalColorCta": "Làm bài test Personal Color để phối theo màu",
+        "demoToggleLabel": "Demo: đã test PC",
+        "emptyState": "Không có món đồ nào khớp lựa chọn hiện tại."
+      },
+      "OccasionStyleSelector": {
+        "modeOccasion": "Theo dịp",
+        "modeStyle": "Theo phong cách",
+        "occasions": {
+          "daily": "Hằng ngày",
+          "work": "Đi làm",
+          "party": "Dự tiệc",
+          "beach": "Đi biển"
+        },
+        "styles": {
+          "casual": "Casual",
+          "minimalist": "Minimalist",
+          "street": "Street",
+          "formal": "Formal"
+        }
       }
     },
     "Step2": {
@@ -865,12 +893,12 @@
         "backButton": "Quay lại Bước 2",
         "estimatedTime": "Thời gian xử lý AI ước tính: ~4 giây",
         "tipTitle": "Mẹo nhỏ tạo dáng cho Áo Peplum",
-        "tipBody": "Tư thế \"Đứng thẳng phía trước\" và \"Góc 45 độ\" là 2 lựa chọn hàng đầu của stylist TwistFit giúp thấy rõ độ chuyển động của vạt áo và eo thon.",
+        "tipBody": "Tư thế \"Đứng thẳng phía trước\" và \"Nghiêng cạnh bên\" giúp thấy rõ độ chuyển động của vạt áo và eo thon.",
         "creditsBalance": "Tài khoản còn: 12 Credits",
         "topUpButton": "Nạp thêm"
       },
       "PoseSelector": {
-        "heading": "Lựa chọn tư thế (9 tư thế có sẵn)",
+        "heading": "Lựa chọn tư thế (2 tư thế có sẵn)",
         "selectedBadge": "Đã chọn: {label}",
         "description": "Góc nhìn và thế đứng làm nổi bật độ rủ peplum và tôn đường cong cơ thể tốt nhất.",
         "poses": {

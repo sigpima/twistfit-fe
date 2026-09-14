@@ -8,17 +8,18 @@ import FlowOverviewBanner from '@/components/outfit/FlowOverviewBanner'
 import GarmentDropzone from '@/components/outfit/step1/GarmentDropzone'
 import ProductUrlFetcher from '@/components/outfit/step1/ProductUrlFetcher'
 import ColorHarmonyCard from '@/components/outfit/step1/ColorHarmonyCard'
-import RecentGarments from '@/components/outfit/step1/RecentGarments'
+import WardrobeLibrary from '@/components/outfit/step1/WardrobeLibrary'
+import { WARDROBE_ITEMS } from '@/components/outfit/step1/wardrobeMockData'
 
-const MODE_TABS = [
-  { id: 'single', icon: 'checkroom', key: 'single' },
-  { id: 'set', icon: 'layers', key: 'set' },
+const TABS = [
+  { id: 'closet', icon: 'checkroom', key: 'closet' },
+  { id: 'upload', icon: 'cloud_upload', key: 'upload' },
 ] as const
 
 export default function Step1Page() {
   const t = useTranslations('Outfit.Step1.Page')
   const router = useRouter()
-  const [activeMode, setActiveMode] = useState<(typeof MODE_TABS)[number]['id']>('single')
+  const [activeTab, setActiveTab] = useState<(typeof TABS)[number]['id']>('closet')
 
   function handleContinue() {
     router.push('/outfit/step-2')
@@ -47,33 +48,40 @@ export default function Step1Page() {
             <p className="max-w-2xl text-body-md text-on-surface-variant">{t('subheading')}</p>
           </div>
           <div className="inline-flex shrink-0 self-start rounded-2xl bg-surface-container-high p-1 shadow-inner md:self-auto">
-            {MODE_TABS.map((tab) => (
+            {TABS.map((tab) => (
               <button
                 key={tab.id}
                 type="button"
-                onClick={() => setActiveMode(tab.id)}
+                onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-space-xs rounded-xl px-space-md py-space-sm text-label-lg transition-all ${
-                  activeMode === tab.id
+                  activeTab === tab.id
                     ? 'bg-surface-container-lowest font-semibold text-on-surface shadow-sm'
                     : 'font-medium text-on-surface-variant hover:text-on-surface'
                 }`}
               >
                 <span className="material-symbols-outlined text-[18px]">{tab.icon}</span>
-                <span>{t(`modeTabs.${tab.key}`)}</span>
+                <span>
+                  {tab.id === 'closet'
+                    ? t('modeTabs.closet', { count: WARDROBE_ITEMS.length })
+                    : t('modeTabs.upload')}
+                </span>
               </button>
             ))}
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-space-lg lg:grid-cols-12">
-          <div className="flex flex-col gap-space-md lg:col-span-7">
-            <GarmentDropzone />
-            <ProductUrlFetcher />
+        {activeTab === 'closet' ? (
+          <WardrobeLibrary />
+        ) : (
+          <div className="grid grid-cols-1 gap-space-lg lg:grid-cols-12">
+            <div className="flex flex-col gap-space-md lg:col-span-7">
+              <GarmentDropzone />
+              <ProductUrlFetcher />
+            </div>
+            <div className="flex flex-col gap-space-md lg:col-span-5">
+              <ColorHarmonyCard />
+            </div>
           </div>
-          <div className="flex flex-col gap-space-md lg:col-span-5">
-            <ColorHarmonyCard />
-            <RecentGarments />
-          </div>
-        </div>
+        )}
         <div className="mt-space-md flex flex-col items-center justify-between gap-space-md pt-space-lg sm:flex-row">
           <Link
             href="/"
