@@ -14,6 +14,7 @@ function SwitchToKenji() {
           name: 'Kenji',
           image: '/outfit/models/kenji.jpg',
           dossierImage: '/outfit/models/kenji.jpg',
+          sideImage: null,
           poseCount: 12,
           tagline: 'Tokyo Street • Tối giản',
           undertone: 'cool',

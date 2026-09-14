@@ -24,7 +24,7 @@ const CATEGORIES = ['ao-thun', 'ao-so-mi', 'quan-jean', 'dam', 'ao-khoac'] as co
 const STYLE_TAGS = ['casual', 'minimalist', 'street', 'formal'] as const
 const OCCASION_TAGS = ['hang-ngay', 'di-lam', 'du-tiec', 'di-bien'] as const
 
-const CATEGORY_KEYS: Record<(typeof CATEGORIES)[number], string> = {
+const CATEGORY_KEYS: Record<(typeof CATEGORIES)[number], 'aoThun' | 'aoSoMi' | 'quanJean' | 'dam' | 'aoKhoac'> = {
   'ao-thun': 'aoThun',
   'ao-so-mi': 'aoSoMi',
   'quan-jean': 'quanJean',
