@@ -748,7 +748,7 @@
         "heading": "Chọn Trang Phục Cho Buổi Thử Đồ",
         "subheading": "Chọn từ tủ đồ cá nhân đã lưu, hoặc tải ảnh/dán link sản phẩm để thêm trang phục mới trước khi thử đồ.",
         "modeTabs": {
-          "closet": "Tủ đồ của tôi ({count})",
+          "closet": "Tủ đồ của tôi",
           "upload": "Upload mới"
         },
         "backHome": "Quay lại trang chủ",
@@ -808,12 +808,13 @@
       "WardrobeLibrary": {
         "sortLabel": "Sắp xếp",
         "sortByCategory": "Theo loại áo quần",
-        "matchBadge": "Phối đồ ({count})",
         "suggestExternalLabel": "Đề xuất thêm đồ ngoài",
         "personalColorLabel": "Phối đồ theo kết quả đánh giá personal color",
         "personalColorCta": "Làm bài test Personal Color để phối theo màu",
-        "demoToggleLabel": "Demo: đã test PC",
-        "emptyState": "Không có món đồ nào khớp lựa chọn hiện tại."
+        "emptyState": "Không có món đồ nào khớp lựa chọn hiện tại.",
+        "loadingItems": "Đang tải tủ đồ...",
+        "loadError": "Không tải được tủ đồ, vui lòng thử lại.",
+        "itemCountBadge": "{count} món đồ phù hợp"
       },
       "OccasionStyleSelector": {
         "modeOccasion": "Theo dịp",

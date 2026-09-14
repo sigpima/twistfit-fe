@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest'
+import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import Step1Page from './page'
@@ -10,9 +10,25 @@ vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: pushMock }),
 }))
 
+function jsonResponse(body: unknown, init: { ok?: boolean; status?: number } = {}) {
+  return { ok: init.ok ?? true, status: init.status ?? 200, json: async () => body }
+}
+
 describe('Step1Page', () => {
   beforeEach(() => {
     pushMock.mockClear()
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((url: string) => {
+        if (url.includes('/wardrobe/items')) return Promise.resolve(jsonResponse([]))
+        if (url.includes('/quiz-attempts/me')) return Promise.resolve(jsonResponse(null))
+        return Promise.resolve(jsonResponse(null, { ok: false, status: 404 }))
+      })
+    )
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
   })
 
   it('renders the step heading', () => {

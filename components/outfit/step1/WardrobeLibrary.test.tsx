@@ -1,68 +1,82 @@
-import { describe, expect, it } from 'vitest'
-import { screen, fireEvent } from '@testing-library/react'
+import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import WardrobeLibrary from './WardrobeLibrary'
-import { OutfitFlowProvider, useOutfitFlow } from '../OutfitFlowProvider'
-
-function SelectedGarmentName() {
-  const { selectedGarment } = useOutfitFlow()
-  return <p>Đang chọn: {selectedGarment.name}</p>
-}
+import { OutfitFlowProvider } from '../OutfitFlowProvider'
 
 function renderLibrary() {
   return renderWithIntl(
     <OutfitFlowProvider>
-      <SelectedGarmentName />
       <WardrobeLibrary />
     </OutfitFlowProvider>
   )
 }
 
+function jsonResponse(body: unknown, init: { ok?: boolean; status?: number } = {}) {
+  return { ok: init.ok ?? true, status: init.status ?? 200, json: async () => body }
+}
+
+const WARDROBE_ITEM = {
+  id: 1,
+  blobUrl: 'https://example.com/a.png',
+  category: 'ao-thun',
+  styleTags: ['casual'],
+  occasionTags: ['hang-ngay'],
+  dominantColors: ['#ff0000'],
+}
+
 describe('WardrobeLibrary', () => {
-  it('defaults to occasion mode showing items tagged "Hằng ngày"', () => {
-    renderLibrary()
-    expect(screen.getByRole('button', { name: 'Hằng ngày' })).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByText('Áo Thun Cổ Chữ V Đỏ')).toBeInTheDocument()
-    expect(screen.queryByText('Áo Sơ Mi Tay Dài Be')).not.toBeInTheDocument()
+  beforeEach(() => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((url: string) => {
+        if (url.includes('/wardrobe/items')) return Promise.resolve(jsonResponse([WARDROBE_ITEM]))
+        if (url.includes('/quiz-attempts/me')) return Promise.resolve(jsonResponse(null))
+        return Promise.resolve(jsonResponse(null, { ok: false, status: 404 }))
+      })
+    )
   })
 
-  it('filters the grid when a different occasion chip is clicked', () => {
-    renderLibrary()
-    fireEvent.click(screen.getByRole('button', { name: 'Dự tiệc' }))
-    expect(screen.getByText('Áo Sơ Mi Tay Dài Be')).toBeInTheDocument()
-    expect(screen.queryByText('Áo Thun Cổ Chữ V Đỏ')).not.toBeInTheDocument()
+  afterEach(() => {
+    vi.unstubAllGlobals()
   })
 
-  it('switches to style chips and filters accordingly', () => {
+  it('shows a loading state, then the fetched items', async () => {
     renderLibrary()
-    fireEvent.click(screen.getByRole('button', { name: 'Theo phong cách' }))
-    fireEvent.click(screen.getByRole('button', { name: 'Formal' }))
-    expect(screen.getByText('Áo Sơ Mi Tay Dài Be')).toBeInTheDocument()
-    expect(screen.queryByText('Quần Short Jean Xanh')).not.toBeInTheDocument()
+    expect(screen.getByText('Đang tải tủ đồ...')).toBeInTheDocument()
+    await waitFor(() => expect(screen.getByText('ao-thun')).toBeInTheDocument())
   })
 
-  it('shows the personal color CTA link when the demo toggle is off', () => {
+  it('shows an error message when the fetch fails', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(null, { ok: false, status: 500 })))
     renderLibrary()
-    expect(screen.getByRole('link', { name: /Personal Color/ })).toHaveAttribute('href', '/personal-color/quiz')
-    expect(screen.queryByText('Phối đồ theo kết quả đánh giá personal color')).not.toBeInTheDocument()
+    await waitFor(() => expect(screen.getByText('Không tải được tủ đồ, vui lòng thử lại.')).toBeInTheDocument())
   })
 
-  it('shows the personal color checkbox once the demo toggle is switched on', () => {
+  it('does not render a clickable/selectable card — items are plain display only', async () => {
     renderLibrary()
-    fireEvent.click(screen.getByRole('checkbox', { name: 'Demo: đã test PC' }))
-    expect(screen.getByText('Phối đồ theo kết quả đánh giá personal color')).toBeInTheDocument()
+    await waitFor(() => expect(screen.getByText('ao-thun')).toBeInTheDocument())
+    expect(screen.queryByRole('button', { name: /ao-thun/ })).not.toBeInTheDocument()
+  })
+
+  it('shows the personal-color CTA link when the user has no quiz result', async () => {
+    renderLibrary()
+    await waitFor(() => expect(screen.getByRole('link', { name: /Personal Color/ })).toBeInTheDocument())
+  })
+
+  it('shows the real personal-color checkbox when the user has a quiz result', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((url: string) => {
+        if (url.includes('/wardrobe/items')) return Promise.resolve(jsonResponse([WARDROBE_ITEM]))
+        if (url.includes('/quiz-attempts/me')) return Promise.resolve(jsonResponse({ season: 'autumn' }))
+        return Promise.resolve(jsonResponse(null, { ok: false, status: 404 }))
+      })
+    )
+    renderLibrary()
+    await waitFor(() =>
+      expect(screen.getByText('Phối đồ theo kết quả đánh giá personal color')).toBeInTheDocument()
+    )
     expect(screen.queryByRole('link', { name: /Personal Color/ })).not.toBeInTheDocument()
-  })
-
-  it('selects a wardrobe item and updates the shared flow state', () => {
-    renderLibrary()
-    fireEvent.click(screen.getByRole('button', { name: /Áo Thun Cổ Chữ V Đỏ/ }))
-    expect(screen.getByText('Đang chọn: Áo Thun Cổ Chữ V Đỏ')).toBeInTheDocument()
-  })
-
-  it('opens the sort menu with the category option pre-selected', () => {
-    renderLibrary()
-    fireEvent.click(screen.getByRole('button', { name: /Sắp xếp/ }))
-    expect(screen.getByRole('button', { name: /Theo loại áo quần/ })).toBeInTheDocument()
   })
 })

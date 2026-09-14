@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import type { OccasionTag, StyleTag } from './wardrobeMockData'
+import type { OccasionTag, StyleTag } from '../OutfitFlowProvider'
 
 export type OccasionStyleMode = 'occasion' | 'style'
 

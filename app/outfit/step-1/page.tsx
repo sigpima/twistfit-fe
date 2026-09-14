@@ -9,7 +9,6 @@ import GarmentDropzone from '@/components/outfit/step1/GarmentDropzone'
 import ProductUrlFetcher from '@/components/outfit/step1/ProductUrlFetcher'
 import ColorHarmonyCard from '@/components/outfit/step1/ColorHarmonyCard'
 import WardrobeLibrary from '@/components/outfit/step1/WardrobeLibrary'
-import { WARDROBE_ITEMS } from '@/components/outfit/step1/wardrobeMockData'
 
 const TABS = [
   { id: 'closet', icon: 'checkroom', key: 'closet' },
@@ -60,11 +59,7 @@ export default function Step1Page() {
                 }`}
               >
                 <span className="material-symbols-outlined text-[18px]">{tab.icon}</span>
-                <span>
-                  {tab.id === 'closet'
-                    ? t('modeTabs.closet', { count: WARDROBE_ITEMS.length })
-                    : t('modeTabs.upload')}
-                </span>
+                <span>{tab.id === 'closet' ? t('modeTabs.closet') : t('modeTabs.upload')}</span>
               </button>
             ))}
           </div>
