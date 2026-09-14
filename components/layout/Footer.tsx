@@ -31,7 +31,7 @@ export default function Footer() {
 
   return (
     <footer className="mt-20 w-full border-t border-[#e2e8f0] bg-white pb-8 pt-14">
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl px-margin md:px-margin-desktop">
         <div className="grid grid-cols-1 gap-10 border-b border-[#f1f5f9] pb-12 md:grid-cols-4">
           <div className="space-y-4">
             <h3 className="font-serif text-2xl font-black tracking-tight text-[#304461]">{t('brand')}</h3>

@@ -1,15 +1,26 @@
 {
   "Header": {
     "nav": {
-      "about": "About us",
-      "howItWorks": "How it works",
+      "about": "Về chúng tôi",
+      "howItWorks": "Cơ chế vận hành",
       "faq": "FAQ",
       "blog": "Blog"
+    },
+    "featuresLabel": "Tính năng",
+    "features": {
+      "personalColorTest": "Test Personal Color",
+      "outfitStyling": "Phối đồ",
+      "forum": "Diễn đàn"
     },
     "login": "Đăng nhập",
     "register": "Đăng ký",
     "accountAriaLabel": "Tài khoản",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "accountMenu": {
+      "savedCollection": "Bộ sưu tập đã lưu",
+      "personalColorResult": "Kết quả đánh giá Personal Color",
+      "profile": "Thông tin cá nhân"
+    }
   },
   "Admin": {
     "checkingAccess": "Đang kiểm tra quyền truy cập...",
