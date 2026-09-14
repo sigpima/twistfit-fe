@@ -4,6 +4,7 @@ import { useEffect, type ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
 import { useOutfitFlow, type FlowStep } from './OutfitFlowProvider'
 import OutfitStepper from './OutfitStepper'
+import OutfitAuthGate from './OutfitAuthGate'
 
 const STEP_BY_PATHNAME: Record<string, FlowStep> = {
   '/outfit/step-1': 1,
@@ -23,6 +24,7 @@ export default function OutfitFlowChrome({ children }: { children: ReactNode }) 
 
   return (
     <>
+      <OutfitAuthGate />
       <OutfitStepper currentStep={currentStep} maxStepReached={Math.max(currentStep, maxStepReached) as FlowStep} />
       {children}
     </>

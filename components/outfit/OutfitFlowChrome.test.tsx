@@ -5,17 +5,23 @@ import type { ReactElement } from 'react'
 import messages from '@/messages/vi.json'
 import { OutfitFlowProvider } from './OutfitFlowProvider'
 import OutfitFlowChrome from './OutfitFlowChrome'
+import { AuthProvider } from '@/components/auth/AuthProvider'
+import { LoginRequiredModalProvider } from '@/components/auth/LoginRequiredModalProvider'
 
 let mockPathname = '/outfit/step-1'
+const replaceMock = vi.fn()
 
 vi.mock('next/navigation', () => ({
   usePathname: () => mockPathname,
+  useRouter: () => ({ replace: replaceMock }),
 }))
 
 function withIntl(ui: ReactElement) {
   return (
     <NextIntlClientProvider locale="vi" messages={messages}>
-      {ui}
+      <AuthProvider>
+        <LoginRequiredModalProvider>{ui}</LoginRequiredModalProvider>
+      </AuthProvider>
     </NextIntlClientProvider>
   )
 }
