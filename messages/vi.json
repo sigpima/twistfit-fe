@@ -639,7 +639,24 @@
         "breadcrumbCurrent": "Kết quả phân tích",
         "heading": "KẾT QUẢ PHÂN TÍCH PERSONAL COLOR",
         "subheading": "Bảng màu cá nhân hóa – Tôn vinh vẻ đẹp tự nhiên của bạn",
-        "accuracyBadge": "Độ chính xác cao"
+        "accuracyBadge": "Độ chính xác cao",
+        "loadingResult": "Đang tải kết quả của bạn...",
+        "emptyStateTitle": "Bạn chưa có kết quả Personal Color nào",
+        "emptyStateBody": "Hãy làm bài test để khám phá mùa màu sắc của riêng bạn.",
+        "emptyStateCta": "Làm bài test ngay"
+      },
+      "AnonymousBanner": {
+        "title": "Lưu lại kết quả của bạn!",
+        "body": "Đăng ký hoặc đăng nhập để lưu kết quả này vĩnh viễn và khám phá thêm nhiều tính năng cá nhân hoá khác của TwistFit.",
+        "registerButton": "Đăng ký ngay",
+        "loginButton": "Đăng nhập"
+      },
+      "CameraArButton": {
+        "openButton": "Mở Camera AR",
+        "modalTitle": "Mở Camera AR trên điện thoại",
+        "modalDescription": "Quét mã QR bằng camera điện thoại để mở trải nghiệm kiểm tra màu sắc trực tiếp qua camera.",
+        "qrTitle": "Mã QR mở trang Camera AR",
+        "closeAriaLabel": "Đóng"
       },
       "ProfileCard": {
         "srHeading": "Tổng quan mùa sắc thái và bảng màu",

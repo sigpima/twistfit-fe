@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
+import CameraArButton from './CameraArButton'
 
 const METRICS: {
   key: 'skinBrightness' | 'warmCoolTone' | 'vividness'
@@ -151,6 +152,7 @@ export default function ColorInsights() {
           <span className="material-symbols-outlined text-[16px] text-rose-500">picture_as_pdf</span>
           <span>{t('downloadPdfButton')}</span>
         </button>
+        <CameraArButton />
       </div>
     </section>
   )
