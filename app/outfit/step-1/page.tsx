@@ -5,9 +5,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import FlowOverviewBanner from '@/components/outfit/FlowOverviewBanner'
-import GarmentDropzone from '@/components/outfit/step1/GarmentDropzone'
-import ProductUrlFetcher from '@/components/outfit/step1/ProductUrlFetcher'
-import ColorHarmonyCard from '@/components/outfit/step1/ColorHarmonyCard'
+import UploadFlow from '@/components/outfit/step1/UploadFlow'
 import WardrobeLibrary from '@/components/outfit/step1/WardrobeLibrary'
 
 const TABS = [
@@ -67,15 +65,7 @@ export default function Step1Page() {
         {activeTab === 'closet' ? (
           <WardrobeLibrary />
         ) : (
-          <div className="grid grid-cols-1 gap-space-lg lg:grid-cols-12">
-            <div className="flex flex-col gap-space-md lg:col-span-7">
-              <GarmentDropzone />
-              <ProductUrlFetcher />
-            </div>
-            <div className="flex flex-col gap-space-md lg:col-span-5">
-              <ColorHarmonyCard />
-            </div>
-          </div>
+          <UploadFlow onUploaded={() => setActiveTab('closet')} />
         )}
         <div className="mt-space-md flex flex-col items-center justify-between gap-space-md pt-space-lg sm:flex-row">
           <Link

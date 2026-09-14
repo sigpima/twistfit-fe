@@ -755,54 +755,36 @@
         "autoSavedNote": "Đã lưu trang phục tự động vào phiên thử",
         "continueButton": "Tiếp tục sang Bước 2: Chọn Người Mẫu"
       },
-      "GarmentDropzone": {
-        "liveCanvasLabel": "Live AI Canvas",
-        "zoomTitle": "Phóng to",
-        "rotateTitle": "Xoay ảnh",
-        "resetTitle": "Đặt lại ảnh",
-        "bgRemovedBadge": "Đã tách nền sạch 100%",
-        "catalogNote": "TwistFit Studio Catalog · Vải tơ organza mềm",
-        "dragDropTitle": "Kéo thả hoặc Bấm để đổi ảnh",
-        "supportedFormats": "Hỗ trợ PNG, JPG, WEBP lên đến 15MB",
-        "uploadFromDevice": "Tải từ thiết bị",
-        "bgRemovalToggleLabel": "Tự động bóc nền AI (Background Removal)",
-        "ultraHdToggleLabel": "Chế độ sắc nét Ultra-HD"
-      },
-      "ProductUrlFetcher": {
-        "title": "Dán đường dẫn sản phẩm từ Sàn TMĐT",
-        "supportedStores": "Shopee · Zara · Uniqlo · TikTok Shop",
-        "placeholder": "https://shopee.vn/ao-peplum-voan-xep-ly-TF8821...",
-        "buttonLoading": "Đang bóc tách đồ...",
-        "buttonSuccess": "Đã nạp xong!",
-        "buttonIdle": "Lấy dữ liệu đồ"
-      },
-      "ColorHarmonyCard": {
-        "title": "Đánh Giá Hòa Sắc AI",
-        "matchBadge": "Match 98%",
-        "bestPaletteLabel": "Bảng màu phù hợp nhất:",
-        "bestPaletteValue": "Light Summer & Cool Winter",
-        "undertoneMatchLabel": "Độ tôn sắc da (Skin undertone match)",
-        "undertoneMatchValue": "Rất Cao",
-        "garmentTypeLabel": "Phân loại áo/quần",
-        "garmentTypes": {
-          "top": "Trên (Top / Áo sơ mi)",
-          "bottom": "Dưới (Bottom / Chân váy / Quần)",
-          "dress": "Đầm liền (Full Dress)",
-          "outerwear": "Áo khoác / Blazer (Outerwear)"
+      "UploadFlow": {
+        "pickFileTitle": "Chọn ảnh áo quần để thêm vào tủ đồ",
+        "pickFileHint": "Hỗ trợ PNG, JPG, WEBP",
+        "uploading": "Đang tải ảnh lên...",
+        "analyzing": "Đang phân tích ảnh...",
+        "categoryLabel": "Danh mục",
+        "styleTagsLabel": "Phong cách",
+        "occasionTagsLabel": "Dịp",
+        "saveButton": "Lưu vào tủ đồ",
+        "saving": "Đang lưu...",
+        "savedMessage": "Đã lưu vào tủ đồ!",
+        "errorMessage": "Có lỗi xảy ra, vui lòng thử lại.",
+        "categories": {
+          "aoThun": "Áo thun",
+          "aoSoMi": "Áo sơ mi",
+          "quanJean": "Quần jean",
+          "dam": "Đầm",
+          "aoKhoac": "Áo khoác"
         },
-        "fitLabel": "Độ ôm phom (Fit)",
-        "fitOptions": {
-          "slim": "Dáng ôm sát (Slim / Bodycon)",
-          "regular": "Dáng thường (Regular Fit)",
-          "loose": "Dáng thụng / Xòe (Loose / Peplum)",
-          "oversize": "Oversize phong cách Hàn"
+        "styles": {
+          "casual": "Casual",
+          "minimalist": "Minimalist",
+          "street": "Street",
+          "formal": "Formal"
         },
-        "swatches": {
-          "blushPink": "Blush Pink",
-          "icyPastelBlue": "Icy Pastel Blue",
-          "softLilac": "Soft Lilac",
-          "pureIvory": "Pure Ivory",
-          "navyContrast": "Navy Contrast"
+        "occasions": {
+          "hangNgay": "Hằng ngày",
+          "diLam": "Đi làm",
+          "duTiec": "Dự tiệc",
+          "diBien": "Đi biển"
         }
       },
       "WardrobeLibrary": {
