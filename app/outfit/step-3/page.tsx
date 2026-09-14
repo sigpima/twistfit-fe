@@ -1,7 +1,10 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { apiFetch } from '@/lib/apiClient'
+import { useOutfitFlow } from '@/components/outfit/OutfitFlowProvider'
 import FlowOverviewBanner from '@/components/outfit/FlowOverviewBanner'
 import QuickSelectionSummary from '@/components/outfit/step3/QuickSelectionSummary'
 import PoseSelector from '@/components/outfit/step3/PoseSelector'
@@ -11,8 +14,40 @@ import BodyMeasurements from '@/components/outfit/step3/BodyMeasurements'
 export default function Step3Page() {
   const t = useTranslations('Outfit.Step3.Page')
   const router = useRouter()
+  const { selectedModel, selectedPose, occasionStyleMode, selectedOccasion, selectedStyle, setJobId } = useOutfitFlow()
+  const [isGenerating, setIsGenerating] = useState(false)
+  const [generateError, setGenerateError] = useState(false)
 
-  function handleGenerate() {
+  async function handleGenerate() {
+    const catalogModelId = Number(selectedModel.id)
+    if (Number.isNaN(catalogModelId)) {
+      setGenerateError(true)
+      return
+    }
+
+    setIsGenerating(true)
+    setGenerateError(false)
+
+    const response = await apiFetch('/tryon', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        catalogModelId,
+        occasion: occasionStyleMode === 'occasion' ? selectedOccasion : 'hang-ngay',
+        style: occasionStyleMode === 'style' ? selectedStyle : 'casual',
+        pose: selectedPose.id === 'side' ? 'side' : 'front',
+      }),
+    })
+
+    setIsGenerating(false)
+
+    if (!response.ok) {
+      setGenerateError(true)
+      return
+    }
+
+    const job = (await response.json()) as { id: number }
+    setJobId(job.id)
     router.push('/outfit/step-4')
   }
 
@@ -51,13 +86,15 @@ export default function Step3Page() {
                 <button
                   type="button"
                   onClick={handleGenerate}
-                  className="group flex w-full transform items-center justify-center gap-space-sm rounded-full bg-gradient-to-r from-secondary via-primary-container to-primary px-space-lg py-space-md text-headline-sm text-on-primary shadow-xl transition-all hover:shadow-2xl active:scale-98"
+                  disabled={isGenerating}
+                  className="group flex w-full transform items-center justify-center gap-space-sm rounded-full bg-gradient-to-r from-secondary via-primary-container to-primary px-space-lg py-space-md text-headline-sm text-on-primary shadow-xl transition-all hover:shadow-2xl active:scale-98 disabled:opacity-60"
                 >
                   <span className="material-symbols-outlined text-[26px] transition-transform group-hover:rotate-12">
                     bolt
                   </span>
                   <span>{t('generateButton')}</span>
                 </button>
+                {generateError && <p className="text-center text-body-sm text-error">{t('generateError')}</p>}
                 <button
                   type="button"
                   onClick={() => router.push('/outfit/step-2')}

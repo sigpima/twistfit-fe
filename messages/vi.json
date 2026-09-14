@@ -884,7 +884,8 @@
         "tipTitle": "Mẹo nhỏ tạo dáng cho Áo Peplum",
         "tipBody": "Tư thế \"Đứng thẳng phía trước\" và \"Nghiêng cạnh bên\" giúp thấy rõ độ chuyển động của vạt áo và eo thon.",
         "creditsBalance": "Tài khoản còn: 12 Credits",
-        "topUpButton": "Nạp thêm"
+        "topUpButton": "Nạp thêm",
+        "generateError": "Không thể tạo yêu cầu phối đồ, vui lòng thử lại."
       },
       "PoseSelector": {
         "heading": "Lựa chọn tư thế (2 tư thế có sẵn)",
