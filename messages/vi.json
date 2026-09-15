@@ -320,7 +320,9 @@
       "title": "Diễn đàn TwistFit",
       "subtitle": "Nơi chia sẻ và xin tư vấn phối đồ cùng cộng đồng TwistFit.",
       "loading": "Đang tải...",
-      "emptyState": "Chưa có bài viết nào trong chuyên mục này."
+      "emptyState": "Chưa có bài viết nào trong chuyên mục này.",
+      "likesLabel": "lượt thích",
+      "commentsLabel": "bình luận"
     },
     "Detail": {
       "backLink": "← Quay lại Diễn đàn",

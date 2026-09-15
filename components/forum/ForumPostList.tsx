@@ -57,14 +57,25 @@ export default function ForumPostList() {
       {posts !== null && posts.length > 0 && (
         <ul className="mt-space-lg space-y-space-md">
           {posts.map((post) => (
-            <li key={post.id} className="rounded-2xl border border-outline-variant p-space-lg">
-              <Link
-                href={`/forum/${post.id}`}
-                className="text-headline-sm font-semibold text-on-surface hover:underline"
-              >
-                {post.title}
-              </Link>
-              <p className="mt-space-xs text-label-sm text-on-surface-variant">{t(`categories.${post.category}`)}</p>
+            <li key={post.id} className="flex gap-space-md rounded-2xl border border-outline-variant p-space-lg">
+              {post.imageUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={post.imageUrl} alt="" className="h-20 w-20 shrink-0 rounded-xl object-cover" />
+              )}
+              <div className="min-w-0 flex-1">
+                <Link
+                  href={`/forum/${post.id}`}
+                  className="text-headline-sm font-semibold text-on-surface hover:underline"
+                >
+                  {post.title}
+                </Link>
+                <p className="mt-space-xs text-label-sm text-on-surface-variant">
+                  {t(`categories.${post.category}`)} · {post.authorName}
+                </p>
+                <p className="mt-space-xs text-label-sm text-on-surface-variant">
+                  {post.likeCount} {t('Public.likesLabel')} · {post.commentCount} {t('Public.commentsLabel')}
+                </p>
+              </div>
             </li>
           ))}
         </ul>

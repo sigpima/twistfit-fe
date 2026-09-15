@@ -33,24 +33,30 @@ export default function MyForumPostList() {
   return (
     <ul className="space-y-space-md">
       {posts.map((post) => (
-        <li key={post.id} className="rounded-2xl border border-outline-variant p-space-lg">
-          <div className="flex items-center justify-between gap-space-md">
-            <h2 className="text-headline-sm font-semibold text-on-surface">{post.title}</h2>
-            <span className="shrink-0 rounded-full bg-surface-container px-space-md py-space-xs text-label-sm text-on-surface-variant">
-              {t(`MyPosts.status.${post.status}`)}
-            </span>
-          </div>
-          <div className="mt-space-sm flex gap-space-md">
-            <Link href={`/forum/${post.id}/edit`} className="font-semibold text-primary hover:underline">
-              {t('MyPosts.editButton')}
-            </Link>
-            <button
-              type="button"
-              onClick={() => handleDelete(post.id)}
-              className="font-semibold text-error hover:underline"
-            >
-              {t('MyPosts.deleteButton')}
-            </button>
+        <li key={post.id} className="flex gap-space-md rounded-2xl border border-outline-variant p-space-lg">
+          {post.imageUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={post.imageUrl} alt="" className="h-16 w-16 shrink-0 rounded-xl object-cover" />
+          )}
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center justify-between gap-space-md">
+              <h2 className="min-w-0 flex-1 text-headline-sm font-semibold text-on-surface">{post.title}</h2>
+              <span className="shrink-0 rounded-full bg-surface-container px-space-md py-space-xs text-label-sm text-on-surface-variant">
+                {t(`MyPosts.status.${post.status}`)}
+              </span>
+            </div>
+            <div className="mt-space-sm flex gap-space-md">
+              <Link href={`/forum/${post.id}/edit`} className="font-semibold text-primary hover:underline">
+                {t('MyPosts.editButton')}
+              </Link>
+              <button
+                type="button"
+                onClick={() => handleDelete(post.id)}
+                className="font-semibold text-error hover:underline"
+              >
+                {t('MyPosts.deleteButton')}
+              </button>
+            </div>
           </div>
         </li>
       ))}

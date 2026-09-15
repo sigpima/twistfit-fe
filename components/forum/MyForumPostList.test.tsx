@@ -9,7 +9,7 @@ const POSTS: ForumPost[] = [
     id: 1,
     title: 'Bài của tôi',
     body: 'Nội dung',
-    imageUrl: null,
+    imageUrl: 'https://example.com/mine.jpg',
     category: 'general',
     status: 'pending',
     authorId: 5,
@@ -55,5 +55,13 @@ describe('MyForumPostList', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => [] }))
     renderWithIntl(<MyForumPostList />)
     await waitFor(() => expect(screen.getByText('Bạn chưa đăng bài nào.')).toBeInTheDocument())
+  })
+
+  it('shows a thumbnail when the post has an image', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POSTS }))
+    renderWithIntl(<MyForumPostList />)
+
+    await waitFor(() => expect(screen.getByText('Bài của tôi')).toBeInTheDocument())
+    expect(screen.getByAltText('')).toHaveAttribute('src', 'https://example.com/mine.jpg')
   })
 })

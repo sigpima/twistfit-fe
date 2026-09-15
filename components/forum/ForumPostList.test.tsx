@@ -52,4 +52,14 @@ describe('ForumPostList', () => {
     renderWithIntl(<ForumPostList />)
     await waitFor(() => expect(screen.getByText('Chưa có bài viết nào trong chuyên mục này.')).toBeInTheDocument())
   })
+
+  it('shows the thumbnail, author, and counts for a post', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POSTS }))
+    renderWithIntl(<ForumPostList />)
+
+    await waitFor(() => expect(screen.getByText('Bài công khai')).toBeInTheDocument())
+    expect(screen.getByText(/Lan Anh/)).toBeInTheDocument()
+    expect(screen.getByAltText('')).toHaveAttribute('src', 'https://example.com/outfit.jpg')
+    expect(screen.getByText('3 lượt thích · 2 bình luận')).toBeInTheDocument()
+  })
 })
