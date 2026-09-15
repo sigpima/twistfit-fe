@@ -58,4 +58,14 @@ describe('FaqSection', () => {
     })
     expect(screen.getByText('Không tìm thấy câu hỏi phù hợp')).toBeInTheDocument()
   })
+
+  it('pre-selects the category passed via initialCategory', () => {
+    renderWithIntl(<FaqSection items={ITEMS} initialCategory="fitting-room" />)
+    expect(screen.getByRole('button', { name: 'Phòng thử đồ ảo (Fitting Room)' })).toHaveAttribute(
+      'aria-pressed',
+      'true'
+    )
+    expect(screen.getByText(/Tính năng Thử Đồ Ảo/)).toBeInTheDocument()
+    expect(screen.queryByText(/Personal Color Test trên TwistFit hoạt động/)).not.toBeInTheDocument()
+  })
 })

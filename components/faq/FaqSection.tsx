@@ -3,13 +3,19 @@
 import { useTranslations } from 'next-intl'
 import { useMemo, useState } from 'react'
 import FaqSearchBar from './FaqSearchBar'
-import FaqCategoryTabs from './FaqCategoryTabs'
+import FaqCategorySidebar from './FaqCategorySidebar'
 import FaqAccordionItem from './FaqAccordionItem'
 import type { FaqItem } from '@/lib/faq'
 
-export default function FaqSection({ items }: { items: FaqItem[] }) {
+export default function FaqSection({
+  items,
+  initialCategory = 'all',
+}: {
+  items: FaqItem[]
+  initialCategory?: string
+}) {
   const t = useTranslations('Faq.Section')
-  const [activeCategory, setActiveCategory] = useState('all')
+  const [activeCategory, setActiveCategory] = useState(initialCategory)
   const [searchQuery, setSearchQuery] = useState('')
   const [openItemId, setOpenItemId] = useState<number | null>(null)
 
@@ -46,28 +52,32 @@ export default function FaqSection({ items }: { items: FaqItem[] }) {
         </div>
       </section>
       <section className="w-full px-margin-desktop pb-space-xl">
-        <div className="mx-auto max-w-4xl">
-          <FaqCategoryTabs active={activeCategory} onChange={setActiveCategory} />
-          <div className="mt-space-lg flex flex-col gap-space-md">
-            {visibleItems.map((item, index) => (
-              <FaqAccordionItem
-                key={item.id}
-                item={item}
-                number={String(index + 1).padStart(2, '0')}
-                isOpen={openItemId === item.id}
-                onToggle={(id) => setOpenItemId((current) => (current === id ? null : id))}
-              />
-            ))}
-          </div>
-          {visibleItems.length === 0 && (
-            <div className="mt-space-md rounded-xl bg-surface-container-lowest py-space-xl text-center shadow-sm">
-              <span className="material-symbols-outlined text-[48px] text-outline">search_off</span>
-              <h4 className="mt-space-xs text-headline-sm font-semibold text-on-surface">
-                {t('noResultsTitle')}
-              </h4>
-              <p className="mt-1 text-body-md text-on-surface-variant">{t('noResultsBody')}</p>
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-col gap-space-lg lg:flex-row lg:items-start">
+            <FaqCategorySidebar active={activeCategory} onChange={setActiveCategory} />
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-col gap-space-md">
+                {visibleItems.map((item, index) => (
+                  <FaqAccordionItem
+                    key={item.id}
+                    item={item}
+                    number={String(index + 1).padStart(2, '0')}
+                    isOpen={openItemId === item.id}
+                    onToggle={(id) => setOpenItemId((current) => (current === id ? null : id))}
+                  />
+                ))}
+              </div>
+              {visibleItems.length === 0 && (
+                <div className="mt-space-md rounded-xl bg-surface-container-lowest py-space-xl text-center shadow-sm">
+                  <span className="material-symbols-outlined text-[48px] text-outline">search_off</span>
+                  <h4 className="mt-space-xs text-headline-sm font-semibold text-on-surface">
+                    {t('noResultsTitle')}
+                  </h4>
+                  <p className="mt-1 text-body-md text-on-surface-variant">{t('noResultsBody')}</p>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </section>
     </>
