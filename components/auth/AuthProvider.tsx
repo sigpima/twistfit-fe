@@ -8,7 +8,8 @@ const STORAGE_KEY = 'twistfit.auth'
 
 export type AuthUser = {
   name: string
-  email: string
+  email: string | null
+  phone: string | null
   role: Role
 }
 
@@ -18,7 +19,7 @@ type AuthContextValue = {
   // page must wait for this before redirecting on `user === null`, or it
   // will bounce an already-logged-in visitor during that first render.
   isHydrated: boolean
-  login: (email: string, password: string) => Promise<AuthUser | null>
+  login: (identifier: string, password: string) => Promise<AuthUser | null>
   logout: () => void
 }
 
@@ -40,11 +41,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsHydrated(true)
   }, [])
 
-  async function login(email: string, password: string): Promise<AuthUser | null> {
+  async function login(identifier: string, password: string): Promise<AuthUser | null> {
     const response = await apiFetch('/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ identifier, password }),
     })
     if (!response.ok) return null
     const account = (await response.json()) as AuthUser

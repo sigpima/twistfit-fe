@@ -11,14 +11,23 @@ function stubLoginFetch() {
   vi.stubGlobal(
     'fetch',
     vi.fn(async (_url: string, init?: RequestInit) => {
-      const body = JSON.parse((init?.body as string) ?? '{}') as { email: string; password: string }
-      if (body.email === 'user@twistfit.vn' && body.password === 'user1234') {
-        return { ok: true, json: async () => ({ name: 'Người dùng Test', email: 'user@twistfit.vn', role: 'user' }) }
-      }
-      if (body.email === 'admin@twistfit.vn' && body.password === 'admin1234') {
+      const body = JSON.parse((init?.body as string) ?? '{}') as { identifier: string; password: string }
+      if (body.identifier === 'user@twistfit.vn' && body.password === 'user1234') {
         return {
           ok: true,
-          json: async () => ({ name: 'Quản trị viên Test', email: 'admin@twistfit.vn', role: 'admin' }),
+          json: async () => ({ name: 'Người dùng Test', email: 'user@twistfit.vn', phone: null, role: 'user' }),
+        }
+      }
+      if (body.identifier === 'admin@twistfit.vn' && body.password === 'admin1234') {
+        return {
+          ok: true,
+          json: async () => ({ name: 'Quản trị viên Test', email: 'admin@twistfit.vn', phone: null, role: 'admin' }),
+        }
+      }
+      if (body.identifier === '0912345678' && body.password === 'user1234') {
+        return {
+          ok: true,
+          json: async () => ({ name: 'Người dùng SĐT', email: null, phone: '+84912345678', role: 'user' }),
         }
       }
       return { ok: false, status: 401, json: async () => ({ error: 'Email hoặc mật khẩu không đúng' }) }
@@ -50,8 +59,29 @@ describe('AuthProvider / useAuth', () => {
       expect(account?.role).toBe('user')
     })
 
-    expect(result.current.user).toEqual({ name: 'Người dùng Test', email: 'user@twistfit.vn', role: 'user' })
+    expect(result.current.user).toEqual({
+      name: 'Người dùng Test',
+      email: 'user@twistfit.vn',
+      phone: null,
+      role: 'user',
+    })
     expect(window.localStorage.getItem('twistfit.auth')).toContain('user@twistfit.vn')
+  })
+
+  it('logs in with a phone number identifier', async () => {
+    const { result } = renderHook(() => useAuth(), { wrapper })
+
+    await act(async () => {
+      const account = await result.current.login('0912345678', 'user1234')
+      expect(account?.phone).toBe('+84912345678')
+    })
+
+    expect(result.current.user).toEqual({
+      name: 'Người dùng SĐT',
+      email: null,
+      phone: '+84912345678',
+      role: 'user',
+    })
   })
 
   it('rejects invalid credentials', async () => {

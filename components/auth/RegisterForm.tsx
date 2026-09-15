@@ -20,7 +20,7 @@ export default function RegisterForm() {
     event.preventDefault()
     const form = event.currentTarget
     const name = (form.elements.namedItem('name') as HTMLInputElement).value
-    const email = (form.elements.namedItem('email') as HTMLInputElement).value
+    const identifier = (form.elements.namedItem('identifier') as HTMLInputElement).value
     const password = (form.elements.namedItem('password') as HTMLInputElement).value
     const confirmPassword = (form.elements.namedItem('confirmPassword') as HTMLInputElement).value
 
@@ -35,17 +35,25 @@ export default function RegisterForm() {
     const response = await apiFetch('/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ name, identifier, password }),
     })
 
     if (!response.ok) {
       const data = await response.json().catch(() => ({}))
-      setFormError(data.error === 'EMAIL_TAKEN' ? t('errors.emailTaken') : t('errors.generic'))
+      if (data.error === 'EMAIL_TAKEN') {
+        setFormError(t('errors.emailTaken'))
+      } else if (data.error === 'PHONE_TAKEN') {
+        setFormError(t('errors.phoneTaken'))
+      } else if (data.error === 'INVALID_IDENTIFIER') {
+        setFormError(t('errors.invalidIdentifier'))
+      } else {
+        setFormError(t('errors.generic'))
+      }
       return
     }
 
     setFormError(null)
-    const account = await login(email, password)
+    const account = await login(identifier, password)
     if (account) {
       router.push(account.role === 'admin' ? '/admin' : '/')
     }
@@ -75,15 +83,15 @@ export default function RegisterForm() {
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="register-email" className="text-label-md font-semibold text-on-surface">
-              {t('fields.email.label')}
+            <label htmlFor="register-identifier" className="text-label-md font-semibold text-on-surface">
+              {t('fields.identifier.label')}
             </label>
             <input
-              id="register-email"
-              name="email"
-              type="email"
+              id="register-identifier"
+              name="identifier"
+              type="text"
               required
-              placeholder={t('fields.email.placeholder')}
+              placeholder={t('fields.identifier.placeholder')}
               className="w-full rounded-xl bg-surface px-4 py-3 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none"
             />
           </div>

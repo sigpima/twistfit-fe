@@ -339,9 +339,9 @@
     "title": "Đăng Nhập TwistFit",
     "subtitle": "Đăng nhập để tiếp tục hành trình khám phá Personal Color của bạn.",
     "fields": {
-      "email": {
-        "label": "Địa chỉ Email *",
-        "placeholder": "linhdan@gmail.com"
+      "identifier": {
+        "label": "Email hoặc Số điện thoại *",
+        "placeholder": "linhdan@gmail.com hoặc 0912345678"
       },
       "password": {
         "label": "Mật khẩu *",
@@ -349,7 +349,7 @@
       }
     },
     "errors": {
-      "invalidCredentials": "Email hoặc mật khẩu không đúng. Vui lòng thử lại."
+      "invalidCredentials": "Email/Số điện thoại hoặc mật khẩu không đúng. Vui lòng thử lại."
     },
     "showPassword": "Hiện mật khẩu",
     "hidePassword": "Ẩn mật khẩu",
@@ -365,9 +365,9 @@
         "label": "Họ và tên *",
         "placeholder": "Ví dụ: Nguyễn Linh Đan"
       },
-      "email": {
-        "label": "Địa chỉ Email *",
-        "placeholder": "linhdan@gmail.com"
+      "identifier": {
+        "label": "Email hoặc Số điện thoại *",
+        "placeholder": "linhdan@gmail.com hoặc 0912345678"
       },
       "password": {
         "label": "Mật khẩu *",
@@ -381,6 +381,8 @@
     "errors": {
       "passwordMismatch": "Mật khẩu xác nhận không khớp",
       "emailTaken": "Email này đã được đăng ký",
+      "phoneTaken": "Số điện thoại này đã được đăng ký",
+      "invalidIdentifier": "Vui lòng nhập đúng định dạng email hoặc số điện thoại",
       "generic": "Có lỗi xảy ra, vui lòng thử lại."
     },
     "showPassword": "Hiện mật khẩu",

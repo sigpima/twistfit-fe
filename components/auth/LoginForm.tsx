@@ -16,10 +16,10 @@ export default function LoginForm() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const form = event.currentTarget
-    const email = (form.elements.namedItem('email') as HTMLInputElement).value
+    const identifier = (form.elements.namedItem('identifier') as HTMLInputElement).value
     const password = (form.elements.namedItem('password') as HTMLInputElement).value
 
-    const account = await login(email, password)
+    const account = await login(identifier, password)
     if (!account) {
       setError(true)
       return
@@ -39,15 +39,15 @@ export default function LoginForm() {
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-1.5">
-            <label htmlFor="login-email" className="text-label-md font-semibold text-on-surface">
-              {t('fields.email.label')}
+            <label htmlFor="login-identifier" className="text-label-md font-semibold text-on-surface">
+              {t('fields.identifier.label')}
             </label>
             <input
-              id="login-email"
-              name="email"
-              type="email"
+              id="login-identifier"
+              name="identifier"
+              type="text"
               required
-              placeholder={t('fields.email.placeholder')}
+              placeholder={t('fields.identifier.placeholder')}
               className="w-full rounded-xl bg-surface px-4 py-3 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none"
             />
           </div>

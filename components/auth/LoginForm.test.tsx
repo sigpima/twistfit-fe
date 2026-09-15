@@ -18,8 +18,8 @@ function renderLoginForm() {
   )
 }
 
-function submit(email: string, password: string) {
-  fireEvent.change(screen.getByLabelText('Địa chỉ Email *'), { target: { value: email } })
+function submit(identifier: string, password: string) {
+  fireEvent.change(screen.getByLabelText('Email hoặc Số điện thoại *'), { target: { value: identifier } })
   fireEvent.change(screen.getByLabelText('Mật khẩu *'), { target: { value: password } })
   fireEvent.click(screen.getByRole('button', { name: 'ĐĂNG NHẬP' }))
 }
@@ -28,14 +28,17 @@ function stubLoginFetch() {
   vi.stubGlobal(
     'fetch',
     vi.fn(async (_url: string, init?: RequestInit) => {
-      const body = JSON.parse((init?.body as string) ?? '{}') as { email: string; password: string }
-      if (body.email === 'user@twistfit.vn' && body.password === 'user1234') {
-        return { ok: true, json: async () => ({ name: 'Người dùng Test', email: 'user@twistfit.vn', role: 'user' }) }
-      }
-      if (body.email === 'admin@twistfit.vn' && body.password === 'admin1234') {
+      const body = JSON.parse((init?.body as string) ?? '{}') as { identifier: string; password: string }
+      if (body.identifier === 'user@twistfit.vn' && body.password === 'user1234') {
         return {
           ok: true,
-          json: async () => ({ name: 'Quản trị viên Test', email: 'admin@twistfit.vn', role: 'admin' }),
+          json: async () => ({ name: 'Người dùng Test', email: 'user@twistfit.vn', phone: null, role: 'user' }),
+        }
+      }
+      if (body.identifier === 'admin@twistfit.vn' && body.password === 'admin1234') {
+        return {
+          ok: true,
+          json: async () => ({ name: 'Quản trị viên Test', email: 'admin@twistfit.vn', phone: null, role: 'admin' }),
         }
       }
       return { ok: false, status: 401, json: async () => ({ error: 'Email hoặc mật khẩu không đúng' }) }
@@ -57,7 +60,7 @@ describe('LoginForm', () => {
 
   it('renders the form and a link back to register', () => {
     renderLoginForm()
-    expect(screen.getByLabelText('Địa chỉ Email *')).toBeInTheDocument()
+    expect(screen.getByLabelText('Email hoặc Số điện thoại *')).toBeInTheDocument()
     expect(screen.getByLabelText('Mật khẩu *')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Đăng ký ngay' })).toHaveAttribute('href', '/register')
   })
@@ -70,7 +73,7 @@ describe('LoginForm', () => {
       '/auth/login',
       expect.objectContaining({
         method: 'POST',
-        body: JSON.stringify({ email: 'user@twistfit.vn', password: 'user1234' }),
+        body: JSON.stringify({ identifier: 'user@twistfit.vn', password: 'user1234' }),
         credentials: 'include',
       })
     )
@@ -86,7 +89,7 @@ describe('LoginForm', () => {
     renderLoginForm()
     submit('user@twistfit.vn', 'wrongpass')
     await waitFor(() =>
-      expect(screen.getByText('Email hoặc mật khẩu không đúng. Vui lòng thử lại.')).toBeInTheDocument()
+      expect(screen.getByText('Email/Số điện thoại hoặc mật khẩu không đúng. Vui lòng thử lại.')).toBeInTheDocument()
     )
     expect(pushMock).not.toHaveBeenCalled()
   })
