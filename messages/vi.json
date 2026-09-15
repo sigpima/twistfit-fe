@@ -496,6 +496,9 @@
       "badgePill": "Hệ Sinh Thái Thời Trang Cá Nhân Hoá",
       "heading": "Ba Bước Đột Phá Nâng Tầm Phong Cách",
       "subheading": "Từ phân tích sinh trắc quang phổ đến trải nghiệm thử đồ ảo và kết nối hội những tín đồ mặc đẹp cùng hệ sắc tố.",
+      "prevAriaLabel": "Xem tính năng trước",
+      "nextAriaLabel": "Xem tính năng tiếp theo",
+      "viewFeatureAriaLabel": "Xem tính năng: {title}",
       "features": {
         "colorTest": {
           "title": "Màu sắc cá nhân",

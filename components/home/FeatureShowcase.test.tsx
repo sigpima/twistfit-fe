@@ -4,44 +4,56 @@ import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import FeatureShowcase from './FeatureShowcase'
 import { QrModalProvider } from '@/components/qr-modal/QrModalProvider'
 
+function renderShowcase() {
+  return renderWithIntl(
+    <QrModalProvider>
+      <FeatureShowcase />
+    </QrModalProvider>
+  )
+}
+
 describe('FeatureShowcase', () => {
-  it('shows all three feature titles at once, with no tab switching', () => {
-    renderWithIntl(
-      <QrModalProvider>
-        <FeatureShowcase />
-      </QrModalProvider>
-    )
+  it('shows only the first feature by default', () => {
+    renderShowcase()
     expect(screen.getByRole('heading', { name: 'Màu sắc cá nhân' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Phối đồ' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Diễn đàn' })).toBeInTheDocument()
-    expect(screen.queryByRole('tab')).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Phối đồ' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Diễn đàn' })).not.toBeInTheDocument()
   })
 
   it('opens the QR modal from the Personal Color CTA', () => {
-    renderWithIntl(
-      <QrModalProvider>
-        <FeatureShowcase />
-      </QrModalProvider>
-    )
+    renderShowcase()
     fireEvent.click(screen.getByText('Kiểm Tra Ngay'))
     expect(screen.getByText('Kiểm Tra Personal Color')).toBeInTheDocument()
   })
 
-  it('links the Outfit CTA to /outfit/step-1', () => {
-    renderWithIntl(
-      <QrModalProvider>
-        <FeatureShowcase />
-      </QrModalProvider>
-    )
+  it('advances to the next feature when the next arrow is clicked', () => {
+    renderShowcase()
+    fireEvent.click(screen.getByRole('button', { name: 'Xem tính năng tiếp theo' }))
+    expect(screen.getByRole('heading', { name: 'Phối đồ' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Bắt Đầu Phối Đồ Ngay' })).toHaveAttribute('href', '/outfit/step-1')
   })
 
-  it('links the Forum CTA to /forum', () => {
-    renderWithIntl(
-      <QrModalProvider>
-        <FeatureShowcase />
-      </QrModalProvider>
-    )
+  it('wraps around from the last feature back to the first', () => {
+    renderShowcase()
+    fireEvent.click(screen.getByRole('button', { name: 'Xem tính năng tiếp theo' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Xem tính năng tiếp theo' }))
+    expect(screen.getByRole('heading', { name: 'Diễn đàn' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Khám Phá Diễn Đàn' })).toHaveAttribute('href', '/forum')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Xem tính năng tiếp theo' }))
+    expect(screen.getByRole('heading', { name: 'Màu sắc cá nhân' })).toBeInTheDocument()
+  })
+
+  it('wraps around from the first feature back to the last with the previous arrow', () => {
+    renderShowcase()
+    fireEvent.click(screen.getByRole('button', { name: 'Xem tính năng trước' }))
+    expect(screen.getByRole('heading', { name: 'Diễn đàn' })).toBeInTheDocument()
+  })
+
+  it('jumps directly to a feature when its dot is clicked', () => {
+    renderShowcase()
+    fireEvent.click(screen.getByRole('button', { name: 'Xem tính năng: Diễn đàn' }))
+    expect(screen.getByRole('heading', { name: 'Diễn đàn' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Xem tính năng: Diễn đàn' })).toHaveAttribute('aria-current', 'true')
   })
 })
