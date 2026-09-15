@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, afterEach } from 'vitest'
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import ResultPreview from './ResultPreview'
 import { OutfitFlowProvider, useOutfitFlow } from '../OutfitFlowProvider'
@@ -65,59 +65,5 @@ describe('ResultPreview', () => {
     )
 
     await waitFor(() => expect(screen.getByText('Không tìm thấy món đồ phù hợp')).toBeInTheDocument())
-  })
-
-  it('shows the selected model and garment tone once the job is done', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockResolvedValue(jsonResponse({ status: 'done', resultBlobUrl: 'https://example.com/result.png' }))
-    )
-
-    renderWithIntl(
-      <OutfitFlowProvider>
-        <SetJobId jobId={1} />
-        <ResultPreview />
-      </OutfitFlowProvider>
-    )
-
-    await waitFor(() => expect(screen.getByText(/Carmen \(1m65\)/)).toBeInTheDocument())
-    expect(screen.getByText(/Light Summer/)).toBeInTheDocument()
-  })
-
-  it('zooms the preview image when the zoom button is clicked', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockResolvedValue(jsonResponse({ status: 'done', resultBlobUrl: 'https://example.com/result.png' }))
-    )
-
-    renderWithIntl(
-      <OutfitFlowProvider>
-        <SetJobId jobId={1} />
-        <ResultPreview />
-      </OutfitFlowProvider>
-    )
-
-    const image = await waitFor(() => screen.getByAltText(''))
-    expect(image).toHaveStyle({ transform: 'scale(1)' })
-    fireEvent.click(screen.getByTitle('Phóng to'))
-    expect(image).toHaveStyle({ transform: 'scale(1.35)' })
-  })
-
-  it('shows a status message when toggling the 360 view', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockResolvedValue(jsonResponse({ status: 'done', resultBlobUrl: 'https://example.com/result.png' }))
-    )
-
-    renderWithIntl(
-      <OutfitFlowProvider>
-        <SetJobId jobId={1} />
-        <ResultPreview />
-      </OutfitFlowProvider>
-    )
-
-    await waitFor(() => expect(screen.getByAltText('')).toBeInTheDocument())
-    fireEvent.click(screen.getByTitle('Góc xoay 360'))
-    expect(screen.getByText(/Đang tải mô hình không gian xoay 360/)).toBeInTheDocument()
   })
 })

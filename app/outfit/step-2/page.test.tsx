@@ -37,8 +37,6 @@ describe('Step2Page', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => MODELS }))
     const page = await Step2Page()
     renderWithIntl(<OutfitFlowProvider>{page}</OutfitFlowProvider>)
-    expect(
-      screen.getByRole('heading', { name: 'Bước 2: Chọn Người Mẫu Hoặc Tải Ảnh Cá Nhân' })
-    ).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Bước 2: Chọn Người Mẫu' })).toBeInTheDocument()
   })
 })
