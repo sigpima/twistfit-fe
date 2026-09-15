@@ -3,7 +3,7 @@ import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import ForumPostDetail from './ForumPostDetail'
 import { AuthProvider } from '@/components/auth/AuthProvider'
-import type { ForumPost } from '@/lib/forum'
+import type { ForumComment, ForumPost } from '@/lib/forum'
 
 const POST: ForumPost = {
   id: 9,
@@ -26,6 +26,32 @@ function renderDetail() {
     <AuthProvider>
       <ForumPostDetail id="9" />
     </AuthProvider>
+  )
+}
+
+const COMMENTS: ForumComment[] = [
+  {
+    id: 1,
+    postId: 9,
+    authorId: 2,
+    authorName: 'Minh',
+    body: 'Phối đồ đẹp quá!',
+    createdAt: '2026-01-02',
+    updatedAt: '2026-01-02',
+    canDelete: false,
+  },
+]
+
+function stubForumFetches(comments: ForumComment[] = COMMENTS) {
+  vi.stubGlobal(
+    'fetch',
+    vi.fn((url: string, init?: RequestInit) => {
+      if (url === '/forum/posts/9') return Promise.resolve({ ok: true, json: async () => POST })
+      if (url === '/forum/posts/9/comments' && (!init || init.method === undefined)) {
+        return Promise.resolve({ ok: true, json: async () => comments })
+      }
+      return Promise.resolve({ ok: true, json: async () => ({}) })
+    })
   )
 }
 
@@ -95,6 +121,71 @@ describe('ForumPostDetail', () => {
     expect(fetch).toHaveBeenCalledWith(
       '/forum/posts/9/like',
       expect.objectContaining({ method: 'POST', credentials: 'include' })
+    )
+  })
+
+  it('fetches and renders the comment list', async () => {
+    stubForumFetches()
+    renderDetail()
+    await waitFor(() => expect(screen.getByText('Phối đồ đẹp quá!')).toBeInTheDocument())
+    expect(screen.getByText('Minh')).toBeInTheDocument()
+  })
+
+  it('does not show a comment composer when signed out', async () => {
+    stubForumFetches()
+    renderDetail()
+    await waitFor(() => expect(screen.getByText('Phối đồ đẹp quá!')).toBeInTheDocument())
+    expect(screen.queryByPlaceholderText('Viết bình luận...')).not.toBeInTheDocument()
+  })
+
+  it('lets a signed-in user post a comment', async () => {
+    window.localStorage.setItem(
+      'twistfit.auth',
+      JSON.stringify({ name: 'Người dùng Test', email: 'user@twistfit.vn', role: 'user' })
+    )
+    stubForumFetches()
+    renderDetail()
+    await waitFor(() => expect(screen.getByText('Phối đồ đẹp quá!')).toBeInTheDocument())
+
+    fireEvent.change(screen.getByPlaceholderText('Viết bình luận...'), { target: { value: 'Đẹp!' } })
+
+    const newComment: ForumComment = {
+      id: 2,
+      postId: 9,
+      authorId: 3,
+      authorName: 'Người dùng Test',
+      body: 'Đẹp!',
+      createdAt: '2026-01-03',
+      updatedAt: '2026-01-03',
+      canDelete: true,
+    }
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 201, json: async () => newComment }))
+    fireEvent.click(screen.getByRole('button', { name: 'Gửi bình luận' }))
+
+    await waitFor(() => expect(screen.getByText('Đẹp!')).toBeInTheDocument())
+    expect(fetch).toHaveBeenCalledWith(
+      '/forum/posts/9/comments',
+      expect.objectContaining({ method: 'POST', credentials: 'include', body: JSON.stringify({ body: 'Đẹp!' }) })
+    )
+  })
+
+  it('shows a delete button only for deletable comments and removes it on click', async () => {
+    const deletableComment: ForumComment = { ...COMMENTS[0], canDelete: true }
+    stubForumFetches([deletableComment])
+    window.localStorage.setItem(
+      'twistfit.auth',
+      JSON.stringify({ name: 'Người dùng Test', email: 'user@twistfit.vn', role: 'user' })
+    )
+    renderDetail()
+    await waitFor(() => expect(screen.getByText('Phối đồ đẹp quá!')).toBeInTheDocument())
+
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 204, json: async () => ({}) }))
+    fireEvent.click(screen.getByRole('button', { name: 'Xóa bình luận' }))
+
+    await waitFor(() => expect(screen.queryByText('Phối đồ đẹp quá!')).not.toBeInTheDocument())
+    expect(fetch).toHaveBeenCalledWith(
+      '/forum/comments/1',
+      expect.objectContaining({ method: 'DELETE', credentials: 'include' })
     )
   })
 

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/components/auth/AuthProvider'
 import { apiFetch } from '@/lib/apiClient'
-import type { ForumPost } from '@/lib/forum'
+import type { ForumComment, ForumPost } from '@/lib/forum'
 
 export default function ForumPostDetail({ id }: { id: string }) {
   const t = useTranslations('Forum')
@@ -15,6 +15,9 @@ export default function ForumPostDetail({ id }: { id: string }) {
   const [showReportForm, setShowReportForm] = useState(false)
   const [reason, setReason] = useState('')
   const [reportMessage, setReportMessage] = useState<string | null>(null)
+  const [comments, setComments] = useState<ForumComment[]>([])
+  const [newComment, setNewComment] = useState('')
+  const [submittingComment, setSubmittingComment] = useState(false)
 
   useEffect(() => {
     apiFetch(`/forum/posts/${id}`).then((response) => {
@@ -24,6 +27,12 @@ export default function ForumPostDetail({ id }: { id: string }) {
       }
       response.json().then(setPost)
     })
+  }, [id])
+
+  useEffect(() => {
+    apiFetch(`/forum/posts/${id}/comments`)
+      .then((response) => (response.ok ? response.json() : []))
+      .then((data) => setComments(Array.isArray(data) ? data : []))
   }, [id])
 
   async function handleSubmitReport() {
@@ -46,6 +55,26 @@ export default function ForumPostDetail({ id }: { id: string }) {
     if (!response.ok || !post) return
     const { liked, likeCount } = (await response.json()) as { liked: boolean; likeCount: number }
     setPost({ ...post, likedByMe: liked, likeCount })
+  }
+
+  async function handleSubmitComment() {
+    setSubmittingComment(true)
+    const response = await apiFetch(`/forum/posts/${id}/comments`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ body: newComment }),
+    })
+    setSubmittingComment(false)
+    if (!response.ok) return
+    const comment = (await response.json()) as ForumComment
+    setComments((current) => [...current, comment])
+    setNewComment('')
+  }
+
+  async function handleDeleteComment(commentId: number) {
+    const response = await apiFetch(`/forum/comments/${commentId}`, { method: 'DELETE' })
+    if (!response.ok) return
+    setComments((current) => current.filter((comment) => comment.id !== commentId))
   }
 
   return (
@@ -130,6 +159,49 @@ export default function ForumPostDetail({ id }: { id: string }) {
               {reportMessage && <p className="text-label-sm text-on-surface-variant">{reportMessage}</p>}
             </div>
           )}
+
+          <div className="mt-space-xl">
+            <h2 className="text-headline-sm font-semibold text-on-surface">{t('Comments.title')}</h2>
+            {comments.length === 0 && (
+              <p className="mt-space-sm text-body-sm text-on-surface-variant">{t('Comments.emptyState')}</p>
+            )}
+            <ul className="mt-space-sm space-y-space-sm">
+              {comments.map((comment) => (
+                <li key={comment.id} className="rounded-xl bg-surface-container p-space-sm">
+                  <p className="text-label-sm font-semibold text-on-surface">{comment.authorName}</p>
+                  <p className="text-body-sm text-on-surface">{comment.body}</p>
+                  {comment.canDelete && (
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteComment(comment.id)}
+                      className="mt-1 text-label-sm font-semibold text-error hover:underline"
+                    >
+                      {t('Comments.deleteButton')}
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
+            {user && (
+              <div className="mt-space-md space-y-2">
+                <textarea
+                  value={newComment}
+                  onChange={(event) => setNewComment(event.target.value)}
+                  placeholder={t('Comments.placeholder')}
+                  rows={2}
+                  className="w-full rounded-xl bg-surface-container px-4 py-3 text-body-sm text-on-surface"
+                />
+                <button
+                  type="button"
+                  onClick={handleSubmitComment}
+                  disabled={!newComment.trim() || submittingComment}
+                  className="rounded-full bg-primary px-6 py-2 text-label-md text-on-primary disabled:opacity-60"
+                >
+                  {t('Comments.submitButton')}
+                </button>
+              </div>
+            )}
+          </div>
         </>
       )}
     </article>

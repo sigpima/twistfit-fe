@@ -340,6 +340,13 @@
       "likeButton": "Thích ({count})",
       "likedButton": "Đã thích ({count})"
     },
+    "Comments": {
+      "title": "Bình luận",
+      "placeholder": "Viết bình luận...",
+      "submitButton": "Gửi bình luận",
+      "deleteButton": "Xóa bình luận",
+      "emptyState": "Chưa có bình luận nào."
+    },
     "Moderation": {
       "title": "Kiểm duyệt Diễn đàn",
       "pendingTitle": "Bài chờ duyệt",

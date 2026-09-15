@@ -50,3 +50,14 @@ export type ForumReport = {
   status: ForumReportStatus
   createdAt: string
 }
+
+export type ForumComment = {
+  id: number
+  postId: number
+  authorId: number
+  authorName: string
+  body: string
+  createdAt: string
+  updatedAt: string
+  canDelete: boolean
+}
