@@ -993,36 +993,18 @@
       "stat4Label": "Điểm hài lòng"
     },
     "MissionVisionGrid": {
-      "kicker": "Tầm Nhìn Tương Lai",
-      "heading": "Sứ Mệnh & Giá Trị Cốt Lõi",
-      "introText": "Chúng tôi xóa bỏ định kiến thời trang phải phức tạp hay tốn kém, mang phương pháp cố vấn hình ảnh cao cấp vào tầm tay bạn.",
-      "missionLabel": "Sứ mệnh của chúng tôi",
-      "missionTitle": "Giải Phóng Tự Do Thể Hiện Bản Thân",
-      "missionBody": "Giúp mọi người tự tin tỏa sáng qua việc thấu hiểu sắc tố tự nhiên của cơ thể. Bằng sự kết hợp chuẩn xác của khoa học sắc độ, TwistFit giúp người dùng tiết kiệm <bold>70% thời gian</bold> lựa chọn trang phục và cắt giảm những khoản chi tiêu mua sắm sai lầm do trang phục không hợp tone.",
-      "missionFooterNote": "Tối ưu chi tiêu cá nhân và giảm thiểu lãng phí may mặc thời trang nhanh.",
-      "visionLabel": "Tầm nhìn 2030",
-      "visionTitle": "Nền Tảng Thời Trang Cá Nhân Hóa Hàng Đầu",
-      "visionBody": "Trở thành nền tảng thời trang thông minh cá nhân hóa hàng đầu Đông Nam Á. Chúng tôi tiên phong thúc đẩy lối sống thời trang bền vững (Sustainable Fashion), giúp mỗi người xây dựng một tủ đồ capsule tinh giản, chuẩn sắc và không bao giờ lỗi mốt.",
-      "visionFooterLabel": "Tiêu chí xanh",
-      "visionFooterValue": "Eco-Fashion Impact",
-      "visionFooterTag": "Zero-Waste Mindset",
-      "coreValues": {
-        "personalization": {
-          "title": "Cá Nhân Hóa Tối Đa",
-          "tag": "Personalized Perfection",
-          "body": "Không rập khuôn tiêu chuẩn chung. Phong cách là tấm gương phản chiếu sắc vóc riêng biệt và cá tính nội tâm của chính bạn."
-        },
-        "science": {
-          "title": "Khoa Học & Chính Xác",
-          "tag": "Science-backed AI",
-          "body": "Dựa trên lý thuyết phân tích sắc ký 12 mùa (12-Season Color Analysis) được mã hóa bằng mô hình thị giác máy tính chính xác cao."
-        },
-        "sustainability": {
-          "title": "Bền Vững & Tối Ưu",
-          "tag": "Conscious Closet",
-          "body": "Mua sắm có chủ đích, mặc nhiều lần và tái tổ chức tủ quần áo thông minh để bảo vệ tài nguyên môi trường toàn cầu."
-        }
-      }
+      "kicker": "Sứ Mệnh & Tầm Nhìn",
+      "heading": "Sứ Mệnh & Tầm Nhìn",
+      "introText": "Hiểu rõ chính mình, làm chủ phong cách.",
+      "missionLabel": "Sứ mệnh của TwistFit",
+      "missionHeading": "Hiểu Rõ Chính Mình, Làm Chủ Phong Cách",
+      "missionQuote": "\"Mặc đẹp thực chất không bắt đầu từ việc sắm thêm một món đồ mới, mà khởi nguồn từ khoảnh khắc bạn thực sự thấu hiểu bản thân.\"",
+      "missionParagraph1": "Chúng ta đều từng đứng trước tủ đồ chật kín nhưng vẫn cảm thấy bối rối vì không có gì để mặc cho ngày hôm nay. Thuật toán gợi ý của TikTok hay Shopee rất giỏi cuốn người dùng vào các xu hướng nhất thời, khiến chúng ta mua sắm theo cảm hứng đám đông rồi nhanh chóng nhận ra món đồ đó lệch dáng, dìm da và không thuộc về mình. Vòng lặp mua sắm rồi lãng quên ấy xảy ra vì một lý do đơn giản: bạn đang cố gắng ướm mình vào gu của người khác thay vì bắt đầu từ những đặc điểm vốn có của chính bạn.",
+      "missionParagraph2": "TwistFit ra đời để thay đổi hoàn toàn trải nghiệm đó bằng cách đặt hành trình khám phá bản thân làm trọng tâm. Thay vì bảo bạn phải mua sắm theo đám đông, nền tảng đồng hành cùng bạn giải mã chính mình qua Bài đánh giá màu sắc cá nhân trực quan kết hợp bài trắc nghiệm ngắn chuẩn xác và công nghệ thực tế ảo thử màu tức thì. Từ sắc độ da nguyên bản, TwistFit khai phóng tiềm năng tủ đồ sẵn có của riêng bạn với khả năng mix & match linh hoạt theo từng dịp, từng phong cách hay bảng màu cá nhân, đồng thời gợi ý khéo léo những món đồ bên ngoài để hoàn thiện outfit. Một trải nghiệm thời trang được cá nhân hóa trọn vẹn, giúp bạn luôn tự tin tỏa sáng theo cách vừa vặn nhất.",
+      "missionParagraph3": "Chính vì vậy, giá trị lớn nhất mà TwistFit mong muốn trao gửi không nằm ở công nghệ, mà nằm ở sự thức tỉnh giá trị độc bản bên trong mỗi người. Chúng tôi tin rằng khi bạn thực sự thấu hiểu bản thân, bạn sẽ không còn cảm giác hoang mang hay phải nương tựa vào ánh nhìn của đám đông. Hiểu mình chính là bước khởi đầu vững chắc nhất để bạn ngừng phán xét vẻ ngoài, yêu lấy những gì mình đang có và biến mỗi bộ trang phục khoác lên người thành một tuyên ngôn tự tin, chân thật và bền vững nhất về chính bạn.",
+      "visionLabel": "Tầm nhìn tương lai",
+      "visionHeading": "Hệ Sinh Thái Thời Trang Số Dẫn Đầu Giới Trẻ Việt",
+      "visionBody": "Trở thành mạng xã hội phối đồ AI tiên phong — nơi việc làm mới phong cách cá nhân từ tủ đồ sẵn có là nhịp cầu kết nối trực tiếp cộng đồng người mặc với hệ sinh thái sáng tạo của các thương hiệu Việt Nam."
     },
     "StorySection": {
       "kicker": "Câu Chuyện Thương Hiệu",
