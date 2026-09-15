@@ -97,7 +97,7 @@ One Alembic migration covers all three changes (they ship together as one sub-pr
 
 ## Frontend
 
-- `frontend/lib/db.ts`: `ForumPost` type gains `authorName`, `imageUrl`, `likeCount`, `likedByMe`, `commentCount`; new `ForumComment` type.
+- `frontend/lib/forum.ts` (forum types live here, not `lib/db.ts`): `ForumPost` type gains `authorName`, `imageUrl`, `likeCount`, `likedByMe`, `commentCount`; new `ForumComment` type.
 - `frontend/components/forum/ForumPostForm.tsx`: add an optional image picker. Reuses the same upload flow as `UploadFlow.tsx` (request `POST /forum/upload-url` → direct PUT with `x-ms-blob-type`/`x-ms-blob-content-type` headers → hold the returned `imageUrl` → submit it as `imageUrl` with the rest of the form). The edit form pre-fills the current `imageUrl` from the fetched post so an untouched image round-trips unchanged (full-replace PUT, same as title/body/category today).
 - `frontend/components/forum/ForumPostList.tsx`: show a thumbnail when `imageUrl` is present, show `authorName`, show `likeCount`/`commentCount` as small metadata (read-only in the list view — liking/commenting happens on the detail page).
 - `frontend/components/forum/ForumPostDetail.tsx`: render the image when present; render `authorName`; add a like button (toggle, calls the like endpoint, optimistically flips `liked`/`likeCount`, requires login — reuse the existing `AuthGate`/login-prompt pattern already used for the report button); render a comment list below the post body; render a comment composer (textarea + submit, login required); each comment shows a delete button when `can_delete` is true.
