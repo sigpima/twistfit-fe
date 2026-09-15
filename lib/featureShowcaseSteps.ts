@@ -5,7 +5,7 @@ export type FeatureStepImage = {
   src: string
 }
 
-export const FEATURE_STEP_IMAGES: Record<FeatureKey, FeatureStepImage[]> = {
+export const FEATURE_STEP_IMAGES = {
   colorTest: [
     { key: 'quiz', src: '/home/feature-steps/color-test-quiz.jpg' },
     { key: 'result', src: '/home/feature-steps/color-test-result.jpg' },
@@ -22,4 +22,4 @@ export const FEATURE_STEP_IMAGES: Record<FeatureKey, FeatureStepImage[]> = {
     { key: 'connect', src: '/home/feature-steps/community-connect.jpg' },
     { key: 'save', src: '/home/feature-steps/community-save.jpg' },
   ],
-}
+} as const satisfies Record<FeatureKey, FeatureStepImage[]>

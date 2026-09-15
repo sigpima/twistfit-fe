@@ -5,44 +5,43 @@ import FeatureShowcase from './FeatureShowcase'
 import { QrModalProvider } from '@/components/qr-modal/QrModalProvider'
 
 describe('FeatureShowcase', () => {
-  it('shows the Phối Đồ Thông Minh panel by default', () => {
+  it('shows all three feature titles at once, with no tab switching', () => {
     renderWithIntl(
       <QrModalProvider>
         <FeatureShowcase />
       </QrModalProvider>
     )
-    expect(screen.getByText('Studio Thử Đồ Ảo AI')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Màu sắc cá nhân' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Phối đồ' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Diễn đàn' })).toBeInTheDocument()
+    expect(screen.queryByRole('tab')).not.toBeInTheDocument()
   })
 
-  it('switches to the Personal Color Test panel when its tab is clicked', () => {
+  it('opens the QR modal from the Personal Color CTA', () => {
     renderWithIntl(
       <QrModalProvider>
         <FeatureShowcase />
       </QrModalProvider>
     )
-    fireEvent.click(screen.getByRole('tab', { name: /Personal Color Test/ }))
-    expect(screen.getByText('Kết Quả Đo Sắc Tố Thực Tế')).toBeInTheDocument()
-    expect(screen.queryByText('Studio Thử Đồ Ảo AI')).not.toBeInTheDocument()
-  })
-
-  it('switches to the Diễn Đàn Phong Cách panel when its tab is clicked', () => {
-    renderWithIntl(
-      <QrModalProvider>
-        <FeatureShowcase />
-      </QrModalProvider>
-    )
-    fireEvent.click(screen.getByRole('tab', { name: /Diễn Đàn Phong Cách/ }))
-    expect(screen.getByText('Cộng Đồng TwistFit Style Club')).toBeInTheDocument()
-  })
-
-  it('opens the QR modal from the Personal Color Test panel CTA', () => {
-    renderWithIntl(
-      <QrModalProvider>
-        <FeatureShowcase />
-      </QrModalProvider>
-    )
-    fireEvent.click(screen.getByRole('tab', { name: /Personal Color Test/ }))
-    fireEvent.click(screen.getByText('Mở Quét QR / Test Ngay'))
+    fireEvent.click(screen.getByText('Kiểm Tra Ngay'))
     expect(screen.getByText('Kiểm Tra Personal Color')).toBeInTheDocument()
+  })
+
+  it('links the Outfit CTA to /outfit/step-1', () => {
+    renderWithIntl(
+      <QrModalProvider>
+        <FeatureShowcase />
+      </QrModalProvider>
+    )
+    expect(screen.getByRole('link', { name: 'Bắt Đầu Phối Đồ Ngay' })).toHaveAttribute('href', '/outfit/step-1')
+  })
+
+  it('links the Forum CTA to /forum', () => {
+    renderWithIntl(
+      <QrModalProvider>
+        <FeatureShowcase />
+      </QrModalProvider>
+    )
+    expect(screen.getByRole('link', { name: 'Khám Phá Diễn Đàn' })).toHaveAttribute('href', '/forum')
   })
 })
