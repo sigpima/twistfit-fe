@@ -22,7 +22,7 @@ export default function AboutCtaBanner() {
         <div className="relative z-10 flex w-full flex-shrink-0 flex-col gap-space-md sm:flex-row lg:w-auto lg:flex-col">
           <Link
             href="/personal-color/quiz"
-            className="inline-flex transform items-center justify-center gap-space-sm whitespace-nowrap rounded-full bg-on-background px-space-xl py-space-md text-center text-label-lg text-surface-container-lowest shadow-lg transition-all duration-300 hover:scale-[1.02] hover:bg-primary active:scale-[0.98]"
+            className="inline-flex transform items-center justify-center gap-space-sm rounded-full bg-on-background px-space-lg py-space-md text-center text-label-lg text-surface-container-lowest shadow-lg transition-all duration-300 hover:scale-[1.02] hover:bg-primary active:scale-[0.98] sm:px-space-xl"
           >
             <span className="material-symbols-outlined text-[20px] text-secondary-container">
               auto_awesome
@@ -31,7 +31,7 @@ export default function AboutCtaBanner() {
           </Link>
           <Link
             href="/outfit/step-1"
-            className="inline-flex transform items-center justify-center gap-space-sm whitespace-nowrap rounded-full bg-surface-container-lowest/90 px-space-xl py-space-md text-center text-label-lg text-primary shadow-md backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:bg-surface-container-lowest hover:text-secondary active:scale-[0.98]"
+            className="inline-flex transform items-center justify-center gap-space-sm rounded-full bg-surface-container-lowest/90 px-space-lg py-space-md text-center text-label-lg text-primary shadow-md backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:bg-surface-container-lowest hover:text-secondary active:scale-[0.98] sm:px-space-xl"
           >
             <span className="material-symbols-outlined text-[20px]">styler</span>
             <span>{t('secondaryCta')}</span>

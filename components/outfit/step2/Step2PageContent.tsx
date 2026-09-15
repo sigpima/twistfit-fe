@@ -47,14 +47,14 @@ export default function Step2PageContent({ models }: { models: CatalogModel[] })
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveMode(tab.id)}
-                  className={`flex flex-1 items-center justify-center gap-space-sm rounded-xl px-space-md py-3 text-title-md transition-all ${
+                  className={`flex min-w-0 flex-1 flex-col items-center justify-center gap-space-xs rounded-xl px-space-sm py-3 text-label-md transition-all sm:flex-row sm:gap-space-sm sm:px-space-md sm:text-title-md ${
                     activeMode === tab.id
                       ? 'bg-surface-container-lowest font-semibold text-primary shadow-sm'
                       : 'font-medium text-on-surface-variant hover:text-on-surface'
                   }`}
                 >
                   <span className="material-symbols-outlined text-[20px]">{tab.icon}</span>
-                  <span>{t(`modeTabs.${tab.key}.label`)}</span>
+                  <span className="text-center">{t(`modeTabs.${tab.key}.label`)}</span>
                   <span className="rounded-full bg-primary-fixed px-2 py-0.5 text-label-sm text-on-primary-fixed">
                     {t(`modeTabs.${tab.key}.badge`)}
                   </span>

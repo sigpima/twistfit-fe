@@ -97,7 +97,7 @@ export default function Header() {
           <div className="flex min-w-0 items-center gap-8">
             <Link href="/" className="flex shrink-0 items-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/home/logo.png" alt="TwistFit Logo" className="h-25 w-auto object-contain" />
+              <img src="/home/logo.png" alt="TwistFit Logo" className="h-12 w-auto object-contain sm:h-16 md:h-25" />
             </Link>
 
             <nav className="hidden items-center gap-1 md:flex">

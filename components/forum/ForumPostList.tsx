@@ -27,21 +27,27 @@ export default function ForumPostList() {
 
   return (
     <div>
-      <div className="flex items-center gap-space-xs overflow-x-auto pb-space-sm">
-        {filters.map((filter) => (
-          <button
-            key={filter.id}
-            type="button"
-            onClick={() => setCategory(filter.id)}
-            className={`shrink-0 rounded-full px-space-lg py-space-sm text-label-lg transition-all duration-200 ${
-              category === filter.id
-                ? 'bg-primary text-on-primary shadow-sm'
-                : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'
-            }`}
-          >
-            {filter.label}
-          </button>
-        ))}
+      <div className="relative">
+        <div className="flex items-center gap-space-xs overflow-x-auto pb-space-sm">
+          {filters.map((filter) => (
+            <button
+              key={filter.id}
+              type="button"
+              onClick={() => setCategory(filter.id)}
+              className={`shrink-0 rounded-full px-space-lg py-space-sm text-label-lg transition-all duration-200 ${
+                category === filter.id
+                  ? 'bg-primary text-on-primary shadow-sm'
+                  : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'
+              }`}
+            >
+              {filter.label}
+            </button>
+          ))}
+        </div>
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-surface to-transparent"
+        />
       </div>
 
       {posts === null && <p className="mt-space-lg text-body-md text-on-surface-variant">{t('Public.loading')}</p>}

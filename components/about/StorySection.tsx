@@ -62,7 +62,7 @@ export default function StorySection() {
                 <p className="text-headline-sm font-semibold">{t('imageCaptionTitle')}</p>
               </div>
             </div>
-            <div className="relative z-20 -mt-16 w-11/12 rounded-xl bg-surface-container-lowest/90 p-space-md shadow-xl backdrop-blur-md sm:-ml-24 sm:w-80">
+            <div className="relative z-20 mt-space-md w-11/12 rounded-xl bg-surface-container-lowest/90 p-space-md shadow-xl backdrop-blur-md sm:-ml-24 sm:-mt-16 sm:w-80">
               <div className="mb-space-xs flex items-center gap-space-sm">
                 <span className="h-3 w-3 animate-pulse rounded-full bg-primary" />
                 <span className="text-label-sm font-semibold uppercase text-primary">{t('aiCoreLabel')}</span>

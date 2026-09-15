@@ -30,7 +30,7 @@ export default function Footer() {
   const t = useTranslations('Footer')
 
   return (
-    <footer className="mt-20 w-full border-t border-[#e2e8f0] bg-white pb-8 pt-14">
+    <footer className="mt-8 w-full border-t border-[#e2e8f0] bg-white pb-8 pt-14 sm:mt-20">
       <div className="mx-auto max-w-7xl px-margin md:px-margin-desktop">
         <div className="grid grid-cols-1 gap-10 border-b border-[#f1f5f9] pb-12 md:grid-cols-4">
           <div className="space-y-4">

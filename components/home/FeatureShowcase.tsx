@@ -25,8 +25,8 @@ export default function FeatureShowcase() {
           <h2 className="text-headline-lg text-on-surface">{t('heading')}</h2>
           <p className="mt-2 text-body-lg text-on-surface-variant">{t('subheading')}</p>
         </div>
-        <div className="mb-10 flex justify-center overflow-x-auto pb-2">
-          <div role="tablist" className="inline-flex gap-1 rounded-full bg-surface-container p-1.5 shadow-inner">
+        <div className="mb-10 flex justify-center pb-2">
+          <div role="tablist" className="flex flex-wrap justify-center gap-1 rounded-full bg-surface-container p-1.5 shadow-inner">
             {TABS.map((tab, index) => (
               <button
                 key={tab.key}
