@@ -47,7 +47,7 @@ export default function OccasionStyleSelector({
           aria-pressed={mode === 'occasion'}
           className={`flex-1 rounded-lg px-space-md py-2 text-center text-label-md font-semibold transition-all ${
             mode === 'occasion'
-              ? 'bg-surface-container-lowest text-primary shadow-xs'
+              ? 'bg-primary text-on-primary shadow-sm'
               : 'text-on-surface-variant hover:text-on-surface'
           }`}
         >
@@ -59,7 +59,7 @@ export default function OccasionStyleSelector({
           aria-pressed={mode === 'style'}
           className={`flex-1 rounded-lg px-space-md py-2 text-center text-label-md font-semibold transition-all ${
             mode === 'style'
-              ? 'bg-surface-container-lowest text-primary shadow-xs'
+              ? 'bg-primary text-on-primary shadow-sm'
               : 'text-on-surface-variant hover:text-on-surface'
           }`}
         >

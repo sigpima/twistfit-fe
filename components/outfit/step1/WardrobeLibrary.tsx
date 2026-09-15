@@ -101,43 +101,45 @@ export default function WardrobeLibrary() {
         )}
       </div>
 
-      <div className="flex flex-col items-start gap-space-sm rounded-2xl bg-surface-container-lowest p-space-md shadow-sm">
-        <label className="flex cursor-pointer select-none items-center gap-space-xs">
-          <input
-            type="checkbox"
-            checked={suggestExternal}
-            onChange={(event) => setSuggestExternal(event.target.checked)}
-          />
-          <span className="text-label-md font-medium text-on-surface">{t('suggestExternalLabel')}</span>
-        </label>
-        {hasPersonalColorResult ? (
+      <div className="flex flex-col gap-space-md rounded-2xl bg-surface-container-lowest p-space-md shadow-sm">
+        <div className="flex flex-wrap items-center gap-space-md">
           <label className="flex cursor-pointer select-none items-center gap-space-xs">
             <input
               type="checkbox"
-              checked={matchByPersonalColor}
-              onChange={(event) => setMatchByPersonalColor(event.target.checked)}
+              checked={suggestExternal}
+              onChange={(event) => setSuggestExternal(event.target.checked)}
             />
-            <span className="text-label-md font-medium text-on-surface">{t('personalColorLabel')}</span>
+            <span className="text-label-md font-medium text-on-surface">{t('suggestExternalLabel')}</span>
           </label>
-        ) : (
-          <Link
-            href="/personal-color/quiz"
-            className="flex items-center gap-space-xs rounded-full bg-secondary-fixed px-space-md py-2 text-label-md font-semibold text-on-secondary-fixed hover:opacity-90"
-          >
-            <span className="material-symbols-outlined text-[18px]">palette</span>
-            <span>{t('personalColorCta')}</span>
-          </Link>
-        )}
-      </div>
+          {hasPersonalColorResult ? (
+            <label className="flex cursor-pointer select-none items-center gap-space-xs">
+              <input
+                type="checkbox"
+                checked={matchByPersonalColor}
+                onChange={(event) => setMatchByPersonalColor(event.target.checked)}
+              />
+              <span className="text-label-md font-medium text-on-surface">{t('personalColorLabel')}</span>
+            </label>
+          ) : (
+            <Link
+              href="/personal-color/quiz"
+              className="flex items-center gap-space-xs rounded-full bg-secondary-fixed px-space-md py-2 text-label-md font-semibold text-on-secondary-fixed hover:opacity-90"
+            >
+              <span className="material-symbols-outlined text-[18px]">palette</span>
+              <span>{t('personalColorCta')}</span>
+            </Link>
+          )}
+        </div>
 
-      <OccasionStyleSelector
-        mode={occasionStyleMode}
-        onModeChange={setOccasionStyleMode}
-        selectedOccasion={selectedOccasion}
-        onOccasionChange={setSelectedOccasion}
-        selectedStyle={selectedStyle}
-        onStyleChange={setSelectedStyle}
-      />
+        <OccasionStyleSelector
+          mode={occasionStyleMode}
+          onModeChange={setOccasionStyleMode}
+          selectedOccasion={selectedOccasion}
+          onOccasionChange={setSelectedOccasion}
+          selectedStyle={selectedStyle}
+          onStyleChange={setSelectedStyle}
+        />
+      </div>
 
       {loadError ? (
         <p className="rounded-2xl bg-error-container p-space-lg text-center text-body-md text-on-error-container">
