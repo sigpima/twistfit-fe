@@ -3,66 +3,45 @@
 import { useTranslations } from 'next-intl'
 import { useOutfitFlow } from '../OutfitFlowProvider'
 
-const POSES = [
-  { id: 'front', icon: 'man', key: 'front' },
-  { id: 'side', icon: 'directions_walk', key: 'side' },
-] as const
-
 export default function PoseSelector() {
   const t = useTranslations('Outfit.Step3.PoseSelector')
-  const { selectedPose, setSelectedPose } = useOutfitFlow()
+  const { selectedModel, selectedPose, setSelectedPose } = useOutfitFlow()
+
+  const poses = [
+    { id: 'front', label: t('poses.front.label'), image: selectedModel.image },
+    ...(selectedModel.sideImage
+      ? [{ id: 'side', label: t('poses.side.label'), image: selectedModel.sideImage }]
+      : []),
+  ]
 
   return (
     <div className="flex flex-col gap-space-md rounded-2xl bg-surface-container-lowest p-space-lg shadow-sm">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-space-xs">
-          <span className="material-symbols-outlined text-primary">view_in_ar</span>
-          <h2 className="text-title-md font-semibold text-on-surface">{t('heading')}</h2>
-        </div>
-        <span className="rounded-full bg-primary-fixed px-2.5 py-1 text-label-sm font-medium text-on-primary-fixed">
-          {t('selectedBadge', { label: selectedPose.label })}
-        </span>
-      </div>
-      <p className="text-body-sm text-on-surface-variant">{t('description')}</p>
-      <div className="grid grid-cols-2 gap-space-sm pt-space-xs">
-        {POSES.map((pose) => {
+      <h2 className="text-title-md font-semibold text-on-surface">{t('heading')}</h2>
+      <div className="grid grid-cols-2 gap-space-md">
+        {poses.map((pose) => {
           const isSelected = selectedPose.id === pose.id
-          const label = t(`poses.${pose.key}.label`)
           return (
             <button
               key={pose.id}
               type="button"
               aria-pressed={isSelected}
-              onClick={() => setSelectedPose({ id: pose.id, label })}
-              className={`relative flex flex-col items-center justify-center gap-space-xs rounded-xl p-space-md text-center transition-all ${
-                isSelected
-                  ? 'bg-surface-container-high text-primary shadow-sm hover:shadow-md'
-                  : 'bg-surface-container-low text-on-surface hover:bg-surface-container'
+              onClick={() => setSelectedPose({ id: pose.id, label: pose.label })}
+              className={`flex flex-col overflow-hidden rounded-2xl text-center transition-all ${
+                isSelected ? 'ring-2 ring-primary' : 'ring-1 ring-outline-variant hover:ring-primary/50'
               }`}
             >
-              {isSelected && <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-primary" />}
-              <div
-                className={`flex h-12 w-12 items-center justify-center rounded-full transition-transform group-hover:scale-105 ${
-                  isSelected ? 'bg-primary text-on-primary' : 'bg-surface-container-highest text-on-surface'
-                }`}
-              >
-                <span className="material-symbols-outlined text-[24px]">{pose.icon}</span>
+              <div className="aspect-[3/4] w-full overflow-hidden bg-surface-container">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={pose.image} alt={pose.label} className="h-full w-full object-cover" />
               </div>
-              <span className="text-label-md font-bold text-on-surface">{label}</span>
-              <span className="text-label-sm text-on-surface-variant">{t(`poses.${pose.key}.sublabel`)}</span>
+              <span
+                className={`p-space-sm text-label-md font-bold ${isSelected ? 'text-primary' : 'text-on-surface'}`}
+              >
+                {pose.label}
+              </span>
             </button>
           )
         })}
-      </div>
-      <div className="mt-space-sm flex items-center justify-between rounded-xl bg-surface-container-low p-space-md">
-        <div className="flex items-center gap-space-sm">
-          <span className="material-symbols-outlined text-secondary">wb_sunny</span>
-          <div className="flex flex-col">
-            <span className="text-label-md font-semibold text-on-surface">{t('lightingLabel')}</span>
-            <span className="text-body-sm text-on-surface-variant">{t('lightingDetail')}</span>
-          </div>
-        </div>
-        <span className="material-symbols-outlined text-primary">tune</span>
       </div>
     </div>
   )

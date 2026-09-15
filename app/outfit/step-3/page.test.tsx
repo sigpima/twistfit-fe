@@ -34,9 +34,7 @@ describe('Step3Page', () => {
         <Step3Page />
       </OutfitFlowProvider>
     )
-    expect(
-      screen.getByRole('heading', { name: 'Bước 3: Chọn Tư Thế & Điều Chỉnh Tỷ Lệ Vóc Dáng' })
-    ).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Bước 3: Chọn Góc Nhìn' })).toBeInTheDocument()
   })
 
   it('links back to step 2', () => {

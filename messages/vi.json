@@ -782,73 +782,18 @@
     },
     "Step3": {
       "Page": {
-        "badge": "Virtual Dressing Studio",
-        "engineBadge": "Smart Fit Engine 3.2",
-        "heading": "Bước 3: Chọn Tư Thế & Điều Chỉnh Tỷ Lệ Vóc Dáng",
-        "subheading": "Tinh chỉnh tư thế người mẫu và số đo cơ thể để công nghệ AI render chính xác từng nếp vải.",
-        "flowBannerTitle": "Quy trình thiết lập trực quan 3 bước TwistFit Studio",
-        "flowBannerSubtitle": "Đồng bộ hoá tự động với dữ liệu Personal Color của bạn",
-        "flowBannerImageAlt": "Tiến trình phòng thử đồ TwistFit",
-        "generateButton": "⚡ Tạo Đồ Ảo Ngay (Nhanh - 1 credit)",
+        "heading": "Bước 3: Chọn Góc Nhìn",
+        "subheading": "Chọn góc chính diện hoặc góc nghiêng của người mẫu đã chọn.",
+        "generateButton": "Tạo Đồ Ảo Ngay",
         "backButton": "Quay lại Bước 2",
-        "estimatedTime": "Thời gian xử lý AI ước tính: ~4 giây",
-        "tipTitle": "Mẹo nhỏ tạo dáng cho Áo Peplum",
-        "tipBody": "Tư thế \"Đứng thẳng phía trước\" và \"Nghiêng cạnh bên\" giúp thấy rõ độ chuyển động của vạt áo và eo thon.",
-        "creditsBalance": "Tài khoản còn: 12 Credits",
-        "topUpButton": "Nạp thêm",
         "generateError": "Không thể tạo yêu cầu phối đồ, vui lòng thử lại."
       },
       "PoseSelector": {
-        "heading": "Lựa chọn tư thế (2 tư thế có sẵn)",
-        "selectedBadge": "Đã chọn: {label}",
-        "description": "Góc nhìn và thế đứng làm nổi bật độ rủ peplum và tôn đường cong cơ thể tốt nhất.",
+        "heading": "Chọn góc nhìn",
         "poses": {
-          "front": { "label": "Đứng thẳng phía trước", "sublabel": "Chuẩn Form 0°" },
-          "angle45": { "label": "Góc 45 độ", "sublabel": "Năng động" },
-          "side": { "label": "Nghiêng cạnh bên", "sublabel": "Góc 90° rõ eo" },
-          "handHip": { "label": "Chống tay hông", "sublabel": "Phong cách Chic" },
-          "armsCrossed": { "label": "Khoanh tay tự tin", "sublabel": "Hiện đại" },
-          "runwayWalk": { "label": "Sải chân Runway", "sublabel": "Chuyển động cao" },
-          "seated": { "label": "Ngồi thanh lịch", "sublabel": "Look cà phê" },
-          "backView": { "label": "Góc sau lưng", "sublabel": "Chi tiết khóa lưng" },
-          "dressSpin": { "label": "Váy xoay nhẹ", "sublabel": "Bồng bềnh" }
-        },
-        "lightingLabel": "Ánh sáng trường quay",
-        "lightingDetail": "Natural Studio Light 5200K (Tôn da Spring/Summer)"
-      },
-      "RenderSettings": {
-        "heading": "Cài đặt render chuyên sâu",
-        "hd4kLabel": "Chế độ chất lượng cao HD 4K",
-        "hd4kDetail": "Mô phỏng chân thực vân vải đũi & lụa cao cấp",
-        "physicsLabel": "Mô phỏng chuyển động vải Smart Fit Physics",
-        "physicsDetail": "Tạo độ rủ peplum tự nhiên và các nếp gấp chân thật"
-      },
-      "BodyMeasurements": {
-        "heading": "Tùy chỉnh số đo vóc dáng",
-        "resetButton": "Mặc định",
-        "aiAnalysisLabel": "AI Phân tích dáng",
-        "matchBadge": "98% khớp",
-        "heightLabel": "Chiều cao",
-        "weightLabel": "Cân nặng",
-        "heightMin": "1m45",
-        "heightMid": "1m65",
-        "heightMax": "1m85",
-        "weightMin": "40 kg",
-        "weightMid": "50 kg",
-        "weightMax": "80 kg",
-        "measurementsHeading": "Số đo ba vòng tiêu chuẩn (cm)",
-        "bustLabel": "Vòng 1 (Ngực)",
-        "waistLabel": "Vòng 2 (Eo)",
-        "hipLabel": "Vòng 3 (Mông)",
-        "decreaseAriaLabel": "Giảm {label}",
-        "increaseAriaLabel": "Tăng {label}",
-        "cmUnit": "cm",
-        "peplumFitLabel": "Độ tương thích Peplum Fit",
-        "peplumFitValue": "Rất hoàn hảo (96%)",
-        "peplumFitNote": "Tỷ lệ thắt eo {waist}cm kết hợp độ xòe peplum giúp tôn trọn dáng {bodyShape}."
-      },
-      "QuickSelectionSummary": {
-        "modelPrefix": "Người mẫu {name}"
+          "front": { "label": "Đứng thẳng phía trước" },
+          "side": { "label": "Nghiêng cạnh bên" }
+        }
       }
     },
     "Step4": {
