@@ -57,6 +57,13 @@ export default function ForumPostDetail({ id }: { id: string }) {
     setPost({ ...post, likedByMe: liked, likeCount })
   }
 
+  async function handleToggleBookmark() {
+    const response = await apiFetch(`/forum/posts/${id}/bookmark`, { method: 'POST' })
+    if (!response.ok || !post) return
+    const { bookmarked } = (await response.json()) as { bookmarked: boolean }
+    setPost({ ...post, bookmarkedByMe: bookmarked })
+  }
+
   async function handleSubmitComment() {
     setSubmittingComment(true)
     const response = await apiFetch(`/forum/posts/${id}/comments`, {
@@ -103,27 +110,48 @@ export default function ForumPostDetail({ id }: { id: string }) {
           <p className="mt-space-md whitespace-pre-wrap text-body-md text-on-surface">{post.body}</p>
 
           {user && (
-            <button
-              type="button"
-              onClick={handleToggleLike}
-              aria-pressed={post.likedByMe}
-              className={`mt-space-md inline-flex items-center gap-1 rounded-full px-space-lg py-space-sm text-label-md font-semibold transition-colors ${
-                post.likedByMe
-                  ? 'bg-primary text-on-primary'
-                  : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'
-              }`}
-            >
-              <span
-                className="material-symbols-outlined text-[20px]"
-                aria-hidden="true"
-                style={post.likedByMe ? { fontVariationSettings: "'FILL' 1" } : undefined}
+            <div className="mt-space-md flex items-center gap-space-sm">
+              <button
+                type="button"
+                onClick={handleToggleLike}
+                aria-pressed={post.likedByMe}
+                className={`inline-flex items-center gap-1 rounded-full px-space-lg py-space-sm text-label-md font-semibold transition-colors ${
+                  post.likedByMe
+                    ? 'bg-primary text-on-primary'
+                    : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'
+                }`}
               >
-                favorite
-              </span>
-              {post.likedByMe
-                ? t('Like.likedButton', { count: post.likeCount })
-                : t('Like.likeButton', { count: post.likeCount })}
-            </button>
+                <span
+                  className="material-symbols-outlined text-[20px]"
+                  aria-hidden="true"
+                  style={post.likedByMe ? { fontVariationSettings: "'FILL' 1" } : undefined}
+                >
+                  favorite
+                </span>
+                {post.likedByMe
+                  ? t('Like.likedButton', { count: post.likeCount })
+                  : t('Like.likeButton', { count: post.likeCount })}
+              </button>
+              <button
+                type="button"
+                onClick={handleToggleBookmark}
+                aria-pressed={post.bookmarkedByMe}
+                className={`inline-flex items-center gap-1 rounded-full px-space-lg py-space-sm text-label-md font-semibold transition-colors ${
+                  post.bookmarkedByMe
+                    ? 'bg-primary text-on-primary'
+                    : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'
+                }`}
+              >
+                <span
+                  className="material-symbols-outlined text-[20px]"
+                  aria-hidden="true"
+                  style={post.bookmarkedByMe ? { fontVariationSettings: "'FILL' 1" } : undefined}
+                >
+                  bookmark
+                </span>
+                {post.bookmarkedByMe ? t('Bookmark.savedButton') : t('Bookmark.saveButton')}
+              </button>
+            </div>
           )}
 
           {user && (

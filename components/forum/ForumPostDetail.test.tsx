@@ -190,6 +190,26 @@ describe('ForumPostDetail', () => {
     )
   })
 
+  it('lets a signed-in user toggle the bookmark button', async () => {
+    window.localStorage.setItem(
+      'twistfit.auth',
+      JSON.stringify({ name: 'Người dùng Test', email: 'user@twistfit.vn', role: 'user' })
+    )
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POST }))
+    renderDetail()
+    await waitFor(() => expect(screen.getByText('Bài chi tiết')).toBeInTheDocument())
+    expect(screen.getByRole('button', { name: 'Lưu' })).toHaveAttribute('aria-pressed', 'false')
+
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({ bookmarked: true }) }))
+    fireEvent.click(screen.getByRole('button', { name: 'Lưu' }))
+
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Đã lưu' })).toHaveAttribute('aria-pressed', 'true'))
+    expect(fetch).toHaveBeenCalledWith(
+      '/forum/posts/9/bookmark',
+      expect.objectContaining({ method: 'POST', credentials: 'include' })
+    )
+  })
+
   it('lets a signed-in user submit a report', async () => {
     window.localStorage.setItem(
       'twistfit.auth',
