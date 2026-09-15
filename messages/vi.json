@@ -336,6 +336,10 @@
       "successMessage": "Đã gửi báo cáo, cảm ơn bạn.",
       "genericError": "Có lỗi xảy ra, vui lòng thử lại."
     },
+    "Like": {
+      "likeButton": "Thích ({count})",
+      "likedButton": "Đã thích ({count})"
+    },
     "Moderation": {
       "title": "Kiểm duyệt Diễn đàn",
       "pendingTitle": "Bài chờ duyệt",

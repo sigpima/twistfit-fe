@@ -59,6 +59,45 @@ describe('ForumPostDetail', () => {
     expect(screen.queryByRole('button', { name: 'Báo cáo bài viết' })).not.toBeInTheDocument()
   })
 
+  it('renders the image and author name', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POST }))
+    renderDetail()
+    await waitFor(() => expect(screen.getByText('Bài chi tiết')).toBeInTheDocument())
+    expect(screen.getByAltText('')).toHaveAttribute('src', 'https://example.com/outfit.jpg')
+    expect(screen.getByText('Lan Anh')).toBeInTheDocument()
+  })
+
+  it('does not show a like button when signed out', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POST }))
+    renderDetail()
+    await waitFor(() => expect(screen.getByText('Bài chi tiết')).toBeInTheDocument())
+    expect(screen.queryByRole('button', { name: /Thích/ })).not.toBeInTheDocument()
+  })
+
+  it('lets a signed-in user toggle the like button', async () => {
+    window.localStorage.setItem(
+      'twistfit.auth',
+      JSON.stringify({ name: 'Người dùng Test', email: 'user@twistfit.vn', role: 'user' })
+    )
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POST }))
+    renderDetail()
+    await waitFor(() => expect(screen.getByText('Bài chi tiết')).toBeInTheDocument())
+    expect(screen.getByRole('button', { name: /Thích \(2\)/ })).toHaveAttribute('aria-pressed', 'false')
+
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({ ok: true, json: async () => ({ liked: true, likeCount: 3 }) })
+    )
+    fireEvent.click(screen.getByRole('button', { name: /Thích \(2\)/ }))
+
+    await waitFor(() => expect(screen.getByRole('button', { name: /Đã thích \(3\)/ })).toBeInTheDocument())
+    expect(screen.getByRole('button', { name: /Đã thích \(3\)/ })).toHaveAttribute('aria-pressed', 'true')
+    expect(fetch).toHaveBeenCalledWith(
+      '/forum/posts/9/like',
+      expect.objectContaining({ method: 'POST', credentials: 'include' })
+    )
+  })
+
   it('lets a signed-in user submit a report', async () => {
     window.localStorage.setItem(
       'twistfit.auth',
