@@ -1033,6 +1033,46 @@
       "imageCaptionLabel": "Atelier Studio",
       "imageCaptionTitle": "Phân Tích Draping Vải Truyền Thống"
     },
+    "BrandMeaning": {
+      "kicker": "Ý Nghĩa Thương Hiệu",
+      "name": {
+        "heading": "Ý Nghĩa Tên Thương Hiệu",
+        "intro": "Tên gọi TwistFit là sự giao thoa hoàn hảo giữa tinh thần tự do và sự thấu hiểu chính mình:",
+        "twist": {
+          "title": "Twist",
+          "body": "Ở Twist, đó là cú bẻ lái đầy bất ngờ của sự đổi mới, phá cách và sáng tạo không rập khuôn. Đó là lời mời gọi bạn bước ra khỏi vùng an toàn, thử nghiệm những bản phối mới mẻ để biến trang phục thường nhật thành tuyên ngôn phong cách riêng biệt."
+        },
+        "fit": {
+          "title": "Fit",
+          "body": "Trong khi đó, Fit chính là sự vừa vặn tuyệt đối. Không chỉ dừng lại ở số đo, màu sắc hay phong cách mong muốn, Fit tại TwistFit còn là sự ăn ý đến hoàn hảo với chính tủ đồ hiện tại của bạn - giúp bạn mặc đẹp và tự tin nhất từ chính những món đồ mình đang có."
+        },
+        "closing": "TwistFit tin rằng vẻ đẹp bền vững không đến từ việc chạy theo xu hướng nhất thời, mà khởi nguồn từ sự thấu hiểu bản thân cùng lòng can đảm tạo nên những \"cú twist\" khác biệt — nơi bạn luôn tìm thấy sự vừa vặn hoàn hảo để tự tin là chính mình mỗi ngày."
+      },
+      "symbol": {
+        "heading": "Ý Nghĩa Biểu Tượng TwistFit",
+        "intro": "Logo TwistFit không chỉ là một nhận diện thị giác, mà còn chứa đựng toàn bộ triết lý chuyển dịch từ sự tĩnh lặng của tủ đồ truyền thống sang không gian số hóa thời trang đầy năng lượng và sáng tạo.",
+        "logoAlt": "Logo TwistFit",
+        "movementHeading": "Hình Tượng & Chuyển Động",
+        "static": {
+          "title": "Tĩnh",
+          "body": "Chiếc móc màu vàng vẫn neo cố định trên thanh ngang biểu trưng cho trạng thái lưu trữ truyền thống - nơi những bộ trang phục quen thuộc dần bị lãng quên theo thời gian."
+        },
+        "dynamic": {
+          "title": "Động",
+          "body": "Ngược lại, chiếc móc màu hồng tách khỏi thanh treo với góc nghiêng tự do đại diện cho hành động \"giải phóng\" không gian tủ đồ. Quần áo không còn bị \"treo chết\", mà được công nghệ AI đánh thức, tái kết hợp và đưa trở lại nhịp sống thường nhật."
+        },
+        "layeringNote": "Hai chiếc móc lồng ghép và đan xen nhau mô phỏng trực quan tính năng phối đồ cùng phòng thử đồ ảo của TwistFit. Ở đó, những món trang phục tưởng chừng rời rạc, đối lập lại tìm thấy điểm chạm hài hòa để tạo nên những bản phối hoàn toàn mới mẻ.",
+        "colorHeading": "Ngôn Ngữ Màu Sắc & Hiệu Ứng Ombre",
+        "vintage": {
+          "title": "Sắc Vàng Vintage - Trạng Thái Tĩnh",
+          "body": "Gam vàng ombre nhuốm màu thời gian gợi nhắc trực tiếp về những món đồ xưa cũ, quen thuộc nằm sâu nơi góc tủ. Neo giữ sắc vàng này trên thanh treo phản ánh giá trị trang phục đang bị \"đóng băng\" và chờ đợi được tái sinh."
+        },
+        "modern": {
+          "title": "Sắc Hồng Hiện Đại - Sự Tái Sinh",
+          "body": "Tương phản với nét hoài niệm là sắc hồng ombre tươi sáng và rực rỡ. Đi cùng chuyển động vươn lên rời khỏi thanh treo, gam màu này phá vỡ hoàn toàn định kiến về \"đồ cũ\", thổi bùng sức sống mới để mỗi món đồ bước ra khỏi góc tối bất động và trở thành diện mạo đầy tự tin của bạn mỗi ngày."
+        }
+      }
+    },
     "TeamGrid": {
       "kicker": "Đội Ngũ Chuyên Gia",
       "heading": "Những Nhà Kiến Tạo Tại TwistFit",
