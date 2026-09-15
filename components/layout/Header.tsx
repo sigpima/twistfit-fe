@@ -188,24 +188,26 @@ export default function Header() {
               </div>
             </div>
           ) : (
-            <div className="flex shrink-0 items-center gap-3">
+            <div className="flex shrink-0 items-center gap-2 sm:gap-3">
               <Link
                 href="/login"
-                className="flex items-center gap-1.5 rounded-full border border-[#ec7fb8] px-5 py-2.5 text-sm font-semibold text-[#ec7fb8] transition-colors hover:bg-[#ec7fb8]/10"
+                aria-label={t('login')}
+                className="flex items-center justify-center gap-1.5 rounded-full border border-[#ec7fb8] p-2.5 text-sm font-semibold text-[#ec7fb8] transition-colors hover:bg-[#ec7fb8]/10 sm:px-5 sm:py-2.5"
               >
                 <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
                   login
                 </span>
-                {t('login')}
+                <span className="hidden sm:inline">{t('login')}</span>
               </Link>
               <Link
                 href="/register"
-                className="flex items-center gap-1.5 rounded-full bg-[#ec7fb8] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#e564a8]"
+                aria-label={t('register')}
+                className="flex items-center justify-center gap-1.5 rounded-full bg-[#ec7fb8] p-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#e564a8] sm:px-5 sm:py-2.5"
               >
                 <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
                   person_add
                 </span>
-                {t('register')}
+                <span className="hidden sm:inline">{t('register')}</span>
               </Link>
             </div>
           )}
