@@ -19,6 +19,7 @@
 - No comment reporting, no image gallery (exactly one image per post), no bookmark/collection feature — all out of scope for this plan.
 - `image_url` is a plain resolved string handed to the client by `POST /forum/upload-url` (mirrors `WardrobeItemCreate.blob_url` — no blob-path bookkeeping on the post schemas).
 - Every backend test runs against the real Postgres test DB (`backend/tests/conftest.py`) — no mocking the ORM. The upload-url test hits the real Azurite emulator, no mocking blob storage (mirrors `backend/tests/domains/wardrobe/test_upload_flow.py`).
+- UI additions (Tasks 5-8) were reviewed against `ui-ux-pro-max` guidance before being written into this plan: the like button carries `aria-pressed` and a `material-symbols-outlined` icon (the same icon font already loaded globally, see `app/layout.tsx`) rather than an emoji glyph; the detail-page image reserves space via `aspect-[4/3]` to avoid layout shift while it loads; the file input disables itself during upload and its error is announced via `role="alert"`; list rows get `min-w-0` on their text column so long titles/names wrap instead of forcing horizontal overflow at ~400px width; and the comment submit button gets a `submitting` guard against double-posting, mirroring the pattern `ForumPostForm.tsx` already uses. Touch-target sizing for the new like button matches the existing pill-button convention (`px-space-lg py-space-sm`, well above the 24×24 CSS px minimum); the comment-delete and remove-image links intentionally stay plain text links to match the sibling "Sửa"/"Xóa" links already used throughout this domain (`MyForumPostList.tsx`) rather than introducing an inconsistent one-off style.
 
 ---
 
@@ -1587,7 +1588,13 @@ export default function ForumPostForm({ initialPost }: { initialPost?: ForumPost
           // eslint-disable-next-line @next/next/no-img-element
           <img src={imageUrl} alt="" className="h-40 w-40 rounded-xl object-cover" />
         )}
-        <input id="forum-image" type="file" accept="image/*" onChange={handleImageChange} />
+        <input
+          id="forum-image"
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          disabled={uploadingImage}
+        />
         {uploadingImage && <p className="text-label-sm text-on-surface-variant">{t('PostForm.imageUploading')}</p>}
         {imageUrl && !uploadingImage && (
           <button
@@ -1598,7 +1605,11 @@ export default function ForumPostForm({ initialPost }: { initialPost?: ForumPost
             {t('PostForm.removeImageButton')}
           </button>
         )}
-        {errors.image && <p className="text-label-sm text-error">{errors.image}</p>}
+        {errors.image && (
+          <p role="alert" className="text-label-sm text-error">
+            {errors.image}
+          </p>
+        )}
       </div>
 
       {errors.form && <p className="text-label-sm text-error">{errors.form}</p>}
@@ -1677,10 +1688,9 @@ it('shows the thumbnail, author, and counts for a post', async () => {
   renderWithIntl(<ForumPostList />)
 
   await waitFor(() => expect(screen.getByText('Bài công khai')).toBeInTheDocument())
-  expect(screen.getByText('Lan Anh')).toBeInTheDocument()
+  expect(screen.getByText(/Lan Anh/)).toBeInTheDocument()
   expect(screen.getByAltText('')).toHaveAttribute('src', 'https://example.com/outfit.jpg')
-  expect(screen.getByText('3')).toBeInTheDocument()
-  expect(screen.getByText('2')).toBeInTheDocument()
+  expect(screen.getByText('3 lượt thích · 2 bình luận')).toBeInTheDocument()
 })
 ```
 
@@ -1735,7 +1745,7 @@ Replace the `<li>` block inside the `posts.map(...)` in `frontend/components/for
       // eslint-disable-next-line @next/next/no-img-element
       <img src={post.imageUrl} alt="" className="h-20 w-20 shrink-0 rounded-xl object-cover" />
     )}
-    <div>
+    <div className="min-w-0 flex-1">
       <Link
         href={`/forum/${post.id}`}
         className="text-headline-sm font-semibold text-on-surface hover:underline"
@@ -1746,7 +1756,7 @@ Replace the `<li>` block inside the `posts.map(...)` in `frontend/components/for
         {t(`categories.${post.category}`)} · {post.authorName}
       </p>
       <p className="mt-space-xs text-label-sm text-on-surface-variant">
-        ♥ {post.likeCount} · {post.commentCount} {t('Public.commentsLabel')}
+        {post.likeCount} {t('Public.likesLabel')} · {post.commentCount} {t('Public.commentsLabel')}
       </p>
     </div>
   </li>
@@ -1764,9 +1774,9 @@ Replace the `<li>` block inside the `posts.map(...)` in `frontend/components/for
       // eslint-disable-next-line @next/next/no-img-element
       <img src={post.imageUrl} alt="" className="h-16 w-16 shrink-0 rounded-xl object-cover" />
     )}
-    <div className="flex-1">
+    <div className="min-w-0 flex-1">
       <div className="flex items-center justify-between gap-space-md">
-        <h2 className="text-headline-sm font-semibold text-on-surface">{post.title}</h2>
+        <h2 className="min-w-0 flex-1 text-headline-sm font-semibold text-on-surface">{post.title}</h2>
         <span className="shrink-0 rounded-full bg-surface-container px-space-md py-space-xs text-label-sm text-on-surface-variant">
           {t(`MyPosts.status.${post.status}`)}
         </span>
@@ -1798,6 +1808,7 @@ In `frontend/messages/vi.json`, add `"commentsLabel": "bình luận"` to the `Fo
   "subtitle": "Nơi chia sẻ và xin tư vấn phối đồ cùng cộng đồng TwistFit.",
   "loading": "Đang tải...",
   "emptyState": "Chưa có bài viết nào trong chuyên mục này.",
+  "likesLabel": "lượt thích",
   "commentsLabel": "bình luận"
 },
 ```
@@ -1878,6 +1889,7 @@ it('lets a signed-in user toggle the like button', async () => {
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POST }))
   renderDetail()
   await waitFor(() => expect(screen.getByText('Bài chi tiết')).toBeInTheDocument())
+  expect(screen.getByRole('button', { name: /Thích \(2\)/ })).toHaveAttribute('aria-pressed', 'false')
 
   vi.stubGlobal(
     'fetch',
@@ -1886,6 +1898,7 @@ it('lets a signed-in user toggle the like button', async () => {
   fireEvent.click(screen.getByRole('button', { name: /Thích \(2\)/ }))
 
   await waitFor(() => expect(screen.getByRole('button', { name: /Đã thích \(3\)/ })).toBeInTheDocument())
+  expect(screen.getByRole('button', { name: /Đã thích \(3\)/ })).toHaveAttribute('aria-pressed', 'true')
   expect(fetch).toHaveBeenCalledWith(
     '/forum/posts/9/like',
     expect.objectContaining({ method: 'POST', credentials: 'include' })
@@ -1984,7 +1997,11 @@ export default function ForumPostDetail({ id }: { id: string }) {
           <p className="mt-space-xs text-label-sm text-on-surface-variant">{post.authorName}</p>
           {post.imageUrl && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={post.imageUrl} alt="" className="mt-space-md w-full rounded-2xl object-cover" />
+            <img
+              src={post.imageUrl}
+              alt=""
+              className="mt-space-md aspect-[4/3] w-full rounded-2xl object-cover"
+            />
           )}
           <p className="mt-space-md whitespace-pre-wrap text-body-md text-on-surface">{post.body}</p>
 
@@ -1992,12 +2009,20 @@ export default function ForumPostDetail({ id }: { id: string }) {
             <button
               type="button"
               onClick={handleToggleLike}
-              className={`mt-space-md rounded-full px-space-lg py-space-sm text-label-md font-semibold transition-colors ${
+              aria-pressed={post.likedByMe}
+              className={`mt-space-md inline-flex items-center gap-1 rounded-full px-space-lg py-space-sm text-label-md font-semibold transition-colors ${
                 post.likedByMe
                   ? 'bg-primary text-on-primary'
                   : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'
               }`}
             >
+              <span
+                className="material-symbols-outlined text-[20px]"
+                aria-hidden="true"
+                style={post.likedByMe ? { fontVariationSettings: "'FILL' 1" } : undefined}
+              >
+                favorite
+              </span>
               {post.likedByMe
                 ? t('Like.likedButton', { count: post.likeCount })
                 : t('Like.likeButton', { count: post.likeCount })}
@@ -2228,6 +2253,7 @@ Add state and effects right after the existing `reportMessage` state:
 ```tsx
   const [comments, setComments] = useState<ForumComment[]>([])
   const [newComment, setNewComment] = useState('')
+  const [submittingComment, setSubmittingComment] = useState(false)
 
   useEffect(() => {
     apiFetch(`/forum/posts/${id}/comments`)
@@ -2240,11 +2266,13 @@ Add a submit handler right after `handleToggleLike`:
 
 ```tsx
   async function handleSubmitComment() {
+    setSubmittingComment(true)
     const response = await apiFetch(`/forum/posts/${id}/comments`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ body: newComment }),
     })
+    setSubmittingComment(false)
     if (!response.ok) return
     const comment = (await response.json()) as ForumComment
     setComments((current) => [...current, comment])
@@ -2295,7 +2323,7 @@ Add the comment section at the end of the `{post && (...)}` block, right after t
                 <button
                   type="button"
                   onClick={handleSubmitComment}
-                  disabled={!newComment.trim()}
+                  disabled={!newComment.trim() || submittingComment}
                   className="rounded-full bg-primary px-6 py-2 text-label-md text-on-primary disabled:opacity-60"
                 >
                   {t('Comments.submitButton')}
