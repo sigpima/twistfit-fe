@@ -353,6 +353,11 @@
       "saveAriaLabel": "Lưu bài viết",
       "savedAriaLabel": "Bỏ lưu bài viết"
     },
+    "Saved": {
+      "title": "Đã lưu",
+      "loading": "Đang tải...",
+      "emptyState": "Bạn chưa lưu bài viết nào."
+    },
     "Moderation": {
       "title": "Kiểm duyệt Diễn đàn",
       "pendingTitle": "Bài chờ duyệt",
