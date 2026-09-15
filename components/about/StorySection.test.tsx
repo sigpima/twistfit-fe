@@ -4,11 +4,18 @@ import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import StorySection from './StorySection'
 
 describe('StorySection', () => {
-  it('renders the brand story narrative and milestones', () => {
+  it('renders the brand story narrative', () => {
     renderWithIntl(<StorySection />)
-    expect(screen.getByText('"Tủ Đồ Đầy Ắp Nhưng Không Có Gì Để Mặc"')).toBeInTheDocument()
-    expect(screen.getByText('Khởi sinh thuật toán quang phổ da')).toBeInTheDocument()
-    expect(screen.getByText('120K+ người dùng tại Việt Nam')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Câu Chuyện Thương Hiệu' })).toBeInTheDocument()
+    expect(screen.getByText(/tủ đồ đầy ngập của bạn Minh Ánh/)).toBeInTheDocument()
+    expect(screen.getByText(/trăn trở chung của rất nhiều người trẻ/)).toBeInTheDocument()
+  })
+
+  it('no longer renders the removed milestones or AI-core panel', () => {
+    renderWithIntl(<StorySection />)
+    expect(screen.queryByText('Khởi sinh thuật toán quang phổ da')).not.toBeInTheDocument()
+    expect(screen.queryByText('120K+ người dùng tại Việt Nam')).not.toBeInTheDocument()
+    expect(screen.queryByText(/TwistFit AI Camera Core/)).not.toBeInTheDocument()
   })
 
   it('renders the story image', () => {

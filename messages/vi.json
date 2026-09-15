@@ -1026,22 +1026,12 @@
     },
     "StorySection": {
       "kicker": "Câu Chuyện Thương Hiệu",
-      "headingPrefix": "Bắt Đầu Từ Nỗi Băn Khoăn:<br></br><quote>\"Tủ Đồ Đầy Ắp Nhưng Không Có Gì Để Mặc\"</quote>",
-      "paragraph1": "Đã bao nhiêu lần bạn đứng trước chiếc tủ quần áo chật ních nhưng vẫn thở dài bất lực? Đã bao lần bạn mua một chiếc váy đắt đỏ vì người mẫu mặc quá đẹp, nhưng khi khoác lên mình lại cảm thấy làn da bị xỉn màu và kém sắc?",
-      "paragraph2": "Đó chính là thực trạng chung mà đội ngũ sáng lập TwistFit từng trải qua. Chúng tôi nhận thấy rào cản lớn nhất của đa số mọi người không nằm ở việc thiếu quần áo, mà nằm ở sự <bold>lệch pha giữa màu sắc trang phục và quang phổ sắc tố cơ thể (undertone, value & chroma)</bold>.",
-      "paragraph3": "Để giải quyết bài toán này, dự án TwistFit Atelier đã ra đời. Chúng tôi dành hơn 2 năm nghiên cứu cùng các Image Consultant quốc tế, tích hợp công nghệ AI Camera nhận diện quang phổ ánh sáng da thực tế dưới các điều kiện môi trường khác nhau. Từ một thuật toán thử nghiệm tại phòng lab, TwistFit nay đã trở thành người bạn đồng hành phong cách của hàng trăm nghìn bạn trẻ.",
-      "milestones": {
-        "founding": { "year": "2023", "label": "Khởi sinh thuật toán quang phổ da" },
-        "partnership": { "year": "2024", "label": "Hợp tác 20+ Master Stylists" },
-        "current": { "year": "Hiện tại", "label": "120K+ người dùng tại Việt Nam" }
-      },
+      "heading": "Câu Chuyện Thương Hiệu",
+      "paragraph1": "Câu chuyện của TwistFit không bắt đầu từ những lý thuyết cao siêu, mà bắt đầu từ chính tủ đồ đầy ngập của bạn Minh Ánh nhóm mình. Có những buổi sáng, bạn loay hoay trước tủ quần áo chất đống nhưng vẫn thốt lên: \"Không có gì để mặc!\". Mua sắm thì nhiều, nhưng món thì khiến da bị xỉn, món thì mua theo trend về rồi chẳng biết phối với cái gì. Nhìn tủ đồ vừa tốn tiền, vừa lãng phí mà vẫn không tạo được outfit đúng ý.",
+      "paragraph2": "Chúng tôi nhận ra đây không chỉ là câu chuyện của riêng bạn, mà là trăn trở chung của rất nhiều người trẻ hiện nay: mua sắm theo cảm hứng, tủ đồ luôn đầy ắp nhưng lại thiếu sự thấu hiểu bản thân để định hình một phong cách thực sự là chính mình. Xuất phát từ niềm tin rằng mỗi người là một bản thể độc nhất, TwistFit ra đời như một người bạn đồng hành, giúp bạn lắng nghe chính mình, khám phá và tự do thể hiện bản sắc riêng.",
       "imageAlt": "Phân Tích Draping Vải Truyền Thống trong atelier TwistFit",
       "imageCaptionLabel": "Atelier Studio",
-      "imageCaptionTitle": "Phân Tích Draping Vải Truyền Thống",
-      "aiCoreLabel": "TwistFit AI Camera Core",
-      "aiCoreBody": "Quét 1.024 điểm sắc tố gương mặt để bóc tách 3 thuộc tính: Hue, Value và Saturation chuẩn khoa học.",
-      "spectrumLabel": "Quang phổ tương thích",
-      "spectrumValue": "Cool Summer"
+      "imageCaptionTitle": "Phân Tích Draping Vải Truyền Thống"
     },
     "TeamGrid": {
       "kicker": "Đội Ngũ Chuyên Gia",
