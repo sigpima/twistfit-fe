@@ -9,7 +9,7 @@ describe('HowItWorksPage', () => {
     expect(
       screen.getByRole('heading', { level: 1, name: /Hành Trình Khám Phá Sắc Màu/ })
     ).toBeInTheDocument()
-    expect(screen.getByText('Chụp hoặc Tải Ảnh Khuôn Mặt')).toBeInTheDocument()
+    expect(screen.getByText('Đánh Giá Màu Sắc Cá Nhân')).toBeInTheDocument()
     expect(screen.getByText('Chi phí mỗi lần test')).toBeInTheDocument()
     expect(screen.getByText('Ánh sáng tự nhiên')).toBeInTheDocument()
   })
