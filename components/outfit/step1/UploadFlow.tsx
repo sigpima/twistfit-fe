@@ -49,7 +49,15 @@ export default function UploadFlow({ onUploaded }: { onUploaded: () => void }) {
     }
     const { uploadUrl, blobPath } = (await uploadUrlResponse.json()) as { uploadUrl: string; blobPath: string }
 
-    await fetch(uploadUrl, { method: 'PUT', body: file })
+    const putResponse = await fetch(uploadUrl, {
+      method: 'PUT',
+      headers: { 'x-ms-blob-type': 'BlockBlob' },
+      body: file,
+    })
+    if (!putResponse.ok) {
+      setState({ step: 'error' })
+      return
+    }
 
     const suggestResponse = await apiFetch('/wardrobe/items/suggest-tags', {
       method: 'POST',

@@ -45,7 +45,10 @@ describe('UploadFlow', () => {
     fireEvent.change(input, { target: { files: [file] } })
 
     await waitFor(() => expect(screen.getByText('Lưu vào tủ đồ')).toBeInTheDocument())
-    expect(putMock).toHaveBeenCalledWith('https://blob.example.com/upload?sig=abc', expect.objectContaining({ method: 'PUT' }))
+    expect(putMock).toHaveBeenCalledWith(
+      'https://blob.example.com/upload?sig=abc',
+      expect.objectContaining({ method: 'PUT', headers: { 'x-ms-blob-type': 'BlockBlob' } })
+    )
 
     fireEvent.click(screen.getByText('Lưu vào tủ đồ'))
 
@@ -55,6 +58,27 @@ describe('UploadFlow', () => {
 
   it('shows an error message when the upload URL request fails', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(null, { ok: false, status: 500 })))
+
+    renderWithIntl(<UploadFlow onUploaded={vi.fn()} />)
+
+    const file = new File(['fake'], 'shirt.png', { type: 'image/png' })
+    const input = screen.getByLabelText(/Chọn ảnh áo quần/) as HTMLInputElement
+    fireEvent.change(input, { target: { files: [file] } })
+
+    await waitFor(() => expect(screen.getByText('Có lỗi xảy ra, vui lòng thử lại.')).toBeInTheDocument())
+  })
+
+  it('shows an error message when the blob upload PUT fails', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((url: string, init?: RequestInit) => {
+        if (init?.method === 'PUT') return Promise.resolve(jsonResponse(null, { ok: false, status: 403 }))
+        if (url.includes('/wardrobe/upload-url')) {
+          return Promise.resolve(jsonResponse({ uploadUrl: 'https://blob.example.com/upload?sig=abc', blobPath: 'u1/x.png' }))
+        }
+        return Promise.resolve(jsonResponse(null, { ok: false, status: 404 }))
+      })
+    )
 
     renderWithIntl(<UploadFlow onUploaded={vi.fn()} />)
 
