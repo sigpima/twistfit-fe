@@ -68,10 +68,10 @@ export default function AssessmentMethodology() {
               {(activePhase.icons as Record<string, string>)[methodKey]}
             </span>
             <h5 className="mt-space-xs text-label-lg font-bold text-on-surface">
-              {t(`phases.${activePhase.key}.methods.${methodKey}.title`)}
+              {t(`phases.${activePhase.key}.methods.${methodKey}.title` as Parameters<typeof t>[0])}
             </h5>
             <p className="mt-space-xs text-body-sm text-on-surface-variant">
-              {t(`phases.${activePhase.key}.methods.${methodKey}.body`)}
+              {t(`phases.${activePhase.key}.methods.${methodKey}.body` as Parameters<typeof t>[0])}
             </p>
           </div>
         ))}
