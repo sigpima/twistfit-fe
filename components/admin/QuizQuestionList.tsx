@@ -21,12 +21,24 @@ export default function QuizQuestionList() {
       apiFetch(`/quiz-questions/${a.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ questionText: a.questionText, sortOrder: b.sortOrder, options: a.options }),
+        body: JSON.stringify({
+          questionText: a.questionText,
+          axis: a.axis,
+          imageUrl: a.imageUrl,
+          sortOrder: b.sortOrder,
+          options: a.options,
+        }),
       }),
       apiFetch(`/quiz-questions/${b.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ questionText: b.questionText, sortOrder: a.sortOrder, options: b.options }),
+        body: JSON.stringify({
+          questionText: b.questionText,
+          axis: b.axis,
+          imageUrl: b.imageUrl,
+          sortOrder: a.sortOrder,
+          options: b.options,
+        }),
       }),
     ])
   }

@@ -11,10 +11,12 @@ vi.mock('next/navigation', () => ({
 const QUESTIONS: QuizQuestion[] = Array.from({ length: 5 }, (_, index) => ({
   id: index + 1,
   questionText: `Câu hỏi số ${index + 1}?`,
+  axis: 'hue',
+  imageUrl: null,
   sortOrder: index,
   options: [
-    { id: index * 10 + 1, label: 'A', season: 'spring', sortOrder: 0 },
-    { id: index * 10 + 2, label: 'B', season: 'summer', sortOrder: 1 },
+    { id: index * 10 + 1, label: 'A', axisValue: 'warm', sortOrder: 0 },
+    { id: index * 10 + 2, label: 'B', axisValue: 'cool', sortOrder: 1 },
   ],
 }))
 

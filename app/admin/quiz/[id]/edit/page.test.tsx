@@ -12,8 +12,10 @@ vi.mock('next/navigation', () => ({
 const QUESTION: QuizQuestion = {
   id: 3,
   questionText: 'Câu hỏi cần sửa?',
+  axis: 'hue',
+  imageUrl: null,
   sortOrder: 0,
-  options: [{ id: 1, label: 'A', season: 'spring', sortOrder: 0 }],
+  options: [{ id: 1, label: 'A', axisValue: 'warm', sortOrder: 0 }],
 }
 
 describe('EditQuizQuestionPage', () => {

@@ -5,8 +5,22 @@ import QuizQuestionList from './QuizQuestionList'
 import type { QuizQuestion } from '@/lib/db'
 
 const QUESTIONS: QuizQuestion[] = [
-  { id: 1, questionText: 'Câu 1?', sortOrder: 0, options: [{ id: 1, label: 'A', season: 'spring', sortOrder: 0 }] },
-  { id: 2, questionText: 'Câu 2?', sortOrder: 1, options: [{ id: 2, label: 'B', season: 'summer', sortOrder: 0 }] },
+  {
+    id: 1,
+    questionText: 'Câu 1?',
+    axis: 'hue',
+    imageUrl: null,
+    sortOrder: 0,
+    options: [{ id: 1, label: 'A', axisValue: 'warm', sortOrder: 0 }],
+  },
+  {
+    id: 2,
+    questionText: 'Câu 2?',
+    axis: 'hue',
+    imageUrl: null,
+    sortOrder: 1,
+    options: [{ id: 2, label: 'B', axisValue: 'cool', sortOrder: 0 }],
+  },
 ]
 
 describe('QuizQuestionList', () => {
