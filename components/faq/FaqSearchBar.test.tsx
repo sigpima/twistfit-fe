@@ -14,7 +14,7 @@ describe('FaqSearchBar', () => {
   it('calls onTagClick with the tag value when a suggested tag is clicked', () => {
     const onTagClick = vi.fn()
     renderWithIntl(<FaqSearchBar value="" onChange={vi.fn()} onTagClick={onTagClick} />)
-    fireEvent.click(screen.getByText('#ThửĐồẢo'))
-    expect(onTagClick).toHaveBeenCalledWith('thử đồ ảo')
+    fireEvent.click(screen.getByText('#PhốiĐồAI'))
+    expect(onTagClick).toHaveBeenCalledWith('phối đồ')
   })
 })

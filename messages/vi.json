@@ -1128,10 +1128,10 @@
     "CategoryTabs": {
       "categories": {
         "all": "Tất cả",
+        "account": "Tài khoản & Dữ liệu",
         "personalColor": "Trắc nghiệm Personal Color",
         "fittingRoom": "Phòng thử đồ ảo (Fitting Room)",
-        "account": "Tài khoản & Dữ liệu",
-        "stylist": "Tư vấn Stylist & Mua sắm"
+        "policy": "Chính sách"
       }
     },
     "SearchBar": {
@@ -1139,10 +1139,10 @@
       "searchButton": "Tìm kiếm",
       "suggestedLabel": "Gợi ý tìm kiếm:",
       "tags": {
-        "light": "#ÁnhSáng",
+        "otp": "#OTP",
         "security": "#BảoMật",
-        "tryOn": "#ThửĐồẢo",
-        "exportPdf": "#XuấtPDF"
+        "outfitAi": "#PhốiĐồAI",
+        "deleteAccount": "#XóaTàiKhoản"
       }
     },
     "SupportBanner": {

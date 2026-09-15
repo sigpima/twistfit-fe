@@ -6,19 +6,19 @@ import type { FaqCategory } from '@/lib/faq'
 // Faq.CategoryTabs.categories.* translation keys.
 export type FaqCategoryVisual = {
   id: FaqCategory
-  key: 'personalColor' | 'fittingRoom' | 'account' | 'stylist'
+  key: 'account' | 'personalColor' | 'fittingRoom' | 'policy'
   icon: string
   tint: string
 }
 
 export const FAQ_CATEGORY_VISUALS: FaqCategoryVisual[] = [
+  { id: 'account', key: 'account', icon: 'manage_accounts', tint: 'bg-tertiary-fixed text-tertiary' },
   { id: 'personal-color', key: 'personalColor', icon: 'palette', tint: 'bg-primary-fixed text-primary' },
   { id: 'fitting-room', key: 'fittingRoom', icon: 'checkroom', tint: 'bg-secondary-fixed text-secondary' },
-  { id: 'account', key: 'account', icon: 'manage_accounts', tint: 'bg-tertiary-fixed text-tertiary' },
   {
-    id: 'stylist',
-    key: 'stylist',
-    icon: 'support_agent',
+    id: 'policy',
+    key: 'policy',
+    icon: 'gavel',
     tint: 'bg-secondary-container text-on-secondary-container',
   },
 ]

@@ -7,10 +7,10 @@ describe('FaqCategorySidebar', () => {
   it('renders the "all" tile plus every FAQ category', () => {
     renderWithIntl(<FaqCategorySidebar active="all" onChange={vi.fn()} />)
     expect(screen.getByRole('button', { name: 'Tất cả' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Tài khoản & Dữ liệu' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Trắc nghiệm Personal Color' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Phòng thử đồ ảo (Fitting Room)' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Tài khoản & Dữ liệu' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Tư vấn Stylist & Mua sắm' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Chính sách' })).toBeInTheDocument()
   })
 
   it('marks the active category as pressed', () => {
@@ -25,7 +25,7 @@ describe('FaqCategorySidebar', () => {
   it('calls onChange with the clicked category id', () => {
     const onChange = vi.fn()
     renderWithIntl(<FaqCategorySidebar active="all" onChange={onChange} />)
-    fireEvent.click(screen.getByRole('button', { name: 'Tài khoản & Dữ liệu' }))
-    expect(onChange).toHaveBeenCalledWith('account')
+    fireEvent.click(screen.getByRole('button', { name: 'Chính sách' }))
+    expect(onChange).toHaveBeenCalledWith('policy')
   })
 })

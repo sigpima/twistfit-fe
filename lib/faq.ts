@@ -1,5 +1,5 @@
-export type FaqCategory = 'personal-color' | 'fitting-room' | 'account' | 'stylist'
-export const FAQ_CATEGORIES: FaqCategory[] = ['personal-color', 'fitting-room', 'account', 'stylist']
+export type FaqCategory = 'account' | 'personal-color' | 'fitting-room' | 'policy'
+export const FAQ_CATEGORIES: FaqCategory[] = ['account', 'personal-color', 'fitting-room', 'policy']
 
 export type FaqHighlightIcon =
   | 'palette'

@@ -9,13 +9,13 @@ import { FAQ_CATEGORIES, FAQ_HIGHLIGHT_ICONS, type FaqCategory, type FaqHighligh
 const inputClass =
   'w-full rounded-xl bg-surface px-4 py-3 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none'
 
-type FaqCategoryTranslationKey = 'personalColor' | 'fittingRoom' | 'account' | 'stylist'
+type FaqCategoryTranslationKey = 'account' | 'personalColor' | 'fittingRoom' | 'policy'
 
 const CATEGORY_LABEL_KEYS: Record<FaqCategory, FaqCategoryTranslationKey> = {
+  account: 'account',
   'personal-color': 'personalColor',
   'fitting-room': 'fittingRoom',
-  account: 'account',
-  stylist: 'stylist',
+  policy: 'policy',
 }
 
 export default function FaqForm({ initialItem }: { initialItem?: FaqItem }) {

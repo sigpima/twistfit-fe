@@ -3,10 +3,10 @@
 import { useTranslations } from 'next-intl'
 
 const SUGGESTED_TAGS = [
-  { key: 'light', value: 'ánh sáng' },
+  { key: 'otp', value: 'OTP' },
   { key: 'security', value: 'bảo mật' },
-  { key: 'tryOn', value: 'thử đồ ảo' },
-  { key: 'exportPdf', value: 'xuất pdf' },
+  { key: 'outfitAi', value: 'phối đồ' },
+  { key: 'deleteAccount', value: 'xóa tài khoản' },
 ] as const
 
 type FaqSearchBarProps = {

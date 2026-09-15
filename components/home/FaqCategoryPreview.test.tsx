@@ -7,6 +7,10 @@ describe('FaqCategoryPreview', () => {
   it('renders exactly the four FAQ category tiles, each linking to the FAQ page', () => {
     renderWithIntl(<FaqCategoryPreview />)
 
+    expect(screen.getByRole('link', { name: /Tài khoản & Dữ liệu/ })).toHaveAttribute(
+      'href',
+      '/faq?category=account'
+    )
     expect(screen.getByRole('link', { name: /Trắc nghiệm Personal Color/ })).toHaveAttribute(
       'href',
       '/faq?category=personal-color'
@@ -15,14 +19,7 @@ describe('FaqCategoryPreview', () => {
       'href',
       '/faq?category=fitting-room'
     )
-    expect(screen.getByRole('link', { name: /Tài khoản & Dữ liệu/ })).toHaveAttribute(
-      'href',
-      '/faq?category=account'
-    )
-    expect(screen.getByRole('link', { name: /Tư vấn Stylist & Mua sắm/ })).toHaveAttribute(
-      'href',
-      '/faq?category=stylist'
-    )
+    expect(screen.getByRole('link', { name: /Chính sách/ })).toHaveAttribute('href', '/faq?category=policy')
   })
 
   it('renders a link to view all FAQ questions', () => {
