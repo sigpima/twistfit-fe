@@ -10,23 +10,48 @@ describe('quizResultStorage', () => {
     expect(getAnonymousQuizResult()).toBeNull()
   })
 
-  it('saves and reads back the season', () => {
-    saveAnonymousQuizResult('autumn')
+  it('saves and reads back the full result', () => {
+    saveAnonymousQuizResult({
+      subSeason: 'true-winter',
+      parentSeason: 'winter',
+      hueResult: 'cool',
+      valueResult: 'medium',
+      chromaResult: 'neutral',
+    })
     const result = getAnonymousQuizResult()
-    expect(result?.season).toBe('autumn')
+    expect(result?.subSeason).toBe('true-winter')
+    expect(result?.parentSeason).toBe('winter')
   })
 
   it('includes a createdAt timestamp', () => {
-    saveAnonymousQuizResult('spring')
+    saveAnonymousQuizResult({
+      subSeason: 'true-spring',
+      parentSeason: 'spring',
+      hueResult: 'warm',
+      valueResult: 'medium',
+      chromaResult: 'neutral',
+    })
     const result = getAnonymousQuizResult()
     expect(typeof result?.createdAt).toBe('string')
-    expect(Number.isNaN(Date.parse(result!.createdAt))).toBe(false)
+    expect(Number.isNaN(Date.parse(result!.createdAt!))).toBe(false)
   })
 
   it('overwrites a previously saved result', () => {
-    saveAnonymousQuizResult('spring')
-    saveAnonymousQuizResult('winter')
-    expect(getAnonymousQuizResult()?.season).toBe('winter')
+    saveAnonymousQuizResult({
+      subSeason: 'true-spring',
+      parentSeason: 'spring',
+      hueResult: 'warm',
+      valueResult: 'medium',
+      chromaResult: 'neutral',
+    })
+    saveAnonymousQuizResult({
+      subSeason: 'true-winter',
+      parentSeason: 'winter',
+      hueResult: 'cool',
+      valueResult: 'medium',
+      chromaResult: 'neutral',
+    })
+    expect(getAnonymousQuizResult()?.subSeason).toBe('true-winter')
   })
 
   it('returns null when the stored value is corrupted JSON', () => {
