@@ -9,13 +9,21 @@ import { getAnonymousQuizResult } from '@/lib/quizResultStorage'
 import ColorProfileCard from '@/components/personal-color/ColorProfileCard'
 import ColorInsights from '@/components/personal-color/ColorInsights'
 import AnonymousResultBanner from '@/components/personal-color/AnonymousResultBanner'
+import type { AxisValue, SubSeason } from '@/lib/db'
 
-type ResultState = 'loading' | 'empty' | 'found'
+type LoadedResult = {
+  subSeason: SubSeason
+  hueResult: AxisValue
+  valueResult: AxisValue
+  chromaResult: AxisValue
+}
+
+type ResultState = { status: 'loading' } | { status: 'empty' } | { status: 'found'; result: LoadedResult }
 
 export default function ResultPage() {
   const t = useTranslations('PersonalColor.Result.Page')
   const { user, isHydrated } = useAuth()
-  const [state, setState] = useState<ResultState>('loading')
+  const [state, setState] = useState<ResultState>({ status: 'loading' })
 
   useEffect(() => {
     if (!isHydrated) return
@@ -26,15 +34,16 @@ export default function ResultPage() {
         const response = await apiFetch('/quiz-attempts/me')
         if (cancelled) return
         if (response.ok) {
-          const data = (await response.json()) as { season: string } | null
+          const data = (await response.json()) as LoadedResult | null
           if (data) {
-            setState('found')
+            setState({ status: 'found', result: data })
             return
           }
         }
       }
       if (!cancelled) {
-        setState(getAnonymousQuizResult() ? 'found' : 'empty')
+        const anonymous = getAnonymousQuizResult()
+        setState(anonymous ? { status: 'found', result: anonymous } : { status: 'empty' })
       }
     }
 
@@ -76,10 +85,10 @@ export default function ResultPage() {
           </div>
         </div>
       </div>
-      {state === 'loading' && (
+      {state.status === 'loading' && (
         <p className="text-center text-sm text-[#304461]/70">{t('loadingResult')}</p>
       )}
-      {state === 'empty' && (
+      {state.status === 'empty' && (
         <div className="flex flex-col items-center gap-3 rounded-3xl border border-[#7b89ba]/15 bg-white p-10 text-center shadow-sm">
           <h2 className="text-lg font-bold text-[#304461]">{t('emptyStateTitle')}</h2>
           <p className="max-w-md text-sm text-[#304461]/75">{t('emptyStateBody')}</p>
@@ -91,11 +100,11 @@ export default function ResultPage() {
           </Link>
         </div>
       )}
-      {state === 'found' && (
+      {state.status === 'found' && (
         <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-12 lg:gap-8">
           {!user && <AnonymousResultBanner />}
-          <ColorProfileCard />
-          <ColorInsights />
+          <ColorProfileCard result={state.result} />
+          <ColorInsights subSeason={state.result.subSeason} />
         </div>
       )}
     </main>

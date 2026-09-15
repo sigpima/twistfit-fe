@@ -29,6 +29,14 @@ function renderResultPage() {
   )
 }
 
+const AUTUMN_RESULT = {
+  subSeason: 'true-autumn' as const,
+  parentSeason: 'autumn' as const,
+  hueResult: 'warm' as const,
+  valueResult: 'medium' as const,
+  chromaResult: 'muted' as const,
+}
+
 describe('ResultPage', () => {
   afterEach(() => {
     vi.unstubAllGlobals()
@@ -63,10 +71,10 @@ describe('ResultPage', () => {
 
   it('shows the result and the anonymous sign-up banner when a guest has a session result', async () => {
     setStoredUser(null)
-    saveAnonymousQuizResult('autumn')
+    saveAnonymousQuizResult(AUTUMN_RESULT)
     renderResultPage()
     await waitFor(() =>
-      expect(screen.getByRole('heading', { level: 3, name: 'Mùa Đông (Winter)' })).toBeInTheDocument()
+      expect(screen.getByRole('heading', { level: 3, name: 'Thu Thuần (True Autumn)' })).toBeInTheDocument()
     )
     expect(screen.getByText('Lưu lại kết quả của bạn!')).toBeInTheDocument()
   })
@@ -75,11 +83,11 @@ describe('ResultPage', () => {
     setStoredUser({ name: 'Test', email: 'user@twistfit.vn', role: 'user' })
     vi.stubGlobal(
       'fetch',
-      vi.fn().mockResolvedValue(jsonResponse({ id: 1, season: 'winter', userId: 1, createdAt: '2026-01-01' }))
+      vi.fn().mockResolvedValue(jsonResponse({ id: 1, ...AUTUMN_RESULT, userId: 1, createdAt: '2026-01-01' }))
     )
     renderResultPage()
     await waitFor(() =>
-      expect(screen.getByRole('heading', { level: 3, name: 'Mùa Đông (Winter)' })).toBeInTheDocument()
+      expect(screen.getByRole('heading', { level: 3, name: 'Thu Thuần (True Autumn)' })).toBeInTheDocument()
     )
     expect(screen.queryByText('Lưu lại kết quả của bạn!')).not.toBeInTheDocument()
   })
@@ -95,11 +103,11 @@ describe('ResultPage', () => {
 
   it('falls back to the session result when logged in but the backend request fails', async () => {
     setStoredUser({ name: 'Test', email: 'user@twistfit.vn', role: 'user' })
-    saveAnonymousQuizResult('spring')
+    saveAnonymousQuizResult(AUTUMN_RESULT)
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(null, { ok: false, status: 500 })))
     renderResultPage()
     await waitFor(() =>
-      expect(screen.getByRole('heading', { level: 3, name: 'Mùa Đông (Winter)' })).toBeInTheDocument()
+      expect(screen.getByRole('heading', { level: 3, name: 'Thu Thuần (True Autumn)' })).toBeInTheDocument()
     )
   })
 })

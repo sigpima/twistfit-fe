@@ -1,48 +1,30 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { SEASON_PROFILES } from '@/lib/seasonProfiles'
+import type { AxisValue, SubSeason } from '@/lib/db'
 
-const PALETTE_SWATCHES = [
-  { hex: '#FAFAFA', key: 'pureWhite' },
-  { hex: '#F0F2F5', key: 'icyOffWhite' },
-  { hex: '#C8CCD3', key: 'lightCoolGray' },
-  { hex: '#8E95A5', key: 'mediumSlate' },
-  { hex: '#6C7280', key: 'charcoalMedium' },
-  { hex: '#505763', key: 'deepCharcoal' },
-  { hex: '#B8C0D4', key: 'icyBlueGray' },
-  { hex: '#BEA9BA', key: 'mutedLavender' },
-  { hex: '#C991A5', key: 'coolRose' },
-  { hex: '#FFD1DC', key: 'icePink' },
-  { hex: '#F4A7BB', key: 'blushRose' },
-  { hex: '#E06C9F', key: 'hotRose' },
-  { hex: '#C43372', key: 'magenta' },
-  { hex: '#A61C5D', key: 'deepRaspberry' },
-  { hex: '#7B194B', key: 'bordeauxWine' },
-  { hex: '#592651', key: 'richAubergine' },
-  { hex: '#3F2B63', key: 'deepViolet' },
-  { hex: '#291749', key: 'nightPurple' },
-  { hex: '#3572C6', key: 'electricBlue' },
-  { hex: '#78A6E8', key: 'skyIceBlue' },
-  { hex: '#5D9CEC', key: 'cornflowerBlue' },
-  { hex: '#2B60B8', key: 'trueBlue' },
-  { hex: '#164B99', key: 'cobaltRoyal' },
-  { hex: '#0F3A78', key: 'deepNavy' },
-  { hex: '#1F8287', key: 'deepCyan' },
-  { hex: '#1C967A', key: 'tealBlue' },
-  { hex: '#276F5F', key: 'pineGreen' },
-  { hex: '#0C584E', key: 'darkEmerald' },
-  { hex: '#1A4736', key: 'forestGreen' },
-  { hex: '#255648', key: 'bottleGreen' },
-  { hex: '#346B55', key: 'coolJade' },
-  { hex: '#425C51', key: 'spruceSlate' },
-  { hex: '#134958', key: 'petrolTeal' },
-  { hex: '#0A3245', key: 'deepTeal' },
-  { hex: '#0A1F3B', key: 'midnightBlue' },
-  { hex: '#111622', key: 'pureOnyxBlack' },
-] as const
+const AXIS_VALUE_LABELS: Record<AxisValue, string> = {
+  warm: 'Ấm',
+  cool: 'Lạnh',
+  neutral: 'Trung tính',
+  dark: 'Sẫm',
+  light: 'Sáng',
+  medium: 'Trung bình',
+  bright: 'Tươi sáng',
+  muted: 'Trầm',
+}
 
-export default function ColorProfileCard() {
+export type ProfileCardResult = {
+  subSeason: SubSeason
+  hueResult: AxisValue
+  valueResult: AxisValue
+  chromaResult: AxisValue
+}
+
+export default function ColorProfileCard({ result }: { result: ProfileCardResult }) {
   const t = useTranslations('PersonalColor.Result.ProfileCard')
+  const profile = SEASON_PROFILES[result.subSeason]
 
   return (
     <section aria-labelledby="primary-analysis-title" className="flex flex-col gap-6 lg:col-span-7">
@@ -68,13 +50,10 @@ export default function ColorProfileCard() {
                 <span className="material-symbols-outlined text-[24px]">ac_unit</span>
               </div>
               <div>
-                <h3 className="text-2xl font-bold tracking-tight text-[#304461]">{t('seasonTitle')}</h3>
-                <p className="text-xs font-medium tracking-wide text-[#7b89ba]">{t('seasonTagline')}</p>
+                <h3 className="text-2xl font-bold tracking-tight text-[#304461]">{profile.displayName}</h3>
               </div>
             </div>
-            <p className="mb-5 text-xs leading-relaxed text-[#304461]/80 sm:text-[13px]">
-              {t.rich('description', { strong: (chunks) => <strong className="font-semibold text-[#304461]">{chunks}</strong> })}
-            </p>
+            <p className="mb-5 text-xs leading-relaxed text-[#304461]/80 sm:text-[13px]">{profile.description}</p>
           </div>
           <div className="border-t border-[#7b89ba]/15 pt-4">
             <h4 className="mb-2.5 text-center text-[11px] font-bold uppercase tracking-wider text-[#304461] md:text-left">
@@ -82,19 +61,16 @@ export default function ColorProfileCard() {
             </h4>
             <div className="grid grid-cols-3 gap-2">
               <div className="flex flex-col items-center rounded-xl border border-[#7b89ba]/10 bg-[#eef4fa]/60 p-2 text-center">
-                <div className="mb-1.5 h-7 w-7 rounded-full border-2 border-white bg-[#F5E6DA] shadow-xs" />
-                <span className="text-[10px] text-[#304461]/70">{t('brightnessLabel')}</span>
-                <span className="text-xs font-bold text-[#304461]">{t('brightnessValue')}</span>
+                <span className="text-[10px] text-[#304461]/70">{t('hueLabel')}</span>
+                <span className="text-xs font-bold text-[#304461]">{AXIS_VALUE_LABELS[result.hueResult]}</span>
               </div>
               <div className="flex flex-col items-center rounded-xl border border-[#7b89ba]/10 bg-[#eef4fa]/60 p-2 text-center">
-                <div className="mb-1.5 h-7 w-7 rounded-full border-2 border-white bg-[#8EAFDA] shadow-xs" />
-                <span className="text-[10px] text-[#304461]/70">{t('toneLabel')}</span>
-                <span className="text-xs font-bold text-[#4a89dc]">{t('toneValue')}</span>
+                <span className="text-[10px] text-[#304461]/70">{t('valueLabel')}</span>
+                <span className="text-xs font-bold text-[#4a89dc]">{AXIS_VALUE_LABELS[result.valueResult]}</span>
               </div>
               <div className="flex flex-col items-center rounded-xl border border-[#7b89ba]/10 bg-[#eef4fa]/60 p-2 text-center">
-                <div className="mb-1.5 h-7 w-7 rounded-full border-2 border-white bg-[#E57EA7] shadow-xs" />
-                <span className="text-[10px] text-[#304461]/70">{t('vividnessLabel')}</span>
-                <span className="text-xs font-bold text-[#D84B85]">{t('vividnessValue')}</span>
+                <span className="text-[10px] text-[#304461]/70">{t('chromaLabel')}</span>
+                <span className="text-xs font-bold text-[#D84B85]">{AXIS_VALUE_LABELS[result.chromaResult]}</span>
               </div>
             </div>
           </div>
@@ -110,13 +86,12 @@ export default function ColorProfileCard() {
             {t('idealPaletteBadge')}
           </span>
         </div>
-        <div className="grid grid-cols-9 place-items-center gap-2 py-2 sm:gap-3">
-          {PALETTE_SWATCHES.map((swatch) => (
+        <div className="grid grid-cols-6 place-items-center gap-2 py-2 sm:gap-3">
+          {profile.paletteHex.map((hex) => (
             <div
-              key={swatch.hex}
-              title={t(`swatches.${swatch.key}`)}
-              className="h-7 w-7 cursor-pointer rounded-full border border-black/10 transition-transform hover:scale-[1.18] sm:h-9 sm:w-9"
-              style={{ backgroundColor: swatch.hex }}
+              key={hex}
+              className="h-9 w-9 cursor-pointer rounded-full border border-black/10 transition-transform hover:scale-[1.18]"
+              style={{ backgroundColor: hex }}
             />
           ))}
         </div>
