@@ -322,7 +322,10 @@
       "loading": "Đang tải...",
       "emptyState": "Chưa có bài viết nào trong chuyên mục này.",
       "likesLabel": "lượt thích",
-      "commentsLabel": "bình luận"
+      "commentsLabel": "bình luận",
+      "newPostLink": "Đăng bài mới",
+      "myPostsLink": "Bài của tôi",
+      "savedLink": "Đã lưu"
     },
     "Detail": {
       "backLink": "← Quay lại Diễn đàn",
@@ -548,7 +551,7 @@
             },
             "save": {
               "title": "Lưu giữ outfit tâm đắc",
-              "body": "Tạo các bộ sưu tập riêng và lưu lại những bài đăng ấn tượng để mở ra tham khảo bất cứ khi nào cần lên đồ."
+              "body": "Lưu lại những bài đăng ấn tượng để mở ra tham khảo bất cứ khi nào cần lên đồ."
             }
           }
         }
