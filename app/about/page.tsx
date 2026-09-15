@@ -1,6 +1,7 @@
 import AboutHero from '@/components/about/AboutHero'
-import MissionVisionGrid from '@/components/about/MissionVisionGrid'
 import StorySection from '@/components/about/StorySection'
+import BrandMeaningSection from '@/components/about/BrandMeaningSection'
+import MissionVisionGrid from '@/components/about/MissionVisionGrid'
 import TeamGrid from '@/components/about/TeamGrid'
 import AboutCtaBanner from '@/components/about/AboutCtaBanner'
 import { apiFetch } from '@/lib/apiClient'
@@ -13,8 +14,9 @@ export default async function AboutPage() {
   return (
     <main className="w-full bg-surface">
       <AboutHero />
-      <MissionVisionGrid />
       <StorySection />
+      <BrandMeaningSection />
+      <MissionVisionGrid />
       <TeamGrid members={members} />
       <AboutCtaBanner />
     </main>
