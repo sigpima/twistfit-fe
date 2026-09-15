@@ -430,12 +430,15 @@
   },
   "Home": {
     "Hero": {
-      "versionBadge": "Phiên bản nâng cấp TwistFit AI 2026",
-      "heading": "Khám Phá Bản Sắc Riêng Cùng <highlight>Personal Color</highlight> & Phối Đồ Thông Minh",
-      "subheading": "Mỗi người là một bảng màu độc bản. TwistFit giúp bạn thấu hiểu sắc độ của chính mình, mở khóa phong cách ăn mặc thời thượng và tự tin tỏa sáng mỗi ngày.",
+      "tagline": "A LITTLE TWIST, A BETTER FIT",
+      "heading": "“Vặn nhẹ góc nhìn, tủ đồ hóa xinh, tự tin vừa vặn.”",
+      "benefits": {
+        "outfitTransform": "Nhìn tủ đồ qua một lăng kính hoàn toàn mới; thử hình dung mọi món đồ cũ đều được biến hóa thành outfit thời thượng chỉ trong vài giây.",
+        "personalColor": "Hiểu rõ sắc da và những gam màu thực sự tôn vinh bạn; mua sắm thông minh hơn, mặc đẹp lâu bền hơn.",
+        "community": "Lướt diễn đàn, trao đổi mẹo phối và cùng bạn bè nâng cấp phong cách mỗi ngày. Cạn kiệt ý tưởng lên đồ? Không bao giờ."
+      },
       "ctaPrimary": "Kiểm Tra Màu Sắc (Camera QR)",
       "ctaSecondary": "Bắt Đầu Phối Đồ Ngay",
-      "iconMarkAlt": "Icon TwistFit",
       "avatarInitials": {
         "one": "LĐ",
         "two": "MN",
@@ -443,24 +446,7 @@
         "more": "+98k"
       },
       "rating": "4.9/5",
-      "ratingCaption": "Hơn 120.000 lượt phân tích màu sắc chuẩn xác",
-      "phoneMock": {
-        "resultTitle": "Kết Quả Personal Color",
-        "resultSubtitle": "Nhận diện bằng AI Camera",
-        "coldToneBadge": "Cold Tone",
-        "modelImageAlt": "Chân dung minh hoạ kết quả Personal Color mùa Đông",
-        "seasonLabel": "Mùa Phù Hợp",
-        "seasonValue": "Mùa Đông (Winter)",
-        "paletteHeading": "Bảng màu tôn da nhất",
-        "paletteCount": "12 sắc thái",
-        "itemDress": "Đầm Dạ Hội",
-        "itemLipstick": "Son Berry Cold",
-        "itemAccessory": "Bạc Platinum"
-      },
-      "accuracyBadge": {
-        "title": "Độ chính xác 98.4%",
-        "subtitle": "Phân giải sắc tố da 3D"
-      }
+      "ratingCaption": "Hơn 120.000 lượt phân tích màu sắc chuẩn xác"
     },
     "FeatureShowcase": {
       "badgePill": "Hệ Sinh Thái Thời Trang Cá Nhân Hoá",

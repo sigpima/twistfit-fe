@@ -11,7 +11,7 @@ describe('HomePage', () => {
         <HomePage />
       </QrModalProvider>
     )
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Khám Phá Bản Sắc Riêng Cùng/)
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Vặn nhẹ góc nhìn/)
   })
 
   it('opens the QR modal from the hero CTA', () => {

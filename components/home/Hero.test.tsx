@@ -11,7 +11,18 @@ describe('Hero', () => {
         <Hero />
       </QrModalProvider>
     )
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Khám Phá Bản Sắc Riêng Cùng/)
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Vặn nhẹ góc nhìn/)
+  })
+
+  it('renders the three benefit bullets', () => {
+    renderWithIntl(
+      <QrModalProvider>
+        <Hero />
+      </QrModalProvider>
+    )
+    expect(screen.getByText(/Nhìn tủ đồ qua một lăng kính hoàn toàn mới/)).toBeInTheDocument()
+    expect(screen.getByText(/Hiểu rõ sắc da và những gam màu/)).toBeInTheDocument()
+    expect(screen.getByText(/Lướt diễn đàn, trao đổi mẹo phối/)).toBeInTheDocument()
   })
 
   it('opens the QR modal when the camera CTA is clicked', () => {
