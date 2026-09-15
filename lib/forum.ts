@@ -27,6 +27,7 @@ export type ForumPost = {
   likeCount: number
   likedByMe: boolean
   commentCount: number
+  bookmarkedByMe: boolean
   createdAt: string
   updatedAt: string
 }

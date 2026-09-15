@@ -347,6 +347,12 @@
       "deleteButton": "Xóa bình luận",
       "emptyState": "Chưa có bình luận nào."
     },
+    "Bookmark": {
+      "saveButton": "Lưu",
+      "savedButton": "Đã lưu",
+      "saveAriaLabel": "Lưu bài viết",
+      "savedAriaLabel": "Bỏ lưu bài viết"
+    },
     "Moderation": {
       "title": "Kiểm duyệt Diễn đàn",
       "pendingTitle": "Bài chờ duyệt",

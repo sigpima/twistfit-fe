@@ -17,6 +17,7 @@ const POSTS: ForumPost[] = [
     likeCount: 3,
     likedByMe: false,
     commentCount: 2,
+    bookmarkedByMe: false,
     createdAt: '2026-01-01',
     updatedAt: '2026-01-01',
   },
@@ -51,6 +52,32 @@ describe('ForumPostList', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => [] }))
     renderWithIntl(<ForumPostList />)
     await waitFor(() => expect(screen.getByText('Chưa có bài viết nào trong chuyên mục này.')).toBeInTheDocument())
+  })
+
+  it('toggles the bookmark button', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((url: string, init?: RequestInit) => {
+        if (init?.method === 'POST') {
+          return Promise.resolve({ ok: true, json: async () => ({ bookmarked: true }) })
+        }
+        return Promise.resolve({ ok: true, json: async () => POSTS })
+      })
+    )
+    renderWithIntl(<ForumPostList />)
+    await waitFor(() => expect(screen.getByText('Bài công khai')).toBeInTheDocument())
+
+    const saveButton = screen.getByRole('button', { name: 'Lưu bài viết' })
+    expect(saveButton).toHaveAttribute('aria-pressed', 'false')
+    fireEvent.click(saveButton)
+
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: 'Bỏ lưu bài viết' })).toHaveAttribute('aria-pressed', 'true')
+    )
+    expect(fetch).toHaveBeenCalledWith(
+      '/forum/posts/1/bookmark',
+      expect.objectContaining({ method: 'POST', credentials: 'include' })
+    )
   })
 
   it('shows the thumbnail, author, and counts for a post', async () => {
