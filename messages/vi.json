@@ -452,6 +452,66 @@
       "badgePill": "Hệ Sinh Thái Thời Trang Cá Nhân Hoá",
       "heading": "Ba Bước Đột Phá Nâng Tầm Phong Cách",
       "subheading": "Từ phân tích sinh trắc quang phổ đến trải nghiệm thử đồ ảo và kết nối hội những tín đồ mặc đẹp cùng hệ sắc tố.",
+      "features": {
+        "colorTest": {
+          "title": "Màu sắc cá nhân",
+          "cta": "Kiểm Tra Ngay",
+          "steps": {
+            "quiz": {
+              "title": "Khám phá sắc độ qua bài kiểm tra nhanh.",
+              "body": "Trả lời 10 câu hỏi ngắn gọn để hệ thống bước đầu phân tích sắc tố tự nhiên, tông da và độ tương phản trên khuôn mặt bạn."
+            },
+            "result": {
+              "title": "Mở khóa cẩm nang màu sắc cá nhân.",
+              "body": "Nhận kết quả phân tích chuyên sâu gồm nhóm mùa đặc trưng, palette màu chuẩn, các chỉ số màu sắc và gợi ý ứng dụng thực tế (trang phục, makeup, phụ kiện,...)"
+            },
+            "ar": {
+              "title": "Kiểm chứng trực quan cùng công nghệ AR.",
+              "body": "Bật camera ướm thử trực tiếp các dải màu thuộc nhóm mùa đó lên gương mặt để thấy rõ ngũ quan bừng sáng và tự tin kiểm tra độ tương thích ngay tức thì."
+            }
+          }
+        },
+        "outfit": {
+          "title": "Phối đồ",
+          "cta": "Bắt Đầu Phối Đồ Ngay",
+          "steps": {
+            "digitizeCloset": {
+              "title": "Số hóa tủ đồ chỉ trong tích tắc",
+              "body": "Tải lên từng món đồ bạn có. Hệ thống sẽ tự động nhận diện và phân loại ngăn nắp vào tủ đồ ảo của bạn."
+            },
+            "setPreferences": {
+              "title": "Thiết lập gu và nhu cầu riêng",
+              "body": "Lựa chọn dịp diện đồ, phong cách yêu thích hoặc mix-match chuẩn bảng màu cá nhân. Muốn đổi gió? Hãy bật tính năng gợi ý thêm item mới từ bên ngoài."
+            },
+            "chooseModel": {
+              "title": "Chọn mẫu và dáng pose theo ý thích",
+              "body": "Chọn người mẫu sẵn có cùng dáng đứng phù hợp nhất để dễ dàng hình dung tổng thể bộ trang phục khi mặc lên người."
+            },
+            "getOutfit": {
+              "title": "Nhận ngay outfit hoàn chỉnh",
+              "body": "Chiêm ngưỡng set đồ được AI phối sẵn chuẩn chỉnh theo từng đường nét, sẵn sàng để bạn tự tin diện ra ngoài."
+            }
+          }
+        },
+        "community": {
+          "title": "Diễn đàn",
+          "cta": "Khám Phá Diễn Đàn",
+          "steps": {
+            "share": {
+              "title": "Chia sẻ phong cách cá nhân",
+              "body": "Đăng tải outfit thường ngày với hình ảnh sắc nét và caption chia sẻ câu chuyện, ý tưởng phối đồ của riêng bạn."
+            },
+            "connect": {
+              "title": "Kết nối và lan tỏa cảm hứng",
+              "body": "Tương tác trực tiếp với cộng đồng mê thời trang qua từng lượt thả tim yêu thích và những dòng bình luận rôm rả."
+            },
+            "save": {
+              "title": "Lưu giữ outfit tâm đắc",
+              "body": "Tạo các bộ sưu tập riêng và lưu lại những bài đăng ấn tượng để mở ra tham khảo bất cứ khi nào cần lên đồ."
+            }
+          }
+        }
+      },
       "tabs": {
         "outfit": "Phối Đồ Thông Minh",
         "colorTest": "Personal Color Test",
