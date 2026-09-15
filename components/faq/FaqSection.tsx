@@ -28,6 +28,26 @@ export default function FaqSection({
     })
   }, [items, activeCategory, searchQuery])
 
+  function relatedItemsFor(item: FaqItem) {
+    return items
+      .filter(
+        (other) => other.id !== item.id && other.categories.some((category) => item.categories.includes(category))
+      )
+      .slice(0, 3)
+      .map((other) => ({ id: other.id, question: other.question }))
+  }
+
+  function handleSelectRelated(id: number) {
+    setSearchQuery('')
+    setActiveCategory('all')
+    setOpenItemId(id)
+    requestAnimationFrame(() => {
+      const target = document.getElementById(`faq-question-${id}`)
+      target?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      target?.focus()
+    })
+  }
+
   return (
     <>
       <section className="relative w-full overflow-hidden bg-surface px-margin-desktop py-space-xl">
@@ -64,6 +84,9 @@ export default function FaqSection({
                     number={String(index + 1).padStart(2, '0')}
                     isOpen={openItemId === item.id}
                     onToggle={(id) => setOpenItemId((current) => (current === id ? null : id))}
+                    relatedItems={relatedItemsFor(item)}
+                    relatedHeading={t('relatedQuestionsHeading')}
+                    onSelectRelated={handleSelectRelated}
                   />
                 ))}
               </div>

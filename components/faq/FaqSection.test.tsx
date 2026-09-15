@@ -27,6 +27,20 @@ const ITEMS: FaqItem[] = [
   },
 ]
 
+const ITEMS_WITH_RELATED: FaqItem[] = [
+  ...ITEMS,
+  {
+    id: 3,
+    categories: ['personal-color'],
+    question: 'Một câu hỏi khác về Personal Color?',
+    answerMarkdown: 'Câu trả lời thứ ba.',
+    highlightIcon: null,
+    highlightText: null,
+    createdAt: '2026-01-01',
+    updatedAt: '2026-01-01',
+  },
+]
+
 describe('FaqSection', () => {
   it('renders every question passed in', () => {
     renderWithIntl(<FaqSection items={ITEMS} />)
@@ -67,5 +81,22 @@ describe('FaqSection', () => {
     )
     expect(screen.getByText(/Tính năng Thử Đồ Ảo/)).toBeInTheDocument()
     expect(screen.queryByText(/Personal Color Test trên TwistFit hoạt động/)).not.toBeInTheDocument()
+  })
+
+  it('shows related questions sharing a category under an open answer', () => {
+    renderWithIntl(<FaqSection items={ITEMS_WITH_RELATED} />)
+    fireEvent.click(screen.getByText(/Personal Color Test trên TwistFit hoạt động/))
+    expect(screen.getByRole('button', { name: 'Một câu hỏi khác về Personal Color?' })).toBeInTheDocument()
+  })
+
+  it('clicking a related question clears the search box, resets the category, and opens it', () => {
+    renderWithIntl(<FaqSection items={ITEMS_WITH_RELATED} initialCategory="personal-color" />)
+    fireEvent.change(screen.getByPlaceholderText(/Tìm kiếm thắc mắc/), { target: { value: 'hoạt động' } })
+    fireEvent.click(screen.getByText(/Personal Color Test trên TwistFit hoạt động/))
+    fireEvent.click(screen.getByRole('button', { name: 'Một câu hỏi khác về Personal Color?' }))
+
+    expect(screen.getByPlaceholderText(/Tìm kiếm thắc mắc/)).toHaveValue('')
+    expect(screen.getByRole('button', { name: 'Tất cả' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByText('Câu trả lời thứ ba.')).toBeInTheDocument()
   })
 })

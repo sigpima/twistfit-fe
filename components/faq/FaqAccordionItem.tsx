@@ -1,18 +1,31 @@
 import type { FaqItem } from '@/lib/faq'
 import { renderMarkdown } from '@/lib/markdown'
+import FaqRelatedQuestions from './FaqRelatedQuestions'
 
 type FaqAccordionItemProps = {
   item: FaqItem
   number: string
   isOpen: boolean
   onToggle: (id: number) => void
+  relatedItems?: { id: number; question: string }[]
+  relatedHeading?: string
+  onSelectRelated?: (id: number) => void
 }
 
-export default function FaqAccordionItem({ item, number, isOpen, onToggle }: FaqAccordionItemProps) {
+export default function FaqAccordionItem({
+  item,
+  number,
+  isOpen,
+  onToggle,
+  relatedItems = [],
+  relatedHeading = '',
+  onSelectRelated = () => {},
+}: FaqAccordionItemProps) {
   return (
     <div className="rounded-xl bg-surface-container-lowest shadow-sm transition-all duration-300">
       <button
         type="button"
+        id={`faq-question-${item.id}`}
         aria-expanded={isOpen}
         onClick={() => onToggle(item.id)}
         className="group flex w-full items-center justify-between p-space-lg text-left"
@@ -46,6 +59,7 @@ export default function FaqAccordionItem({ item, number, isOpen, onToggle }: Faq
                 <span>{item.highlightText}</span>
               </div>
             )}
+            <FaqRelatedQuestions heading={relatedHeading} items={relatedItems} onSelect={onSelectRelated} />
           </div>
         </div>
       )}

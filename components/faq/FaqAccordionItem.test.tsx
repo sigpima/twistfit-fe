@@ -45,4 +45,26 @@ describe('FaqAccordionItem', () => {
     fireEvent.click(screen.getByRole('button'))
     expect(onToggle).toHaveBeenCalledWith(1)
   })
+
+  it('renders related questions when open and passed some, and forwards the selected id', () => {
+    const onSelectRelated = vi.fn()
+    render(
+      <FaqAccordionItem
+        item={ITEM}
+        number="01"
+        isOpen={true}
+        onToggle={vi.fn()}
+        relatedItems={[{ id: 2, question: 'Câu hỏi liên quan?' }]}
+        relatedHeading="Câu hỏi liên quan"
+        onSelectRelated={onSelectRelated}
+      />
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Câu hỏi liên quan?' }))
+    expect(onSelectRelated).toHaveBeenCalledWith(2)
+  })
+
+  it('carries an id on its toggle button matching the item id', () => {
+    render(<FaqAccordionItem item={ITEM} number="01" isOpen={false} onToggle={vi.fn()} />)
+    expect(document.getElementById('faq-question-1')).toBe(screen.getByRole('button'))
+  })
 })
