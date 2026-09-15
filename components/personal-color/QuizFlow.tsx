@@ -4,39 +4,64 @@ import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { apiFetch } from '@/lib/apiClient'
-import type { QuizQuestion, Season } from '@/lib/db'
-import { computeSeasonResult } from '@/lib/computeSeasonResult'
+import type { QuizQuestion } from '@/lib/db'
 import { saveAnonymousQuizResult } from '@/lib/quizResultStorage'
+
+type ScoredResult = {
+  subSeason: string
+  parentSeason: string
+  hueResult: string
+  valueResult: string
+  chromaResult: string
+}
 
 export default function QuizFlow({ questions }: { questions: QuizQuestion[] }) {
   const t = useTranslations('PersonalColor.Quiz')
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(0)
-  const [answers, setAnswers] = useState<(Season | null)[]>(() => Array(questions.length).fill(null))
+  const [answers, setAnswers] = useState<Record<number, number>>({})
+  const [submitError, setSubmitError] = useState(false)
 
   const totalSteps = questions.length
   const question = questions[currentStep]
-  const selectedSeason = answers[currentStep]
+  const selectedOptionId = answers[question.id] ?? null
   const isLastStep = currentStep === totalSteps - 1
 
-  function selectOption(season: Season) {
-    setAnswers((prev) => prev.map((value, index) => (index === currentStep ? season : value)))
+  function selectOption(optionId: number) {
+    setAnswers((prev) => ({ ...prev, [question.id]: optionId }))
   }
 
-  function handleAdvance() {
-    if (isLastStep) {
-      const finalAnswers = answers.filter((value): value is Season => value !== null)
-      const season = computeSeasonResult(finalAnswers)
-      saveAnonymousQuizResult(season)
-      void apiFetch('/quiz-attempts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ season }),
-      }).catch(() => {})
-      router.push('/personal-color/result')
+  async function handleAdvance() {
+    if (!isLastStep) {
+      setCurrentStep((step) => step + 1)
       return
     }
-    setCurrentStep((step) => step + 1)
+
+    setSubmitError(false)
+    const payload = {
+      answers: questions.map((q) => ({ questionId: q.id, optionId: answers[q.id] })),
+    }
+
+    const response = await apiFetch('/quiz-attempts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+
+    if (!response.ok) {
+      setSubmitError(true)
+      return
+    }
+
+    const result = (await response.json()) as ScoredResult
+    saveAnonymousQuizResult({
+      subSeason: result.subSeason as never,
+      parentSeason: result.parentSeason as never,
+      hueResult: result.hueResult as never,
+      valueResult: result.valueResult as never,
+      chromaResult: result.chromaResult as never,
+    })
+    router.push('/personal-color/result')
   }
 
   return (
@@ -54,15 +79,23 @@ export default function QuizFlow({ questions }: { questions: QuizQuestion[] }) {
         </div>
       </div>
       <h2 className="text-headline-sm font-bold text-on-surface">{question.questionText}</h2>
+      {question.imageUrl && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={question.imageUrl}
+          alt={question.questionText}
+          className="mt-4 w-full rounded-2xl object-cover"
+        />
+      )}
       <div className="mt-5 space-y-3">
         {question.options.map((option) => {
-          const isSelected = selectedSeason === option.season
+          const isSelected = selectedOptionId === option.id
           return (
             <button
-              key={option.label}
+              key={option.id}
               type="button"
               data-quiz-option="true"
-              onClick={() => selectOption(option.season)}
+              onClick={() => selectOption(option.id)}
               className={`flex w-full items-center justify-between rounded-2xl border p-4 text-left text-body-md transition-colors ${
                 isSelected
                   ? 'border-primary bg-primary-fixed text-on-surface'
@@ -77,6 +110,9 @@ export default function QuizFlow({ questions }: { questions: QuizQuestion[] }) {
           )
         })}
       </div>
+      {submitError && (
+        <p className="mt-4 text-center text-body-sm text-error">{t('submitError')}</p>
+      )}
       <div className="mt-6 flex items-center justify-between">
         <button
           type="button"
@@ -89,7 +125,7 @@ export default function QuizFlow({ questions }: { questions: QuizQuestion[] }) {
         <button
           type="button"
           onClick={handleAdvance}
-          disabled={selectedSeason === null}
+          disabled={selectedOptionId === null}
           className="rounded-full bg-primary px-7 py-3 text-label-lg text-on-primary transition-all hover:bg-primary-container disabled:cursor-not-allowed disabled:opacity-40"
         >
           {isLastStep ? t('viewResultButton') : t('nextButton')}

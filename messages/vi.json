@@ -564,7 +564,8 @@
       "questionCounter": "Câu hỏi {current}/{total}",
       "backButton": "Quay lại",
       "nextButton": "Tiếp theo",
-      "viewResultButton": "Xem kết quả"
+      "viewResultButton": "Xem kết quả",
+      "submitError": "Không thể tính kết quả, vui lòng thử lại."
     },
     "Result": {
       "Page": {

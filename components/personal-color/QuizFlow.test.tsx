@@ -10,27 +10,36 @@ vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: pushMock }),
 }))
 
-function makeQuestion(id: number, text: string): QuizQuestion {
+function makeQuestion(id: number, axis: QuizQuestion['axis'], text: string, imageUrl: string | null = null): QuizQuestion {
+  const axisValues =
+    axis === 'hue' ? ['warm', 'cool', 'neutral'] : axis === 'value' ? ['dark', 'light', 'medium'] : ['bright', 'muted', 'neutral']
   return {
     id,
     questionText: text,
+    axis,
+    imageUrl,
     sortOrder: id,
-    options: [
-      { id: id * 10 + 1, label: `Lựa chọn ${id}.1`, season: 'spring', sortOrder: 0 },
-      { id: id * 10 + 2, label: `Lựa chọn ${id}.2`, season: 'summer', sortOrder: 1 },
-      { id: id * 10 + 3, label: `Lựa chọn ${id}.3`, season: 'autumn', sortOrder: 2 },
-      { id: id * 10 + 4, label: `Lựa chọn ${id}.4`, season: 'winter', sortOrder: 3 },
-    ],
+    options: axisValues.map((axisValue, index) => ({
+      id: id * 10 + index,
+      label: `Lựa chọn ${id}.${index + 1}`,
+      axisValue: axisValue as QuizQuestion['options'][number]['axisValue'],
+      sortOrder: index,
+    })),
   }
 }
 
-const QUESTIONS: QuizQuestion[] = [1, 2, 3, 4, 5].map((id) => makeQuestion(id, `Câu hỏi số ${id}?`))
+const QUESTIONS: QuizQuestion[] = [
+  makeQuestion(1, 'hue', 'Câu hỏi 1?', '/personal-color/quiz/wrist-veins.jpg'),
+  makeQuestion(2, 'hue', 'Câu hỏi 2?'),
+  makeQuestion(3, 'value', 'Câu hỏi 3?'),
+  makeQuestion(4, 'chroma', 'Câu hỏi 4?'),
+]
 
 function completeQuiz() {
-  for (let step = 0; step < 5; step++) {
+  for (let step = 0; step < QUESTIONS.length; step++) {
     const optionButtons = screen.getAllByRole('button').filter((btn) => btn.dataset.quizOption === 'true')
     fireEvent.click(optionButtons[0])
-    const isLast = step === 4
+    const isLast = step === QUESTIONS.length - 1
     const advanceButton = screen.getByRole('button', { name: isLast ? 'Xem kết quả' : 'Tiếp theo' })
     fireEvent.click(advanceButton)
   }
@@ -39,7 +48,19 @@ function completeQuiz() {
 describe('QuizFlow', () => {
   beforeEach(() => {
     pushMock.mockClear()
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({ id: 1 }) }))
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          subSeason: 'true-spring',
+          parentSeason: 'spring',
+          hueResult: 'warm',
+          valueResult: 'medium',
+          chromaResult: 'neutral',
+        }),
+      })
+    )
   })
 
   afterEach(() => {
@@ -47,28 +68,34 @@ describe('QuizFlow', () => {
     window.sessionStorage.clear()
   })
 
+  it('shows the illustrative image only for the question that has one', () => {
+    renderWithIntl(<QuizFlow questions={QUESTIONS} />)
+    expect(screen.getByAltText('Câu hỏi 1?')).toHaveAttribute('src', '/personal-color/quiz/wrist-veins.jpg')
+  })
+
   it('shows the first question with the Tiếp theo button disabled until an option is picked', () => {
     renderWithIntl(<QuizFlow questions={QUESTIONS} />)
-    expect(screen.getByText('Câu hỏi 1/5')).toBeInTheDocument()
+    expect(screen.getByText('Câu hỏi 1/4')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Tiếp theo' })).toBeDisabled()
   })
 
   it('enables Tiếp theo once an option is selected and advances to the next question', () => {
     renderWithIntl(<QuizFlow questions={QUESTIONS} />)
-    fireEvent.click(screen.getAllByRole('button', { name: /./ })[0])
+    const optionButtons = screen.getAllByRole('button').filter((btn) => btn.dataset.quizOption === 'true')
+    fireEvent.click(optionButtons[0])
     const nextButton = screen.getByRole('button', { name: 'Tiếp theo' })
     expect(nextButton).toBeEnabled()
     fireEvent.click(nextButton)
-    expect(screen.getByText('Câu hỏi 2/5')).toBeInTheDocument()
+    expect(screen.getByText('Câu hỏi 2/4')).toBeInTheDocument()
   })
 
-  it('shows "Xem kết quả" on the last question and navigates to the result page when finished', () => {
+  it('shows "Xem kết quả" on the last question and navigates to the result page once scored', async () => {
     renderWithIntl(<QuizFlow questions={QUESTIONS} />)
     completeQuiz()
-    expect(pushMock).toHaveBeenCalledWith('/personal-color/result')
+    await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/personal-color/result'))
   })
 
-  it('records the computed season via a fire-and-forget POST to /api/quiz-attempts', async () => {
+  it('POSTs all answers as {questionId, optionId} pairs', async () => {
     renderWithIntl(<QuizFlow questions={QUESTIONS} />)
     completeQuiz()
 
@@ -79,22 +106,24 @@ describe('QuizFlow', () => {
       )
     )
     const [, init] = (fetch as ReturnType<typeof vi.fn>).mock.calls[0]
-    const sentBody = JSON.parse(init.body as string) as { season: string }
-    expect(['spring', 'summer', 'autumn', 'winter']).toContain(sentBody.season)
+    const sentBody = JSON.parse(init.body as string) as { answers: { questionId: number; optionId: number }[] }
+    expect(sentBody.answers).toHaveLength(4)
+    expect(sentBody.answers[0]).toEqual({ questionId: 1, optionId: 10 })
   })
 
-  it('still navigates to the result page even if the tracking request fails', () => {
-    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('network down')))
+  it('saves the full computed result to sessionStorage before navigating', async () => {
     renderWithIntl(<QuizFlow questions={QUESTIONS} />)
     completeQuiz()
-    expect(pushMock).toHaveBeenCalledWith('/personal-color/result')
-  })
-
-  it('saves the computed season to sessionStorage before navigating, even if the request fails', () => {
-    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('network down')))
-    renderWithIntl(<QuizFlow questions={QUESTIONS} />)
-    completeQuiz()
+    await waitFor(() => expect(pushMock).toHaveBeenCalled())
     const stored = JSON.parse(window.sessionStorage.getItem('twistfit.quizResult') ?? 'null')
-    expect(stored?.season).toBe('spring')
+    expect(stored?.subSeason).toBe('true-spring')
+  })
+
+  it('shows an error and does not navigate if scoring fails', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 422, json: async () => ({}) }))
+    renderWithIntl(<QuizFlow questions={QUESTIONS} />)
+    completeQuiz()
+    await waitFor(() => expect(screen.getByText(/không thể/i)).toBeInTheDocument())
+    expect(pushMock).not.toHaveBeenCalled()
   })
 })
