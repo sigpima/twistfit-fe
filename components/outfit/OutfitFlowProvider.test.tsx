@@ -47,22 +47,14 @@ function TestConsumer() {
       <button
         onClick={() =>
           setSelectedModel({
-            id: 'kenji',
-            name: 'Kenji',
-            image: '/outfit/models/kenji.jpg',
-            dossierImage: '/outfit/models/kenji.jpg',
-            sideImage: null,
-            poseCount: 12,
-            tagline: 'Tokyo Street • Tối giản',
-            undertone: 'cool',
-            height: '1m78',
-            bodyShape: 'Chữ nhật',
-            waist: '78cm',
-            personalColor: 'Cool Winter',
+            id: 'male-4',
+            name: 'Mảnh khảnh',
+            image: '/outfit/models/male-4.jpg',
+            sideImage: '/outfit/models/male-4-side.jpg',
           })
         }
       >
-        select kenji
+        select male-4
       </button>
     </div>
   )
@@ -106,8 +98,8 @@ describe('OutfitFlowProvider', () => {
         <TestConsumer />
       </OutfitFlowProvider>
     )
-    fireEvent.click(screen.getByText('select kenji'))
-    expect(screen.getByText('Kenji')).toBeInTheDocument()
+    fireEvent.click(screen.getByText('select male-4'))
+    expect(screen.getByText('Mảnh khảnh')).toBeInTheDocument()
   })
 
   it('starts with the furthest step reached at 1', () => {

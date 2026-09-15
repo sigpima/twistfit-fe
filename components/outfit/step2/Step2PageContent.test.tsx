@@ -14,17 +14,17 @@ vi.mock('next/navigation', () => ({
 const MODELS: CatalogModel[] = [
   {
     id: 1,
-    name: 'Carmen',
-    image: '/outfit/models/carmen-card.jpg',
-    dossierImage: '/outfit/models/carmen-dossier.jpg',
-    sideImage: null,
-    poseCount: 15,
-    tagline: 'Tông da: Warm Neutral',
+    name: 'Mảnh mai',
+    image: '/outfit/models/female-1.jpg',
+    dossierImage: '/outfit/models/female-1.jpg',
+    sideImage: '/outfit/models/female-1-side.jpg',
+    poseCount: 2,
+    tagline: '—',
     undertone: 'neutral',
-    height: '1m65',
-    bodyShape: 'Đồng hồ cát',
-    waist: '64cm',
-    personalColor: 'Autumn Soft',
+    height: '—',
+    bodyShape: '—',
+    waist: '—',
+    personalColor: '—',
     createdAt: '2026-01-01',
     updatedAt: '2026-01-01',
   },
@@ -41,9 +41,7 @@ describe('Step2PageContent', () => {
         <Step2PageContent models={MODELS} />
       </OutfitFlowProvider>
     )
-    expect(
-      screen.getByRole('heading', { name: 'Bước 2: Chọn Người Mẫu Hoặc Tải Ảnh Cá Nhân' })
-    ).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Bước 2: Chọn Người Mẫu' })).toBeInTheDocument()
   })
 
   it('links back to step 1', () => {

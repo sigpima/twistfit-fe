@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import ModelCatalog from './ModelCatalog'
@@ -9,14 +9,14 @@ function makeModel(overrides: Partial<CatalogModel> & Pick<CatalogModel, 'id' | 
   return {
     image: `/outfit/models/${overrides.id}.jpg`,
     dossierImage: `/outfit/models/${overrides.id}.jpg`,
-    sideImage: null,
-    poseCount: 15,
-    tagline: 'Tagline',
+    sideImage: `/outfit/models/${overrides.id}-side.jpg`,
+    poseCount: 2,
+    tagline: '—',
     undertone: 'neutral',
-    height: '1m65',
-    bodyShape: 'Đồng hồ cát',
-    waist: '64cm',
-    personalColor: 'Autumn Soft',
+    height: '—',
+    bodyShape: '—',
+    waist: '—',
+    personalColor: '—',
     createdAt: '2026-01-01',
     updatedAt: '2026-01-01',
     ...overrides,
@@ -24,11 +24,9 @@ function makeModel(overrides: Partial<CatalogModel> & Pick<CatalogModel, 'id' | 
 }
 
 const MODELS: CatalogModel[] = [
-  makeModel({ id: 1, name: 'Carmen', undertone: 'neutral' }),
-  makeModel({ id: 2, name: 'Aisha', undertone: 'warm' }),
-  makeModel({ id: 3, name: 'Astrid', undertone: 'cool' }),
-  makeModel({ id: 4, name: 'Kenji', undertone: 'cool' }),
-  makeModel({ id: 5, name: 'Linh Đan', undertone: 'cool' }),
+  makeModel({ id: 1, name: 'Mảnh mai' }),
+  makeModel({ id: 2, name: 'Thể thao' }),
+  makeModel({ id: 5, name: 'Thư sinh' }),
 ]
 
 function SelectedModelName() {
@@ -37,59 +35,45 @@ function SelectedModelName() {
 }
 
 describe('ModelCatalog', () => {
-  beforeEach(() => {
-    vi.stubGlobal('URL', { ...URL, createObjectURL: vi.fn(() => 'blob:mock-model') })
-  })
-
-  afterEach(() => {
-    vi.unstubAllGlobals()
-  })
-
   it('renders every model passed in', () => {
     renderWithIntl(
       <OutfitFlowProvider>
         <ModelCatalog models={MODELS} />
       </OutfitFlowProvider>
     )
-    expect(screen.getByText('Kenji')).toBeInTheDocument()
-    expect(screen.getByText('Linh Đan')).toBeInTheDocument()
+    expect(screen.getByText('Mảnh mai')).toBeInTheDocument()
+    expect(screen.getByText('Thể thao')).toBeInTheDocument()
+    expect(screen.getByText('Thư sinh')).toBeInTheDocument()
   })
 
-  it('updates the shared selected model when a card is clicked', () => {
+  it('shows the front-facing image for each model', () => {
+    renderWithIntl(
+      <OutfitFlowProvider>
+        <ModelCatalog models={MODELS} />
+      </OutfitFlowProvider>
+    )
+    expect(screen.getByAltText('Mảnh mai')).toHaveAttribute('src', '/outfit/models/1.jpg')
+  })
+
+  it('updates the shared selected model when a card is clicked, including its side image', () => {
     renderWithIntl(
       <OutfitFlowProvider>
         <SelectedModelName />
         <ModelCatalog models={MODELS} />
       </OutfitFlowProvider>
     )
-    fireEvent.click(screen.getByText('Kenji'))
-    expect(screen.getByText('Đang xem: Kenji')).toBeInTheDocument()
+    fireEvent.click(screen.getByText('Thư sinh'))
+    expect(screen.getByText('Đang xem: Thư sinh')).toBeInTheDocument()
   })
 
-  it('filters the grid by undertone', () => {
+  it('marks the selected card', () => {
     renderWithIntl(
       <OutfitFlowProvider>
         <ModelCatalog models={MODELS} />
       </OutfitFlowProvider>
     )
-    fireEvent.click(screen.getByRole('button', { name: 'Cool' }))
-    expect(screen.getByText('Astrid')).toBeInTheDocument()
-    expect(screen.queryByText('Aisha')).not.toBeInTheDocument()
-
-    fireEvent.click(screen.getByRole('button', { name: 'Tất cả' }))
-    expect(screen.getByText('Aisha')).toBeInTheDocument()
-  })
-
-  it('creates and selects a custom model from an uploaded photo', () => {
-    renderWithIntl(
-      <OutfitFlowProvider>
-        <SelectedModelName />
-        <ModelCatalog models={MODELS} />
-      </OutfitFlowProvider>
-    )
-    const file = new File(['fake'], 'me.png', { type: 'image/png' })
-    const input = screen.getByLabelText(/Tải ảnh mặt \/ dáng/) as HTMLInputElement
-    fireEvent.change(input, { target: { files: [file] } })
-    expect(screen.getByText('Đang xem: Ảnh của bạn')).toBeInTheDocument()
+    const card = screen.getByText('Thể thao').closest('button') as HTMLButtonElement
+    fireEvent.click(card)
+    expect(card).toHaveAttribute('aria-pressed', 'true')
   })
 })

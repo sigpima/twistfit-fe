@@ -1,23 +1,15 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import SelectedGarmentBanner from './SelectedGarmentBanner'
 import ModelCatalog from './ModelCatalog'
-import ModelDossier from './ModelDossier'
 import type { CatalogModel } from '@/lib/modelCatalog'
-
-const MODE_TABS = [
-  { id: 'our-models', icon: 'group', key: 'ourModels' },
-  { id: 'user-model', icon: 'add_a_photo', key: 'userModel' },
-] as const
 
 export default function Step2PageContent({ models }: { models: CatalogModel[] }) {
   const t = useTranslations('Outfit.Step2.Page')
   const router = useRouter()
-  const [activeMode, setActiveMode] = useState<(typeof MODE_TABS)[number]['id']>('our-models')
 
   function handleContinue() {
     router.push('/outfit/step-3')
@@ -39,33 +31,8 @@ export default function Step2PageContent({ models }: { models: CatalogModel[] })
         </div>
       </section>
       <section className="w-full bg-background px-margin-desktop py-space-xl">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-gutter-desktop lg:grid-cols-12">
-          <div className="flex flex-col gap-space-lg lg:col-span-8">
-            <div className="flex items-center gap-space-xs rounded-2xl bg-surface-container p-1.5">
-              {MODE_TABS.map((tab) => (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setActiveMode(tab.id)}
-                  className={`flex min-w-0 flex-1 flex-col items-center justify-center gap-space-xs rounded-xl px-space-sm py-3 text-label-md transition-all sm:flex-row sm:gap-space-sm sm:px-space-md sm:text-title-md ${
-                    activeMode === tab.id
-                      ? 'bg-surface-container-lowest font-semibold text-primary shadow-sm'
-                      : 'font-medium text-on-surface-variant hover:text-on-surface'
-                  }`}
-                >
-                  <span className="material-symbols-outlined text-[20px]">{tab.icon}</span>
-                  <span className="text-center">{t(`modeTabs.${tab.key}.label`)}</span>
-                  <span className="rounded-full bg-primary-fixed px-2 py-0.5 text-label-sm text-on-primary-fixed">
-                    {t(`modeTabs.${tab.key}.badge`)}
-                  </span>
-                </button>
-              ))}
-            </div>
-            <ModelCatalog models={models} />
-          </div>
-          <div className="lg:col-span-4">
-            <ModelDossier />
-          </div>
+        <div className="mx-auto max-w-7xl">
+          <ModelCatalog models={models} />
         </div>
       </section>
       <section className="sticky bottom-0 z-40 w-full bg-surface-container-lowest/95 px-margin-desktop py-space-md shadow-xl backdrop-blur-md">

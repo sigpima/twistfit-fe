@@ -769,50 +769,10 @@
     "Step2": {
       "Page": {
         "eyebrow": "Cá nhân hoá hình tượng",
-        "heading": "Bước 2: Chọn Người Mẫu Hoặc Tải Ảnh Cá Nhân",
-        "subheading": "Lựa chọn vóc dáng và thần thái phù hợp nhất để công nghệ AI render trang phục chuẩn xác theo tỷ lệ cơ thể thực tế.",
-        "modeTabs": {
-          "ourModels": { "label": "Mẫu của chúng tôi (TwistFit AI)", "badge": "18 Sẵn có" },
-          "userModel": { "label": "Mẫu của bạn (Tải ảnh cá nhân)", "badge": "Chính chủ" }
-        },
+        "heading": "Bước 2: Chọn Người Mẫu",
+        "subheading": "Chọn người mẫu phù hợp để AI dựng trang phục lên đúng vóc dáng.",
         "backButton": "Quay lại Bước 1 (Chọn đồ)",
         "continueButton": "Xác nhận người mẫu & Tiếp tục sang Bước 3"
-      },
-      "ModelCatalog": {
-        "filterHeading": "Bộ lọc đặc tính cơ thể",
-        "undertoneLabel": "Tông da (Undertone)",
-        "undertoneFilters": {
-          "all": "Tất cả",
-          "warm": "Warm",
-          "cool": "Cool",
-          "neutral": "Neutral"
-        },
-        "listHeading": "Danh sách AI Model thế hệ mới ({count} lựa chọn)",
-        "clickHint": "Click vào ảnh để đổi người mẫu",
-        "uploadTitle": "Tải ảnh mặt / dáng",
-        "uploadHint": "Chụp thẳng hoặc tải từ thư viện ảnh",
-        "uploadBadge": "Tuỳ biến 100%",
-        "selectedBadge": "Đang chọn",
-        "poseCount": "{count} dáng",
-        "customUploadName": "Ảnh của bạn",
-        "customUploadTagline": "Ảnh cá nhân tự tải lên"
-      },
-      "ModelDossier": {
-        "title": "Hồ sơ người mẫu",
-        "matchBadge": "Đã khớp 98% dáng áo",
-        "nameWithOfficialSuffix": "{name} (TwistFit Official)",
-        "poseTagline": "{count} tư thế tự nhiên • {tagline}",
-        "heightLabel": "Chiều cao chuẩn",
-        "heightRatioNote": "Tỷ lệ chân 5:5",
-        "bodyShapeLabel": "Dáng người",
-        "waistNote": "Vòng eo {waist}",
-        "undertoneLabel": "Tông da thực tế",
-        "personalColorLabel": "Personal Color",
-        "hdModeLabel": "Chế độ chất lượng cao HD",
-        "hdModeDetail": "Chi tiết nếp vải & sợi tơ voan",
-        "renderTimeLabel": "Thời gian render dự kiến:",
-        "renderTimeValue": "~15 giây • 1 credit",
-        "autoAdjustNote": "TwistFit AI tự động căn chỉnh số đo áo theo tỷ lệ vai và ngực của người mẫu {name}."
       },
       "SelectedGarmentBanner": {
         "selectedLabel": "Trang phục đã chọn (B1)",

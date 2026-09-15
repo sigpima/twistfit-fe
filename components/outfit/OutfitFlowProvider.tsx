@@ -22,36 +22,18 @@ export const DEFAULT_GARMENT: Garment = {
   type: 'Top',
 }
 
-export type Undertone = 'warm' | 'cool' | 'neutral'
-
 export type Model = {
   id: string
   name: string
   image: string
-  dossierImage: string
   sideImage: string | null
-  poseCount: number
-  tagline: string
-  undertone: Undertone
-  height: string
-  bodyShape: string
-  waist: string
-  personalColor: string
 }
 
 export const FALLBACK_MODEL: Model = {
-  id: 'carmen',
-  name: 'Carmen',
-  image: '/outfit/models/carmen-card.jpg',
-  dossierImage: '/outfit/models/carmen-dossier.jpg',
-  sideImage: null,
-  poseCount: 15,
-  tagline: 'Tông da: Warm Neutral',
-  undertone: 'neutral',
-  height: '1m65',
-  bodyShape: 'Đồng hồ cát',
-  waist: '64cm',
-  personalColor: 'Autumn Soft',
+  id: 'female-1',
+  name: 'Mảnh mai',
+  image: '/outfit/models/female-1.jpg',
+  sideImage: '/outfit/models/female-1-side.jpg',
 }
 
 export type Pose = {
