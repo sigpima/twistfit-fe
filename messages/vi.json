@@ -887,24 +887,6 @@
     "ProcessSteps": {
       "kicker": "Quy Trình Tinh Gọn",
       "heading": "Chu trình 3 bước tái định hình phong cách cá nhân",
-      "step1": {
-        "title": "Chụp hoặc Tải Ảnh Khuôn Mặt",
-        "body": "AI Camera tự động kích hoạt tính năng tự cân bằng trắng thông minh, nhận diện góc nghiêng và độ phơi sáng nhằm bóc tách chuẩn xác ba chỉ số cốt lõi: <bold>Sắc tướng (Hue)</bold>, <bold>Độ sáng (Value)</bold> và <bold>Độ tinh rực rỡ (Chroma)</bold>.",
-        "tipTitle": "Mẹo chụp ảnh từ chuyên gia:",
-        "tipBody": "Để mặt mộc không trang điểm, đứng trước nguồn ánh sáng tự nhiên ban ngày (cạnh cửa sổ) và nhìn thẳng trực diện ống kính với khoảng cách 40-50cm.",
-        "checkAutoBg": "Tự động tách nền",
-        "checkPrivacy": "Bảo mật gương mặt 100%",
-        "calibratorLabel": "AI Camera Calibrator",
-        "calibratorSpec": "ISO 100 • 5600K Daylight",
-        "imageAlt": "AI Camera Calibrator quét gương mặt xác định sắc tố da",
-        "lockLabel": "Khóa 1,024 điểm quang phổ",
-        "undertoneLabel": "Undertone",
-        "undertoneValue": "Cool/Lạnh (84%)",
-        "contrastLabel": "Độ tương phản",
-        "contrastValue": "Cao (Clear)",
-        "pigmentLabel": "Sắc tố mắt/tóc",
-        "pigmentValue": "Đen khói thuần"
-      },
       "step2": {
         "title": "Phân Tích AI & Báo Cáo 12 Mùa Sắc Thái",
         "body": "Thuật toán độc quyền đối chiếu đặc tính gương mặt với hệ thống phân loại 12 Season Color Palette quốc tế (Xuân Rạng Rỡ, Hè Dịu Dàng, Thu Ấm Áp, Đông Sắc Nét...). Bạn nhận được một cẩm nang màu toàn diện và độc bản.",

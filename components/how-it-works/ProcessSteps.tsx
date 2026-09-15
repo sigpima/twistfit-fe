@@ -1,6 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import AssessmentMethodology from './AssessmentMethodology'
 
 const PALETTE_SWATCHES: {
   hex: string
@@ -33,83 +34,7 @@ export default function ProcessSteps() {
         <h2 className="mt-1 text-headline-lg font-bold text-on-surface">{t('heading')}</h2>
       </div>
 
-      {/* Step 1 */}
-      <div className="mb-20 grid grid-cols-1 items-center gap-space-xl lg:grid-cols-12">
-        <div className="flex flex-col justify-center lg:col-span-6">
-          <div className="mb-space-md flex h-12 w-12 items-center justify-center rounded-2xl bg-secondary-container text-headline-sm font-bold text-on-secondary-fixed shadow-sm">
-            01
-          </div>
-          <h3 className="text-headline-md font-bold text-on-surface">{t('step1.title')}</h3>
-          <p className="mt-space-sm text-body-lg leading-relaxed text-on-surface-variant">
-            {t.rich('step1.body', { bold: (chunks) => <strong>{chunks}</strong> })}
-          </p>
-          <div className="mt-space-lg flex items-start gap-space-sm rounded-xl bg-surface-container-low p-space-md shadow-sm">
-            <span className="material-symbols-outlined mt-0.5 text-[24px] text-secondary">
-              tips_and_updates
-            </span>
-            <div>
-              <h4 className="text-label-lg font-semibold text-on-surface">{t('step1.tipTitle')}</h4>
-              <p className="mt-0.5 text-body-md text-on-surface-variant">{t('step1.tipBody')}</p>
-            </div>
-          </div>
-          <div className="mt-space-md flex items-center gap-space-md text-label-md text-on-surface-variant">
-            <span className="inline-flex items-center gap-1">
-              <span className="material-symbols-outlined text-[18px] text-primary">check_circle</span>{' '}
-              {t('step1.checkAutoBg')}
-            </span>
-            <span className="inline-flex items-center gap-1">
-              <span className="material-symbols-outlined text-[18px] text-primary">check_circle</span>{' '}
-              {t('step1.checkPrivacy')}
-            </span>
-          </div>
-        </div>
-        <div className="lg:col-span-6">
-          <div className="relative overflow-hidden rounded-3xl bg-surface-container-lowest p-space-lg shadow-xl">
-            <div className="mb-space-md flex items-center justify-between">
-              <span className="flex items-center gap-1.5 text-label-md font-semibold text-on-surface">
-                <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-emerald-500" />
-                {t('step1.calibratorLabel')}
-              </span>
-              <span className="rounded-full bg-surface-container px-2.5 py-1 text-label-sm text-primary">
-                {t('step1.calibratorSpec')}
-              </span>
-            </div>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-surface-container-low">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/how-it-works/camera-calibrator.jpg"
-                alt={t('step1.imageAlt')}
-                className="h-full w-full object-cover"
-              />
-              <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                <div className="flex h-60 w-48 items-center justify-center rounded-full border-2 border-dashed border-secondary-container/80">
-                  <div className="h-4 w-4 animate-ping rounded-full bg-primary/40" />
-                </div>
-              </div>
-              <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-xl bg-surface-container-lowest/90 px-3 py-1.5 shadow-md backdrop-blur-md">
-                <span className="material-symbols-outlined text-[18px] text-primary">
-                  center_focus_strong
-                </span>
-                <span className="text-label-sm text-on-surface">{t('step1.lockLabel')}</span>
-              </div>
-            </div>
-            <div className="mt-space-md grid grid-cols-3 gap-space-sm">
-              <div className="rounded-xl bg-surface-container-low p-space-sm text-center">
-                <span className="block text-label-sm text-on-surface-variant">{t('step1.undertoneLabel')}</span>
-                <span className="text-label-lg font-bold text-primary">{t('step1.undertoneValue')}</span>
-              </div>
-              <div className="rounded-xl bg-surface-container-low p-space-sm text-center">
-                <span className="block text-label-sm text-on-surface-variant">{t('step1.contrastLabel')}</span>
-                <span className="text-label-lg font-bold text-secondary">{t('step1.contrastValue')}</span>
-              </div>
-              <div className="rounded-xl bg-surface-container-low p-space-sm text-center">
-                <span className="block text-label-sm text-on-surface-variant">{t('step1.pigmentLabel')}</span>
-                <span className="text-label-lg font-bold text-on-surface">{t('step1.pigmentValue')}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <AssessmentMethodology />
 
       {/* Step 2 */}
       <div className="mb-20 grid grid-cols-1 items-center gap-space-xl lg:grid-cols-12">
