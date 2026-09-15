@@ -817,6 +817,73 @@
         "instantResult": { "value": "30s", "label": "Kết quả ngay lập tức" }
       }
     },
+    "AssessmentMethodology": {
+      "title": "Đánh Giá Màu Sắc Cá Nhân",
+      "intro": "Bộ câu hỏi được chia thành 3 giai đoạn rõ rệt dựa trên 3 trục độc lập của Munsell, giao điểm của ba trục sẽ chỉ ra một trong 12 mùa.",
+      "phases": {
+        "hue": {
+          "tabLabel": "1. Hue",
+          "title": "Xác Định Nhiệt Độ Màu (Hue: Warm vs Cool)",
+          "intro": "Tìm ra màu nền ẩn bên dưới da (Undertone) thông qua các phản ứng quang học trên bề mặt và cơ chế biến đổi sinh học tự nhiên dưới ánh sáng.",
+          "methods": {
+            "veins": {
+              "title": "Tán xạ tĩnh mạch dưới ánh sáng tự nhiên",
+              "body": "Quan sát sự phản chiếu qua thành mạch để nhận diện sắc tố ẩn: ánh xanh tím (Cool undertone) hoặc ánh xanh lá (Warm undertone chịu ảnh hưởng từ carotenoid)."
+            },
+            "jewelry": {
+              "title": "Độ tương thích trang sức kim loại",
+              "body": "Kiểm tra độ hòa hợp sắc da khi tiếp xúc gần với ánh kim để đối chiếu phản ứng cùng gam màu ấm (vàng) hay gam màu lạnh (bạc/bạch kim)."
+            },
+            "fitzpatrick": {
+              "title": "Phản ứng sinh học da Fitzpatrick",
+              "body": "Đo lường mức độ nhạy cảm trước ánh nắng mặt trời giữa phản ứng ửng đỏ (hoạt động của hemoglobin) và dễ rám nắng (tăng sinh eumelanin)."
+            },
+            "drapery": {
+              "title": "Thử nghiệm Drapery sắc trắng",
+              "body": "Phân tách sắc tố qua hai sắc thái chuẩn: sắc trắng tinh (Pure White) kích hoạt undertone lạnh và sắc trắng kem/ngà (Ivory) làm rạng rỡ undertone ấm."
+            }
+          }
+        },
+        "value": {
+          "tabLabel": "2. Value",
+          "title": "Đo Lường Độ Sáng - Tối (Value: Light vs Deep)",
+          "intro": "Đo lường chiều sâu sắc tố tổng thể và định lượng độ chênh lệch sáng/tối giữa các vùng đặc trưng trên gương mặt ở trạng thái nguyên bản.",
+          "methods": {
+            "eyesHair": {
+              "title": "Chiều sâu sắc tố Mắt & Tóc tự nhiên",
+              "body": "Phân tích đặc điểm khuôn mặt (Facial feature analysis) ở trạng thái mộc nhằm xác định cấp độ giá trị sắc tố tổng thể thuộc nhóm Sáng (Light) hay Tối (Deep)."
+            },
+            "contrastLevel": {
+              "title": "Định lượng tương phản diện mạo (Contrast Level)",
+              "body": "Đo lường khoảng cách sắc độ giữa màu da, mắt và chân tóc để phân loại độ tương phản cao (High Contrast) hay tương phản thấp/đồng điệu (Low Contrast)."
+            },
+            "colorFormula": {
+              "title": "Định hướng công thức phối màu trang phục",
+              "body": "Chuyển hóa chỉ số tương phản khuôn mặt thành nguyên tắc chọn đồ: gợi ý cách phối màu đối lập rõ rệt hay phối màu đơn sắc/chuyển tông mượt mà (Tonal)."
+            }
+          }
+        },
+        "chroma": {
+          "tabLabel": "3. Chroma",
+          "title": "Độ Bão Hòa & Khóa Kết Quả (Chroma: Clear vs Muted)",
+          "intro": "Đánh giá mức độ tương thích với dải màu rực rỡ hay trầm khói, kết hợp dữ liệu kiểm chứng đa chiều để khóa chuẩn xác 1 trong 12 mùa sắc thái.",
+          "methods": {
+            "sparkleTest": {
+              "title": "Bài kiểm tra hiệu ứng lấp lánh (Sparkle Test)",
+              "body": "Xác định giới hạn sắc độ giúp gương mặt nổi bật: nhóm Soft cần độ đục nhẹ để tránh bị lấn át, nhóm Bright cần độ bão hòa cao để diện mạo không mờ nhạt."
+            },
+            "triangulation": {
+              "title": "Đối chiếu chéo trải nghiệm thực tế (Triangulation)",
+              "body": "Thu thập dữ liệu từ những nhóm màu trang phục từng giúp bạn nhận được nhiều lời khen nhất nhằm kiểm chứng độ chuẩn xác của các bước phân tích."
+            },
+            "lockResult": {
+              "title": "Khóa kết quả & Định vị mùa phụ (Sub-season)",
+              "body": "Tổng hợp giao điểm của 3 trục Munsell để đưa ra kết luận mùa cá nhân chính xác tuyệt đối kèm bộ cẩm nang màu sắc độc bản."
+            }
+          }
+        }
+      }
+    },
     "ProcessSteps": {
       "kicker": "Quy Trình Tinh Gọn",
       "heading": "Chu trình 3 bước tái định hình phong cách cá nhân",
