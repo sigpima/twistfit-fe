@@ -47,7 +47,10 @@ describe('UploadFlow', () => {
     await waitFor(() => expect(screen.getByText('Lưu vào tủ đồ')).toBeInTheDocument())
     expect(putMock).toHaveBeenCalledWith(
       'https://blob.example.com/upload?sig=abc',
-      expect.objectContaining({ method: 'PUT', headers: { 'x-ms-blob-type': 'BlockBlob' } })
+      expect.objectContaining({
+        method: 'PUT',
+        headers: { 'x-ms-blob-type': 'BlockBlob', 'x-ms-blob-content-type': 'image/png' },
+      })
     )
 
     fireEvent.click(screen.getByText('Lưu vào tủ đồ'))
