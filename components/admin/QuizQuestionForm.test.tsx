@@ -13,10 +13,12 @@ vi.mock('next/navigation', () => ({
 const EXISTING_QUESTION: QuizQuestion = {
   id: 9,
   questionText: 'Câu hỏi hiện có?',
+  axis: 'hue',
+  imageUrl: null,
   sortOrder: 0,
   options: [
-    { id: 1, label: 'Lựa chọn 1', season: 'spring', sortOrder: 0 },
-    { id: 2, label: 'Lựa chọn 2', season: 'summer', sortOrder: 1 },
+    { id: 1, label: 'Lựa chọn 1', axisValue: 'warm', sortOrder: 0 },
+    { id: 2, label: 'Lựa chọn 2', axisValue: 'cool', sortOrder: 1 },
   ],
 }
 
@@ -68,5 +70,26 @@ describe('QuizQuestionForm', () => {
 
     await waitFor(() => expect(screen.getByText('Có lỗi xảy ra, vui lòng thử lại.')).toBeInTheDocument())
     expect(pushMock).not.toHaveBeenCalled()
+  })
+
+  it("changing the axis resets each option to that axis's first valid value", () => {
+    renderWithIntl(<QuizQuestionForm />)
+    fireEvent.change(screen.getByLabelText('Trục'), { target: { value: 'value' } })
+    const axisValueSelects = screen.getAllByLabelText(/Giá trị trục/)
+    expect(axisValueSelects[0]).toHaveValue('dark')
+  })
+
+  it('renders the image URL field and includes it in the submitted body', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 201, json: async () => ({ id: 1 }) }))
+    renderWithIntl(<QuizQuestionForm />)
+    fireEvent.change(screen.getByLabelText('Nội dung câu hỏi'), { target: { value: 'Câu hỏi test?' } })
+    fireEvent.change(screen.getByLabelText('URL ảnh minh hoạ (không bắt buộc)'), {
+      target: { value: '/personal-color/quiz/wrist-veins.jpg' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: 'Tạo câu hỏi' }))
+    await waitFor(() => expect(fetch).toHaveBeenCalled())
+    const [, init] = (fetch as ReturnType<typeof vi.fn>).mock.calls[0]
+    const body = JSON.parse(init.body as string)
+    expect(body.imageUrl).toBe('/personal-color/quiz/wrist-veins.jpg')
   })
 })

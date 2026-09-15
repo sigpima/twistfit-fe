@@ -4,22 +4,50 @@ import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 import { apiFetch } from '@/lib/apiClient'
-import { SEASONS, type QuizQuestion, type Season } from '@/lib/db'
+import type { Axis, AxisValue, QuizQuestion } from '@/lib/db'
 
 const inputClass =
   'w-full rounded-xl bg-surface px-4 py-3 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none'
 
-type OptionDraft = { label: string; season: Season }
+const AXIS_OPTIONS: { value: Axis; label: string }[] = [
+  { value: 'hue', label: 'Nhiệt độ màu (Hue)' },
+  { value: 'value', label: 'Sắc độ (Value)' },
+  { value: 'chroma', label: 'Độ bão hoà (Chroma)' },
+]
+
+const AXIS_VALUE_OPTIONS: Record<Axis, { value: AxisValue; label: string }[]> = {
+  hue: [
+    { value: 'warm', label: 'Ấm (Warm)' },
+    { value: 'cool', label: 'Lạnh (Cool)' },
+    { value: 'neutral', label: 'Trung tính (Neutral)' },
+  ],
+  value: [
+    { value: 'dark', label: 'Sẫm (Dark)' },
+    { value: 'light', label: 'Sáng (Light)' },
+    { value: 'medium', label: 'Trung bình (Medium)' },
+  ],
+  chroma: [
+    { value: 'bright', label: 'Tươi sáng (Bright)' },
+    { value: 'muted', label: 'Trầm (Muted)' },
+    { value: 'neutral', label: 'Trung tính (Neutral)' },
+  ],
+}
+
+type OptionDraft = { label: string; axisValue: AxisValue }
+
+function initialAxis(initialQuestion?: QuizQuestion): Axis {
+  return initialQuestion?.axis ?? 'hue'
+}
 
 function initialOptions(initialQuestion?: QuizQuestion): OptionDraft[] {
   if (initialQuestion) {
-    return initialQuestion.options.map((option) => ({ label: option.label, season: option.season }))
+    return initialQuestion.options.map((option) => ({ label: option.label, axisValue: option.axisValue }))
   }
   return [
-    { label: '', season: 'spring' },
-    { label: '', season: 'summer' },
-    { label: '', season: 'autumn' },
-    { label: '', season: 'winter' },
+    { label: '', axisValue: 'warm' },
+    { label: '', axisValue: 'cool' },
+    { label: '', axisValue: 'neutral' },
+    { label: '', axisValue: 'warm' },
   ]
 }
 
@@ -29,16 +57,24 @@ export default function QuizQuestionForm({ initialQuestion }: { initialQuestion?
   const isEditing = Boolean(initialQuestion)
 
   const [questionText, setQuestionText] = useState(initialQuestion?.questionText ?? '')
+  const [axis, setAxis] = useState<Axis>(() => initialAxis(initialQuestion))
+  const [imageUrl, setImageUrl] = useState(initialQuestion?.imageUrl ?? '')
   const [options, setOptions] = useState<OptionDraft[]>(() => initialOptions(initialQuestion))
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [submitting, setSubmitting] = useState(false)
+
+  function handleAxisChange(nextAxis: Axis) {
+    setAxis(nextAxis)
+    const fallbackValue = AXIS_VALUE_OPTIONS[nextAxis][0].value
+    setOptions((current) => current.map((option) => ({ ...option, axisValue: fallbackValue })))
+  }
 
   function updateOption(index: number, patch: Partial<OptionDraft>) {
     setOptions((current) => current.map((option, i) => (i === index ? { ...option, ...patch } : option)))
   }
 
   function addOption() {
-    setOptions((current) => [...current, { label: '', season: 'spring' }])
+    setOptions((current) => [...current, { label: '', axisValue: AXIS_VALUE_OPTIONS[axis][0].value }])
   }
 
   function removeOption(index: number) {
@@ -52,6 +88,8 @@ export default function QuizQuestionForm({ initialQuestion }: { initialQuestion?
 
     const body = {
       questionText,
+      axis,
+      imageUrl: imageUrl.trim() || null,
       sortOrder: initialQuestion?.sortOrder ?? 0,
       options,
     }
@@ -96,6 +134,36 @@ export default function QuizQuestionForm({ initialQuestion }: { initialQuestion?
         {errors.questionText && <p className="text-label-sm text-error">{errors.questionText}</p>}
       </div>
 
+      <div className="space-y-1.5">
+        <label htmlFor="question-axis" className="text-label-md font-semibold text-on-surface">
+          {t('axisLabel')}
+        </label>
+        <select
+          id="question-axis"
+          value={axis}
+          onChange={(event) => handleAxisChange(event.target.value as Axis)}
+          className={inputClass}
+        >
+          {AXIS_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="space-y-1.5">
+        <label htmlFor="question-image-url" className="text-label-md font-semibold text-on-surface">
+          {t('imageUrlLabel')}
+        </label>
+        <input
+          id="question-image-url"
+          value={imageUrl}
+          onChange={(event) => setImageUrl(event.target.value)}
+          className={inputClass}
+        />
+      </div>
+
       <div className="space-y-3">
         {options.map((option, index) => (
           <div key={index} className="flex items-start gap-3">
@@ -113,19 +181,19 @@ export default function QuizQuestionForm({ initialQuestion }: { initialQuestion?
                 <p className="text-label-sm text-error">{errors[`options.${index}.label`]}</p>
               )}
             </div>
-            <div className="w-40 space-y-1.5">
-              <label htmlFor={`option-season-${index}`} className="text-label-md font-semibold text-on-surface">
-                {t('seasonLabel')}
+            <div className="w-48 space-y-1.5">
+              <label htmlFor={`option-axis-value-${index}`} className="text-label-md font-semibold text-on-surface">
+                {t('axisValueLabel')}
               </label>
               <select
-                id={`option-season-${index}`}
-                value={option.season}
-                onChange={(event) => updateOption(index, { season: event.target.value as Season })}
+                id={`option-axis-value-${index}`}
+                value={option.axisValue}
+                onChange={(event) => updateOption(index, { axisValue: event.target.value as AxisValue })}
                 className={inputClass}
               >
-                {SEASONS.map((season) => (
-                  <option key={season} value={season}>
-                    {t(`seasons.${season}`)}
+                {AXIS_VALUE_OPTIONS[axis].map((axisValueOption) => (
+                  <option key={axisValueOption.value} value={axisValueOption.value}>
+                    {axisValueOption.label}
                   </option>
                 ))}
               </select>

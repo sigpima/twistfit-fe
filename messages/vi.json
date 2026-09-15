@@ -80,19 +80,30 @@
     },
     "QuizForm": {
       "questionLabel": "Nội dung câu hỏi",
+      "axisLabel": "Trục",
+      "imageUrlLabel": "URL ảnh minh hoạ (không bắt buộc)",
       "optionLabel": "Lựa chọn",
-      "seasonLabel": "Mùa tương ứng",
+      "axisValueLabel": "Giá trị trục",
       "addOption": "Thêm lựa chọn",
       "removeOption": "Xóa lựa chọn",
       "submitCreate": "Tạo câu hỏi",
       "submitEdit": "Lưu thay đổi",
       "unauthorizedError": "Bạn cần đăng nhập với quyền quản trị.",
       "genericError": "Có lỗi xảy ra, vui lòng thử lại.",
-      "seasons": {
-        "spring": "Mùa Xuân",
-        "summer": "Mùa Hạ",
-        "autumn": "Mùa Thu",
-        "winter": "Mùa Đông"
+      "axes": {
+        "hue": "Nhiệt độ màu (Hue)",
+        "value": "Sắc độ (Value)",
+        "chroma": "Độ bão hoà (Chroma)"
+      },
+      "axisValues": {
+        "warm": "Ấm (Warm)",
+        "cool": "Lạnh (Cool)",
+        "neutral": "Trung tính (Neutral)",
+        "dark": "Sẫm (Dark)",
+        "light": "Sáng (Light)",
+        "medium": "Trung bình (Medium)",
+        "bright": "Tươi sáng (Bright)",
+        "muted": "Trầm (Muted)"
       }
     },
     "QuizList": {
