@@ -287,8 +287,12 @@
       "fields": {
         "title": "Tiêu đề",
         "category": "Chuyên mục",
-        "body": "Nội dung"
+        "body": "Nội dung",
+        "image": "Hình ảnh (không bắt buộc)"
       },
+      "imageUploading": "Đang tải ảnh lên...",
+      "imageUploadError": "Tải ảnh lên thất bại, vui lòng thử lại.",
+      "removeImageButton": "Xóa ảnh",
       "submitCreate": "Đăng bài",
       "submitEdit": "Lưu thay đổi",
       "unauthorizedError": "Bạn không có quyền thực hiện thao tác này.",

@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import { useState, type FormEvent } from 'react'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { apiFetch } from '@/lib/apiClient'
 import { FORUM_CATEGORIES, type ForumCategory, type ForumPost } from '@/lib/forum'
 
@@ -17,15 +17,49 @@ export default function ForumPostForm({ initialPost }: { initialPost?: ForumPost
   const [title, setTitle] = useState(initialPost?.title ?? '')
   const [category, setCategory] = useState<ForumCategory>(initialPost?.category ?? FORUM_CATEGORIES[0])
   const [body, setBody] = useState(initialPost?.body ?? '')
+  const [imageUrl, setImageUrl] = useState<string | null>(initialPost?.imageUrl ?? null)
+  const [uploadingImage, setUploadingImage] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [submitting, setSubmitting] = useState(false)
+
+  async function handleImageChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    setUploadingImage(true)
+    setErrors((current) => ({ ...current, image: '' }))
+
+    const uploadUrlResponse = await apiFetch('/forum/upload-url', { method: 'POST' })
+    if (!uploadUrlResponse.ok) {
+      setUploadingImage(false)
+      setErrors((current) => ({ ...current, image: t('PostForm.imageUploadError') }))
+      return
+    }
+    const { uploadUrl, imageUrl: resolvedUrl } = (await uploadUrlResponse.json()) as {
+      uploadUrl: string
+      blobPath: string
+      imageUrl: string
+    }
+
+    const putResponse = await fetch(uploadUrl, {
+      method: 'PUT',
+      headers: { 'x-ms-blob-type': 'BlockBlob', 'x-ms-blob-content-type': file.type },
+      body: file,
+    })
+    setUploadingImage(false)
+    if (!putResponse.ok) {
+      setErrors((current) => ({ ...current, image: t('PostForm.imageUploadError') }))
+      return
+    }
+    setImageUrl(resolvedUrl)
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setSubmitting(true)
     setErrors({})
 
-    const requestBody = { title, body, category }
+    const requestBody = { title, body, category, imageUrl }
 
     const response = await apiFetch(isEditing ? `/forum/posts/${initialPost!.id}` : '/forum/posts', {
       method: isEditing ? 'PUT' : 'POST',
@@ -94,6 +128,38 @@ export default function ForumPostForm({ initialPost }: { initialPost?: ForumPost
           className={inputClass}
         />
         {errors.body && <p className="text-label-sm text-error">{errors.body}</p>}
+      </div>
+
+      <div className="space-y-1.5">
+        <label htmlFor="forum-image" className="text-label-md font-semibold text-on-surface">
+          {t('PostForm.fields.image')}
+        </label>
+        {imageUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={imageUrl} alt="" className="h-40 w-40 rounded-xl object-cover" />
+        )}
+        <input
+          id="forum-image"
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          disabled={uploadingImage}
+        />
+        {uploadingImage && <p className="text-label-sm text-on-surface-variant">{t('PostForm.imageUploading')}</p>}
+        {imageUrl && !uploadingImage && (
+          <button
+            type="button"
+            onClick={() => setImageUrl(null)}
+            className="text-label-sm font-semibold text-error hover:underline"
+          >
+            {t('PostForm.removeImageButton')}
+          </button>
+        )}
+        {errors.image && (
+          <p role="alert" className="text-label-sm text-error">
+            {errors.image}
+          </p>
+        )}
       </div>
 
       {errors.form && <p className="text-label-sm text-error">{errors.form}</p>}
