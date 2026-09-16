@@ -52,7 +52,7 @@ describe('Header', () => {
   it('renders social media links', () => {
     renderHeader()
     expect(screen.getByRole('link', { name: 'Facebook' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Instagram' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Threads' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'TikTok' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Email' })).toBeInTheDocument()
   })
