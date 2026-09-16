@@ -43,3 +43,5 @@ next-env.d.ts
 
 # sqlite data
 data/*.db
+
+pm2.config.json
