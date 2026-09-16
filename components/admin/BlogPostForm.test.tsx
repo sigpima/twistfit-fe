@@ -49,7 +49,7 @@ describe('BlogPostForm', () => {
     expect(screen.getByLabelText('Đường dẫn (slug)')).toHaveValue('duong-dan-tuy-chinh')
   })
 
-  it('POSTs to /api/blog when creating and redirects to the list on success', async () => {
+  it('sets the cover image URL from the image picker and submits it', async () => {
     vi.stubGlobal(
       'fetch',
       vi.fn().mockResolvedValue({ ok: true, status: 201, json: async () => ({ id: 1 }) })
@@ -58,12 +58,23 @@ describe('BlogPostForm', () => {
     fireEvent.change(screen.getByLabelText('Tiêu đề'), { target: { value: 'Bài Mới' } })
     fireEvent.change(screen.getByLabelText('Mô tả ngắn'), { target: { value: 'Mô tả' } })
     fireEvent.change(screen.getByLabelText('Nội dung (Markdown)'), { target: { value: 'Nội dung' } })
-    fireEvent.change(screen.getByLabelText('Ảnh bìa (URL)'), { target: { value: '/blog/x.jpg' } })
     fireEvent.change(screen.getByLabelText('Ngày đăng'), { target: { value: '2026-02-01' } })
+
+    fireEvent.click(screen.getByRole('button', { name: 'Chọn ảnh bìa' }))
+    expect(screen.queryByLabelText('Mô tả ảnh (alt text)')).not.toBeInTheDocument()
+    fireEvent.change(screen.getByLabelText('Đường dẫn ảnh'), { target: { value: '/blog/x.jpg' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Chèn ảnh' }))
+
     fireEvent.click(screen.getByRole('button', { name: 'Tạo bài viết' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/blog'))
-    expect(fetch).toHaveBeenCalledWith('/blog', expect.objectContaining({ method: 'POST', credentials: 'include' }))
+    expect(fetch).toHaveBeenCalledWith(
+      '/blog',
+      expect.objectContaining({
+        method: 'POST',
+        body: expect.stringContaining('"coverImageUrl":"/blog/x.jpg"'),
+      })
+    )
   })
 
   it('pre-fills fields and PUTs to /api/blog/{id} when editing', async () => {
@@ -86,5 +97,45 @@ describe('BlogPostForm', () => {
 
     await waitFor(() => expect(screen.getByText('Có lỗi xảy ra, vui lòng thử lại.')).toBeInTheDocument())
     expect(pushMock).not.toHaveBeenCalled()
+  })
+
+  it('formats the selected content text as bold using the markdown toolbar', () => {
+    vi.stubGlobal('fetch', vi.fn())
+    renderWithIntl(<BlogPostForm />)
+    const textarea = screen.getByLabelText('Nội dung (Markdown)') as HTMLTextAreaElement
+    fireEvent.change(textarea, { target: { value: 'Xin chào' } })
+    textarea.focus()
+    textarea.setSelectionRange(0, 3)
+
+    fireEvent.click(screen.getByRole('button', { name: 'In đậm' }))
+
+    expect(textarea.value).toBe('**Xin** chào')
+  })
+
+  it('switches to the preview tab and renders the content as markdown', () => {
+    vi.stubGlobal('fetch', vi.fn())
+    renderWithIntl(<BlogPostForm />)
+    fireEvent.change(screen.getByLabelText('Nội dung (Markdown)'), { target: { value: '**đậm**' } })
+
+    fireEvent.click(screen.getByRole('button', { name: 'Xem trước' }))
+
+    expect(screen.queryByLabelText('Nội dung (Markdown)')).not.toBeInTheDocument()
+    expect(screen.getByText('đậm').tagName).toBe('STRONG')
+  })
+
+  it('inserts an image into the content via the toolbar image picker', () => {
+    vi.stubGlobal('fetch', vi.fn())
+    renderWithIntl(<BlogPostForm />)
+    const textarea = screen.getByLabelText('Nội dung (Markdown)') as HTMLTextAreaElement
+    fireEvent.change(textarea, { target: { value: 'Trước.Sau.' } })
+    textarea.focus()
+    textarea.setSelectionRange(6, 6)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Ảnh' }))
+    fireEvent.change(screen.getByLabelText('Đường dẫn ảnh'), { target: { value: 'https://example.com/a.jpg' } })
+    fireEvent.change(screen.getByLabelText('Mô tả ảnh (alt text)'), { target: { value: 'Mô tả ảnh' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Chèn ảnh' }))
+
+    expect(textarea.value).toBe('Trước.![Mô tả ảnh](https://example.com/a.jpg)Sau.')
   })
 })

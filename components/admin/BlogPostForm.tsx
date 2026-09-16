@@ -2,9 +2,13 @@
 
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
+import ImagePickerDialog from '@/components/admin/ImagePickerDialog'
+import MarkdownToolbar from '@/components/admin/MarkdownToolbar'
 import { apiFetch } from '@/lib/apiClient'
 import { BLOG_CATEGORIES, type BlogCategory, type BlogPost } from '@/lib/db'
+import { renderMarkdown } from '@/lib/markdown'
+import { insertImage } from '@/lib/markdownEditor'
 import { slugify } from '@/lib/slugify'
 
 const inputClass =
@@ -27,6 +31,10 @@ export default function BlogPostForm({ initialPost }: { initialPost?: BlogPost }
   const [publishedAt, setPublishedAt] = useState(initialPost?.publishedAt ?? '')
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [submitting, setSubmitting] = useState(false)
+  const [contentTab, setContentTab] = useState<'write' | 'preview'>('write')
+  const [coverDialogOpen, setCoverDialogOpen] = useState(false)
+  const [imageDialogOpen, setImageDialogOpen] = useState(false)
+  const contentTextareaRef = useRef<HTMLTextAreaElement>(null)
 
   function handleTitleChange(value: string) {
     setTitle(value)
@@ -119,30 +127,80 @@ export default function BlogPostForm({ initialPost }: { initialPost?: BlogPost }
       </div>
 
       <div className="space-y-1.5">
-        <label htmlFor="post-content" className="text-label-md font-semibold text-on-surface">
-          {t('fields.content')}
-        </label>
-        <textarea
-          id="post-content"
-          rows={10}
-          value={content}
-          onChange={(event) => setContent(event.target.value)}
-          className={inputClass}
-        />
+        <div className="flex items-center justify-between">
+          <label htmlFor="post-content" className="text-label-md font-semibold text-on-surface">
+            {t('fields.content')}
+          </label>
+          <div className="flex gap-1">
+            <button
+              type="button"
+              onClick={() => setContentTab('write')}
+              aria-pressed={contentTab === 'write'}
+              className="rounded-lg px-3 py-1 text-label-sm font-semibold text-on-surface-variant"
+            >
+              {t('tabWrite')}
+            </button>
+            <button
+              type="button"
+              onClick={() => setContentTab('preview')}
+              aria-pressed={contentTab === 'preview'}
+              className="rounded-lg px-3 py-1 text-label-sm font-semibold text-on-surface-variant"
+            >
+              {t('tabPreview')}
+            </button>
+          </div>
+        </div>
+        {contentTab === 'write' ? (
+          <>
+            <MarkdownToolbar
+              textareaRef={contentTextareaRef}
+              value={content}
+              onChange={setContent}
+              onRequestImage={() => setImageDialogOpen(true)}
+            />
+            <textarea
+              id="post-content"
+              ref={contentTextareaRef}
+              rows={10}
+              value={content}
+              onChange={(event) => setContent(event.target.value)}
+              className={inputClass}
+            />
+          </>
+        ) : (
+          <div
+            className="prose max-w-none rounded-xl bg-surface p-4 text-body-md text-on-surface"
+            dangerouslySetInnerHTML={{ __html: renderMarkdown(content) }}
+          />
+        )}
         {errors.content && <p className="text-label-sm text-error">{errors.content}</p>}
       </div>
 
+      <ImagePickerDialog
+        open={imageDialogOpen}
+        uploadUrlEndpoint="/blog/upload-url"
+        onCancel={() => setImageDialogOpen(false)}
+        onConfirm={({ url, alt }) => {
+          const cursor = contentTextareaRef.current?.selectionStart ?? content.length
+          setContent(insertImage(content, cursor, url, alt).text)
+          setImageDialogOpen(false)
+        }}
+      />
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="space-y-1.5">
-          <label htmlFor="post-cover-image" className="text-label-md font-semibold text-on-surface">
-            {t('fields.coverImageUrl')}
-          </label>
-          <input
-            id="post-cover-image"
-            value={coverImageUrl}
-            onChange={(event) => setCoverImageUrl(event.target.value)}
-            className={inputClass}
-          />
+          <span className="text-label-md font-semibold text-on-surface">{t('fields.coverImageUrl')}</span>
+          {coverImageUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={coverImageUrl} alt="" className="h-32 w-full rounded-xl object-cover" />
+          )}
+          <button
+            type="button"
+            onClick={() => setCoverDialogOpen(true)}
+            className="rounded-full bg-surface px-4 py-2 text-label-md font-semibold text-on-surface"
+          >
+            {t('coverImageButton')}
+          </button>
           {errors.coverImageUrl && <p className="text-label-sm text-error">{errors.coverImageUrl}</p>}
         </div>
 
@@ -165,6 +223,17 @@ export default function BlogPostForm({ initialPost }: { initialPost?: BlogPost }
           {errors.category && <p className="text-label-sm text-error">{errors.category}</p>}
         </div>
       </div>
+
+      <ImagePickerDialog
+        open={coverDialogOpen}
+        requireAlt={false}
+        uploadUrlEndpoint="/blog/upload-url"
+        onCancel={() => setCoverDialogOpen(false)}
+        onConfirm={({ url }) => {
+          setCoverImageUrl(url)
+          setCoverDialogOpen(false)
+        }}
+      />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="space-y-1.5">

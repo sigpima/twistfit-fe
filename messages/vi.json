@@ -42,18 +42,44 @@
     "forumCardDescription": "Duyệt bài đăng và xử lý báo cáo vi phạm từ người dùng.",
     "contactCardTitle": "Quản lý Hộp thư",
     "contactCardDescription": "Xem, đánh dấu đã đọc và xóa tin nhắn liên hệ từ khách.",
+    "MarkdownToolbar": {
+      "bold": "In đậm",
+      "italic": "In nghiêng",
+      "heading2": "Tiêu đề 2",
+      "heading3": "Tiêu đề 3",
+      "bulletList": "Danh sách gạch đầu dòng",
+      "numberedList": "Danh sách đánh số",
+      "blockquote": "Trích dẫn",
+      "inlineCode": "Mã (code)",
+      "link": "Chèn liên kết",
+      "image": "Ảnh"
+    },
+    "ImagePicker": {
+      "modeLink": "Dán link",
+      "modeUpload": "Tải ảnh lên",
+      "urlLabel": "Đường dẫn ảnh",
+      "altLabel": "Mô tả ảnh (alt text)",
+      "fileLabel": "Chọn tệp ảnh",
+      "uploadingLabel": "Đang tải ảnh lên...",
+      "uploadError": "Tải ảnh lên thất bại, vui lòng thử lại.",
+      "cancelButton": "Hủy",
+      "confirmButton": "Chèn ảnh"
+    },
     "BlogForm": {
       "fields": {
         "title": "Tiêu đề",
         "slug": "Đường dẫn (slug)",
         "excerpt": "Mô tả ngắn",
         "content": "Nội dung (Markdown)",
-        "coverImageUrl": "Ảnh bìa (URL)",
+        "coverImageUrl": "Ảnh bìa",
         "category": "Chuyên mục",
         "authorName": "Tác giả (không bắt buộc)",
         "publishedAt": "Ngày đăng",
         "isFeatured": "Đặt làm bài nổi bật"
       },
+      "coverImageButton": "Chọn ảnh bìa",
+      "tabWrite": "Soạn thảo",
+      "tabPreview": "Xem trước",
       "categories": {
         "personal-color": "Personal Color",
         "styling": "Phối đồ & Vóc dáng",
