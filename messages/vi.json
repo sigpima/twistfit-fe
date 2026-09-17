@@ -44,6 +44,19 @@
     "taxonomyCardDescription": "Quản lý các nhóm và giá trị thuộc tính (loại quần áo, dịp, phong cách) dùng khi phân loại tủ đồ.",
     "contactCardTitle": "Quản lý Hộp thư",
     "contactCardDescription": "Xem, đánh dấu đã đọc và xóa tin nhắn liên hệ từ khách.",
+    "RichTextToolbar": {
+      "heading2": "Tiêu đề 2",
+      "heading3": "Tiêu đề 3",
+      "bold": "In đậm",
+      "italic": "In nghiêng",
+      "bulletList": "Danh sách gạch đầu dòng",
+      "numberedList": "Danh sách đánh số",
+      "blockquote": "Trích dẫn",
+      "inlineCode": "Mã (code)",
+      "link": "Chèn liên kết",
+      "linkPrompt": "Nhập đường dẫn liên kết:",
+      "image": "Ảnh"
+    },
     "MarkdownToolbar": {
       "bold": "In đậm",
       "italic": "In nghiêng",

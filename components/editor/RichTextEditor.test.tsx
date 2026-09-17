@@ -43,11 +43,8 @@ describe('RichTextEditor', () => {
     const { onChange } = setup('hello')
     const editable = await screen.findByLabelText('Nội dung')
     editable.focus()
-    // toggling a mark via keyboard shortcut is a real, supported ProseMirror
-    // interaction (not a test-only trick) and exercises the same onUpdate path
-    // real typing would.
     fireEvent.keyDown(editable, { key: 'a', code: 'KeyA', ctrlKey: true })
-    fireEvent.keyDown(editable, { key: 'b', code: 'KeyB', ctrlKey: true })
+    fireEvent.click(screen.getByRole('button', { name: 'In đậm' }))
     await waitFor(() => expect(onChange).toHaveBeenCalledWith('**hello**'))
   })
 })

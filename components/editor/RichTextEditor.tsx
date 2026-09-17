@@ -3,6 +3,7 @@
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { Markdown } from 'tiptap-markdown'
+import RichTextToolbar from './RichTextToolbar'
 
 export default function RichTextEditor({
   value,
@@ -32,6 +33,7 @@ export default function RichTextEditor({
 
   return (
     <div className="overflow-hidden rounded-xl border border-outline-variant">
+      <RichTextToolbar editor={editor} onRequestImage={() => {}} />
       <EditorContent editor={editor} />
     </div>
   )
