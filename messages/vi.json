@@ -796,32 +796,10 @@
         "pickFileHint": "Hỗ trợ PNG, JPG, WEBP",
         "uploading": "Đang tải ảnh lên...",
         "analyzing": "Đang phân tích ảnh...",
-        "categoryLabel": "Danh mục",
-        "styleTagsLabel": "Phong cách",
-        "occasionTagsLabel": "Dịp",
         "saveButton": "Lưu vào tủ đồ",
         "saving": "Đang lưu...",
         "savedMessage": "Đã lưu vào tủ đồ!",
-        "errorMessage": "Có lỗi xảy ra, vui lòng thử lại.",
-        "categories": {
-          "aoThun": "Áo thun",
-          "aoSoMi": "Áo sơ mi",
-          "quanJean": "Quần jean",
-          "dam": "Đầm",
-          "aoKhoac": "Áo khoác"
-        },
-        "styles": {
-          "casual": "Casual",
-          "minimalist": "Minimalist",
-          "street": "Street",
-          "formal": "Formal"
-        },
-        "occasions": {
-          "hangNgay": "Hằng ngày",
-          "diLam": "Đi làm",
-          "duTiec": "Dự tiệc",
-          "diBien": "Đi biển"
-        }
+        "errorMessage": "Có lỗi xảy ra, vui lòng thử lại."
       },
       "WardrobeLibrary": {
         "filterLabel": "Lọc",
