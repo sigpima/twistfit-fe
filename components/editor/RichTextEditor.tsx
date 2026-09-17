@@ -34,7 +34,7 @@ export default function RichTextEditor({
       },
     },
     onUpdate: ({ editor }) => {
-      onChange((editor.storage.markdown as { getMarkdown: () => string }).getMarkdown())
+      onChange(editor.storage.markdown.getMarkdown())
     },
   })
 

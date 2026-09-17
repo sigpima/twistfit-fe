@@ -3,8 +3,8 @@ import { renderMarkdown, extractHeadings } from './markdown'
 
 describe('renderMarkdown', () => {
   it('renders basic markdown to HTML', () => {
-    const html = renderMarkdown('# Tiêu đề\n\nĐoạn **in đậm**.')
-    expect(html).toContain('<h1>Tiêu đề</h1>')
+    const html = renderMarkdown('## Tiêu đề\n\nĐoạn **in đậm**.')
+    expect(html).toContain('<h2 id="tieu-de">Tiêu đề</h2>')
     expect(html).toContain('<strong>in đậm</strong>')
   })
 
@@ -14,11 +14,16 @@ describe('renderMarkdown', () => {
     expect(html).not.toContain('onerror')
   })
 
-  it('adds a slugified id to h2/h3 headings but not h1', () => {
-    const html = renderMarkdown('# Tiêu đề chính\n\n## Bí quyết chọn màu\n\n### Tông da ấm')
-    expect(html).toContain('<h1>Tiêu đề chính</h1>')
+  it('adds a slugified id to h2/h3 headings', () => {
+    const html = renderMarkdown('## Bí quyết chọn màu\n\n### Tông da ấm')
     expect(html).toContain('<h2 id="bi-quyet-chon-mau">Bí quyết chọn màu</h2>')
     expect(html).toContain('<h3 id="tong-da-am">Tông da ấm</h3>')
+  })
+
+  it('downgrades a level-1 heading to h2, giving it an id like any other level-2 heading', () => {
+    const html = renderMarkdown('# Tiêu đề chính\n\nĐoạn văn.')
+    expect(html).not.toContain('<h1>')
+    expect(html).toContain('<h2 id="tieu-de-chinh">Tiêu đề chính</h2>')
   })
 
   it('de-duplicates ids when two headings produce the same slug', () => {
@@ -38,7 +43,12 @@ describe('extractHeadings', () => {
     ])
   })
 
-  it('returns an empty list when the content has no h2/h3 headings', () => {
-    expect(extractHeadings(renderMarkdown('# Tiêu đề\n\nChỉ có đoạn văn.'))).toEqual([])
+  it('includes a downgraded level-1 heading as a depth-2 entry', () => {
+    const html = renderMarkdown('# Tiêu đề chính')
+    expect(extractHeadings(html)).toEqual([{ id: 'tieu-de-chinh', depth: 2, text: 'Tiêu đề chính' }])
+  })
+
+  it('returns an empty list when the content has no headings at all', () => {
+    expect(extractHeadings(renderMarkdown('Chỉ có đoạn văn.'))).toEqual([])
   })
 })

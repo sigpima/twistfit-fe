@@ -19,14 +19,15 @@ export function renderMarkdown(content: string): string {
     renderer: {
       heading({ tokens, depth }) {
         const html = this.parser.parseInline(tokens)
-        if (depth !== 2 && depth !== 3) {
+        const effectiveDepth = depth === 1 ? 2 : depth
+        if (effectiveDepth !== 2 && effectiveDepth !== 3) {
           return `<h${depth}>${html}</h${depth}>\n`
         }
         const base = slugify(html.replace(/<[^>]+>/g, '')) || 'section'
         const count = slugCounts.get(base) ?? 0
         slugCounts.set(base, count + 1)
         const id = count === 0 ? base : `${base}-${count + 1}`
-        return `<h${depth} id="${id}">${html}</h${depth}>\n`
+        return `<h${effectiveDepth} id="${id}">${html}</h${effectiveDepth}>\n`
       },
     },
   })
