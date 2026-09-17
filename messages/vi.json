@@ -497,6 +497,31 @@
     "noAccount": "Chưa có tài khoản?",
     "registerLink": "Đăng ký ngay"
   },
+  "Collection": {
+    "title": "Bộ sưu tập đã lưu",
+    "OutfitResults": {
+      "heading": "Phối đồ đã tạo",
+      "loading": "Đang tải...",
+      "emptyState": "Bạn chưa có kết quả phối đồ nào.",
+      "emptyStateCta": "Bắt đầu phối đồ",
+      "frontImageAlt": "Ảnh trực diện",
+      "sideImageAlt": "Ảnh nghiêng"
+    },
+    "Wardrobe": {
+      "heading": "Tủ đồ của tôi",
+      "loading": "Đang tải...",
+      "emptyState": "Tủ đồ của bạn đang trống.",
+      "emptyStateCta": "Tải đồ lên",
+      "itemImageAlt": "Món đồ trong tủ đồ"
+    },
+    "PersonalColor": {
+      "heading": "Kết quả Personal Color",
+      "loading": "Đang tải...",
+      "emptyState": "Bạn chưa có kết quả Personal Color nào.",
+      "emptyStateCta": "Làm bài test ngay",
+      "viewDetailButton": "Xem chi tiết"
+    }
+  },
   "Profile": {
     "title": "Thông tin cá nhân",
     "adminBadge": "Admin",
