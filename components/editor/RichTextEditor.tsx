@@ -2,20 +2,27 @@
 
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import ImageExtension from '@tiptap/extension-image'
 import { Markdown } from 'tiptap-markdown'
+import { useState } from 'react'
+import ImagePickerDialog from '@/components/admin/ImagePickerDialog'
 import RichTextToolbar from './RichTextToolbar'
 
 export default function RichTextEditor({
   value,
   onChange,
   labelId,
+  uploadUrlEndpoint,
 }: {
   value: string
   onChange: (value: string) => void
   labelId: string
+  uploadUrlEndpoint: string
 }) {
+  const [imageDialogOpen, setImageDialogOpen] = useState(false)
+
   const editor = useEditor({
-    extensions: [StarterKit.configure({ heading: { levels: [2, 3] } }), Markdown],
+    extensions: [StarterKit.configure({ heading: { levels: [2, 3] } }), ImageExtension, Markdown],
     content: value,
     immediatelyRender: false,
     editorProps: {
@@ -33,8 +40,20 @@ export default function RichTextEditor({
 
   return (
     <div className="overflow-hidden rounded-xl border border-outline-variant">
-      <RichTextToolbar editor={editor} onRequestImage={() => {}} />
+      {/* RichTextToolbar uses useEditorState, which does not pick up a prop
+          transitioning from null to a real editor across renders — mount it
+          only once a real editor exists, instead of passing it null. */}
+      {editor && <RichTextToolbar editor={editor} onRequestImage={() => setImageDialogOpen(true)} />}
       <EditorContent editor={editor} />
+      <ImagePickerDialog
+        open={imageDialogOpen}
+        uploadUrlEndpoint={uploadUrlEndpoint}
+        onCancel={() => setImageDialogOpen(false)}
+        onConfirm={({ url, alt }) => {
+          editor?.chain().focus().setImage({ src: url, alt }).run()
+          setImageDialogOpen(false)
+        }}
+      />
     </div>
   )
 }

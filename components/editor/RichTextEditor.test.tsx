@@ -12,7 +12,12 @@ function setup(initialValue = '') {
   renderWithIntl(
     <div>
       <span id="content-label">Nội dung</span>
-      <RichTextEditor value={initialValue} onChange={onChange} labelId="content-label" />
+      <RichTextEditor
+        value={initialValue}
+        onChange={onChange}
+        labelId="content-label"
+        uploadUrlEndpoint="/blog/upload-url"
+      />
     </div>
   )
   return { onChange }
@@ -46,5 +51,20 @@ describe('RichTextEditor', () => {
     fireEvent.keyDown(editable, { key: 'a', code: 'KeyA', ctrlKey: true })
     fireEvent.click(screen.getByRole('button', { name: 'In đậm' }))
     await waitFor(() => expect(onChange).toHaveBeenCalledWith('**hello**'))
+  })
+
+  it('inserts an image via the toolbar image button and ImagePickerDialog', async () => {
+    const { onChange } = setup('before')
+    await waitFor(() => expect(screen.getByLabelText('Nội dung')).toBeInTheDocument())
+
+    fireEvent.click(screen.getByRole('button', { name: 'Ảnh' }))
+    fireEvent.change(screen.getByLabelText('Đường dẫn ảnh'), { target: { value: 'https://example.com/a.jpg' } })
+    fireEvent.change(screen.getByLabelText('Mô tả ảnh (alt text)'), { target: { value: 'Mô tả ảnh' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Chèn ảnh' }))
+
+    await waitFor(() =>
+      expect(onChange).toHaveBeenCalledWith(expect.stringContaining('![Mô tả ảnh](https://example.com/a.jpg)'))
+    )
+    expect(screen.queryByLabelText('Đường dẫn ảnh')).not.toBeInTheDocument()
   })
 })
