@@ -247,6 +247,32 @@
       "emptyState": "Chưa có phụ kiện nào.",
       "loading": "Đang tải..."
     },
+    "AccessoryForm": {
+      "pickFileTitle": "Tải ảnh phụ kiện lên",
+      "pickFileHint": "Chọn một ảnh sản phẩm để AI gợi ý danh mục và tag.",
+      "uploading": "Đang tải ảnh lên...",
+      "errorMessage": "Có lỗi khi tải ảnh, vui lòng thử lại.",
+      "fields": {
+        "name": "Tên phụ kiện",
+        "affiliateLink": "Link affiliate",
+        "category": "Danh mục",
+        "styleTags": "Phong cách phù hợp",
+        "occasionTags": "Dịp phù hợp",
+        "toneTags": "Tone màu phù hợp"
+      },
+      "categories": {
+        "tui-xach": "Túi xách",
+        "giay": "Giày",
+        "trang-suc": "Trang sức",
+        "mu-non": "Mũ nón",
+        "khan": "Khăn"
+      },
+      "submitCreate": "Tạo phụ kiện",
+      "submitEdit": "Lưu thay đổi",
+      "saving": "Đang lưu...",
+      "unauthorizedError": "Bạn cần đăng nhập với quyền quản trị.",
+      "genericError": "Có lỗi xảy ra, vui lòng thử lại."
+    },
     "TeamForm": {
       "fields": {
         "image": "Ảnh (URL)",

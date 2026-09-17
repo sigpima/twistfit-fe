@@ -1,0 +1,98 @@
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { renderWithIntl } from '@/test-utils/renderWithIntl'
+import AccessoryForm from './AccessoryForm'
+import type { AccessoryProduct } from '@/lib/accessories'
+
+const pushMock = vi.fn()
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: pushMock }),
+}))
+
+const EXISTING_ACCESSORY: AccessoryProduct = {
+  id: 9,
+  name: 'Túi tote nâu',
+  imageUrl: '/tote.png',
+  affiliateLink: 'https://shop.example.com/tote',
+  category: 'tui-xach',
+  styleTags: ['casual'],
+  occasionTags: ['hang-ngay'],
+  toneTags: ['autumn'],
+  isActive: true,
+  createdAt: '2026-01-01',
+  updatedAt: '2026-01-01',
+}
+
+describe('AccessoryForm', () => {
+  afterEach(() => {
+    pushMock.mockClear()
+    vi.unstubAllGlobals()
+  })
+
+  it('pre-fills fields from initialAccessory and PUTs on submit', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => EXISTING_ACCESSORY }))
+    renderWithIntl(<AccessoryForm initialAccessory={EXISTING_ACCESSORY} />)
+
+    expect(screen.getByLabelText('Tên phụ kiện')).toHaveValue('Túi tote nâu')
+    expect(screen.getByLabelText('Link affiliate')).toHaveValue('https://shop.example.com/tote')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Lưu thay đổi' }))
+
+    await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/accessories'))
+    expect(fetch).toHaveBeenCalledWith(
+      '/accessories/9',
+      expect.objectContaining({ method: 'PUT', credentials: 'include' })
+    )
+  })
+
+  it('shows a generic error and does not redirect when the API rejects the submission', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 422, json: async () => ({ detail: [] }) }))
+    renderWithIntl(<AccessoryForm initialAccessory={EXISTING_ACCESSORY} />)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Lưu thay đổi' }))
+
+    await waitFor(() => expect(screen.getByText('Có lỗi xảy ra, vui lòng thử lại.')).toBeInTheDocument())
+    expect(pushMock).not.toHaveBeenCalled()
+  })
+
+  function jsonResponse(body: unknown, init: { ok?: boolean; status?: number } = {}) {
+    return { ok: init.ok ?? true, status: init.status ?? 200, json: async () => body }
+  }
+
+  it('walks through upload, Gemini suggestion, and creates on submit', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(jsonResponse({ uploadUrl: 'https://blob.example.com/upload?sig=abc', blobPath: 'x.png' }))
+      .mockResolvedValueOnce({ ok: true }) // the raw PUT to blob storage
+      .mockResolvedValueOnce(
+        jsonResponse({
+          category: 'tui-xach',
+          styleTags: ['casual'],
+          occasionTags: ['hang-ngay'],
+          toneTags: ['autumn'],
+          blobUrl: 'https://blob.example.com/x.png',
+        })
+      )
+      .mockResolvedValueOnce(jsonResponse({ id: 1 }, { status: 201 }))
+    vi.stubGlobal('fetch', fetchMock)
+
+    renderWithIntl(<AccessoryForm />)
+
+    const file = new File(['fake-image'], 'tote.png', { type: 'image/png' })
+    fireEvent.change(screen.getByLabelText('Tải ảnh phụ kiện lên'), { target: { files: [file] } })
+
+    await waitFor(() => expect(screen.getByLabelText('Tên phụ kiện')).toBeInTheDocument())
+    expect(screen.getByRole('checkbox', { name: 'casual' })).toBeChecked()
+
+    fireEvent.change(screen.getByLabelText('Tên phụ kiện'), { target: { value: 'Túi tote nâu' } })
+    fireEvent.change(screen.getByLabelText('Link affiliate'), { target: { value: 'https://shop.example.com/tote' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Tạo phụ kiện' }))
+
+    await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/accessories'))
+    expect(fetchMock).toHaveBeenLastCalledWith(
+      '/accessories',
+      expect.objectContaining({ method: 'POST', credentials: 'include' })
+    )
+  })
+})
