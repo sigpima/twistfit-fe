@@ -836,19 +836,7 @@
       },
       "OccasionStyleSelector": {
         "modeOccasion": "Theo dịp",
-        "modeStyle": "Theo phong cách",
-        "occasions": {
-          "daily": "Hằng ngày",
-          "work": "Đi làm",
-          "party": "Dự tiệc",
-          "beach": "Đi biển"
-        },
-        "styles": {
-          "casual": "Casual",
-          "minimalist": "Minimalist",
-          "street": "Street",
-          "formal": "Formal"
-        }
+        "modeStyle": "Theo phong cách"
       }
     },
     "Step2": {

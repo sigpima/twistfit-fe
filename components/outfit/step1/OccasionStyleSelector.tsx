@@ -1,42 +1,33 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import type { OccasionTag, StyleTag } from '../OutfitFlowProvider'
+import type { TaxonomyValue } from '@/lib/taxonomy'
 
 export type OccasionStyleMode = 'occasion' | 'style'
-
-const OCCASION_OPTIONS: { id: OccasionTag; key: 'daily' | 'work' | 'party' | 'beach' }[] = [
-  { id: 'hang-ngay', key: 'daily' },
-  { id: 'di-lam', key: 'work' },
-  { id: 'du-tiec', key: 'party' },
-  { id: 'di-bien', key: 'beach' },
-]
-
-const STYLE_OPTIONS: { id: StyleTag; key: 'casual' | 'minimalist' | 'street' | 'formal' }[] = [
-  { id: 'casual', key: 'casual' },
-  { id: 'minimalist', key: 'minimalist' },
-  { id: 'street', key: 'street' },
-  { id: 'formal', key: 'formal' },
-]
 
 type OccasionStyleSelectorProps = {
   mode: OccasionStyleMode
   onModeChange: (mode: OccasionStyleMode) => void
-  selectedOccasion: OccasionTag
-  onOccasionChange: (tag: OccasionTag) => void
-  selectedStyle: StyleTag
-  onStyleChange: (tag: StyleTag) => void
+  occasionValues: TaxonomyValue[]
+  selectedOccasion: string
+  onOccasionChange: (tag: string) => void
+  styleValues: TaxonomyValue[]
+  selectedStyle: string
+  onStyleChange: (tag: string) => void
 }
 
 export default function OccasionStyleSelector({
   mode,
   onModeChange,
+  occasionValues,
   selectedOccasion,
   onOccasionChange,
+  styleValues,
   selectedStyle,
   onStyleChange,
 }: OccasionStyleSelectorProps) {
   const t = useTranslations('Outfit.Step1.OccasionStyleSelector')
+  const activeValues = mode === 'occasion' ? occasionValues : styleValues
 
   return (
     <div className="flex flex-col gap-space-sm">
@@ -67,37 +58,24 @@ export default function OccasionStyleSelector({
         </button>
       </div>
       <div className="flex flex-wrap gap-2">
-        {mode === 'occasion'
-          ? OCCASION_OPTIONS.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                aria-pressed={option.id === selectedOccasion}
-                onClick={() => onOccasionChange(option.id)}
-                className={`rounded-full px-space-md py-2 text-label-md font-medium transition-all ${
-                  option.id === selectedOccasion
-                    ? 'bg-primary text-on-primary shadow-sm'
-                    : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container'
-                }`}
-              >
-                {t(`occasions.${option.key}`)}
-              </button>
-            ))
-          : STYLE_OPTIONS.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                aria-pressed={option.id === selectedStyle}
-                onClick={() => onStyleChange(option.id)}
-                className={`rounded-full px-space-md py-2 text-label-md font-medium transition-all ${
-                  option.id === selectedStyle
-                    ? 'bg-primary text-on-primary shadow-sm'
-                    : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container'
-                }`}
-              >
-                {t(`styles.${option.key}`)}
-              </button>
-            ))}
+        {activeValues.map((value) => {
+          const isSelected = mode === 'occasion' ? value.key === selectedOccasion : value.key === selectedStyle
+          return (
+            <button
+              key={value.id}
+              type="button"
+              aria-pressed={isSelected}
+              onClick={() => (mode === 'occasion' ? onOccasionChange(value.key) : onStyleChange(value.key))}
+              className={`rounded-full px-space-md py-2 text-label-md font-medium transition-all ${
+                isSelected
+                  ? 'bg-primary text-on-primary shadow-sm'
+                  : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container'
+              }`}
+            >
+              {value.label}
+            </button>
+          )
+        })}
       </div>
     </div>
   )

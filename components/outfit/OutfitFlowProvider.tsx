@@ -45,8 +45,8 @@ export const DEFAULT_POSE: Pose = { id: 'front', label: 'Đứng thẳng phía t
 
 export type FlowStep = 1 | 2 | 3 | 4
 
-export type OccasionTag = 'hang-ngay' | 'di-lam' | 'du-tiec' | 'di-bien'
-export type StyleTag = 'casual' | 'minimalist' | 'street' | 'formal'
+export type OccasionTag = string
+export type StyleTag = string
 export type OccasionStyleMode = 'occasion' | 'style'
 
 type OutfitFlowContextValue = {
