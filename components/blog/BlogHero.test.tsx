@@ -10,8 +10,8 @@ describe('BlogHero', () => {
     expect(screen.getByText('120+ Bài Viết')).toBeInTheDocument()
   })
 
-  it('links the breadcrumb back to the home page', () => {
+  it('does not render a breadcrumb trail', () => {
     renderWithIntl(<BlogHero />)
-    expect(screen.getByRole('link', { name: 'Trang chủ' })).toHaveAttribute('href', '/')
+    expect(screen.queryByRole('link', { name: 'Trang chủ' })).not.toBeInTheDocument()
   })
 })

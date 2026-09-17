@@ -1,20 +1,12 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import Link from 'next/link'
 
 export default function BlogHero() {
   const t = useTranslations('Blog.Hero')
 
   return (
     <div className="mb-space-xl flex flex-col gap-space-sm">
-      <div className="flex items-center gap-space-xs text-label-md text-on-surface-variant">
-        <Link href="/" className="transition-colors hover:text-primary">
-          {t('breadcrumbHome')}
-        </Link>
-        <span className="material-symbols-outlined text-[14px]">chevron_right</span>
-        <span className="font-semibold text-primary">{t('breadcrumbCurrent')}</span>
-      </div>
       <div className="flex flex-col justify-between gap-space-md md:flex-row md:items-end">
         <div>
           <div className="mb-space-sm inline-flex items-center gap-space-xs rounded-full bg-secondary-container/60 px-space-md py-space-xs text-label-sm text-secondary backdrop-blur-md">

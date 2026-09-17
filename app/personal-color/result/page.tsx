@@ -56,17 +56,6 @@ export default function ResultPage() {
   return (
     <main className="mx-auto w-full max-w-7xl flex-grow px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <nav className="mb-3 flex items-center gap-2 text-xs font-medium text-[#7b89ba]">
-          <Link href="/" className="hover:underline">
-            {t('breadcrumbHome')}
-          </Link>
-          <span className="material-symbols-outlined text-[10px] opacity-60">chevron_right</span>
-          <Link href="/personal-color/quiz" className="hover:underline">
-            {t('breadcrumbQuiz')}
-          </Link>
-          <span className="material-symbols-outlined text-[10px] opacity-60">chevron_right</span>
-          <span className="font-semibold text-[#304461]">{t('breadcrumbCurrent')}</span>
-        </nav>
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
           <div className="flex items-start gap-3.5 sm:items-center">
             <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-[#7b89ba]/15 text-lg text-[#7b89ba] shadow-sm">

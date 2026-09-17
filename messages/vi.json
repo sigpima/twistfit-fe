@@ -679,9 +679,6 @@
     },
     "Result": {
       "Page": {
-        "breadcrumbHome": "Trang chủ",
-        "breadcrumbQuiz": "Kiểm tra Personal Color",
-        "breadcrumbCurrent": "Kết quả phân tích",
         "heading": "KẾT QUẢ PHÂN TÍCH PERSONAL COLOR",
         "subheading": "Bảng màu cá nhân hóa – Tôn vinh vẻ đẹp tự nhiên của bạn",
         "accuracyBadge": "Độ chính xác cao",
@@ -1226,8 +1223,6 @@
   },
   "Blog": {
     "Hero": {
-      "breadcrumbHome": "Trang chủ",
-      "breadcrumbCurrent": "Blog & Tạp chí phong cách",
       "editorialBadge": "TwistFit Editorial",
       "heading": "Tạp Chí Phong Cách TwistFit",
       "subheading": "Khám phá bí quyết định hình bản sắc, giải mã bảng màu cá nhân và cập nhật xu hướng thời trang ứng dụng mới nhất.",

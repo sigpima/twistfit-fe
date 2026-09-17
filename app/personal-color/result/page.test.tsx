@@ -44,17 +44,14 @@ describe('ResultPage', () => {
     window.sessionStorage.clear()
   })
 
-  it('renders the page heading and breadcrumbs regardless of result state', () => {
+  it('renders the page heading regardless of result state, with no breadcrumb trail', () => {
     setStoredUser(null)
     renderResultPage()
     expect(
       screen.getByRole('heading', { level: 1, name: 'KẾT QUẢ PHÂN TÍCH PERSONAL COLOR' })
     ).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Trang chủ' })).toHaveAttribute('href', '/')
-    expect(screen.getByRole('link', { name: 'Kiểm tra Personal Color' })).toHaveAttribute(
-      'href',
-      '/personal-color/quiz'
-    )
+    expect(screen.queryByRole('link', { name: 'Trang chủ' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Kiểm tra Personal Color' })).not.toBeInTheDocument()
   })
 
   it('shows an empty state when a signed-out visitor has no saved result', async () => {
