@@ -57,18 +57,6 @@
       "linkPrompt": "Nhập đường dẫn liên kết:",
       "image": "Ảnh"
     },
-    "MarkdownToolbar": {
-      "bold": "In đậm",
-      "italic": "In nghiêng",
-      "heading2": "Tiêu đề 2",
-      "heading3": "Tiêu đề 3",
-      "bulletList": "Danh sách gạch đầu dòng",
-      "numberedList": "Danh sách đánh số",
-      "blockquote": "Trích dẫn",
-      "inlineCode": "Mã (code)",
-      "link": "Chèn liên kết",
-      "image": "Ảnh"
-    },
     "ImagePicker": {
       "modeLink": "Dán link",
       "modeUpload": "Tải ảnh lên",
