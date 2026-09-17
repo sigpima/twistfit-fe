@@ -236,6 +236,17 @@
       "emptyState": "Chưa có set đồ nào.",
       "loading": "Đang tải..."
     },
+    "AccessoryList": {
+      "title": "Quản lý Phụ kiện",
+      "newButton": "Thêm phụ kiện",
+      "columnName": "Tên",
+      "columnCategory": "Danh mục",
+      "editButton": "Sửa",
+      "deleteButton": "Xóa",
+      "deleteConfirm": "Xóa phụ kiện này?",
+      "emptyState": "Chưa có phụ kiện nào.",
+      "loading": "Đang tải..."
+    },
     "TeamForm": {
       "fields": {
         "image": "Ảnh (URL)",
