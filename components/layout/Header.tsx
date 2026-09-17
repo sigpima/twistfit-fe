@@ -16,12 +16,13 @@ const PRIMARY_NAV_LINKS = [{ href: '/about', key: 'about' }] as const
 const SECONDARY_NAV_LINKS = [
   { href: '/forum', key: 'community' },
   { href: '/blog', key: 'blog' },
+  { href: '/contact', key: 'contact' },
 ] as const
 
 const ACCOUNT_MENU_LINKS = [
-  { href: '#', key: 'savedCollection' },
+  { href: '/collection', key: 'savedCollection' },
   { href: '/personal-color/result', key: 'personalColorResult' },
-  { href: '#', key: 'profile' },
+  { href: '/profile', key: 'profile' },
 ] as const
 
 const SOCIAL_LINKS = [
@@ -154,45 +155,80 @@ export default function Header() {
           </div>
 
           {user ? (
-            <div className="group relative shrink-0">
-              <button
-                type="button"
-                aria-label={`${t('accountAriaLabel')} — ${user.name}`}
-                title={user.name}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#ec7fb8] text-white shadow-sm ring-2 ring-[#ec7fb8]/30 transition-colors hover:bg-[#e564a8]"
-              >
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-              </button>
-              <div className="invisible absolute right-0 top-full z-20 pt-2 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                <div className="w-60 rounded-2xl border border-[#f3e3b8] bg-white p-2 shadow-lg">
-                  <p className="truncate px-4 pb-2 pt-1 text-xs font-semibold text-[#94a3b8]">{user.name}</p>
-                  {ACCOUNT_MENU_LINKS.map((item) => (
-                    <Link
-                      key={item.key}
-                      href={item.href}
-                      className="block rounded-xl px-4 py-2.5 text-sm font-medium text-[#3c4a63] transition-colors hover:bg-[#fdf3d3]"
+            <div className="flex shrink-0 items-center gap-2">
+              {user.role === 'admin' && (
+                <span className="hidden items-center gap-1 rounded-full bg-primary px-3 py-1 text-label-sm font-semibold text-on-primary sm:inline-flex">
+                  <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
+                    admin_panel_settings
+                  </span>
+                  {t('adminBadge')}
+                </span>
+              )}
+              <div className="group relative">
+                <button
+                  type="button"
+                  aria-label={
+                    user.role === 'admin'
+                      ? `${t('accountAriaLabel')} — ${user.name} (${t('adminBadgeAriaSuffix')})`
+                      : `${t('accountAriaLabel')} — ${user.name}`
+                  }
+                  title={user.name}
+                  className={`relative flex h-10 w-10 items-center justify-center rounded-full bg-[#ec7fb8] text-white shadow-sm ring-2 transition-colors hover:bg-[#e564a8] ${
+                    user.role === 'admin' ? 'ring-primary/50' : 'ring-[#ec7fb8]/30'
+                  }`}
+                >
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                  {user.role === 'admin' && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-on-primary ring-2 ring-white"
                     >
-                      {t(`accountMenu.${item.key}`)}
-                    </Link>
-                  ))}
-                  <div className="my-1 h-px bg-[#f1f5f9]" />
-                  <button
-                    type="button"
-                    onClick={logout}
-                    className="flex w-full items-center gap-2 rounded-xl px-4 py-2.5 text-left text-sm font-medium text-[#ec7fb8] transition-colors hover:bg-[#ec7fb8]/10"
-                  >
-                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
-                      logout
+                      <span className="material-symbols-outlined text-[11px]">admin_panel_settings</span>
                     </span>
-                    {t('logout')}
-                  </button>
+                  )}
+                </button>
+                <div className="invisible absolute right-0 top-full z-20 pt-2 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                  <div className="w-60 rounded-2xl border border-[#f3e3b8] bg-white p-2 shadow-lg">
+                    <p className="truncate px-4 pb-2 pt-1 text-xs font-semibold text-[#94a3b8]">{user.name}</p>
+                    {user.role === 'admin' && (
+                      <Link
+                        href="/admin"
+                        className="mb-1 flex items-center gap-2 rounded-xl bg-primary-fixed px-4 py-2.5 text-sm font-semibold text-on-primary-fixed transition-colors hover:bg-primary-fixed-dim"
+                      >
+                        <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                          admin_panel_settings
+                        </span>
+                        {t('accountMenu.adminDashboard')}
+                      </Link>
+                    )}
+                    {ACCOUNT_MENU_LINKS.map((item) => (
+                      <Link
+                        key={item.key}
+                        href={item.href}
+                        className="block rounded-xl px-4 py-2.5 text-sm font-medium text-[#3c4a63] transition-colors hover:bg-[#fdf3d3]"
+                      >
+                        {t(`accountMenu.${item.key}`)}
+                      </Link>
+                    ))}
+                    <div className="my-1 h-px bg-[#f1f5f9]" />
+                    <button
+                      type="button"
+                      onClick={logout}
+                      className="flex w-full items-center gap-2 rounded-xl px-4 py-2.5 text-left text-sm font-medium text-[#ec7fb8] transition-colors hover:bg-[#ec7fb8]/10"
+                    >
+                      <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+                        logout
+                      </span>
+                      {t('logout')}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

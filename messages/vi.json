@@ -3,7 +3,8 @@
     "nav": {
       "about": "Về chúng tôi",
       "community": "Cộng đồng TwistFit",
-      "blog": "Cảm hứng"
+      "blog": "Cảm hứng",
+      "contact": "Liên hệ"
     },
     "featuresLabel": "Tính năng",
     "features": {
@@ -13,8 +14,11 @@
     "login": "Đăng nhập",
     "register": "Đăng ký",
     "accountAriaLabel": "Tài khoản",
+    "adminBadge": "Admin",
+    "adminBadgeAriaSuffix": "Tài khoản quản trị viên",
     "logout": "Đăng xuất",
     "accountMenu": {
+      "adminDashboard": "Trang quản lý",
       "savedCollection": "Bộ sưu tập đã lưu",
       "personalColorResult": "Kết quả đánh giá Personal Color",
       "profile": "Thông tin cá nhân"

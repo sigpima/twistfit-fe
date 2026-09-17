@@ -29,6 +29,7 @@ describe('Header', () => {
     expect(screen.getByRole('link', { name: 'Về chúng tôi' })).toHaveAttribute('href', '/about')
     expect(screen.getByRole('link', { name: 'Cộng đồng TwistFit' })).toHaveAttribute('href', '/forum')
     expect(screen.getByRole('link', { name: 'Cảm hứng' })).toHaveAttribute('href', '/blog')
+    expect(screen.getByRole('link', { name: 'Liên hệ' })).toHaveAttribute('href', '/contact')
   })
 
   it('renders the features dropdown with links to the expected routes', () => {
@@ -74,12 +75,35 @@ describe('Header', () => {
     )
     renderHeader()
 
-    expect(screen.getByRole('link', { name: 'Bộ sưu tập đã lưu' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Bộ sưu tập đã lưu' })).toHaveAttribute('href', '/collection')
     expect(screen.getByRole('link', { name: 'Kết quả đánh giá Personal Color' })).toHaveAttribute(
       'href',
       '/personal-color/result'
     )
-    expect(screen.getByRole('link', { name: 'Thông tin cá nhân' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Thông tin cá nhân' })).toHaveAttribute('href', '/profile')
+  })
+
+  it('does not show the admin badge or admin dashboard link for a regular user', () => {
+    window.localStorage.setItem(
+      'twistfit.auth',
+      JSON.stringify({ name: 'Người dùng Test', email: 'user@twistfit.vn', role: 'user' })
+    )
+    renderHeader()
+
+    expect(screen.queryByText('Admin')).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Trang quản lý' })).not.toBeInTheDocument()
+  })
+
+  it('shows the admin badge and an admin dashboard link when signed in as admin', () => {
+    window.localStorage.setItem(
+      'twistfit.auth',
+      JSON.stringify({ name: 'Quản trị viên Test', email: 'admin@twistfit.vn', role: 'admin' })
+    )
+    renderHeader()
+
+    expect(screen.getByText('Admin')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Trang quản lý/ })).toHaveAttribute('href', '/admin')
+    expect(screen.getByRole('button', { name: /Tài khoản.*Quản trị viên Test/ })).toBeInTheDocument()
   })
 
   it('logs out when the account icon is clicked', () => {
