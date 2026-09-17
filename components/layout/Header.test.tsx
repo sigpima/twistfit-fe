@@ -27,9 +27,8 @@ describe('Header', () => {
   it('renders nav links to the expected routes', () => {
     renderHeader()
     expect(screen.getByRole('link', { name: 'Về chúng tôi' })).toHaveAttribute('href', '/about')
-    expect(screen.getByRole('link', { name: 'Cơ chế vận hành' })).toHaveAttribute('href', '/how-it-works')
-    expect(screen.getByRole('link', { name: 'FAQ' })).toHaveAttribute('href', '/faq')
-    expect(screen.getByRole('link', { name: 'Blog' })).toHaveAttribute('href', '/blog')
+    expect(screen.getByRole('link', { name: 'Cộng đồng TwistFit' })).toHaveAttribute('href', '/forum')
+    expect(screen.getByRole('link', { name: 'Cảm hứng' })).toHaveAttribute('href', '/blog')
   })
 
   it('renders the features dropdown with links to the expected routes', () => {
@@ -40,7 +39,6 @@ describe('Header', () => {
       '/personal-color/quiz'
     )
     expect(screen.getByRole('link', { name: 'Phối đồ' })).toHaveAttribute('href', '/outfit/step-1')
-    expect(screen.getByRole('link', { name: 'Diễn đàn' })).toHaveAttribute('href', '/forum')
   })
 
   it('shows login and register links to /login and /register when signed out', () => {

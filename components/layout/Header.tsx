@@ -9,13 +9,12 @@ import { useLoginRequiredModal } from '@/components/auth/LoginRequiredModalProvi
 const FEATURE_LINKS = [
   { href: '/personal-color/quiz', key: 'personalColorTest' },
   { href: '/outfit/step-1', key: 'outfitStyling' },
-  { href: '/forum', key: 'forum' },
 ] as const
 
-const NAV_LINKS = [
-  { href: '/about', key: 'about' },
-  { href: '/how-it-works', key: 'howItWorks' },
-  { href: '/faq', key: 'faq' },
+const PRIMARY_NAV_LINKS = [{ href: '/about', key: 'about' }] as const
+
+const SECONDARY_NAV_LINKS = [
+  { href: '/forum', key: 'community' },
   { href: '/blog', key: 'blog' },
 ] as const
 
@@ -101,6 +100,16 @@ export default function Header() {
             </Link>
 
             <nav className="hidden items-center gap-1 md:flex">
+              {PRIMARY_NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="rounded-full px-4 py-2 text-sm font-medium text-[#3c4a63] transition-colors hover:bg-white/50"
+                >
+                  {t(`nav.${link.key}`)}
+                </Link>
+              ))}
+
               <div className="group relative">
                 <button
                   type="button"
@@ -132,7 +141,7 @@ export default function Header() {
                 </div>
               </div>
 
-              {NAV_LINKS.map((link) => (
+              {SECONDARY_NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}

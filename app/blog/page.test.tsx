@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import type { BlogPost } from '@/lib/db'
+import type { FaqItem } from '@/lib/faq'
 import BlogPage from './page'
 
 const POSTS: BlogPost[] = [
@@ -35,18 +36,51 @@ const POSTS: BlogPost[] = [
   },
 ]
 
+const FAQ_ITEMS: FaqItem[] = [
+  {
+    id: 1,
+    categories: ['personal-color'],
+    question: 'Câu hỏi seed test?',
+    answerMarkdown: 'Trả lời seed test.',
+    highlightIcon: null,
+    highlightText: null,
+    createdAt: '2026-01-01',
+    updatedAt: '2026-01-01',
+  },
+]
+
+function stubFetchByPath({ posts, faqItems }: { posts: BlogPost[]; faqItems: FaqItem[] }) {
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input)
+      if (url.includes('/faq')) {
+        return { ok: true, json: async () => faqItems }
+      }
+      return { ok: true, json: async () => posts }
+    })
+  )
+}
+
 describe('BlogPage', () => {
   afterEach(() => {
     vi.unstubAllGlobals()
   })
 
   it('renders the hero heading, featured article and article grid', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POSTS }))
+    stubFetchByPath({ posts: POSTS, faqItems: FAQ_ITEMS })
     const page = await BlogPage()
     renderWithIntl(page)
     expect(screen.getByRole('heading', { level: 1, name: 'Tạp Chí Phong Cách TwistFit' })).toBeInTheDocument()
     expect(screen.getByText('Bởi Stylist Mai Anh')).toBeInTheDocument()
     expect(screen.getByText(/Top 5 thỏi son kinh điển/)).toBeInTheDocument()
     expect(screen.getByText('Nhận Cẩm Nang Thời Trang Hàng Tuần')).toBeInTheDocument()
+  })
+
+  it('renders the FAQ content below the blog content', async () => {
+    stubFetchByPath({ posts: POSTS, faqItems: FAQ_ITEMS })
+    const page = await BlogPage()
+    renderWithIntl(page)
+    expect(screen.getByText('Câu hỏi seed test?')).toBeInTheDocument()
   })
 })
