@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { SEASON_PROFILES } from '@/lib/seasonProfiles'
+import { SEASON_PROFILES, SEASON_PORTRAIT_IMAGES } from '@/lib/seasonProfiles'
 import type { AxisValue, SubSeason } from '@/lib/db'
 
 const AXIS_VALUE_LABELS: Record<AxisValue, string> = {
@@ -14,6 +14,14 @@ const AXIS_VALUE_LABELS: Record<AxisValue, string> = {
   bright: 'Tươi sáng',
   muted: 'Trầm',
 }
+
+const RECOMMENDATION_ICONS: Record<'outfit' | 'lipstick' | 'accessory', string> = {
+  outfit: 'checkroom',
+  lipstick: 'favorite',
+  accessory: 'diamond',
+}
+
+const RECOMMENDATION_KEYS = ['outfit', 'lipstick', 'accessory'] as const
 
 export type ProfileCardResult = {
   subSeason: SubSeason
@@ -35,7 +43,7 @@ export default function ColorProfileCard({ result }: { result: ProfileCardResult
         <div className="relative w-full max-w-[260px] flex-shrink-0 overflow-hidden rounded-2xl border border-[#7b89ba]/20 bg-[#eef4fa] shadow-inner md:w-5/12 md:max-w-none">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/personal-color/portrait-winter.jpg"
+            src={SEASON_PORTRAIT_IMAGES[result.subSeason]}
             alt={t('portraitAlt')}
             className="aspect-[4/5] h-full w-full object-cover object-center"
           />
@@ -77,29 +85,36 @@ export default function ColorProfileCard({ result }: { result: ProfileCardResult
         </div>
       </div>
       <div className="rounded-3xl border border-[#7b89ba]/15 bg-white p-6 shadow-[0_4px_20px_rgba(48,68,97,0.05)]">
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="flex items-center gap-2 text-base font-bold text-[#304461]">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#7b89ba]" />
-            {t('idealPaletteHeading')}
-          </h3>
-          <span className="rounded-full bg-[#7b89ba]/10 px-2.5 py-1 text-[11px] font-medium text-[#7b89ba]">
-            {t('idealPaletteBadge')}
-          </span>
+        <div className="mb-4 flex items-center gap-2.5 border-b border-[#7b89ba]/15 pb-3">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#fdc8e9]/40 text-[#304461]">
+            <span className="material-symbols-outlined text-[18px]">schedule</span>
+          </div>
+          <h3 className="text-base font-bold text-[#304461]">{t('recommendationsHeading')}</h3>
         </div>
-        <div className="grid grid-cols-6 place-items-center gap-2 py-2 sm:gap-3">
-          {profile.paletteHex.map((hex) => (
+        <div className="grid grid-cols-3 gap-3">
+          {RECOMMENDATION_KEYS.map((key) => (
             <div
-              key={hex}
-              className="h-9 w-9 cursor-pointer rounded-full border border-black/10 transition-transform hover:scale-[1.18]"
-              style={{ backgroundColor: hex }}
-            />
+              key={key}
+              className="flex flex-col items-center gap-2 rounded-2xl border border-[#7b89ba]/10 bg-[#eef4fa]/50 p-3.5 text-center transition-colors hover:bg-[#eef4fa]"
+            >
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#4a89dc] to-[#7b89ba] text-white shadow-xs">
+                <span className="material-symbols-outlined text-[20px]">{RECOMMENDATION_ICONS[key]}</span>
+              </div>
+              <div>
+                <h4 className="text-xs font-bold text-[#304461]">{t(`recommendations.${key}.title`)}</h4>
+                <p className="mt-0.5 text-[11px] leading-snug text-[#304461]/80">{profile.recommendations[key]}</p>
+              </div>
+            </div>
           ))}
         </div>
-        <div className="mt-4 flex items-start gap-3 rounded-2xl border-t border-[#7b89ba]/10 bg-[#eef4fa]/50 p-3 pt-4 sm:items-center">
-          <div className="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[#fdc8e9]/50 text-[#7b89ba] sm:mt-0">
-            <span className="material-symbols-outlined text-[14px]">auto_awesome</span>
+        <div className="mt-4 flex items-center gap-3 rounded-2xl border border-[#7b89ba]/20 bg-gradient-to-r from-[#eef4fa] via-indigo-50/60 to-pink-50/60 p-3.5">
+          <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#7b89ba]/20 text-[#7b89ba]">
+            <span className="material-symbols-outlined text-[16px]">favorite</span>
           </div>
-          <p className="text-xs leading-relaxed text-[#304461]/80">{t('paletteNote')}</p>
+          <div>
+            <p className="text-xs font-bold text-[#304461]">{t('ctaBannerTitle')}</p>
+            <p className="text-[11px] text-[#304461]/75">{t('ctaBannerSubtitle')}</p>
+          </div>
         </div>
       </div>
     </section>

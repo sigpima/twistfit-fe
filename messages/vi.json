@@ -793,19 +793,13 @@
         "closeAriaLabel": "Đóng"
       },
       "ProfileCard": {
-        "srHeading": "Tổng quan mùa sắc thái và bảng màu",
+        "srHeading": "Tổng quan mùa sắc thái và gợi ý ứng dụng",
         "portraitAlt": "Chân dung phân tích sắc tố khuôn mặt",
         "paletteLabel": "Bảng màu phù hợp nhất",
         "overviewHeading": "Tổng quan sắc diện",
         "hueLabel": "Nhiệt độ màu",
         "valueLabel": "Sắc độ",
         "chromaLabel": "Độ bão hoà",
-        "idealPaletteHeading": "Bảng màu lý tưởng của bạn",
-        "idealPaletteBadge": "Personal Palette",
-        "paletteNote": "Tông màu phù hợp sẽ giúp da bạn trông sáng hơn, che đi khuyết điểm và làm nổi bật đường nét khuôn mặt một cách tự nhiên nhất."
-      },
-      "Insights": {
-        "srHeading": "Chỉ số chi tiết và Gợi ý ứng dụng",
         "recommendationsHeading": "Gợi ý ứng dụng",
         "recommendations": {
           "outfit": { "title": "Màu trang phục" },
@@ -813,9 +807,12 @@
           "accessory": { "title": "Màu phụ kiện" }
         },
         "ctaBannerTitle": "Kết quả Personal Color của bạn đã sẵn sàng!",
-        "ctaBannerSubtitle": "Khám phá thế giới màu sắc giúp bạn tỏa sáng mỗi ngày ✨",
-        "tryOutfitButton": "Thử Phối Đồ Ngay (AI Fitting)",
-        "downloadPdfButton": "Tải Báo Cáo PDF"
+        "ctaBannerSubtitle": "Khám phá thế giới màu sắc giúp bạn tỏa sáng mỗi ngày ✨"
+      },
+      "Insights": {
+        "srHeading": "Bảng màu lý tưởng và trải nghiệm Camera AR",
+        "idealPaletteHeading": "Bảng màu lý tưởng của bạn",
+        "paletteImageAlt": "Bảng phối màu minh họa dành cho {season}"
       }
     }
   },

@@ -12,16 +12,10 @@ vi.mock('react-qr-code', () => ({
 }))
 
 describe('ColorInsights', () => {
-  it('renders the real recommendation text for the given sub-season', () => {
+  it('renders the ideal-palette illustration matching the given sub-season', () => {
     renderWithIntl(<ColorInsights subSeason="true-winter" />)
-    expect(screen.getByText('Đỏ tươi, hồng fuchsia')).toBeInTheDocument()
-    expect(screen.getByText('Áo trắng phối đen, đầm xanh hoàng gia')).toBeInTheDocument()
-  })
-
-  it('renders the action buttons', () => {
-    renderWithIntl(<ColorInsights subSeason="true-winter" />)
-    expect(screen.getByRole('link', { name: /Thử Phối Đồ Ngay/ })).toHaveAttribute('href', '/outfit/step-1')
-    expect(screen.getByRole('button', { name: /Tải Báo Cáo PDF/ })).toBeInTheDocument()
+    const image = screen.getByRole('img', { name: /.+/ })
+    expect(image).toHaveAttribute('src', '/personal-color/results/true-winter.png')
   })
 
   it('renders the camera AR button', () => {

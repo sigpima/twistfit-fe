@@ -134,3 +134,33 @@ export const SEASON_PROFILES: Record<SubSeason, SeasonProfile> = {
     },
   },
 }
+
+export const SEASON_RESULT_IMAGES: Record<SubSeason, string> = {
+  'light-spring': '/personal-color/results/light-spring.png',
+  'true-spring': '/personal-color/results/true-spring.png',
+  'bright-spring': '/personal-color/results/bright-spring.png',
+  'light-summer': '/personal-color/results/light-summer.png',
+  'true-summer': '/personal-color/results/true-summer.png',
+  'soft-summer': '/personal-color/results/soft-summer.png',
+  'soft-autumn': '/personal-color/results/soft-autumn.png',
+  'true-autumn': '/personal-color/results/true-autumn.png',
+  'deep-autumn': '/personal-color/results/deep-autumn.png',
+  'deep-winter': '/personal-color/results/deep-winter.png',
+  'true-winter': '/personal-color/results/true-winter.png',
+  'bright-winter': '/personal-color/results/bright-winter.png',
+}
+
+export const SEASON_PORTRAIT_IMAGES: Record<SubSeason, string> = {
+  'light-spring': '/personal-color/portraits/light-spring.png',
+  'true-spring': '/personal-color/portraits/true-spring.png',
+  'bright-spring': '/personal-color/portraits/bright-spring.png',
+  'light-summer': '/personal-color/portraits/light-summer.png',
+  'true-summer': '/personal-color/portraits/true-summer.png',
+  'soft-summer': '/personal-color/portraits/soft-summer.png',
+  'soft-autumn': '/personal-color/portraits/soft-autumn.png',
+  'true-autumn': '/personal-color/portraits/true-autumn.png',
+  'deep-autumn': '/personal-color/portraits/deep-autumn.png',
+  'deep-winter': '/personal-color/portraits/deep-winter.png',
+  'true-winter': '/personal-color/portraits/true-winter.jpg',
+  'bright-winter': '/personal-color/portraits/bright-winter.png',
+}

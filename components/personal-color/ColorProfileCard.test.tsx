@@ -12,10 +12,16 @@ describe('ColorProfileCard', () => {
     expect(screen.getByText(/Lạnh rõ rệt, sắc nét/)).toBeInTheDocument()
   })
 
-  it('renders the real palette swatches', () => {
+  it('renders the portrait photo matching the given sub-season', () => {
     renderWithIntl(<ColorProfileCard result={RESULT} />)
-    const swatch = document.querySelector('[style*="background-color: rgb(0, 51, 153)"]')
-    expect(swatch).not.toBeNull()
+    const portrait = screen.getByRole('img', { name: /.+/ })
+    expect(portrait).toHaveAttribute('src', '/personal-color/portraits/true-winter.jpg')
+  })
+
+  it('renders a different portrait photo for a different sub-season', () => {
+    renderWithIntl(<ColorProfileCard result={{ ...RESULT, subSeason: 'bright-spring' }} />)
+    const portrait = screen.getByRole('img', { name: /.+/ })
+    expect(portrait).toHaveAttribute('src', '/personal-color/portraits/bright-spring.png')
   })
 
   it('renders the three axis results', () => {
@@ -23,5 +29,11 @@ describe('ColorProfileCard', () => {
     expect(screen.getByText('Lạnh')).toBeInTheDocument()
     expect(screen.getByText('Trung bình')).toBeInTheDocument()
     expect(screen.getByText('Trung tính')).toBeInTheDocument()
+  })
+
+  it('renders the real recommendation text for the given sub-season', () => {
+    renderWithIntl(<ColorProfileCard result={RESULT} />)
+    expect(screen.getByText('Đỏ tươi, hồng fuchsia')).toBeInTheDocument()
+    expect(screen.getByText('Áo trắng phối đen, đầm xanh hoàng gia')).toBeInTheDocument()
   })
 })
