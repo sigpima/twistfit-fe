@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
+import AccessoryRecommendations from './AccessoryRecommendations'
 import ResultPreview from './ResultPreview'
 
 export default function Step4PageContent() {
@@ -9,10 +10,13 @@ export default function Step4PageContent() {
   const router = useRouter()
 
   return (
-    <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-space-lg px-margin-desktop py-space-xl">
+    <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-space-lg px-margin-desktop py-space-xl lg:max-w-6xl">
       <h1 className="text-headline-lg text-on-surface">{t('heading')}</h1>
-      <div className="w-full">
-        <ResultPreview />
+      <div className="grid w-full grid-cols-1 items-start gap-space-lg lg:grid-cols-12 lg:items-end lg:gap-8">
+        <div className="w-full lg:col-span-7">
+          <ResultPreview />
+        </div>
+        <AccessoryRecommendations />
       </div>
       <button
         type="button"

@@ -865,6 +865,11 @@
         "noJob": "Chưa có yêu cầu phối đồ nào.",
         "processingStatus": "Đang xử lý phối đồ, vui lòng đợi...",
         "failedStatus": "Không thể hoàn tất phối đồ."
+      },
+      "AccessoryRecommendations": {
+        "heading": "Phụ kiện gợi ý cho bạn",
+        "buyNowButton": "Mua ngay",
+        "buyNowAriaLabel": "Mua ngay {name} (mở tab mới)"
       }
     }
   },

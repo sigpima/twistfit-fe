@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest'
+import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import Step4PageContent from './Step4PageContent'
@@ -13,6 +13,11 @@ vi.mock('next/navigation', () => ({
 describe('Step4PageContent', () => {
   beforeEach(() => {
     pushMock.mockClear()
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => [] }))
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
   })
 
   it('renders the result heading', () => {
