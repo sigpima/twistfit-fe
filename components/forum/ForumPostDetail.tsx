@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '@/components/auth/AuthProvider'
 import { apiFetch } from '@/lib/apiClient'
 import type { ForumComment, ForumPost } from '@/lib/forum'
+import { renderMarkdown } from '@/lib/markdown'
 
 export default function ForumPostDetail({ id }: { id: string }) {
   const t = useTranslations('Forum')
@@ -107,7 +108,10 @@ export default function ForumPostDetail({ id }: { id: string }) {
               className="mt-space-md aspect-[4/3] w-full rounded-2xl object-cover"
             />
           )}
-          <p className="mt-space-md whitespace-pre-wrap text-body-md text-on-surface">{post.body}</p>
+          <div
+            className="prose mt-space-md max-w-none text-body-md text-on-surface"
+            dangerouslySetInnerHTML={{ __html: renderMarkdown(post.body) }}
+          />
 
           {user && (
             <div className="mt-space-md flex items-center gap-space-sm">

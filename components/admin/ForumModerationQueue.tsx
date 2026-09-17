@@ -2,12 +2,14 @@
 
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
+import ForumPostViewDialog from '@/components/admin/ForumPostViewDialog'
 import { apiFetch } from '@/lib/apiClient'
 import type { ForumPost } from '@/lib/forum'
 
 export default function ForumModerationQueue() {
   const t = useTranslations('Forum.Moderation')
   const [posts, setPosts] = useState<ForumPost[] | null>(null)
+  const [viewingPost, setViewingPost] = useState<ForumPost | null>(null)
 
   useEffect(() => {
     apiFetch('/forum/moderation/pending')
@@ -33,29 +35,39 @@ export default function ForumModerationQueue() {
   }
 
   return (
-    <ul className="space-y-space-md">
-      {posts.map((post) => (
-        <li key={post.id} className="rounded-2xl border border-outline-variant p-space-lg">
-          <h3 className="text-headline-sm font-semibold text-on-surface">{post.title}</h3>
-          <p className="mt-space-xs whitespace-pre-wrap text-body-sm text-on-surface-variant">{post.body}</p>
-          <div className="mt-space-sm flex gap-space-md">
-            <button
-              type="button"
-              onClick={() => handleDecision(post.id, 'published')}
-              className="font-semibold text-primary hover:underline"
-            >
-              {t('approveButton')}
-            </button>
-            <button
-              type="button"
-              onClick={() => handleDecision(post.id, 'rejected')}
-              className="font-semibold text-error hover:underline"
-            >
-              {t('rejectButton')}
-            </button>
-          </div>
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className="space-y-space-md">
+        {posts.map((post) => (
+          <li key={post.id} className="rounded-2xl border border-outline-variant p-space-lg">
+            <h3 className="text-headline-sm font-semibold text-on-surface">{post.title}</h3>
+            <p className="mt-space-xs whitespace-pre-wrap text-body-sm text-on-surface-variant">{post.body}</p>
+            <div className="mt-space-sm flex gap-space-md">
+              <button
+                type="button"
+                onClick={() => setViewingPost(post)}
+                className="font-semibold text-on-surface-variant hover:underline"
+              >
+                {t('viewButton')}
+              </button>
+              <button
+                type="button"
+                onClick={() => handleDecision(post.id, 'published')}
+                className="font-semibold text-primary hover:underline"
+              >
+                {t('approveButton')}
+              </button>
+              <button
+                type="button"
+                onClick={() => handleDecision(post.id, 'rejected')}
+                className="font-semibold text-error hover:underline"
+              >
+                {t('rejectButton')}
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <ForumPostViewDialog post={viewingPost} onClose={() => setViewingPost(null)} />
+    </>
   )
 }

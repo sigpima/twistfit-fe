@@ -60,4 +60,18 @@ describe('ForumModerationQueue', () => {
     renderWithIntl(<ForumModerationQueue />)
     await waitFor(() => expect(screen.getByText('Không có bài nào chờ duyệt.')).toBeInTheDocument())
   })
+
+  it('opens the post view dialog when the view button is clicked', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POSTS }))
+    renderWithIntl(<ForumModerationQueue />)
+    await waitFor(() => expect(screen.getByText('Bài chờ duyệt')).toBeInTheDocument())
+
+    fireEvent.click(screen.getByRole('button', { name: 'Xem bài viết' }))
+
+    expect(screen.getByRole('button', { name: 'Đóng' })).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Đóng' }))
+
+    expect(screen.queryByRole('button', { name: 'Đóng' })).not.toBeInTheDocument()
+  })
 })
