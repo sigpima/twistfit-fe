@@ -18,3 +18,8 @@ export const HERO_SLIDESHOW_DESKTOP_IMAGES: HeroSlideshowImage[] = IMAGE_NUMBERS
   src: `/home/hero-slideshow/desktop/img-${number}.jpg`,
   alt: '',
 }))
+
+export const HERO_SLIDESHOW_DESKTOP_WIDE_IMAGES: HeroSlideshowImage[] = IMAGE_NUMBERS.map((number) => ({
+  src: `/home/hero-slideshow/desktop-wide/img-${number}.jpg`,
+  alt: '',
+}))
