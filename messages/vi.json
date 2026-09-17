@@ -374,9 +374,6 @@
       "sustainable-swap": "Trao đổi đồ cũ"
     },
     "categoryAll": "Tất cả",
-    "AuthGate": {
-      "checkingAccess": "Đang kiểm tra đăng nhập..."
-    },
     "PostForm": {
       "fields": {
         "title": "Tiêu đề",
@@ -475,6 +472,9 @@
       "reasonLabel": "Lý do"
     }
   },
+  "Auth": {
+    "checkingAccess": "Đang kiểm tra đăng nhập..."
+  },
   "Login": {
     "title": "Đăng Nhập TwistFit",
     "subtitle": "Đăng nhập để tiếp tục hành trình khám phá Personal Color của bạn.",
@@ -496,6 +496,42 @@
     "submit": "ĐĂNG NHẬP",
     "noAccount": "Chưa có tài khoản?",
     "registerLink": "Đăng ký ngay"
+  },
+  "Profile": {
+    "title": "Thông tin cá nhân",
+    "adminBadge": "Admin",
+    "PersonalInfo": {
+      "heading": "Thông tin cá nhân",
+      "fields": {
+        "name": "Họ và tên",
+        "phone": "Số điện thoại",
+        "email": "Địa chỉ Email"
+      },
+      "phonePlaceholder": "0912345678",
+      "emailLockedNote": "Email dùng để đăng nhập, không thể thay đổi.",
+      "saveButton": "Lưu thay đổi",
+      "saving": "Đang lưu...",
+      "successMessage": "Đã cập nhật thông tin.",
+      "phoneTakenError": "Số điện thoại này đã được dùng cho tài khoản khác.",
+      "invalidPhoneError": "Số điện thoại không hợp lệ.",
+      "genericError": "Có lỗi xảy ra, vui lòng thử lại."
+    },
+    "ChangePassword": {
+      "heading": "Đổi mật khẩu",
+      "fields": {
+        "currentPassword": "Mật khẩu hiện tại",
+        "newPassword": "Mật khẩu mới",
+        "confirmPassword": "Xác nhận mật khẩu mới"
+      },
+      "showPassword": "Hiện mật khẩu",
+      "hidePassword": "Ẩn mật khẩu",
+      "saveButton": "Đổi mật khẩu",
+      "saving": "Đang đổi...",
+      "successMessage": "Đã đổi mật khẩu thành công.",
+      "mismatchError": "Mật khẩu xác nhận không khớp.",
+      "incorrectCurrentError": "Mật khẩu hiện tại không đúng.",
+      "genericError": "Có lỗi xảy ra, vui lòng thử lại."
+    }
   },
   "Register": {
     "title": "Tạo Tài Khoản TwistFit",

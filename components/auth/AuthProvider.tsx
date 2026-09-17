@@ -21,6 +21,7 @@ type AuthContextValue = {
   isHydrated: boolean
   login: (identifier: string, password: string) => Promise<AuthUser | null>
   logout: () => void
+  updateUser: (account: AuthUser) => void
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -60,7 +61,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     void apiFetch('/auth/logout', { method: 'POST' }).catch(() => {})
   }
 
-  return <AuthContext.Provider value={{ user, isHydrated, login, logout }}>{children}</AuthContext.Provider>
+  function updateUser(account: AuthUser) {
+    setUser(account)
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(account))
+  }
+
+  return (
+    <AuthContext.Provider value={{ user, isHydrated, login, logout, updateUser }}>{children}</AuthContext.Provider>
+  )
 }
 
 export function useAuth() {
