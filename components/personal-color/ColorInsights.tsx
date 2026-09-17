@@ -70,7 +70,7 @@ export default function ColorInsights({ subSeason }: { subSeason: SubSeason }) {
           <span className="material-symbols-outlined text-[16px] text-rose-500">picture_as_pdf</span>
           <span>{t('downloadPdfButton')}</span>
         </button>
-        <CameraArButton />
+        <CameraArButton subSeason={subSeason} />
       </div>
     </section>
   )

@@ -5,15 +5,18 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import QRCode from 'react-qr-code'
 import { isMobileDevice } from '@/lib/isMobileDevice'
+import type { SubSeason } from '@/lib/db'
+import { subSeasonToPaletteId } from '@/lib/subSeasonToPaletteId'
 
-export default function CameraArButton() {
+export default function CameraArButton({ subSeason }: { subSeason: SubSeason }) {
   const t = useTranslations('PersonalColor.Result.CameraArButton')
   const router = useRouter()
   const [isQrOpen, setIsQrOpen] = useState(false)
+  const cameraFramePath = `/camera-frame?palette=${subSeasonToPaletteId(subSeason)}`
 
   function handleClick() {
     if (isMobileDevice(window.navigator.userAgent)) {
-      router.push('/camera-frame')
+      router.push(cameraFramePath)
       return
     }
     setIsQrOpen(true)
@@ -53,7 +56,7 @@ export default function CameraArButton() {
               <h3 className="text-headline-sm font-bold text-on-surface">{t('modalTitle')}</h3>
               <p className="mt-2 max-w-xs text-body-md text-on-surface-variant">{t('modalDescription')}</p>
               <div className="mt-6 rounded-2xl bg-surface-container-low p-4 shadow-inner">
-                <QRCode value={`${window.location.origin}/camera-frame`} size={192} title={t('qrTitle')} />
+                <QRCode value={`${window.location.origin}${cameraFramePath}`} size={192} title={t('qrTitle')} />
               </div>
             </div>
           </div>
