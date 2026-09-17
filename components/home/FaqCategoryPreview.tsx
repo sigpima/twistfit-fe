@@ -27,16 +27,17 @@ export default function FaqCategoryPreview() {
             <Link
               key={category.id}
               href={`/faq?category=${category.id}`}
-              className="group flex aspect-square flex-col items-center justify-center gap-3 rounded-3xl bg-surface-container-lowest p-4 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
+              className="group relative flex aspect-square flex-col justify-end overflow-hidden rounded-3xl shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
             >
-              <span className={`flex h-14 w-14 items-center justify-center rounded-2xl ${category.tint}`}>
-                <span className="material-symbols-outlined text-[28px]" aria-hidden="true">
-                  {category.icon}
-                </span>
-              </span>
-              <span className="text-label-lg font-semibold text-on-surface transition-colors group-hover:text-primary">
-                {tCategories(category.key)}
-              </span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={category.image}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+              <span className="relative p-4 text-label-lg font-semibold text-white">{tCategories(category.key)}</span>
             </Link>
           ))}
         </div>

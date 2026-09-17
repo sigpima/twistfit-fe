@@ -22,6 +22,25 @@ describe('FaqCategoryPreview', () => {
     expect(screen.getByRole('link', { name: /Chính sách/ })).toHaveAttribute('href', '/faq?category=policy')
   })
 
+  it('renders each category tile with its matching background image', () => {
+    renderWithIntl(<FaqCategoryPreview />)
+
+    expect(screen.getByRole('link', { name: /Tài khoản & Dữ liệu/ }).querySelector('img')).toHaveAttribute(
+      'src',
+      '/faq/account.jpg'
+    )
+    expect(
+      screen.getByRole('link', { name: /Trắc nghiệm Personal Color/ }).querySelector('img')
+    ).toHaveAttribute('src', '/faq/personal-color.jpg')
+    expect(
+      screen.getByRole('link', { name: /Phòng thử đồ ảo \(Fitting Room\)/ }).querySelector('img')
+    ).toHaveAttribute('src', '/faq/fitting-room.jpg')
+    expect(screen.getByRole('link', { name: /Chính sách/ }).querySelector('img')).toHaveAttribute(
+      'src',
+      '/faq/policy.jpg'
+    )
+  })
+
   it('renders a link to view all FAQ questions', () => {
     renderWithIntl(<FaqCategoryPreview />)
     expect(screen.getByRole('link', { name: 'Xem tất cả câu hỏi' })).toHaveAttribute('href', '/faq')
