@@ -10,7 +10,6 @@ const STEP_BY_PATHNAME: Record<string, FlowStep> = {
   '/outfit/step-1': 1,
   '/outfit/step-2': 2,
   '/outfit/step-3': 3,
-  '/outfit/step-4': 4,
 }
 
 export default function OutfitFlowChrome({ children }: { children: ReactNode }) {

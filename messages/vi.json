@@ -760,12 +760,11 @@
   "Outfit": {
     "Stepper": {
       "kicker": "Virtual Fitting Studio",
-      "kickerSuffix": "Quy trình 4 bước",
+      "kickerSuffix": "Quy trình 3 bước",
       "badge": "AI Segmentation 4.0 Online",
       "steps": {
         "chooseGarment": "Chọn Quần Áo",
         "modelAndFace": "Dáng & Khuôn Mặt",
-        "poseAndAngle": "Tư Thế & Góc Nhìn",
         "viewResult": "Xem Kết Quả 3D"
       },
       "statusCurrent": "Bước {step} · Đang chọn",
@@ -780,8 +779,8 @@
       "Page": {
         "bannerTitle": "Lộ trình thử đồ thông minh cá nhân hóa",
         "bannerSubtitle": "Hệ thống phân tách bóc phông chuẩn Studio, hỗ trợ link sàn Shopee, Zara, TikTok Shop",
-        "bannerImageAlt": "Quy trình thử đồ ảo TwistFit 4 bước",
-        "stepBadge": "Step 01 / 04",
+        "bannerImageAlt": "Quy trình thử đồ ảo TwistFit 3 bước",
+        "stepBadge": "Step 01 / 03",
         "tagline": "A little twist, a better fit",
         "heading": "Chọn Trang Phục Cho Buổi Thử Đồ",
         "subheading": "Chọn từ tủ đồ cá nhân đã lưu, hoặc tải ảnh/dán link sản phẩm để thêm trang phục mới trước khi thử đồ.",
@@ -825,7 +824,8 @@
         "heading": "Bước 2: Chọn Người Mẫu",
         "subheading": "Chọn người mẫu phù hợp để AI dựng trang phục lên đúng vóc dáng.",
         "backButton": "Quay lại Bước 1 (Chọn đồ)",
-        "continueButton": "Xác nhận người mẫu & Tiếp tục sang Bước 3"
+        "generateButton": "Xác nhận người mẫu & Tạo Đồ Ảo Ngay",
+        "generateError": "Không thể tạo yêu cầu phối đồ, vui lòng thử lại."
       },
       "SelectedGarmentBanner": {
         "selectedLabel": "Trang phục đã chọn (B1)",
@@ -835,29 +835,15 @@
     },
     "Step3": {
       "Page": {
-        "heading": "Bước 3: Chọn Góc Nhìn",
-        "subheading": "Chọn góc chính diện hoặc góc nghiêng của người mẫu đã chọn.",
-        "generateButton": "Tạo Đồ Ảo Ngay",
-        "backButton": "Quay lại Bước 2",
-        "generateError": "Không thể tạo yêu cầu phối đồ, vui lòng thử lại."
-      },
-      "PoseSelector": {
-        "heading": "Chọn góc nhìn",
-        "poses": {
-          "front": { "label": "Đứng thẳng phía trước" },
-          "side": { "label": "Nghiêng cạnh bên" }
-        }
-      }
-    },
-    "Step4": {
-      "Page": {
         "heading": "Kết Quả Thử Đồ",
         "newOutfitButton": "Phối Đồ Mới"
       },
       "ResultPreview": {
         "noJob": "Chưa có yêu cầu phối đồ nào.",
         "processingStatus": "Đang xử lý phối đồ, vui lòng đợi...",
-        "failedStatus": "Không thể hoàn tất phối đồ."
+        "failedStatus": "Không thể hoàn tất phối đồ.",
+        "frontImageAlt": "Ảnh trực diện",
+        "sideImageAlt": "Ảnh nghiêng"
       },
       "AccessoryRecommendations": {
         "heading": "Phụ kiện gợi ý cho bạn",

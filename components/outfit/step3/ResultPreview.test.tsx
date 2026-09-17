@@ -29,12 +29,18 @@ describe('ResultPreview', () => {
     expect(screen.getByText('Chưa có yêu cầu phối đồ nào.')).toBeInTheDocument()
   })
 
-  it('polls until the job is done, then shows the result image', async () => {
+  it('polls until the job is done, then shows both the front and side result images', async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true })
     const fetchMock = vi
       .fn()
       .mockResolvedValueOnce(jsonResponse({ status: 'processing' }))
-      .mockResolvedValueOnce(jsonResponse({ status: 'done', resultBlobUrl: 'https://example.com/result.png' }))
+      .mockResolvedValueOnce(
+        jsonResponse({
+          status: 'done',
+          resultFrontBlobUrl: 'https://example.com/front.png',
+          resultSideBlobUrl: 'https://example.com/side.png',
+        })
+      )
     vi.stubGlobal('fetch', fetchMock)
 
     renderWithIntl(
@@ -47,7 +53,32 @@ describe('ResultPreview', () => {
     expect(screen.getByText('Đang xử lý phối đồ, vui lòng đợi...')).toBeInTheDocument()
 
     await vi.advanceTimersByTimeAsync(3000)
-    await waitFor(() => expect(screen.getByAltText('')).toHaveAttribute('src', 'https://example.com/result.png'))
+    await waitFor(() =>
+      expect(screen.getByAltText('Ảnh trực diện')).toHaveAttribute('src', 'https://example.com/front.png')
+    )
+    expect(screen.getByAltText('Ảnh nghiêng')).toHaveAttribute('src', 'https://example.com/side.png')
+  })
+
+  it('shows only the front result image when the model has no side pose', async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true })
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(
+        jsonResponse({ status: 'done', resultFrontBlobUrl: 'https://example.com/front.png', resultSideBlobUrl: null })
+      )
+    )
+
+    renderWithIntl(
+      <OutfitFlowProvider>
+        <SetJobId jobId={8} />
+        <ResultPreview />
+      </OutfitFlowProvider>
+    )
+
+    await waitFor(() =>
+      expect(screen.getByAltText('Ảnh trực diện')).toHaveAttribute('src', 'https://example.com/front.png')
+    )
+    expect(screen.queryByAltText('Ảnh nghiêng')).not.toBeInTheDocument()
   })
 
   it('shows the error message when the job fails', async () => {

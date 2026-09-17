@@ -1,34 +1,18 @@
 import { describe, expect, it } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { renderHook, act } from '@testing-library/react'
-import {
-  OutfitFlowProvider,
-  useOutfitFlow,
-  DEFAULT_GARMENT,
-  FALLBACK_MODEL,
-  DEFAULT_POSE,
-} from './OutfitFlowProvider'
+import { OutfitFlowProvider, useOutfitFlow, DEFAULT_GARMENT, FALLBACK_MODEL } from './OutfitFlowProvider'
 
 function TestConsumer() {
-  const {
-    selectedGarment,
-    setSelectedGarment,
-    selectedModel,
-    setSelectedModel,
-    selectedPose,
-    setSelectedPose,
-    maxStepReached,
-    markStepVisited,
-  } = useOutfitFlow()
+  const { selectedGarment, setSelectedGarment, selectedModel, setSelectedModel, maxStepReached, markStepVisited } =
+    useOutfitFlow()
   return (
     <div>
       <span>{selectedGarment.name}</span>
       <span>{selectedModel.name}</span>
-      <span>{selectedPose.label}</span>
       <span>Max: {maxStepReached}</span>
       <button onClick={() => markStepVisited(3)}>mark step 3</button>
       <button onClick={() => markStepVisited(2)}>mark step 2</button>
-      <button onClick={() => setSelectedPose({ id: 'side', label: 'Nghiêng cạnh bên' })}>select side pose</button>
       <button
         onClick={() =>
           setSelectedGarment({
@@ -69,17 +53,6 @@ describe('OutfitFlowProvider', () => {
     )
     expect(screen.getByText(DEFAULT_GARMENT.name)).toBeInTheDocument()
     expect(screen.getByText(FALLBACK_MODEL.name)).toBeInTheDocument()
-    expect(screen.getByText(DEFAULT_POSE.label)).toBeInTheDocument()
-  })
-
-  it('updates the selected pose when setSelectedPose is called', () => {
-    render(
-      <OutfitFlowProvider>
-        <TestConsumer />
-      </OutfitFlowProvider>
-    )
-    fireEvent.click(screen.getByText('select side pose'))
-    expect(screen.getByText('Nghiêng cạnh bên')).toBeInTheDocument()
   })
 
   it('updates the selected garment when setSelectedGarment is called', () => {

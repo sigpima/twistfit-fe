@@ -14,7 +14,7 @@ type Accessory = {
 }
 
 export default function AccessoryRecommendations() {
-  const t = useTranslations('Outfit.Step4.AccessoryRecommendations')
+  const t = useTranslations('Outfit.Step3.AccessoryRecommendations')
   const { selectedOccasion, selectedStyle } = useOutfitFlow()
   const [accessories, setAccessories] = useState<Accessory[]>([])
 

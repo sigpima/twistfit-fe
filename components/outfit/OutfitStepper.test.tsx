@@ -23,13 +23,12 @@ describe('OutfitStepper', () => {
   })
 
   it('renders steps already visited ahead of the current step as clickable links', () => {
-    renderWithIntl(<OutfitStepper currentStep={2} maxStepReached={4} />)
-    expect(screen.getByRole('link', { name: /Tư Thế & Góc Nhìn/ })).toHaveAttribute('href', '/outfit/step-3')
-    expect(screen.getByRole('link', { name: /Xem Kết Quả 3D/ })).toHaveAttribute('href', '/outfit/step-4')
+    renderWithIntl(<OutfitStepper currentStep={2} maxStepReached={3} />)
+    expect(screen.getByRole('link', { name: /Xem Kết Quả 3D/ })).toHaveAttribute('href', '/outfit/step-3')
   })
 
   it('does not link to steps beyond the furthest one reached', () => {
-    renderWithIntl(<OutfitStepper currentStep={2} maxStepReached={2} />)
-    expect(screen.queryByRole('link', { name: /Tư Thế & Góc Nhìn/ })).not.toBeInTheDocument()
+    renderWithIntl(<OutfitStepper currentStep={1} maxStepReached={1} />)
+    expect(screen.queryByRole('link', { name: /Dáng & Khuôn Mặt/ })).not.toBeInTheDocument()
   })
 })

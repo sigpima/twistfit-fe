@@ -76,6 +76,6 @@ describe('OutfitFlowChrome', () => {
       )
     )
 
-    expect(screen.getByRole('link', { name: /Tư Thế & Góc Nhìn/ })).toHaveAttribute('href', '/outfit/step-3')
+    expect(screen.getByRole('link', { name: /Xem Kết Quả 3D/ })).toHaveAttribute('href', '/outfit/step-3')
   })
 })

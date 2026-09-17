@@ -3,6 +3,9 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { apiFetch } from '@/lib/apiClient'
+import { useOutfitFlow } from '../OutfitFlowProvider'
 import SelectedGarmentBanner from './SelectedGarmentBanner'
 import ModelCatalog from './ModelCatalog'
 import type { CatalogModel } from '@/lib/modelCatalog'
@@ -10,8 +13,39 @@ import type { CatalogModel } from '@/lib/modelCatalog'
 export default function Step2PageContent({ models }: { models: CatalogModel[] }) {
   const t = useTranslations('Outfit.Step2.Page')
   const router = useRouter()
+  const { selectedModel, occasionStyleMode, selectedOccasion, selectedStyle, setJobId } = useOutfitFlow()
+  const [isGenerating, setIsGenerating] = useState(false)
+  const [generateError, setGenerateError] = useState(false)
 
-  function handleContinue() {
+  async function handleGenerate() {
+    const catalogModelId = Number(selectedModel.id)
+    if (Number.isNaN(catalogModelId)) {
+      setGenerateError(true)
+      return
+    }
+
+    setIsGenerating(true)
+    setGenerateError(false)
+
+    const response = await apiFetch('/tryon', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        catalogModelId,
+        occasion: occasionStyleMode === 'occasion' ? selectedOccasion : 'hang-ngay',
+        style: occasionStyleMode === 'style' ? selectedStyle : 'casual',
+      }),
+    })
+
+    setIsGenerating(false)
+
+    if (!response.ok) {
+      setGenerateError(true)
+      return
+    }
+
+    const job = (await response.json()) as { id: number }
+    setJobId(job.id)
     router.push('/outfit/step-3')
   }
 
@@ -36,22 +70,26 @@ export default function Step2PageContent({ models }: { models: CatalogModel[] })
         </div>
       </section>
       <section className="sticky bottom-0 z-40 w-full bg-surface-container-lowest/95 px-margin-desktop py-space-md shadow-xl backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-space-md sm:flex-row">
-          <Link
-            href="/outfit/step-1"
-            className="flex w-full items-center justify-center gap-space-xs rounded-full bg-surface-container-high px-space-lg py-3 text-label-lg text-on-surface transition-colors hover:bg-surface-container-highest sm:w-auto"
-          >
-            <span className="material-symbols-outlined text-[18px]">arrow_back</span>
-            {t('backButton')}
-          </Link>
-          <button
-            type="button"
-            onClick={handleContinue}
-            className="flex w-full items-center justify-center gap-space-sm rounded-full bg-primary px-space-xl py-3.5 text-label-lg text-on-primary shadow-md transition-all hover:bg-primary-container hover:shadow-lg sm:w-auto"
-          >
-            <span>{t('continueButton')}</span>
-            <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
-          </button>
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-space-sm">
+          <div className="flex w-full flex-col items-center justify-between gap-space-md sm:flex-row">
+            <Link
+              href="/outfit/step-1"
+              className="flex w-full items-center justify-center gap-space-xs rounded-full bg-surface-container-high px-space-lg py-3 text-label-lg text-on-surface transition-colors hover:bg-surface-container-highest sm:w-auto"
+            >
+              <span className="material-symbols-outlined text-[18px]">arrow_back</span>
+              {t('backButton')}
+            </Link>
+            <button
+              type="button"
+              onClick={handleGenerate}
+              disabled={isGenerating}
+              className="flex w-full items-center justify-center gap-space-sm rounded-full bg-primary px-space-xl py-3.5 text-label-lg text-on-primary shadow-md transition-all hover:bg-primary-container hover:shadow-lg disabled:opacity-60 sm:w-auto"
+            >
+              <span>{t('generateButton')}</span>
+              <span className="material-symbols-outlined text-[20px]">bolt</span>
+            </button>
+          </div>
+          {generateError && <p className="text-center text-body-sm text-error">{t('generateError')}</p>}
         </div>
       </section>
     </div>

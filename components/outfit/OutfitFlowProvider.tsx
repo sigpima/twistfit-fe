@@ -36,14 +36,7 @@ export const FALLBACK_MODEL: Model = {
   sideImage: '/outfit/models/female-1-side.jpg',
 }
 
-export type Pose = {
-  id: string
-  label: string
-}
-
-export const DEFAULT_POSE: Pose = { id: 'front', label: 'Đứng thẳng phía trước' }
-
-export type FlowStep = 1 | 2 | 3 | 4
+export type FlowStep = 1 | 2 | 3
 
 export type OccasionTag = string
 export type StyleTag = string
@@ -54,8 +47,6 @@ type OutfitFlowContextValue = {
   setSelectedGarment: (garment: Garment) => void
   selectedModel: Model
   setSelectedModel: (model: Model) => void
-  selectedPose: Pose
-  setSelectedPose: (pose: Pose) => void
   maxStepReached: FlowStep
   markStepVisited: (step: FlowStep) => void
   occasionStyleMode: OccasionStyleMode
@@ -79,7 +70,6 @@ export function OutfitFlowProvider({
 }) {
   const [selectedGarment, setSelectedGarment] = useState<Garment>(DEFAULT_GARMENT)
   const [selectedModel, setSelectedModel] = useState<Model>(initialModel ?? FALLBACK_MODEL)
-  const [selectedPose, setSelectedPose] = useState<Pose>(DEFAULT_POSE)
   const [maxStepReached, setMaxStepReached] = useState<FlowStep>(1)
   const [occasionStyleMode, setOccasionStyleMode] = useState<OccasionStyleMode>('occasion')
   const [selectedOccasion, setSelectedOccasion] = useState<OccasionTag>('hang-ngay')
@@ -97,8 +87,6 @@ export function OutfitFlowProvider({
         setSelectedGarment,
         selectedModel,
         setSelectedModel,
-        selectedPose,
-        setSelectedPose,
         maxStepReached,
         markStepVisited,
         occasionStyleMode,

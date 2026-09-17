@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation'
 import AccessoryRecommendations from './AccessoryRecommendations'
 import ResultPreview from './ResultPreview'
 
-export default function Step4PageContent() {
-  const t = useTranslations('Outfit.Step4.Page')
+export default function Step3PageContent() {
+  const t = useTranslations('Outfit.Step3.Page')
   const router = useRouter()
 
   return (

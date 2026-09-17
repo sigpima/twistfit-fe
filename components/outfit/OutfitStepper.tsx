@@ -6,16 +6,15 @@ import Link from 'next/link'
 const STEPS = [
   { step: 1, key: 'chooseGarment', href: '/outfit/step-1' },
   { step: 2, key: 'modelAndFace', href: '/outfit/step-2' },
-  { step: 3, key: 'poseAndAngle', href: '/outfit/step-3' },
-  { step: 4, key: 'viewResult', href: '/outfit/step-4' },
+  { step: 3, key: 'viewResult', href: '/outfit/step-3' },
 ] as const
 
 export default function OutfitStepper({
   currentStep,
   maxStepReached = currentStep,
 }: {
-  currentStep: 1 | 2 | 3 | 4
-  maxStepReached?: 1 | 2 | 3 | 4
+  currentStep: 1 | 2 | 3
+  maxStepReached?: 1 | 2 | 3
 }) {
   const t = useTranslations('Outfit.Stepper')
 
@@ -33,7 +32,7 @@ export default function OutfitStepper({
             <span>{t('badge')}</span>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-space-md pt-space-xs md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-space-md pt-space-xs md:grid-cols-3">
           {STEPS.map((item) => {
             const isCurrent = item.step === currentStep
             const isVisited = item.step <= maxStepReached

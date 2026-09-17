@@ -6,10 +6,15 @@ import { apiFetch } from '@/lib/apiClient'
 import { useOutfitFlow } from '../OutfitFlowProvider'
 
 type JobStatus = 'pending' | 'processing' | 'done' | 'failed'
-type JobPollResult = { status: JobStatus; resultBlobUrl: string | null; errorMessage: string | null }
+type JobPollResult = {
+  status: JobStatus
+  resultFrontBlobUrl: string | null
+  resultSideBlobUrl: string | null
+  errorMessage: string | null
+}
 
 export default function ResultPreview() {
-  const t = useTranslations('Outfit.Step4.ResultPreview')
+  const t = useTranslations('Outfit.Step3.ResultPreview')
   const { jobId } = useOutfitFlow()
   const [job, setJob] = useState<JobPollResult | null>(null)
 
@@ -45,12 +50,20 @@ export default function ResultPreview() {
     return <p className="text-center text-body-md text-error">{job.errorMessage ?? t('failedStatus')}</p>
   }
 
-  const resultImageUrl = job.resultBlobUrl ?? '/outfit/flow-overview.png'
+  const frontImageUrl = job.resultFrontBlobUrl ?? '/outfit/flow-overview.png'
 
   return (
-    <div className="overflow-hidden rounded-2xl bg-surface-container-lowest shadow-xl">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={resultImageUrl} alt="" className="h-auto w-full object-contain" />
+    <div className="grid grid-cols-1 gap-space-md sm:grid-cols-2">
+      <div className="overflow-hidden rounded-2xl bg-surface-container-lowest shadow-xl">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={frontImageUrl} alt={t('frontImageAlt')} className="h-auto w-full object-contain" />
+      </div>
+      {job.resultSideBlobUrl && (
+        <div className="overflow-hidden rounded-2xl bg-surface-container-lowest shadow-xl">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={job.resultSideBlobUrl} alt={t('sideImageAlt')} className="h-auto w-full object-contain" />
+        </div>
+      )}
     </div>
   )
 }
