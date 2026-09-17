@@ -2,15 +2,13 @@
   "Header": {
     "nav": {
       "about": "Về chúng tôi",
-      "howItWorks": "Cơ chế vận hành",
-      "faq": "FAQ",
-      "blog": "Blog"
+      "community": "Cộng đồng TwistFit",
+      "blog": "Cảm hứng"
     },
     "featuresLabel": "Tính năng",
     "features": {
       "personalColorTest": "Test Personal Color",
-      "outfitStyling": "Phối đồ",
-      "forum": "Diễn đàn"
+      "outfitStyling": "Phối đồ"
     },
     "login": "Đăng nhập",
     "register": "Đăng ký",
@@ -355,6 +353,8 @@
         "body": "Nội dung",
         "image": "Hình ảnh (không bắt buộc)"
       },
+      "tabWrite": "Soạn thảo",
+      "tabPreview": "Xem trước",
       "imageUploading": "Đang tải ảnh lên...",
       "imageUploadError": "Tải ảnh lên thất bại, vui lòng thử lại.",
       "removeImageButton": "Xóa ảnh",
@@ -429,10 +429,14 @@
     "Moderation": {
       "title": "Kiểm duyệt Diễn đàn",
       "pendingTitle": "Bài chờ duyệt",
+      "viewButton": "Xem bài viết",
       "approveButton": "Duyệt",
       "rejectButton": "Từ chối",
       "pendingEmptyState": "Không có bài nào chờ duyệt.",
       "loading": "Đang tải...",
+      "ViewDialog": {
+        "closeButton": "Đóng"
+      },
       "reportsTitle": "Báo cáo",
       "resolveButton": "Đánh dấu đã xử lý",
       "hideButton": "Ẩn bài",
@@ -506,14 +510,14 @@
     "features": {
       "colorTest": "Đánh giá màu sắc cá nhân",
       "virtualFitting": "Phối đồ",
-      "newsletter": "Diễn đàn"
+      "newsletter": "Cộng đồng TwistFit"
     },
     "supportHeading": "Hỗ trợ & thông tin",
     "support": {
       "about": "Về chúng tôi",
       "howItWorks": "Cơ chế vận hành",
       "faq": "Câu hỏi thường gặp",
-      "blog": "Bài viết"
+      "blog": "Cảm hứng"
     },
     "contactHeading": "Liên hệ & hợp tác",
     "email": "twistfit.official@gmail.com",
