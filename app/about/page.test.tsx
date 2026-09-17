@@ -30,6 +30,6 @@ describe('AboutPage', () => {
     const page = await AboutPage()
     renderWithIntl(page)
     expect(screen.getByText('Thành viên seed test')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Ý Nghĩa Tên Thương Hiệu' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Ý nghĩa thương hiệu' })).toBeInTheDocument()
   })
 })
