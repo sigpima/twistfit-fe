@@ -50,7 +50,7 @@ export default function AboutHero() {
             tagline: (chunks) => <span className="font-semibold italic text-primary">{chunks}</span>,
           })}
         </p>
-        <div className="mt-space-xl grid w-full grid-cols-2 gap-space-md lg:grid-cols-4">
+        {/* <div className="mt-space-xl grid w-full grid-cols-2 gap-space-md lg:grid-cols-4">
           <div className="flex flex-col items-center rounded-xl bg-surface-container-lowest/80 p-space-lg shadow-sm backdrop-blur-md transition-all duration-300 hover:shadow-md">
             <div className="mb-space-sm flex h-10 w-10 items-center justify-center rounded-full bg-primary-fixed text-on-primary-fixed">
               <span className="material-symbols-outlined text-[20px]">palette</span>
@@ -79,7 +79,7 @@ export default function AboutHero() {
             <span className="text-headline-lg font-bold tracking-tight text-tertiary">{t('stat4Value')}</span>
             <span className="mt-space-xs text-label-md text-on-surface-variant">{t('stat4Label')}</span>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   )
