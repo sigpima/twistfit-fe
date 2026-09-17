@@ -273,6 +273,32 @@
       "unauthorizedError": "Bạn cần đăng nhập với quyền quản trị.",
       "genericError": "Có lỗi xảy ra, vui lòng thử lại."
     },
+    "TaxonomyGroupList": {
+      "title": "Quản lý thuộc tính (Taxonomy)",
+      "columnLabel": "Tên nhóm",
+      "columnValueCount": "Số giá trị",
+      "manageButton": "Quản lý",
+      "newGroupLabel": "Tên nhóm mới",
+      "addGroupButton": "Thêm nhóm",
+      "emptyState": "Chưa có nhóm nào.",
+      "loading": "Đang tải...",
+      "genericError": "Có lỗi xảy ra, vui lòng thử lại."
+    },
+    "TaxonomyGroupDetail": {
+      "groupLabelField": "Tên nhóm",
+      "saveGroupButton": "Lưu tên nhóm",
+      "valuesTitle": "Giá trị trong nhóm",
+      "newValueLabel": "Tên giá trị mới",
+      "addValueButton": "Thêm giá trị",
+      "editButton": "Sửa",
+      "saveButton": "Lưu",
+      "cancelButton": "Hủy",
+      "deleteButton": "Xóa",
+      "deleteConfirm": "Xóa giá trị này?",
+      "genericError": "Có lỗi xảy ra, vui lòng thử lại.",
+      "loading": "Đang tải...",
+      "notFound": "Không tìm thấy nhóm."
+    },
     "TeamForm": {
       "fields": {
         "image": "Ảnh (URL)",
