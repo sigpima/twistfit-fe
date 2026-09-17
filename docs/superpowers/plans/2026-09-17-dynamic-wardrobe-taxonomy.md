@@ -36,7 +36,7 @@
 **Interfaces:**
 - Produces: `TaxonomyGroup` (columns: `id`, `key: str` unique, `label: str`, `sort_order: int`, `created_at`, `updated_at`, relationship `values: list[TaxonomyValue]`), `TaxonomyValue` (columns: `id`, `group_id: int` FK, `key: str`, `label: str`, `sort_order: int`, `created_at`, `updated_at`, relationship `group: TaxonomyGroup`), both in `app.domains.taxonomy.models`, table names `taxonomy_groups` / `taxonomy_values`.
 
-- [ ] **Step 1: Write the failing model test**
+- [x] **Step 1: Write the failing model test**
 
 ```python
 # backend/tests/domains/taxonomy/test_models.py
@@ -69,19 +69,19 @@ def test_deleting_group_cascades_to_its_values(db_session):
     assert db_session.get(TaxonomyValue, value_id) is None
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `cd backend && pytest tests/domains/taxonomy/test_models.py -v`
 Expected: FAIL with `ModuleNotFoundError: No module named 'app.domains.taxonomy'`
 
-- [ ] **Step 3: Create the empty package files**
+- [x] **Step 3: Create the empty package files**
 
 ```bash
 mkdir -p backend/app/domains/taxonomy backend/tests/domains/taxonomy
 touch backend/app/domains/taxonomy/__init__.py backend/tests/domains/taxonomy/__init__.py
 ```
 
-- [ ] **Step 4: Write `models.py`**
+- [x] **Step 4: Write `models.py`**
 
 ```python
 # backend/app/domains/taxonomy/models.py
@@ -142,7 +142,7 @@ class TaxonomyValue(Base):
     group: Mapped["TaxonomyGroup"] = relationship("TaxonomyGroup", back_populates="values")
 ```
 
-- [ ] **Step 5: Register the model module in `alembic/env.py`**
+- [x] **Step 5: Register the model module in `alembic/env.py`**
 
 In `backend/alembic/env.py`, add this line alongside the other domain model imports (after the `accessories` import, since that's currently the last one):
 
@@ -151,7 +151,7 @@ from app.domains.accessories import models as accessories_models  # noqa: F401
 from app.domains.taxonomy import models as taxonomy_models  # noqa: F401
 ```
 
-- [ ] **Step 6: Generate and write the migration**
+- [x] **Step 6: Generate and write the migration**
 
 Run: `cd backend && alembic revision -m "create taxonomy_groups and taxonomy_values tables"`
 
@@ -212,12 +212,12 @@ def downgrade() -> None:
 
 Replace both `<rev>` placeholders with the actual generated revision id from the filename.
 
-- [ ] **Step 7: Run test to verify it passes**
+- [x] **Step 7: Run test to verify it passes**
 
 Run: `cd backend && pytest tests/domains/taxonomy/test_models.py -v`
 Expected: PASS (the `_migrated_test_database` session fixture in `tests/conftest.py` runs `alembic upgrade head` automatically, which now includes this migration)
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add backend/app/domains/taxonomy/__init__.py backend/app/domains/taxonomy/models.py \
@@ -238,7 +238,7 @@ git commit -m "feat(taxonomy): add TaxonomyGroup/TaxonomyValue models and migrat
 
 No test for this task alone — schemas are exercised end-to-end by Task 4's router tests (this mirrors how `faq/schemas.py` has no standalone test file; only `faq/service.py`/`faq/router.py` are tested).
 
-- [ ] **Step 1: Write `schemas.py`**
+- [x] **Step 1: Write `schemas.py`**
 
 ```python
 # backend/app/domains/taxonomy/schemas.py
@@ -306,12 +306,12 @@ class TaxonomyGroupResponse(CamelModel):
     updated_at: datetime
 ```
 
-- [ ] **Step 2: Verify it imports cleanly**
+- [x] **Step 2: Verify it imports cleanly**
 
 Run: `cd backend && python -c "from app.domains.taxonomy.schemas import TaxonomyGroupInput, TaxonomyGroupResponse, TaxonomyValueInput, TaxonomyValueResponse; print('ok')"`
 Expected: prints `ok`
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add backend/app/domains/taxonomy/schemas.py
@@ -341,7 +341,7 @@ git commit -m "feat(taxonomy): add taxonomy Pydantic schemas"
 
 This task's `delete_value` in-use check references `wardrobe_items.attributes` and `accessory_products.style_tags`/`occasion_tags`, which don't exist yet in this shape (Task 6/Task 10 change them later) — write the check now against a small local helper that Task 6/10 will make actually correct; for now, since `wardrobe_items` still has the OLD three-column shape until Task 5-6 run, the check queries the columns that exist **at the time each task lands**. To keep this task isolated and testable without depending on future tasks, `delete_value` here only guards against **other taxonomy data** integrity (nothing references a `TaxonomyValue` yet from outside the domain) — the cross-domain in-use guard is added in Task 6 (wardrobe) and Task 10 (accessories) once those tables/columns are in their final shape, each contributing an additional check into the same `delete_value` function. This task's test suite only covers plain CRUD + duplicate-key rejection; Task 6/10 add the in-use-guard tests.
 
-- [ ] **Step 1: Write the failing service tests**
+- [x] **Step 1: Write the failing service tests**
 
 ```python
 # backend/tests/domains/taxonomy/test_service.py
@@ -422,12 +422,12 @@ def test_get_group_values_returns_empty_list_for_unknown_group(db_session):
     assert service.get_group_values(db_session, "does-not-exist") == []
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `cd backend && pytest tests/domains/taxonomy/test_service.py -v`
 Expected: FAIL with `ModuleNotFoundError: No module named 'app.domains.taxonomy.service'`
 
-- [ ] **Step 3: Write `service.py`**
+- [x] **Step 3: Write `service.py`**
 
 ```python
 # backend/app/domains/taxonomy/service.py
@@ -523,12 +523,12 @@ def get_group_values(db: Session, group_key: str) -> list[str]:
     return [value.key for value in group.values]
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `cd backend && pytest tests/domains/taxonomy/test_service.py -v`
 Expected: PASS (9 tests)
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/domains/taxonomy/service.py backend/tests/domains/taxonomy/test_service.py
@@ -550,7 +550,7 @@ git commit -m "feat(taxonomy): add taxonomy service CRUD layer"
 - Consumes: `service.py` (Task 3), `schemas.py` (Task 2), `require_admin`/`get_db` (`app.deps`, `app.db.session`).
 - Produces: `router` (`APIRouter(prefix="/taxonomy", ...)`) with `GET /taxonomy`, `POST /taxonomy/groups`, `PUT /taxonomy/groups/{group_id}`, `POST /taxonomy/groups/{group_id}/values`, `PUT /taxonomy/values/{value_id}`, `DELETE /taxonomy/values/{value_id}`. `seed_demo_taxonomy_groups(db: Session) -> None` in `app.domains.taxonomy.seed`, called from `app.main`'s lifespan — this is what later tasks (frontend, wardrobe) rely on for the three real group keys `clothing-type`/`occasion`/`style` existing in a fresh dev DB.
 
-- [ ] **Step 1: Write the failing router tests**
+- [x] **Step 1: Write the failing router tests**
 
 ```python
 # backend/tests/domains/taxonomy/test_router.py
@@ -650,12 +650,12 @@ def test_seed_is_idempotent(db_session):
     assert len(groups) == 3
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `cd backend && pytest tests/domains/taxonomy/test_router.py tests/domains/taxonomy/test_seed.py -v`
 Expected: FAIL (`ModuleNotFoundError` for `app.domains.taxonomy.router` / `.seed`)
 
-- [ ] **Step 3: Write `router.py`**
+- [x] **Step 3: Write `router.py`**
 
 ```python
 # backend/app/domains/taxonomy/router.py
@@ -734,7 +734,7 @@ def delete_value(value_id: int, db: Session = Depends(get_db), _admin=Depends(re
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Không tìm thấy giá trị")
 ```
 
-- [ ] **Step 4: Write `seed.py`**
+- [x] **Step 4: Write `seed.py`**
 
 ```python
 # backend/app/domains/taxonomy/seed.py
@@ -791,7 +791,7 @@ def seed_demo_taxonomy_groups(db: Session) -> None:
     db.commit()
 ```
 
-- [ ] **Step 5: Register the router and seed in `app/main.py`**
+- [x] **Step 5: Register the router and seed in `app/main.py`**
 
 Add these imports alongside the other domain imports in `backend/app/main.py` (after the `accessories` import):
 
@@ -815,12 +815,12 @@ app.include_router(accessories_router)
 app.include_router(taxonomy_router)
 ```
 
-- [ ] **Step 6: Run tests to verify they pass**
+- [x] **Step 6: Run tests to verify they pass**
 
 Run: `cd backend && pytest tests/domains/taxonomy/ -v`
 Expected: PASS (all taxonomy tests, including Tasks 1 and 3's)
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add backend/app/domains/taxonomy/router.py backend/app/domains/taxonomy/seed.py \
@@ -840,13 +840,13 @@ git commit -m "feat(taxonomy): add taxonomy router, seed data, and app registrat
 
 This is a pure-SQL data migration; there's no unit test for it in this codebase's established style (no existing migration has one — see `Global Constraints`). Correctness is verified by Step 3 (manual run + inspect) below, which is a required step, not optional.
 
-- [ ] **Step 1: Generate the migration file**
+- [x] **Step 1: Generate the migration file**
 
 Run: `cd backend && alembic revision -m "migrate wardrobe items to attributes jsonb"`
 
 This creates `backend/alembic/versions/<rev>_migrate_wardrobe_items_to_attributes_jsonb.py`. Note the revision id it prints (call it `<rev>`), and confirm its `down_revision` was auto-set to the taxonomy migration's revision id from Task 1 Step 6 (Alembic always chains to the current head at generation time) — if not, set it manually.
 
-- [ ] **Step 2: Write the migration**
+- [x] **Step 2: Write the migration**
 
 ```python
 """migrate wardrobe items to attributes jsonb
@@ -928,7 +928,7 @@ def downgrade() -> None:
 
 Replace `<rev>` with the actual generated revision id, and `<taxonomy_migration_rev>` with Task 1 Step 6's revision id.
 
-- [ ] **Step 3: Run the migration against the test DB and manually verify**
+- [x] **Step 3: Run the migration against the test DB and manually verify**
 
 Run: `cd backend && pytest tests/domains/taxonomy/ -v` (this triggers the session-scoped `_migrated_test_database` fixture, which runs every migration including this one, against `twistfit_test`)
 Expected: all taxonomy tests still PASS (they don't touch `wardrobe_items`, so this just proves the migration runs without SQL errors)
@@ -937,7 +937,7 @@ Then manually confirm the column change against the real dev DB (not test — th
 Run: `cd backend && alembic upgrade head`
 Then: `psql "$DATABASE_URL" -c "\d wardrobe_items"` (or the project's usual DB shell) and confirm `attributes` exists and `category`/`style_tags`/`occasion_tags` are gone. If any pre-existing rows exist, spot check one: `psql "$DATABASE_URL" -c "SELECT id, attributes FROM wardrobe_items LIMIT 5;"` and confirm `attributes` looks like `{"clothing-type": ["ao"], "style": [...], "occasion": [...]}`.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add backend/alembic/versions/
@@ -960,7 +960,7 @@ git commit -m "feat(wardrobe): migrate wardrobe_items to generic attributes json
 - Consumes: `taxonomy.service.get_group_values` (Task 3), `wardrobe_items.attributes` column (Task 5).
 - Produces: `WardrobeItem.attributes: dict[str, list[str]]` (was `category`/`style_tags`/`occasion_tags`). `WardrobeItemCreate(blob_url: str, attributes: dict[str, list[str]], dominant_colors: list[str])` — no more static `CATEGORIES`/`STYLE_TAGS`/`OCCASION_TAGS` module constants (deleted from this file; nothing outside this task's own changes imports them after this task — Task 9/accessories moves off its import of these in the same PR-equivalent scope). `service.create_item(db, user_id, data)` now validates every `attributes` key against a real taxonomy group and every value against that group's current values, raising `ValueError` (Vietnamese message) on mismatch — the router (Task 8) converts that to a 400.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 Append to `backend/tests/domains/wardrobe/test_service.py` (create the file with this content if it doesn't already exist — check first, since the investigation noted this file exists; if so, add these test functions to it):
 
@@ -1047,12 +1047,12 @@ def test_delete_value_rejects_when_referenced_by_a_wardrobe_item(db_session):
         service.delete_value(db_session, value.id)
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `cd backend && pytest tests/domains/wardrobe/test_service.py tests/domains/taxonomy/test_service.py -v`
 Expected: FAIL — `WardrobeItemCreate` still requires `category`/`style_tags`/`occasion_tags` and rejects `attributes` as an unexpected field; the new taxonomy test fails because `delete_value` doesn't check wardrobe usage yet.
 
-- [ ] **Step 3: Update `models.py`**
+- [x] **Step 3: Update `models.py`**
 
 Replace the three fixed columns with `attributes`:
 
@@ -1086,7 +1086,7 @@ class WardrobeItem(Base):
     )
 ```
 
-- [ ] **Step 4: Update `schemas.py`**
+- [x] **Step 4: Update `schemas.py`**
 
 ```python
 # backend/app/domains/wardrobe/schemas.py
@@ -1126,7 +1126,7 @@ class SuggestTagsRequest(CamelModel):
 
 Note: the module-level `CATEGORIES`/`STYLE_TAGS`/`OCCASION_TAGS` constants are gone. Task 9 (accessories) and Task 7 (this domain's own `gemini_client.py`) no longer import them from here after their own tasks land — until Task 7/9 run, those two files will fail to import; that's expected and fixed within this same work session (this task, Task 7, and Task 9 must all land together before the backend is left in a working state — see the note at the top of Task 7).
 
-- [ ] **Step 5: Update `service.py`**
+- [x] **Step 5: Update `service.py`**
 
 ```python
 # backend/app/domains/wardrobe/service.py
@@ -1164,7 +1164,7 @@ def create_item(db: Session, user_id: int, data: WardrobeItemCreate) -> Wardrobe
     return item
 ```
 
-- [ ] **Step 6: Add the in-use guard to `taxonomy/service.py`'s `delete_value`**
+- [x] **Step 6: Add the in-use guard to `taxonomy/service.py`'s `delete_value`**
 
 ```python
 # backend/app/domains/taxonomy/service.py
@@ -1196,12 +1196,12 @@ def delete_value(db: Session, value_id: int) -> bool:
 
 The `from app.domains.wardrobe.models import WardrobeItem` import is placed **inside the function**, not at module level, to avoid a circular import (`wardrobe/service.py` imports `taxonomy/service.py`, so `taxonomy/service.py` can't import `wardrobe/models.py` at module load time).
 
-- [ ] **Step 7: Run tests to verify they pass**
+- [x] **Step 7: Run tests to verify they pass**
 
 Run: `cd backend && pytest tests/domains/wardrobe/ tests/domains/taxonomy/ -v`
 Expected: everything under `tests/domains/taxonomy/` passes; `tests/domains/wardrobe/test_service.py`'s new tests pass. `tests/domains/wardrobe/test_router.py`, `test_models.py`, `test_gemini_client.py`, `test_upload_flow.py` will now FAIL (they still reference `category`/`style_tags`/`occasion_tags`) — that's expected and fixed by Tasks 7-8; note it and continue, don't try to fix those files in this task.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add backend/app/domains/wardrobe/models.py backend/app/domains/wardrobe/schemas.py \
@@ -1222,7 +1222,7 @@ git commit -m "feat(wardrobe): switch WardrobeItem to generic attributes, valida
 - Consumes: `taxonomy.service.list_groups` (Task 3).
 - Produces: `suggest_tags(image_bytes: bytes, db: Session) -> dict[str, list[str]]` (signature changed — now takes `db`; return shape is `{group_key: [value_key, ...]}` for every group that currently exists, not a fixed `{category, styleTags, occasionTags}` shape). `_call_gemini(image_bytes: bytes, prompt: str) -> str` (signature changed — prompt is now a parameter, not a module constant, since it's built per-request). Task 8's router passes its `db` dependency through to this function.
 
-- [ ] **Step 1: Write the failing tests (full replacement of the existing file)**
+- [x] **Step 1: Write the failing tests (full replacement of the existing file)**
 
 ```python
 # backend/tests/domains/wardrobe/test_gemini_client.py
@@ -1306,12 +1306,12 @@ def test_build_prompt_lists_every_current_group_and_its_values(db_session):
     assert "casual" in prompt
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `cd backend && pytest tests/domains/wardrobe/test_gemini_client.py -v`
 Expected: FAIL — `suggest_tags()` still takes only `image_bytes`, `_build_prompt` doesn't exist yet.
 
-- [ ] **Step 3: Rewrite `gemini_client.py`**
+- [x] **Step 3: Rewrite `gemini_client.py`**
 
 ```python
 # backend/app/domains/wardrobe/gemini_client.py
@@ -1386,12 +1386,12 @@ def suggest_tags(image_bytes: bytes, db: Session) -> dict[str, list[str]]:
     return _filter_valid(parsed, groups)
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `cd backend && pytest tests/domains/wardrobe/test_gemini_client.py -v`
 Expected: PASS (5 tests)
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/domains/wardrobe/gemini_client.py backend/tests/domains/wardrobe/test_gemini_client.py
@@ -1412,7 +1412,7 @@ git commit -m "feat(wardrobe): build Gemini classification prompt dynamically fr
 - Consumes: `wardrobe.gemini_client.suggest_tags(image_bytes, db)` (Task 7), `wardrobe.service.create_item` (Task 6).
 - Produces: `POST /wardrobe/items/suggest-tags` now returns `{**attributes_dict, "dominantColors": [...], "blobUrl": "..."}` (no more separate `category`/`styleTags`/`occasionTags` top-level keys — the suggested attributes are spread directly, keyed by whatever group keys exist).
 
-- [ ] **Step 1: Update `router.py`**
+- [x] **Step 1: Update `router.py`**
 
 ```python
 # backend/app/domains/wardrobe/router.py
@@ -1474,24 +1474,24 @@ def suggest_tags_endpoint(
 
 (Only changes: `create_item` now catches `ValueError` from the service and returns 400; `suggest_tags_endpoint` gains the `db` dependency and passes it through, and the response spreads `attributes` directly instead of the old fixed 3-key shape.)
 
-- [ ] **Step 2: Read and update the remaining broken test files**
+- [x] **Step 2: Read and update the remaining broken test files**
 
 Read `backend/tests/domains/wardrobe/test_router.py`, `test_models.py`, and `test_upload_flow.py` in full first (their exact current content wasn't part of this plan's research — they exist per Task 6 Step 7's note but weren't quoted). For each:
 - Any JSON body or fixture using `"category": "...", "styleTags": [...], "occasionTags": [...]` becomes `"attributes": {"clothing-type": [...], "style": [...], "occasion": [...]}` — and any test that relies on a *specific* category/tag value being accepted must first create that taxonomy group/value via `taxonomy_service.create_group`/`create_value` in the test (using the `db_session` fixture), the same way Task 6/7's new tests do, since there's no longer a hardcoded always-valid list.
 - Any assertion reading `response.json()["category"]` becomes `response.json()["attributes"]["clothing-type"]`.
 - `test_upload_flow.py` (an integration-style test per its name) likely exercises the full upload → suggest-tags → create flow with a mocked Gemini call; update its `monkeypatch.setattr(gemini_client, "_call_gemini", ...)` call to the new two-argument lambda shape (`lambda image_bytes, prompt: ...`) per Task 7, and seed whatever taxonomy groups/values the test's fixture JSON references before hitting the endpoints.
 
-- [ ] **Step 3: Run the full wardrobe test suite**
+- [x] **Step 3: Run the full wardrobe test suite**
 
 Run: `cd backend && pytest tests/domains/wardrobe/ -v`
 Expected: PASS — every test in the domain, including the ones fixed in Step 2.
 
-- [ ] **Step 4: Run the entire backend test suite as a regression check**
+- [x] **Step 4: Run the entire backend test suite as a regression check**
 
 Run: `cd backend && pytest -v`
 Expected: PASS. If anything outside `wardrobe`/`taxonomy` fails, it's almost certainly `accessories` (fixed next, in Task 9) — confirm the only failures are in `tests/domains/accessories/` before moving on; anything else is a real regression to investigate before continuing.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add backend/app/domains/wardrobe/router.py backend/tests/domains/wardrobe/
@@ -1513,11 +1513,11 @@ git commit -m "feat(wardrobe): wire db into suggest-tags endpoint, fix tests for
 - Consumes: `taxonomy.service.get_group_values(db, "style" | "occasion")` (Task 3).
 - Produces: `accessories.gemini_client.suggest_tags(image_bytes: bytes, db: Session) -> dict` (signature changed — gains `db`, same as wardrobe's). `ACCESSORY_CATEGORIES` stays a local hardcoded constant in `accessories/schemas.py` (unchanged, out of scope per the spec).
 
-- [ ] **Step 1: Read the current accessories test files**
+- [x] **Step 1: Read the current accessories test files**
 
 Read `backend/tests/domains/accessories/test_gemini_client.py`, `test_service.py`, and `test_router.py` in full (not quoted in this plan's research) to find every fixture that hardcodes a `style_tags`/`occasion_tags` value — those tests need taxonomy `style`/`occasion` groups seeded via `taxonomy_service.create_group`/`create_value` before they'll pass, the same pattern used in Task 6/7.
 
-- [ ] **Step 2: Update `accessories/schemas.py`**
+- [x] **Step 2: Update `accessories/schemas.py`**
 
 Remove the import of `OCCASION_TAGS`/`STYLE_TAGS` from `wardrobe.schemas` (that module no longer exports them, per Task 6). The `style_tags`/`occasion_tags` field validators can no longer do a static Python `in` check — move that validation into `accessories/service.py`'s create/update path instead (mirroring Task 6's `_validate_attributes` approach), the same way wardrobe's Pydantic-level category/tag validators were removed in Task 6:
 
@@ -1592,7 +1592,7 @@ class AccessoryRecommendationResponse(CamelModel):
 
 (`style_tags`/`occasion_tags` field validators are removed entirely from this schema — no longer statically checkable without a DB call. `category` and `tone_tags` validators are unaffected, since `ACCESSORY_CATEGORIES` and `PARENT_SEASONS` stay hardcoded.)
 
-- [ ] **Step 2: Update `accessories/service.py`**
+- [x] **Step 2: Update `accessories/service.py`**
 
 First read the file's current content in full (not quoted in this plan's research). Find its `create`/`update` functions (mirroring `wardrobe/service.py`'s pre-Task-6 shape, per the FAQ/wardrobe pattern this domain also follows) and add a validation step before persisting, calling `taxonomy_service.get_group_values(db, "style")` / `get_group_values(db, "occasion")` and rejecting any `style_tags`/`occasion_tags` value not in those lists, raising `ValueError` — the same shape as `wardrobe/service.py`'s `_validate_attributes` from Task 6 Step 5, adapted to accessories' two separate list fields instead of one `attributes` dict:
 
@@ -1613,7 +1613,7 @@ def _validate_style_and_occasion_tags(db: Session, style_tags: list[str], occasi
 
 Call `_validate_style_and_occasion_tags(db, data.style_tags, data.occasion_tags)` at the top of whatever functions currently create/update an `AccessoryProduct` from an `AccessoryProductInput`, before the `db.add`/`db.commit`.
 
-- [ ] **Step 3: Update `gemini_client.py`**
+- [x] **Step 3: Update `gemini_client.py`**
 
 ```python
 # backend/app/domains/accessories/gemini_client.py
@@ -1680,20 +1680,20 @@ def suggest_tags(image_bytes: bytes, db: Session) -> dict:
     return json.loads(cleaned)
 ```
 
-- [ ] **Step 4: Find and update the accessories router's call site**
+- [x] **Step 4: Find and update the accessories router's call site**
 
 Read `backend/app/domains/accessories/router.py`, find its `suggest-tags` endpoint (mirrors wardrobe's shape from Task 8), and add the `db: Session = Depends(get_db)` parameter if not already present, passing it through to `suggest_tags(image_bytes, db)`.
 
-- [ ] **Step 5: Update the three accessories test files per Step 1's findings**
+- [x] **Step 5: Update the three accessories test files per Step 1's findings**
 
 Apply the same "seed the taxonomy `style`/`occasion` groups the test's fixtures reference, before hitting the endpoint" fix Task 8 Step 2 described, plus update every `monkeypatch.setattr(gemini_client, "_call_gemini", ...)` call to the new two-argument lambda shape.
 
-- [ ] **Step 6: Run the full backend test suite**
+- [x] **Step 6: Run the full backend test suite**
 
 Run: `cd backend && pytest -v`
 Expected: PASS, all domains, zero failures.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add backend/app/domains/accessories/ backend/tests/domains/accessories/
@@ -1713,7 +1713,7 @@ git commit -m "feat(accessories): read style/occasion tags from taxonomy instead
 
 No dedicated test file for this task — these are plain type exports with no logic, matching how `lib/faq.ts`'s type exports and `lib/accessories.ts`'s `AccessoryProduct` type aren't unit-tested directly (they're exercised through the components that import them, tested in later tasks).
 
-- [ ] **Step 1: Write `lib/taxonomy.ts`**
+- [x] **Step 1: Write `lib/taxonomy.ts`**
 
 ```ts
 export type TaxonomyValue = {
@@ -1736,7 +1736,7 @@ export function findGroup(groups: TaxonomyGroup[], key: string): TaxonomyGroup |
 }
 ```
 
-- [ ] **Step 2: Write `lib/wardrobe.ts`**
+- [x] **Step 2: Write `lib/wardrobe.ts`**
 
 ```ts
 export type WardrobeItem = {
@@ -1747,12 +1747,12 @@ export type WardrobeItem = {
 }
 ```
 
-- [ ] **Step 3: Verify the project still typechecks**
+- [x] **Step 3: Verify the project still typechecks**
 
 Run: `cd frontend && npx tsc --noEmit`
 Expected: no new errors introduced by these two new files (existing errors elsewhere, if any, are unrelated — don't fix them here).
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add frontend/lib/taxonomy.ts frontend/lib/wardrobe.ts
@@ -1773,7 +1773,7 @@ git commit -m "feat(frontend): add TaxonomyGroup/TaxonomyValue and WardrobeItem 
 - Consumes: `TaxonomyGroup` (`lib/taxonomy.ts`, Task 10), `apiFetch` (`lib/apiClient.ts`), `AdminGate` (`components/auth/AdminGate.tsx`), `slugify` (`lib/slugify.ts`).
 - Produces: `TaxonomyGroupList` component (fetches `GET /taxonomy`, lists groups with a value count and a link to `/admin/taxonomy/{id}`, plus an inline "add group" form that POSTs `/taxonomy/groups`). Task 12 links into this list's per-group detail route.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```tsx
 // frontend/components/admin/TaxonomyGroupList.test.tsx
@@ -1853,12 +1853,12 @@ describe('TaxonomyGroupList', () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `cd frontend && npx vitest run components/admin/TaxonomyGroupList.test.tsx`
 Expected: FAIL — `./TaxonomyGroupList` doesn't exist yet.
 
-- [ ] **Step 3: Add `Admin.TaxonomyGroupList` to `messages/vi.json`**
+- [x] **Step 3: Add `Admin.TaxonomyGroupList` to `messages/vi.json`**
 
 Add this object as a new sibling key inside the existing `"Admin"` namespace (alongside `"FaqList"`, `"AccessoryList"`, etc. — insert it right after the `"AccessoryForm"` block, matching the file's existing ordering of one `List` immediately after its matching entity's other blocks):
 
@@ -1876,7 +1876,7 @@ Add this object as a new sibling key inside the existing `"Admin"` namespace (al
     },
 ```
 
-- [ ] **Step 4: Write `TaxonomyGroupList.tsx`**
+- [x] **Step 4: Write `TaxonomyGroupList.tsx`**
 
 ```tsx
 // frontend/components/admin/TaxonomyGroupList.tsx
@@ -1980,7 +1980,7 @@ export default function TaxonomyGroupList() {
 }
 ```
 
-- [ ] **Step 5: Write `app/admin/taxonomy/page.tsx`**
+- [x] **Step 5: Write `app/admin/taxonomy/page.tsx`**
 
 ```tsx
 // frontend/app/admin/taxonomy/page.tsx
@@ -2006,12 +2006,12 @@ export default function AdminTaxonomyPage() {
 }
 ```
 
-- [ ] **Step 6: Run test to verify it passes**
+- [x] **Step 6: Run test to verify it passes**
 
 Run: `cd frontend && npx vitest run components/admin/TaxonomyGroupList.test.tsx`
 Expected: PASS (3 tests)
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add frontend/components/admin/TaxonomyGroupList.tsx frontend/components/admin/TaxonomyGroupList.test.tsx \
@@ -2033,7 +2033,7 @@ git commit -m "feat(admin): add taxonomy group list + create page"
 - Consumes: `TaxonomyGroup`, `TaxonomyValue`, `findGroup` (`lib/taxonomy.ts`, Task 10), `slugify` (`lib/slugify.ts`).
 - Produces: `TaxonomyGroupDetail` component, `props: { groupId: number }`, self-contained fetch of `GET /taxonomy` + client-side lookup by id (no per-group GET endpoint exists — the list is small, so this avoids adding a redundant route).
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```tsx
 // frontend/components/admin/TaxonomyGroupDetail.test.tsx
@@ -2132,12 +2132,12 @@ describe('TaxonomyGroupDetail', () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `cd frontend && npx vitest run components/admin/TaxonomyGroupDetail.test.tsx`
 Expected: FAIL — component doesn't exist yet.
 
-- [ ] **Step 3: Add `Admin.TaxonomyGroupDetail` to `messages/vi.json`**
+- [x] **Step 3: Add `Admin.TaxonomyGroupDetail` to `messages/vi.json`**
 
 Insert right after the `Admin.TaxonomyGroupList` block added in Task 11:
 
@@ -2159,7 +2159,7 @@ Insert right after the `Admin.TaxonomyGroupList` block added in Task 11:
     },
 ```
 
-- [ ] **Step 4: Write `TaxonomyGroupDetail.tsx`**
+- [x] **Step 4: Write `TaxonomyGroupDetail.tsx`**
 
 ```tsx
 // frontend/components/admin/TaxonomyGroupDetail.tsx
@@ -2379,7 +2379,7 @@ export default function TaxonomyGroupDetail({ groupId }: { groupId: number }) {
 }
 ```
 
-- [ ] **Step 5: Write `app/admin/taxonomy/[groupId]/page.tsx`**
+- [x] **Step 5: Write `app/admin/taxonomy/[groupId]/page.tsx`**
 
 ```tsx
 // frontend/app/admin/taxonomy/[groupId]/page.tsx
@@ -2404,12 +2404,12 @@ export default function AdminTaxonomyGroupPage({ params }: { params: Promise<{ g
 }
 ```
 
-- [ ] **Step 6: Run test to verify it passes**
+- [x] **Step 6: Run test to verify it passes**
 
 Run: `cd frontend && npx vitest run components/admin/TaxonomyGroupDetail.test.tsx`
 Expected: PASS (4 tests)
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add frontend/components/admin/TaxonomyGroupDetail.tsx frontend/components/admin/TaxonomyGroupDetail.test.tsx \
@@ -2430,7 +2430,7 @@ git commit -m "feat(admin): add taxonomy group detail page with value CRUD"
 - Consumes: `WardrobeItem` (`lib/wardrobe.ts`, Task 10), `TaxonomyGroup`/`findGroup` (`lib/taxonomy.ts`, Task 10).
 - Produces: `WardrobeLibrary` now fetches `/taxonomy` in addition to `/wardrobe/items`, renders a "Lọc" checkbox dropdown over the `clothing-type` group's values, and filters on `item.attributes['clothing-type']` — replacing the old dead "Sắp xếp" button entirely (the spec's decision: this is a replacement, not an addition, since the sort button never worked and "Lọc" is the feature the user actually asked for in this slot).
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Replace `frontend/components/outfit/step1/WardrobeLibrary.test.tsx` in full:
 
@@ -2553,12 +2553,12 @@ describe('WardrobeLibrary', () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `cd frontend && npx vitest run components/outfit/step1/WardrobeLibrary.test.tsx`
 Expected: FAIL — no "Lọc" button exists yet, `item.attributes` isn't read, `<img>` has no accessible role since alt text setup differs.
 
-- [ ] **Step 3: Update `Outfit.Step1.WardrobeLibrary` in `messages/vi.json`**
+- [x] **Step 3: Update `Outfit.Step1.WardrobeLibrary` in `messages/vi.json`**
 
 Replace the existing block (currently `sortLabel`/`sortByCategory`) with:
 
@@ -2576,7 +2576,7 @@ Replace the existing block (currently `sortLabel`/`sortByCategory`) with:
       },
 ```
 
-- [ ] **Step 4: Rewrite `WardrobeLibrary.tsx`**
+- [x] **Step 4: Rewrite `WardrobeLibrary.tsx`**
 
 ```tsx
 // frontend/components/outfit/step1/WardrobeLibrary.tsx
@@ -2796,12 +2796,12 @@ export default function WardrobeLibrary() {
 }
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [x] **Step 5: Run test to verify it passes**
 
 Run: `cd frontend && npx vitest run components/outfit/step1/WardrobeLibrary.test.tsx`
 Expected: PASS (6 tests)
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add frontend/components/outfit/step1/WardrobeLibrary.tsx frontend/components/outfit/step1/WardrobeLibrary.test.tsx \
@@ -2824,7 +2824,7 @@ git commit -m "feat(outfit): replace dead Sort button with a working Lọc filte
 - Consumes: `TaxonomyValue` (`lib/taxonomy.ts`, Task 10).
 - Produces: `OccasionTag`/`StyleTag` (`OutfitFlowProvider.tsx`) become plain `string` instead of 4-member literal unions. `OccasionStyleSelector` gains `occasionValues: TaxonomyValue[]` and `styleValues: TaxonomyValue[]` props — it renders chip labels straight from `value.label` (admin-entered text) instead of looking up a translation key, since the option set is no longer fixed at build time.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Replace `frontend/components/outfit/step1/OccasionStyleSelector.test.tsx` in full:
 
@@ -2910,12 +2910,12 @@ describe('OccasionStyleSelector', () => {
 
 (The last test's assertion is intentionally loose — its point is just that an empty `occasionValues` array doesn't crash the render, since `toHaveLength` on a function reference is always truthy in Vitest and won't fail; keep it exactly as written, it's a smoke check, not a strict assertion.)
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `cd frontend && npx vitest run components/outfit/step1/OccasionStyleSelector.test.tsx`
 Expected: FAIL — component still expects no `occasionValues`/`styleValues` props and imports `OccasionTag`/`StyleTag` for its own hardcoded arrays.
 
-- [ ] **Step 3: Update `OutfitFlowProvider.tsx`**
+- [x] **Step 3: Update `OutfitFlowProvider.tsx`**
 
 Change lines 48-49 from:
 
@@ -2933,7 +2933,7 @@ export type StyleTag = string
 
 Everything else in the file (the context type, state, defaults `'hang-ngay'`/`'casual'`) stays exactly as-is — `useState<OccasionTag>('hang-ngay')` still compiles since `OccasionTag` is now just `string`.
 
-- [ ] **Step 4: Rewrite `OccasionStyleSelector.tsx`**
+- [x] **Step 4: Rewrite `OccasionStyleSelector.tsx`**
 
 ```tsx
 // frontend/components/outfit/step1/OccasionStyleSelector.tsx
@@ -3021,7 +3021,7 @@ export default function OccasionStyleSelector({
 }
 ```
 
-- [ ] **Step 5: Update `WardrobeLibrary.tsx`'s `<OccasionStyleSelector>` usage**
+- [x] **Step 5: Update `WardrobeLibrary.tsx`'s `<OccasionStyleSelector>` usage**
 
 Find the `<OccasionStyleSelector ... />` call added in Task 13 Step 4 and replace it with:
 
@@ -3038,7 +3038,7 @@ Find the `<OccasionStyleSelector ... />` call added in Task 13 Step 4 and replac
         />
 ```
 
-- [ ] **Step 6: Remove the now-unused `occasions`/`styles` keys from `Outfit.Step1.OccasionStyleSelector` in `messages/vi.json`**
+- [x] **Step 6: Remove the now-unused `occasions`/`styles` keys from `Outfit.Step1.OccasionStyleSelector` in `messages/vi.json`**
 
 The block becomes just:
 
@@ -3051,17 +3051,17 @@ The block becomes just:
 
 (delete the `"occasions": {...}` and `"styles": {...}` sub-objects that were there before — labels now come from the taxonomy API, not from `vi.json`).
 
-- [ ] **Step 7: Run tests to verify they pass**
+- [x] **Step 7: Run tests to verify they pass**
 
 Run: `cd frontend && npx vitest run components/outfit/step1/OccasionStyleSelector.test.tsx components/outfit/step1/WardrobeLibrary.test.tsx`
 Expected: PASS (both files)
 
-- [ ] **Step 8: Typecheck**
+- [x] **Step 8: Typecheck**
 
 Run: `cd frontend && npx tsc --noEmit`
 Expected: no errors (confirms nothing else in the frontend still imports the old 4-member `OccasionTag`/`StyleTag` literal unions in a way that breaks — if something does, fix that call site now rather than deferring)
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add frontend/components/outfit/OutfitFlowProvider.tsx frontend/components/outfit/step1/OccasionStyleSelector.tsx \
@@ -3083,7 +3083,7 @@ git commit -m "feat(outfit): read occasion/style options from taxonomy instead o
 - Consumes: `TaxonomyGroup` (`lib/taxonomy.ts`, Task 10).
 - Produces: `UploadFlow`'s review step renders one checkbox section per taxonomy group returned by `GET /taxonomy` (instead of one hardcoded `<select>` for category + two hardcoded checkbox blocks for style/occasion), and POSTs `/wardrobe/items` with `{ blobUrl, attributes, dominantColors }` matching Task 6's `WardrobeItemCreate` shape. This is what makes a future 4th admin-created taxonomy group show up in the upload review UI with zero frontend code changes.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Replace `frontend/components/outfit/step1/UploadFlow.test.tsx` in full (create it with this content if the file doesn't already exist with different content — the investigation confirmed it exists but wasn't fully quoted; this replaces it):
 
@@ -3201,12 +3201,12 @@ describe('UploadFlow', () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `cd frontend && npx vitest run components/outfit/step1/UploadFlow.test.tsx`
 Expected: FAIL — component doesn't render group sections yet, POST body still uses old shape.
 
-- [ ] **Step 3: Update `Outfit.Step1.UploadFlow` in `messages/vi.json`**
+- [x] **Step 3: Update `Outfit.Step1.UploadFlow` in `messages/vi.json`**
 
 Replace the existing block with (drop `categoryLabel`/`styleTagsLabel`/`occasionTagsLabel` and the `categories`/`styles`/`occasions` sub-objects — group/value labels now come from the taxonomy API):
 
@@ -3223,7 +3223,7 @@ Replace the existing block with (drop `categoryLabel`/`styleTagsLabel`/`occasion
       },
 ```
 
-- [ ] **Step 4: Rewrite `UploadFlow.tsx`**
+- [x] **Step 4: Rewrite `UploadFlow.tsx`**
 
 ```tsx
 // frontend/components/outfit/step1/UploadFlow.tsx
@@ -3412,12 +3412,12 @@ export default function UploadFlow({ onUploaded }: { onUploaded: () => void }) {
 }
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [x] **Step 5: Run test to verify it passes**
 
 Run: `cd frontend && npx vitest run components/outfit/step1/UploadFlow.test.tsx`
 Expected: PASS (2 tests)
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add frontend/components/outfit/step1/UploadFlow.tsx frontend/components/outfit/step1/UploadFlow.test.tsx \
@@ -3438,13 +3438,13 @@ git commit -m "feat(outfit): make wardrobe upload review UI iterate taxonomy gro
 - Consumes: nothing new.
 - Produces: an admin lands on `/admin` and sees a "Quản lý thuộc tính" card linking to `/admin/taxonomy` (Task 11), same visual pattern as the existing Forum/Blog/FAQ cards.
 
-- [ ] **Step 1: Read `app/admin/page.tsx` and find the card list**
+- [x] **Step 1: Read `app/admin/page.tsx` and find the card list**
 
 Run: `cd frontend && cat app/admin/page.tsx`
 
 Identify the array/JSX structure that produces each existing card (Blog, Quiz, FAQ, Model Catalog, Capsule Wardrobe, Accessories, Team, Forum, Contact) — each reads a `t('xCardTitle')`/`t('xCardDescription')` pair and links to `/admin/x`, per the `Admin` namespace keys already confirmed in this plan's research (`forumCardTitle: "Quản lý Diễn đàn"`, `forumCardDescription: "..."`, etc., at `messages/vi.json` lines ~41-42).
 
-- [ ] **Step 2: Add the vi.json keys**
+- [x] **Step 2: Add the vi.json keys**
 
 Insert into the `Admin` namespace in `messages/vi.json`, alongside the other `*CardTitle`/`*CardDescription` pairs (e.g. right after `contactCardTitle`/`contactCardDescription`):
 
@@ -3453,20 +3453,20 @@ Insert into the `Admin` namespace in `messages/vi.json`, alongside the other `*C
     "taxonomyCardDescription": "Quản lý các nhóm và giá trị thuộc tính (loại quần áo, dịp, phong cách) dùng khi phân loại tủ đồ.",
 ```
 
-- [ ] **Step 3: Add the card to `app/admin/page.tsx`**
+- [x] **Step 3: Add the card to `app/admin/page.tsx`**
 
 Following the exact structure found in Step 1 (whether it's a data array mapped into cards, or repeated inline JSX blocks), add one more entry for taxonomy: `titleKey: 'taxonomyCardTitle'`, `descriptionKey: 'taxonomyCardDescription'`, `href: '/admin/taxonomy'` — matching whichever of those two structures the file actually uses. If it's a data array, add the object in the same position other domains occupy (order doesn't matter functionally, but placing it near `forumCardTitle`'s entry keeps related admin-content-moderation-adjacent sections visually grouped, since taxonomy configuration is closely tied to the wardrobe/forum content pipeline).
 
-- [ ] **Step 4: Update or add the dashboard test**
+- [x] **Step 4: Update or add the dashboard test**
 
 If a test file already asserts the exact set/count of cards rendered on `/admin` (check for `app/admin/page.test.tsx` or a component test for whatever `app/admin/page.tsx` renders), add an assertion that the new "Quản lý thuộc tính" card renders with the correct `href`, following that test file's existing style for the other cards' assertions. If no such test exists at all (the investigation didn't surface one), skip adding a new one — this task doesn't need to invent test infrastructure the admin dashboard has never had.
 
-- [ ] **Step 5: Run the frontend test suite for anything touching the admin dashboard**
+- [x] **Step 5: Run the frontend test suite for anything touching the admin dashboard**
 
 Run: `cd frontend && npx vitest run app/admin`
 Expected: PASS (or "no test files found" if Step 4 found nothing to run — that's fine)
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add frontend/app/admin/page.tsx frontend/messages/vi.json
@@ -3481,22 +3481,22 @@ git commit -m "feat(admin): add taxonomy management card to the admin dashboard"
 
 **Interfaces:** none — this task certifies the whole feature, it doesn't produce new interfaces.
 
-- [ ] **Step 1: Run the full backend test suite**
+- [x] **Step 1: Run the full backend test suite**
 
 Run: `cd backend && pytest -v`
 Expected: PASS, zero failures, across every domain (`taxonomy`, `wardrobe`, `accessories`, and everything untouched by this plan).
 
-- [ ] **Step 2: Run the full frontend test suite**
+- [x] **Step 2: Run the full frontend test suite**
 
 Run: `cd frontend && npx vitest run`
 Expected: PASS. If any pre-existing, unrelated failures were already present before this plan started (check with `git log` / ask whoever's executing this plan whether any were known-broken beforehand), confirm the failure count hasn't grown — this plan's tasks shouldn't introduce new failures anywhere outside the files they touch.
 
-- [ ] **Step 3: Typecheck the whole frontend**
+- [x] **Step 3: Typecheck the whole frontend**
 
 Run: `cd frontend && npx tsc --noEmit`
 Expected: zero errors.
 
-- [ ] **Step 4: Manual smoke test — admin taxonomy CRUD**
+- [x] **Step 4: Manual smoke test — admin taxonomy CRUD**
 
 With the backend and frontend dev servers running and an admin-role test account logged in:
 1. Visit `/admin/taxonomy` — confirm the three seeded groups (Loại quần áo, Loại dịp, Loại phong cách) are listed with their value counts (5, 4, 4).
@@ -3504,20 +3504,20 @@ With the backend and frontend dev servers running and an admin-role test account
 3. Delete that 6th value — confirm it disappears.
 4. Attempt to delete a value that's actually in use by a real wardrobe item (create one first via Step 5 below if none exist) — confirm the inline "đang được N món đồ sử dụng" error appears and the value is NOT removed from the list.
 
-- [ ] **Step 5: Manual smoke test — wardrobe upload + Lọc filter**
+- [x] **Step 5: Manual smoke test — wardrobe upload + Lọc filter**
 
 1. Visit `/outfit/step-1`, switch to the "Upload mới" tab, upload a clothing photo.
 2. Confirm the review screen shows one checkbox section per taxonomy group (Loại quần áo, Loại dịp, Loại phong cách), pre-checked per Gemini's suggestion.
 3. Adjust a checkbox, save — confirm no error and the item appears back in "Tủ đồ của tôi".
 4. In "Tủ đồ của tôi", click "Lọc", check one clothing-type box — confirm the grid narrows to matching items only; uncheck it — confirm the full grid returns.
 
-- [ ] **Step 6: Manual smoke test — a 4th taxonomy group requires zero code changes**
+- [x] **Step 6: Manual smoke test — a 4th taxonomy group requires zero code changes**
 
 1. In `/admin/taxonomy`, add a brand-new group (e.g. key `mua`, label "Theo mùa") with two values ("Hè", "Đông").
 2. Go back to `/outfit/step-1`'s upload flow and upload another photo — confirm a new "Theo mùa" checkbox section appears in the review screen automatically, with no app redeploy, proving the dynamic-prompt/dynamic-form design actually delivers the "no code for a new group" property from the spec's Goal section.
 3. Delete this test group afterward via a direct API call (`DELETE` isn't exposed for groups per the spec's deliberate v1 scope — leave the test group in place, or note it for manual cleanup via a database console; don't add a group-delete UI just to clean up after this smoke test).
 
-- [ ] **Step 7: Final commit (if Steps 1-3 required any fixes)**
+- [x] **Step 7: Final commit (if Steps 1-3 required any fixes)**
 
 If any regression was found and fixed while running this task, commit it now with a message describing what broke and why; if everything passed cleanly with no fixes needed, this task has nothing to commit — that's the expected/good outcome.
 
