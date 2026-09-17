@@ -21,7 +21,7 @@ export default function Hero() {
         <HeroSlideshow images={HERO_SLIDESHOW_DESKTOP_WIDE_IMAGES} className="h-full w-full" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-transparent" />
       </div>
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl px-margin-desktop py-space-xl lg:min-h-[640px] lg:items-center lg:justify-center lg:py-24">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl px-margin-desktop py-space-xl lg:min-h-[720px] lg:items-center lg:justify-center lg:py-24">
         <div className="flex w-full flex-col items-start space-y-6 lg:w-auto lg:max-w-3xl lg:items-center lg:text-center">
           <span className="text-label-sm font-bold uppercase tracking-[0.2em] text-white lg:text-label-lg">
             {t('tagline')}
