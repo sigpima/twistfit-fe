@@ -392,8 +392,6 @@
         "body": "Nội dung",
         "image": "Hình ảnh (không bắt buộc)"
       },
-      "tabWrite": "Soạn thảo",
-      "tabPreview": "Xem trước",
       "imageUploading": "Đang tải ảnh lên...",
       "imageUploadError": "Tải ảnh lên thất bại, vui lòng thử lại.",
       "removeImageButton": "Xóa ảnh",

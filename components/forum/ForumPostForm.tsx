@@ -2,13 +2,10 @@
 
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import { useRef, useState, type ChangeEvent, type FormEvent } from 'react'
-import ImagePickerDialog from '@/components/admin/ImagePickerDialog'
-import MarkdownToolbar from '@/components/admin/MarkdownToolbar'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
+import RichTextEditor from '@/components/editor/RichTextEditor'
 import { apiFetch } from '@/lib/apiClient'
 import { FORUM_CATEGORIES, type ForumCategory, type ForumPost } from '@/lib/forum'
-import { renderMarkdown } from '@/lib/markdown'
-import { insertImage } from '@/lib/markdownEditor'
 
 const inputClass =
   'w-full rounded-xl bg-surface px-4 py-3 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none'
@@ -25,9 +22,6 @@ export default function ForumPostForm({ initialPost }: { initialPost?: ForumPost
   const [uploadingImage, setUploadingImage] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [submitting, setSubmitting] = useState(false)
-  const [bodyTab, setBodyTab] = useState<'write' | 'preview'>('write')
-  const [bodyImageDialogOpen, setBodyImageDialogOpen] = useState(false)
-  const bodyTextareaRef = useRef<HTMLTextAreaElement>(null)
 
   async function handleImageChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0]
@@ -124,65 +118,17 @@ export default function ForumPostForm({ initialPost }: { initialPost?: ForumPost
       </div>
 
       <div className="space-y-1.5">
-        <div className="flex items-center justify-between">
-          <label htmlFor="forum-body" className="text-label-md font-semibold text-on-surface">
-            {t('PostForm.fields.body')}
-          </label>
-          <div className="flex gap-1">
-            <button
-              type="button"
-              onClick={() => setBodyTab('write')}
-              aria-pressed={bodyTab === 'write'}
-              className="rounded-lg px-3 py-1 text-label-sm font-semibold text-on-surface-variant"
-            >
-              {t('PostForm.tabWrite')}
-            </button>
-            <button
-              type="button"
-              onClick={() => setBodyTab('preview')}
-              aria-pressed={bodyTab === 'preview'}
-              className="rounded-lg px-3 py-1 text-label-sm font-semibold text-on-surface-variant"
-            >
-              {t('PostForm.tabPreview')}
-            </button>
-          </div>
-        </div>
-        {bodyTab === 'write' ? (
-          <>
-            <MarkdownToolbar
-              textareaRef={bodyTextareaRef}
-              value={body}
-              onChange={setBody}
-              onRequestImage={() => setBodyImageDialogOpen(true)}
-            />
-            <textarea
-              id="forum-body"
-              ref={bodyTextareaRef}
-              rows={8}
-              value={body}
-              onChange={(event) => setBody(event.target.value)}
-              className={inputClass}
-            />
-          </>
-        ) : (
-          <div
-            className="prose max-w-none rounded-xl bg-surface p-4 text-body-md text-on-surface"
-            dangerouslySetInnerHTML={{ __html: renderMarkdown(body) }}
-          />
-        )}
+        <span id="forum-body-label" className="text-label-md font-semibold text-on-surface">
+          {t('PostForm.fields.body')}
+        </span>
+        <RichTextEditor
+          value={body}
+          onChange={setBody}
+          labelId="forum-body-label"
+          uploadUrlEndpoint="/forum/upload-url"
+        />
         {errors.body && <p className="text-label-sm text-error">{errors.body}</p>}
       </div>
-
-      <ImagePickerDialog
-        open={bodyImageDialogOpen}
-        uploadUrlEndpoint="/forum/upload-url"
-        onCancel={() => setBodyImageDialogOpen(false)}
-        onConfirm={({ url, alt }) => {
-          const cursor = bodyTextareaRef.current?.selectionStart ?? body.length
-          setBody(insertImage(body, cursor, url, alt).text)
-          setBodyImageDialogOpen(false)
-        }}
-      />
 
       <div className="space-y-1.5">
         <label htmlFor="forum-image" className="text-label-md font-semibold text-on-surface">

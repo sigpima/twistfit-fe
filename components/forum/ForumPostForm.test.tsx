@@ -41,11 +41,16 @@ describe('ForumPostForm', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 201, json: async () => ({ id: 1 }) }))
     renderWithIntl(<ForumPostForm />)
     fireEvent.change(screen.getByLabelText('Tiêu đề'), { target: { value: 'Bài mới' } })
-    fireEvent.change(screen.getByLabelText('Nội dung'), { target: { value: 'Nội dung mới' } })
     fireEvent.click(screen.getByRole('button', { name: 'Đăng bài' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/forum/my-posts'))
     expect(fetch).toHaveBeenCalledWith('/forum/posts', expect.objectContaining({ method: 'POST', credentials: 'include' }))
+  })
+
+  it('renders the existing post body in the editor when editing', () => {
+    vi.stubGlobal('fetch', vi.fn())
+    renderWithIntl(<ForumPostForm initialPost={EXISTING_POST} />)
+    expect(screen.getByText('Nội dung hiện có')).toBeInTheDocument()
   })
 
   it('pre-fills fields and PUTs to /forum/posts/{id} when editing', async () => {
@@ -62,7 +67,6 @@ describe('ForumPostForm', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 422, json: async () => ({ detail: [] }) }))
     renderWithIntl(<ForumPostForm />)
     fireEvent.change(screen.getByLabelText('Tiêu đề'), { target: { value: 'Bài mới' } })
-    fireEvent.change(screen.getByLabelText('Nội dung'), { target: { value: 'Nội dung mới' } })
     fireEvent.click(screen.getByRole('button', { name: 'Đăng bài' }))
 
     await waitFor(() => expect(screen.getByText('Có lỗi xảy ra, vui lòng thử lại.')).toBeInTheDocument())
@@ -102,7 +106,6 @@ describe('ForumPostForm', () => {
     renderWithIntl(<ForumPostForm />)
 
     fireEvent.change(screen.getByLabelText('Tiêu đề'), { target: { value: 'Bài mới' } })
-    fireEvent.change(screen.getByLabelText('Nội dung'), { target: { value: 'Nội dung mới' } })
     const file = new File(['fake'], 'outfit.jpg', { type: 'image/jpeg' })
     fireEvent.change(screen.getByLabelText('Hình ảnh (không bắt buộc)'), { target: { files: [file] } })
 
@@ -125,7 +128,7 @@ describe('ForumPostForm', () => {
         method: 'POST',
         body: JSON.stringify({
           title: 'Bài mới',
-          body: 'Nội dung mới',
+          body: '',
           category: 'general',
           imageUrl: 'https://blob.example.com/u1/x.jpg',
         }),
