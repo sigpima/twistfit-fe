@@ -1238,6 +1238,14 @@
       "readNowLink": "Đọc ngay",
       "nextButton": "Tiếp theo"
     },
+    "TableOfContents": {
+      "heading": "Mục lục",
+      "ariaLabel": "Mục lục bài viết"
+    },
+    "RelatedPosts": {
+      "heading": "Bài viết liên quan",
+      "ariaLabel": "Bài viết liên quan cùng chuyên mục"
+    },
     "QuizCallout": {
       "title": "Chưa biết mình thuộc hệ màu nào?",
       "body": "Làm bài trắc nghiệm thông minh chỉ trong 60 giây và nhận bảng gợi ý trang phục chuẩn xác.",

@@ -16,6 +16,20 @@ if (!window.matchMedia) {
     }) as unknown as MediaQueryList
 }
 
+if (!window.IntersectionObserver) {
+  class MockIntersectionObserver implements IntersectionObserver {
+    readonly root = null
+    readonly rootMargin = ''
+    readonly thresholds: ReadonlyArray<number> = []
+    constructor(public callback: IntersectionObserverCallback) {}
+    observe = () => {}
+    unobserve = () => {}
+    disconnect = () => {}
+    takeRecords = (): IntersectionObserverEntry[] => []
+  }
+  window.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver
+}
+
 afterEach(() => {
   cleanup()
 })
