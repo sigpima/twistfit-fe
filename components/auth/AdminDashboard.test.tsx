@@ -45,5 +45,6 @@ describe('AdminDashboard', () => {
     expect(screen.getByRole('link', { name: /Quản lý Diễn đàn/ })).toHaveAttribute('href', '/admin/forum')
     expect(screen.getByRole('link', { name: /Quản lý Hộp thư/ })).toHaveAttribute('href', '/admin/contact')
     expect(screen.getByRole('link', { name: /Quản lý Phụ kiện/ })).toHaveAttribute('href', '/admin/accessories')
+    expect(screen.getByRole('link', { name: /Quản lý thuộc tính/ })).toHaveAttribute('href', '/admin/taxonomy')
   })
 })

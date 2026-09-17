@@ -40,6 +40,8 @@
     "teamCardDescription": "Tạo, sửa và xóa thành viên hiển thị trên trang Giới thiệu.",
     "forumCardTitle": "Quản lý Diễn đàn",
     "forumCardDescription": "Duyệt bài đăng và xử lý báo cáo vi phạm từ người dùng.",
+    "taxonomyCardTitle": "Quản lý thuộc tính",
+    "taxonomyCardDescription": "Quản lý các nhóm và giá trị thuộc tính (loại quần áo, dịp, phong cách) dùng khi phân loại tủ đồ.",
     "contactCardTitle": "Quản lý Hộp thư",
     "contactCardDescription": "Xem, đánh dấu đã đọc và xóa tin nhắn liên hệ từ khách.",
     "MarkdownToolbar": {
