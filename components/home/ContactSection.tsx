@@ -74,7 +74,7 @@ export default function ContactSection() {
             </div>
           </div>
           <div className="lg:col-span-7">
-            <div className="rounded-3xl bg-surface-container-lowest p-8 shadow-[0_12px_36px_rgba(4,28,55,0.06)] lg:p-10">
+            <div className="rounded-3xl border border-outline bg-surface-container-lowest p-8 shadow-[0_12px_36px_rgba(4,28,55,0.06)] lg:p-10">
               <div className="mb-6">
                 <h4 className="text-headline-sm font-bold text-on-surface">{t('formHeading')}</h4>
                 <p className="mt-1 text-body-sm text-on-surface-variant">{t('formSubheading')}</p>

@@ -6,9 +6,9 @@ import { useState, type ChangeEvent, type FormEvent } from 'react'
 import RichTextEditor from '@/components/editor/RichTextEditor'
 import { apiFetch } from '@/lib/apiClient'
 import { FORUM_CATEGORIES, type ForumCategory, type ForumPost } from '@/lib/forum'
+import { FORM_INPUT_CLASS } from '@/lib/formFieldStyles'
 
-const inputClass =
-  'w-full rounded-xl bg-surface px-4 py-3 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none'
+const inputClass = FORM_INPUT_CLASS
 
 export default function ForumPostForm({ initialPost }: { initialPost?: ForumPost }) {
   const t = useTranslations('Forum')

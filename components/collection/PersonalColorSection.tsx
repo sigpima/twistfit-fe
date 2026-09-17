@@ -20,7 +20,7 @@ export default function PersonalColorSection() {
   }, [])
 
   return (
-    <section className="rounded-3xl bg-surface-container-lowest p-6 shadow-[0_12px_36px_rgba(4,28,55,0.06)] sm:p-8">
+    <section className="rounded-3xl border border-outline bg-surface-container-lowest p-6 shadow-[0_12px_36px_rgba(4,28,55,0.06)] sm:p-8">
       <h2 className="mb-6 text-headline-sm font-bold text-on-surface">{t('heading')}</h2>
       {result === undefined && <p className="text-body-md text-on-surface-variant">{t('loading')}</p>}
       {result === null && (

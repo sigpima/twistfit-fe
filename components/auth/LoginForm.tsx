@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 import { useAuth } from '@/components/auth/AuthProvider'
+import { FORM_INPUT_CLASS } from '@/lib/formFieldStyles'
 
 export default function LoginForm() {
   const t = useTranslations('Login')
@@ -48,7 +49,7 @@ export default function LoginForm() {
               type="text"
               required
               placeholder={t('fields.identifier.placeholder')}
-              className="w-full rounded-xl bg-surface px-4 py-3 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none"
+              className={FORM_INPUT_CLASS}
             />
           </div>
 
@@ -63,7 +64,7 @@ export default function LoginForm() {
                 type={showPassword ? 'text' : 'password'}
                 required
                 placeholder={t('fields.password.placeholder')}
-                className="w-full rounded-xl bg-surface px-4 py-3 pr-12 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none"
+                className={`${FORM_INPUT_CLASS} pr-12`}
               />
               <button
                 type="button"

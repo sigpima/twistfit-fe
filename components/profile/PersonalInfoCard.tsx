@@ -4,9 +4,9 @@ import { useTranslations } from 'next-intl'
 import { useState, type FormEvent } from 'react'
 import { apiFetch } from '@/lib/apiClient'
 import { useAuth, type AuthUser } from '@/components/auth/AuthProvider'
+import { FORM_INPUT_CLASS } from '@/lib/formFieldStyles'
 
-const inputClass =
-  'w-full rounded-xl bg-surface px-4 py-3 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none disabled:cursor-not-allowed disabled:opacity-60'
+const inputClass = `${FORM_INPUT_CLASS} disabled:cursor-not-allowed disabled:opacity-60`
 
 export default function PersonalInfoCard({ user }: { user: AuthUser }) {
   const t = useTranslations('Profile.PersonalInfo')
@@ -46,7 +46,7 @@ export default function PersonalInfoCard({ user }: { user: AuthUser }) {
   }
 
   return (
-    <div className="rounded-3xl bg-surface-container-lowest p-6 shadow-[0_12px_36px_rgba(4,28,55,0.06)] sm:p-8">
+    <div className="rounded-3xl border border-outline bg-surface-container-lowest p-6 shadow-[0_12px_36px_rgba(4,28,55,0.06)] sm:p-8">
       <div className="mb-6 flex flex-wrap items-center gap-3">
         <h2 className="text-headline-sm font-bold text-on-surface">{t('heading')}</h2>
         {user.role === 'admin' && (

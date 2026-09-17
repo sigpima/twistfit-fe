@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 import { useAuth } from '@/components/auth/AuthProvider'
 import { apiFetch } from '@/lib/apiClient'
+import { FORM_INPUT_CLASS } from '@/lib/formFieldStyles'
 
 export default function RegisterForm() {
   const t = useTranslations('Register')
@@ -78,7 +79,7 @@ export default function RegisterForm() {
               type="text"
               required
               placeholder={t('fields.name.placeholder')}
-              className="w-full rounded-xl bg-surface px-4 py-3 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none"
+              className={FORM_INPUT_CLASS}
             />
           </div>
 
@@ -92,7 +93,7 @@ export default function RegisterForm() {
               type="text"
               required
               placeholder={t('fields.identifier.placeholder')}
-              className="w-full rounded-xl bg-surface px-4 py-3 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none"
+              className={FORM_INPUT_CLASS}
             />
           </div>
 
@@ -108,7 +109,7 @@ export default function RegisterForm() {
                 required
                 minLength={8}
                 placeholder={t('fields.password.placeholder')}
-                className="w-full rounded-xl bg-surface px-4 py-3 pr-12 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none"
+                className={`${FORM_INPUT_CLASS} pr-12`}
               />
               <button
                 type="button"
@@ -138,7 +139,7 @@ export default function RegisterForm() {
                 aria-invalid={confirmError}
                 aria-describedby={confirmError ? 'register-confirm-password-error' : undefined}
                 onChange={() => setConfirmError(false)}
-                className="w-full rounded-xl bg-surface px-4 py-3 pr-12 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none"
+                className={`${FORM_INPUT_CLASS} pr-12`}
               />
               <button
                 type="button"

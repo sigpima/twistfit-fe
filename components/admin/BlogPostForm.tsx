@@ -8,9 +8,9 @@ import RichTextEditor from '@/components/editor/RichTextEditor'
 import { apiFetch } from '@/lib/apiClient'
 import { BLOG_CATEGORIES, type BlogCategory, type BlogPost } from '@/lib/db'
 import { slugify } from '@/lib/slugify'
+import { FORM_INPUT_CLASS } from '@/lib/formFieldStyles'
 
-const inputClass =
-  'w-full rounded-xl bg-surface px-4 py-3 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none'
+const inputClass = FORM_INPUT_CLASS
 
 export default function BlogPostForm({ initialPost }: { initialPost?: BlogPost }) {
   const t = useTranslations('Admin.BlogForm')
