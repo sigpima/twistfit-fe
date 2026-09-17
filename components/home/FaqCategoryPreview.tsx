@@ -12,12 +12,12 @@ export default function FaqCategoryPreview() {
     <section className="w-full bg-surface py-space-xl">
       <div className="mx-auto max-w-7xl px-margin py-space-lg md:px-margin-desktop">
         <div className="mx-auto mb-10 flex max-w-2xl flex-col items-center text-center">
-          <div className="mb-3 flex items-center gap-2 rounded-full bg-surface-container px-3.5 py-1 text-label-sm text-on-surface-variant">
+          {/* <div className="mb-3 flex items-center gap-2 rounded-full bg-surface-container px-3.5 py-1 text-label-sm text-on-surface-variant">
             <span className="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">
               live_help
             </span>
             <span>{t('badge')}</span>
-          </div>
+          </div> */}
           <h2 className="text-headline-lg text-on-surface">{t('heading')}</h2>
           <p className="mt-2 text-body-lg text-on-surface-variant">{t('subheading')}</p>
         </div>

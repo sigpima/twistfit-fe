@@ -36,10 +36,10 @@ export default function FeatureShowcase() {
     <section id="features-section" className="w-full bg-surface-container-lowest/60 py-space-xl">
       <div className="mx-auto max-w-7xl px-margin-desktop">
         <div className="mx-auto mb-16 flex max-w-3xl flex-col items-center text-center">
-          <div className="mb-3 flex items-center gap-2 rounded-full bg-secondary-fixed px-3.5 py-1 text-label-sm text-on-secondary-fixed-variant">
+          {/* <div className="mb-3 flex items-center gap-2 rounded-full bg-secondary-fixed px-3.5 py-1 text-label-sm text-on-secondary-fixed-variant">
             <span className="material-symbols-outlined text-[16px]">stars</span>
             <span>{t('badgePill')}</span>
-          </div>
+          </div> */}
           <h2 className="text-headline-lg text-on-surface">{t('heading')}</h2>
           <p className="mt-2 text-body-lg text-on-surface-variant">{t('subheading')}</p>
         </div>
