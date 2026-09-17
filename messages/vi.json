@@ -85,7 +85,7 @@
         "title": "Tiêu đề",
         "slug": "Đường dẫn (slug)",
         "excerpt": "Mô tả ngắn",
-        "content": "Nội dung (Markdown)",
+        "content": "Nội dung",
         "coverImageUrl": "Ảnh bìa",
         "category": "Chuyên mục",
         "authorName": "Tác giả (không bắt buộc)",
@@ -93,8 +93,6 @@
         "isFeatured": "Đặt làm bài nổi bật"
       },
       "coverImageButton": "Chọn ảnh bìa",
-      "tabWrite": "Soạn thảo",
-      "tabPreview": "Xem trước",
       "categories": {
         "personal-color": "Personal Color",
         "styling": "Phối đồ & Vóc dáng",
