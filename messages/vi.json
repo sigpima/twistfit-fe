@@ -504,23 +504,21 @@
     "description": "Nền tảng ứng dụng công nghệ AI Personal Color & Virtual Fitting tiên phong, giúp bạn khám phá vẻ đẹp tự nhiên và nâng tầm phong cách thời trang cá nhân hóa.",
     "featuresHeading": "Tính năng chính",
     "features": {
-      "colorTest": "Trắc nghiệm Personal Color AI",
-      "virtualFitting": "Phòng thử đồ ảo TwistFit",
-      "outfitByBodyShape": "Phối đồ theo vóc dáng",
-      "newsletter": "Bản tin xu hướng thời trang"
+      "colorTest": "Đánh giá màu sắc cá nhân",
+      "virtualFitting": "Phối đồ",
+      "newsletter": "Diễn đàn"
     },
     "supportHeading": "Hỗ trợ & thông tin",
     "support": {
-      "about": "Về chúng tôi (About us)",
-      "howItWorks": "Cách hoạt động (How it works)",
-      "faq": "Câu hỏi thường gặp (FAQ)",
-      "blog": "Tạp chí phong cách (Blog)",
-      "privacy": "Chính sách bảo mật"
+      "about": "Về chúng tôi",
+      "howItWorks": "Cơ chế vận hành",
+      "faq": "Câu hỏi thường gặp",
+      "blog": "Bài viết"
     },
     "contactHeading": "Liên hệ & hợp tác",
-    "email": "support@twistfit.vn",
+    "email": "twistfit.official@gmail.com",
     "hotline": "Hotline: 1900 8899",
-    "address": "Quận 1, TP. Hồ Chí Minh",
+    "address": "UEH, TP. Hồ Chí Minh",
     "copyright": "© 2026 TwistFit Vietnam. All rights reserved. Nền tảng ứng dụng định hình phong cách cá nhân.",
     "copyrightSecondary": "Bản quyền thuộc về TwistFit Fashion AI."
   },
@@ -635,10 +633,10 @@
       "brandTagline": "A little twist, a better fit",
       "logoAlt": "Logo TwistFit",
       "heading": "Chúng Tôi Luôn Lắng Nghe Ý Kiến Của Bạn",
-      "description": "Bạn có câu hỏi về kết quả màu sắc, muốn hợp tác stylist hoặc muốn góp ý tính năng phối đồ? Hãy để lại lời nhắn cho đội ngũ cố vấn thời trang của TwistFit.",
-      "email": "support@twistfit.vn",
+      "description": "Mọi chia sẻ, thắc mắc về kết quả hay ý kiến đóng góp tính năng của bạn đều là động lực lớn để  TwistFit hoàn thiện. Đừng ngần ngại gửi tin nhắn cho chúng mình nhé!",
+      "email": "twistfit.official@gmail.com",
       "phone": "1900 8899 (8:30 - 21:00 hàng ngày)",
-      "address": "TwistFit AI Studio, Quận 1, TP. Hồ Chí Minh",
+      "address": "UEH, TP. Hồ Chí Minh",
       "formHeading": "Hòm Thư Góp Ý",
       "formSubheading": "Vui lòng điền thông tin bên dưới, chúng tôi sẽ phản hồi trong vòng 24 giờ làm việc.",
       "labels": {
