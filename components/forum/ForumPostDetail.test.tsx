@@ -18,6 +18,9 @@ const POST: ForumPost = {
   likedByMe: false,
   commentCount: 0,
   bookmarkedByMe: false,
+  canDelete: false,
+  deletedAt: null,
+  deletedByAdmin: null,
   createdAt: '2026-01-01',
   updatedAt: '2026-01-01',
 }
@@ -235,5 +238,72 @@ describe('ForumPostDetail', () => {
       '/forum/posts/9/report',
       expect.objectContaining({ method: 'POST', credentials: 'include', body: JSON.stringify({ reason: 'Spam' }) })
     )
+  })
+
+  it('does not show a delete button when the post cannot be deleted by the viewer', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POST }))
+    renderDetail()
+    await waitFor(() => expect(screen.getByText('Bài chi tiết')).toBeInTheDocument())
+    expect(screen.queryByRole('button', { name: 'Xóa bài viết' })).not.toBeInTheDocument()
+  })
+
+  it('shows a delete button when the post can be deleted, and shows the removed banner after confirming', async () => {
+    const deletablePost: ForumPost = { ...POST, canDelete: true }
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => deletablePost }))
+    renderDetail()
+    await waitFor(() => expect(screen.getByText('Bài chi tiết')).toBeInTheDocument())
+
+    vi.stubGlobal('confirm', vi.fn().mockReturnValue(true))
+    const deletedPost: ForumPost = { ...deletablePost, deletedAt: '2026-01-04', deletedByAdmin: false }
+    vi.stubGlobal(
+      'fetch',
+      vi
+        .fn()
+        .mockResolvedValueOnce({ ok: true, status: 204, json: async () => ({}) })
+        .mockResolvedValueOnce({ ok: true, json: async () => deletedPost })
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Xóa bài viết' }))
+
+    await waitFor(() => expect(screen.getByText('Bài viết đã bị xóa bởi tác giả.')).toBeInTheDocument())
+    expect(fetch).toHaveBeenCalledWith(
+      '/forum/posts/9',
+      expect.objectContaining({ method: 'DELETE', credentials: 'include' })
+    )
+    expect(screen.queryByText('Nội dung chi tiết')).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Xóa bài viết' })).not.toBeInTheDocument()
+  })
+
+  it('does not delete the post when the confirmation is declined', async () => {
+    const deletablePost: ForumPost = { ...POST, canDelete: true }
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => deletablePost }))
+    renderDetail()
+    await waitFor(() => expect(screen.getByText('Bài chi tiết')).toBeInTheDocument())
+
+    vi.stubGlobal('confirm', vi.fn().mockReturnValue(false))
+    const deleteFetch = vi.fn()
+    vi.stubGlobal('fetch', deleteFetch)
+    fireEvent.click(screen.getByRole('button', { name: 'Xóa bài viết' }))
+
+    expect(deleteFetch).not.toHaveBeenCalled()
+  })
+
+  it('shows the admin-deleted banner and hides comments for an already-deleted post', async () => {
+    const deletedPost: ForumPost = { ...POST, deletedAt: '2026-01-04', deletedByAdmin: true }
+    stubForumFetches()
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((url: string) => {
+        if (url === '/forum/posts/9') return Promise.resolve({ ok: true, json: async () => deletedPost })
+        if (url === '/forum/posts/9/comments') return Promise.resolve({ ok: true, json: async () => COMMENTS })
+        return Promise.resolve({ ok: true, json: async () => ({}) })
+      })
+    )
+    renderDetail()
+
+    await waitFor(() =>
+      expect(screen.getByText('Bài viết đã bị xóa bởi quản trị viên.')).toBeInTheDocument()
+    )
+    expect(screen.queryByText('Bình luận')).not.toBeInTheDocument()
+    expect(screen.queryByText('Phối đồ đẹp quá!')).not.toBeInTheDocument()
   })
 })

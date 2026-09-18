@@ -85,6 +85,14 @@ export default function ForumPostDetail({ id }: { id: string }) {
     setComments((current) => current.filter((comment) => comment.id !== commentId))
   }
 
+  async function handleDeletePost() {
+    if (!window.confirm(t('Detail.deleteConfirm'))) return
+    const response = await apiFetch(`/forum/posts/${id}`, { method: 'DELETE' })
+    if (!response.ok) return
+    const refreshed = await apiFetch(`/forum/posts/${id}`)
+    if (refreshed.ok) setPost(await refreshed.json())
+  }
+
   return (
     <article className="mx-auto max-w-3xl px-margin py-space-lg md:px-margin-desktop md:py-space-xl">
       <Link href="/forum" className="text-label-md font-semibold text-primary hover:underline">
@@ -98,22 +106,42 @@ export default function ForumPostDetail({ id }: { id: string }) {
       )}
       {post && (
         <>
-          <h1 className="mt-space-md text-headline-lg font-bold text-on-surface">{post.title}</h1>
+          <div className="mt-space-md flex items-start justify-between gap-space-md">
+            <h1 className="text-headline-lg font-bold text-on-surface">{post.title}</h1>
+            {post.canDelete && !post.deletedAt && (
+              <button
+                type="button"
+                onClick={handleDeletePost}
+                className="shrink-0 text-label-sm font-semibold text-error hover:underline"
+              >
+                {t('Detail.deleteButton')}
+              </button>
+            )}
+          </div>
           <p className="mt-space-xs text-label-sm text-on-surface-variant">{post.authorName}</p>
-          {post.imageUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={post.imageUrl}
-              alt=""
-              className="mt-space-md aspect-[4/3] w-full rounded-2xl object-cover"
-            />
-          )}
-          <div
-            className="prose mt-space-md max-w-none text-body-md text-on-surface"
-            dangerouslySetInnerHTML={{ __html: renderMarkdown(post.body) }}
-          />
 
-          {user && (
+          {post.deletedAt ? (
+            <p className="mt-space-md rounded-xl bg-surface-container px-space-md py-space-sm text-body-md text-on-surface-variant">
+              {post.deletedByAdmin ? t('Detail.deletedByAdmin') : t('Detail.deletedByAuthor')}
+            </p>
+          ) : (
+            <>
+              {post.imageUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={post.imageUrl}
+                  alt=""
+                  className="mt-space-md aspect-[4/3] w-full rounded-2xl object-cover"
+                />
+              )}
+              <div
+                className="prose mt-space-md max-w-none text-body-md text-on-surface"
+                dangerouslySetInnerHTML={{ __html: renderMarkdown(post.body) }}
+              />
+            </>
+          )}
+
+          {!post.deletedAt && user && (
             <div className="mt-space-md flex items-center gap-space-sm">
               <button
                 type="button"
@@ -158,7 +186,7 @@ export default function ForumPostDetail({ id }: { id: string }) {
             </div>
           )}
 
-          {user && (
+          {!post.deletedAt && user && (
             <div className="mt-space-lg">
               {!showReportForm && !reportMessage && (
                 <button
@@ -192,6 +220,7 @@ export default function ForumPostDetail({ id }: { id: string }) {
             </div>
           )}
 
+          {!post.deletedAt && (
           <div className="mt-space-xl">
             <h2 className="text-headline-sm font-semibold text-on-surface">{t('Comments.title')}</h2>
             {comments.length === 0 && (
@@ -234,6 +263,7 @@ export default function ForumPostDetail({ id }: { id: string }) {
               </div>
             )}
           </div>
+          )}
         </>
       )}
     </article>

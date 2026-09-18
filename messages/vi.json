@@ -423,7 +423,11 @@
     "Detail": {
       "backLink": "← Quay lại Diễn đàn",
       "notFoundTitle": "Không tìm thấy bài viết",
-      "notFoundBody": "Bài viết này không tồn tại hoặc bạn không có quyền xem."
+      "notFoundBody": "Bài viết này không tồn tại hoặc bạn không có quyền xem.",
+      "deleteButton": "Xóa bài viết",
+      "deleteConfirm": "Xóa bài viết này?",
+      "deletedByAuthor": "Bài viết đã bị xóa bởi tác giả.",
+      "deletedByAdmin": "Bài viết đã bị xóa bởi quản trị viên."
     },
     "Report": {
       "reportButton": "Báo cáo bài viết",

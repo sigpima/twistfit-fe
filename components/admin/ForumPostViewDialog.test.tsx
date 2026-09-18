@@ -17,6 +17,9 @@ const POST: ForumPost = {
   likedByMe: false,
   commentCount: 0,
   bookmarkedByMe: false,
+  canDelete: false,
+  deletedAt: null,
+  deletedByAdmin: null,
   createdAt: '2026-01-01',
   updatedAt: '2026-01-01',
 }

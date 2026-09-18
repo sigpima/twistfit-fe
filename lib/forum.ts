@@ -28,6 +28,9 @@ export type ForumPost = {
   likedByMe: boolean
   commentCount: number
   bookmarkedByMe: boolean
+  canDelete: boolean
+  deletedAt: string | null
+  deletedByAdmin: boolean | null
   createdAt: string
   updatedAt: string
 }
