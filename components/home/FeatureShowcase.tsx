@@ -9,7 +9,6 @@ import type { FeatureKey } from '@/lib/featureShowcaseSteps'
 const FEATURES: { key: FeatureKey; accentClassName: string }[] = [
   { key: 'colorTest', accentClassName: 'text-secondary' },
   { key: 'outfit', accentClassName: 'text-primary' },
-  { key: 'community', accentClassName: 'text-tertiary' },
 ]
 
 export default function FeatureShowcase() {
@@ -21,7 +20,6 @@ export default function FeatureShowcase() {
   const ctaByFeature: Record<FeatureKey, { label: string; onClick?: () => void; href?: string }> = {
     colorTest: { label: t('features.colorTest.cta'), onClick: openQrModal },
     outfit: { label: t('features.outfit.cta'), href: '/outfit/step-1' },
-    community: { label: t('features.community.cta'), href: '/forum' },
   }
 
   function goToPrevious() {

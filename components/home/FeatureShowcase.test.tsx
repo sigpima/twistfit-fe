@@ -17,7 +17,6 @@ describe('FeatureShowcase', () => {
     renderShowcase()
     expect(screen.getByRole('heading', { name: 'Màu sắc cá nhân' })).toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: 'Phối đồ' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('heading', { name: 'Diễn đàn' })).not.toBeInTheDocument()
   })
 
   it('opens the QR modal from the Personal Color CTA', () => {
@@ -36,9 +35,7 @@ describe('FeatureShowcase', () => {
   it('wraps around from the last feature back to the first', () => {
     renderShowcase()
     fireEvent.click(screen.getByRole('button', { name: 'Xem tính năng tiếp theo' }))
-    fireEvent.click(screen.getByRole('button', { name: 'Xem tính năng tiếp theo' }))
-    expect(screen.getByRole('heading', { name: 'Diễn đàn' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Khám Phá Diễn Đàn' })).toHaveAttribute('href', '/forum')
+    expect(screen.getByRole('heading', { name: 'Phối đồ' })).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('button', { name: 'Xem tính năng tiếp theo' }))
     expect(screen.getByRole('heading', { name: 'Màu sắc cá nhân' })).toBeInTheDocument()
@@ -47,13 +44,13 @@ describe('FeatureShowcase', () => {
   it('wraps around from the first feature back to the last with the previous arrow', () => {
     renderShowcase()
     fireEvent.click(screen.getByRole('button', { name: 'Xem tính năng trước' }))
-    expect(screen.getByRole('heading', { name: 'Diễn đàn' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Phối đồ' })).toBeInTheDocument()
   })
 
   it('jumps directly to a feature when its dot is clicked', () => {
     renderShowcase()
-    fireEvent.click(screen.getByRole('button', { name: 'Xem tính năng: Diễn đàn' }))
-    expect(screen.getByRole('heading', { name: 'Diễn đàn' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Xem tính năng: Diễn đàn' })).toHaveAttribute('aria-current', 'true')
+    fireEvent.click(screen.getByRole('button', { name: 'Xem tính năng: Phối đồ' }))
+    expect(screen.getByRole('heading', { name: 'Phối đồ' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Xem tính năng: Phối đồ' })).toHaveAttribute('aria-current', 'true')
   })
 })

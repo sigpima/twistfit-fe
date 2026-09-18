@@ -1,4 +1,4 @@
-export type FeatureKey = 'colorTest' | 'outfit' | 'community'
+export type FeatureKey = 'colorTest' | 'outfit'
 
 export type FeatureStepImage = {
   key: string
@@ -12,14 +12,8 @@ export const FEATURE_STEP_IMAGES = {
     { key: 'ar', src: '/home/feature-steps/color-test-ar.jpg' },
   ],
   outfit: [
-    { key: 'digitizeCloset', src: '/home/feature-steps/outfit-digitize-closet.jpg' },
-    { key: 'setPreferences', src: '/home/feature-steps/outfit-set-preferences.jpg' },
-    { key: 'chooseModel', src: '/home/feature-steps/outfit-choose-model.jpg' },
-    { key: 'getOutfit', src: '/home/feature-steps/outfit-get-outfit.jpg' },
-  ],
-  community: [
-    { key: 'share', src: '/home/feature-steps/community-share.jpg' },
-    { key: 'connect', src: '/home/feature-steps/community-connect.jpg' },
-    { key: 'save', src: '/home/feature-steps/community-save.jpg' },
+    { key: 'chooseGarment', src: '/home/feature-steps/outfit-choose-garment.jpg' },
+    { key: 'modelAndFace', src: '/home/feature-steps/outfit-model-and-face.jpg' },
+    { key: 'viewResult', src: '/home/feature-steps/outfit-view-result.jpg' },
   ],
 } as const satisfies Record<FeatureKey, FeatureStepImage[]>

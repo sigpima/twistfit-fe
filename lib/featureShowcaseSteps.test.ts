@@ -4,8 +4,7 @@ import { FEATURE_STEP_IMAGES } from './featureShowcaseSteps'
 describe('featureShowcaseSteps', () => {
   it('has the right number of steps per feature', () => {
     expect(FEATURE_STEP_IMAGES.colorTest).toHaveLength(3)
-    expect(FEATURE_STEP_IMAGES.outfit).toHaveLength(4)
-    expect(FEATURE_STEP_IMAGES.community).toHaveLength(3)
+    expect(FEATURE_STEP_IMAGES.outfit).toHaveLength(3)
   })
 
   it('uses unique keys within each feature', () => {
