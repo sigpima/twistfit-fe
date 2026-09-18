@@ -21,4 +21,12 @@ describe('featureShowcaseSteps', () => {
       }
     }
   })
+
+  it('points every background image at the feature-steps/backgrounds directory as a jpg', () => {
+    for (const images of Object.values(FEATURE_STEP_IMAGES)) {
+      for (const image of images) {
+        expect(image.bg).toMatch(/^\/home\/feature-steps\/backgrounds\/[a-z0-9-]+\.jpg$/)
+      }
+    }
+  })
 })

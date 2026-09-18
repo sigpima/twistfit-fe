@@ -20,6 +20,7 @@ export default function FeatureSection({ featureKey, accentClassName, cta }: Fea
   const stepperImages = images.map((image, index) => ({
     key: image.key,
     src: image.src,
+    bg: image.bg,
     alt: t(`steps.${image.key}.title`) || `Step ${index + 1}`,
   }))
 

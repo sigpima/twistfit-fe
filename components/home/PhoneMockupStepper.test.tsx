@@ -3,15 +3,22 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import PhoneMockupStepper from './PhoneMockupStepper'
 
 const IMAGES = [
-  { key: 'a', src: '/a.jpg', alt: 'A' },
-  { key: 'b', src: '/b.jpg', alt: 'B' },
-  { key: 'c', src: '/c.jpg', alt: 'C' },
+  { key: 'a', src: '/a.jpg', alt: 'A', bg: '/a-bg.jpg' },
+  { key: 'b', src: '/b.jpg', alt: 'B', bg: '/b-bg.jpg' },
+  { key: 'c', src: '/c.jpg', alt: 'C', bg: '/c-bg.jpg' },
 ]
 
 describe('PhoneMockupStepper', () => {
   it('shows the image at activeIndex', () => {
     render(<PhoneMockupStepper images={IMAGES} activeIndex={1} onSelect={vi.fn()} />)
     expect(screen.getByAltText('B')).toBeInTheDocument()
+  })
+
+  it('shows the background image matching activeIndex', () => {
+    render(<PhoneMockupStepper images={IMAGES} activeIndex={1} onSelect={vi.fn()} />)
+    expect(screen.getByAltText('B')).toBeInTheDocument()
+    const bgImage = document.querySelector('img[src="/b-bg.jpg"]')
+    expect(bgImage).toBeInTheDocument()
   })
 
   it('renders one step button per image', () => {
