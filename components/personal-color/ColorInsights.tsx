@@ -1,7 +1,6 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import CameraArButton from './CameraArButton'
 import { IDEAL_PALETTE_COLORS } from '@/lib/idealPaletteColors'
 import type { SubSeason } from '@/lib/db'
 
@@ -30,9 +29,6 @@ export default function ColorInsights({ subSeason }: { subSeason: SubSeason }) {
             </div>
           ))}
         </div>
-      </div>
-      <div className="flex justify-center">
-        <CameraArButton subSeason={subSeason} />
       </div>
     </section>
   )

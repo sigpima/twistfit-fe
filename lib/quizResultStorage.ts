@@ -8,6 +8,9 @@ export type AnonymousQuizResult = {
   hueResult: AxisValue
   valueResult: AxisValue
   chromaResult: AxisValue
+  hueScore?: number | null
+  valueScore?: number | null
+  chromaScore?: number | null
   createdAt?: string
 }
 

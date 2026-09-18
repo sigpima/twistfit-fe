@@ -1,10 +1,12 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import Link from 'next/link'
 import type { SubSeason } from '@/lib/db'
 import RecommendationDisclosure from './RecommendationDisclosure'
 import JewelryRecommendation from './JewelryRecommendation'
 import MakeupRecommendations from './MakeupRecommendations'
+import CameraArButton from './CameraArButton'
 
 export default function RecommendationsSection({ subSeason }: { subSeason: SubSeason }) {
   const t = useTranslations('PersonalColor.Result.Recommendations')
@@ -30,14 +32,15 @@ export default function RecommendationsSection({ subSeason }: { subSeason: SubSe
           <MakeupRecommendations subSeason={subSeason} />
         </RecommendationDisclosure>
       </div>
-      <div className="mt-4 flex items-center gap-3 rounded-2xl border border-[#7b89ba]/20 bg-gradient-to-r from-[#eef4fa] via-indigo-50/60 to-pink-50/60 p-3.5">
-        <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#7b89ba]/20 text-[#7b89ba]">
-          <span className="material-symbols-outlined text-[16px]">favorite</span>
-        </div>
-        <div>
-          <p className="text-xs font-bold text-[#304461]">{t('ctaBannerTitle')}</p>
-          <p className="text-[11px] text-[#304461]/75">{t('ctaBannerSubtitle')}</p>
-        </div>
+      <div className="mt-4 flex flex-wrap items-center justify-end gap-2.5">
+        <Link
+          href="/personal-color/quiz"
+          className="flex items-center justify-center gap-2 rounded-2xl border border-[#7b89ba]/30 bg-white px-4 py-3 text-xs font-semibold text-[#304461] transition-all hover:border-[#7b89ba] hover:bg-[#eef4fa]"
+        >
+          <span className="material-symbols-outlined text-[16px] text-primary">refresh</span>
+          <span>{t('retakeButton')}</span>
+        </Link>
+        <CameraArButton subSeason={subSeason} />
       </div>
     </section>
   )

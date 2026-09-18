@@ -2,6 +2,8 @@
 
 import { useTranslations } from 'next-intl'
 import { SEASON_PROFILES, SEASON_PORTRAIT_IMAGES } from '@/lib/seasonProfiles'
+import { AXIS_VALUE_LABELS } from '@/lib/axisValueLabels'
+import { ColorMetricsSummary } from './ColorMetricsSection'
 import type { AxisValue, SubSeason } from '@/lib/db'
 
 export type ProfileCardResult = {
@@ -9,6 +11,9 @@ export type ProfileCardResult = {
   hueResult: AxisValue
   valueResult: AxisValue
   chromaResult: AxisValue
+  hueScore?: number | null
+  valueScore?: number | null
+  chromaScore?: number | null
 }
 
 export default function ColorProfileCard({ result }: { result: ProfileCardResult }) {
@@ -39,9 +44,17 @@ export default function ColorProfileCard({ result }: { result: ProfileCardResult
             </div>
             <div>
               <h3 className="text-2xl font-bold tracking-tight text-[#304461]">{profile.displayName}</h3>
+              <p className="text-xs font-semibold text-[#304461]/60">
+                {t('tagline', {
+                  hue: AXIS_VALUE_LABELS[result.hueResult],
+                  value: AXIS_VALUE_LABELS[result.valueResult],
+                  chroma: AXIS_VALUE_LABELS[result.chromaResult],
+                })}
+              </p>
             </div>
           </div>
           <p className="text-xs leading-relaxed text-[#304461]/80 sm:text-[13px]">{profile.description}</p>
+          <ColorMetricsSummary result={result} />
         </div>
       </div>
     </section>

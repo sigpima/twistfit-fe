@@ -8,7 +8,7 @@ import { useAuth } from '@/components/auth/AuthProvider'
 import { getAnonymousQuizResult } from '@/lib/quizResultStorage'
 import ColorProfileCard from '@/components/personal-color/ColorProfileCard'
 import ColorInsights from '@/components/personal-color/ColorInsights'
-import ColorMetricsSection from '@/components/personal-color/ColorMetricsSection'
+import { ColorMetricsDetail } from '@/components/personal-color/ColorMetricsSection'
 import RecommendationsSection from '@/components/personal-color/RecommendationsSection'
 import AnonymousResultBanner from '@/components/personal-color/AnonymousResultBanner'
 import type { AxisValue, SubSeason } from '@/lib/db'
@@ -18,6 +18,9 @@ type LoadedResult = {
   hueResult: AxisValue
   valueResult: AxisValue
   chromaResult: AxisValue
+  hueScore?: number | null
+  valueScore?: number | null
+  chromaScore?: number | null
 }
 
 type ResultState = { status: 'loading' } | { status: 'empty' } | { status: 'found'; result: LoadedResult }
@@ -92,12 +95,16 @@ export default function ResultPage() {
         </div>
       )}
       {state.status === 'found' && (
-        <div className="mx-auto flex max-w-3xl flex-col gap-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           {!user && <AnonymousResultBanner />}
-          <ColorProfileCard result={state.result} />
-          <ColorInsights subSeason={state.result.subSeason} />
-          <ColorMetricsSection result={state.result} />
-          <RecommendationsSection subSeason={state.result.subSeason} />
+          <div className="flex flex-col gap-6 lg:col-span-7">
+            <ColorProfileCard result={state.result} />
+            <ColorInsights subSeason={state.result.subSeason} />
+          </div>
+          <div className="flex flex-col gap-6 lg:col-span-5">
+            <ColorMetricsDetail result={state.result} />
+            <RecommendationsSection subSeason={state.result.subSeason} />
+          </div>
         </div>
       )}
     </main>

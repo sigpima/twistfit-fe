@@ -12,6 +12,12 @@ describe('ColorProfileCard', () => {
     expect(screen.getByText(/Lạnh rõ rệt, sắc nét/)).toBeInTheDocument()
   })
 
+  it('renders a tagline derived from the axis results and the inline metrics summary', () => {
+    renderWithIntl(<ColorProfileCard result={RESULT} />)
+    expect(screen.getByText('Tông Lạnh – Trung bình – Trung tính')).toBeInTheDocument()
+    expect(screen.getByText('Tổng quan sắc diện')).toBeInTheDocument()
+  })
+
   it('renders the portrait photo matching the given sub-season', () => {
     renderWithIntl(<ColorProfileCard result={RESULT} />)
     const portrait = screen.getByRole('img', { name: /.+/ })

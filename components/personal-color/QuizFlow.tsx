@@ -13,6 +13,9 @@ type ScoredResult = {
   hueResult: string
   valueResult: string
   chromaResult: string
+  hueScore: number | null
+  valueScore: number | null
+  chromaScore: number | null
 }
 
 export default function QuizFlow({ questions }: { questions: QuizQuestion[] }) {
@@ -60,6 +63,9 @@ export default function QuizFlow({ questions }: { questions: QuizQuestion[] }) {
       hueResult: result.hueResult as never,
       valueResult: result.valueResult as never,
       chromaResult: result.chromaResult as never,
+      hueScore: result.hueScore,
+      valueScore: result.valueScore,
+      chromaScore: result.chromaScore,
     })
     router.push('/personal-color/result')
   }

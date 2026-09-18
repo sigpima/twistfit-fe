@@ -792,17 +792,19 @@
       "ProfileCard": {
         "srHeading": "Kết quả phân tích mùa sắc thái",
         "portraitAlt": "Chân dung phân tích sắc tố khuôn mặt",
-        "paletteLabel": "Bảng màu phù hợp nhất"
+        "paletteLabel": "Bảng màu phù hợp nhất",
+        "tagline": "Tông {hue} – {value} – {chroma}"
       },
       "Insights": {
-        "srHeading": "Bảng màu lý tưởng và trải nghiệm Camera AR",
+        "srHeading": "Bảng màu lý tưởng của bạn",
         "idealPaletteHeading": "Bảng màu lý tưởng của bạn"
       },
       "Metrics": {
         "heading": "Chi tiết chỉ số màu sắc",
-        "hueLabel": "Nhiệt độ màu",
-        "valueLabel": "Sắc độ",
-        "chromaLabel": "Độ bão hoà"
+        "summaryHeading": "Tổng quan sắc diện",
+        "hueLabel": "Sắc độ (ấm/lạnh)",
+        "valueLabel": "Độ sáng (da)",
+        "chromaLabel": "Độ tươi (rực rỡ/êm dịu)"
       },
       "Recommendations": {
         "heading": "Gợi ý ứng dụng",
@@ -826,14 +828,13 @@
           "neutral": "Da tone Trung tính"
         },
         "creditLabel": "Nguồn",
-        "ctaBannerTitle": "Kết quả Personal Color của bạn đã sẵn sàng!",
-        "ctaBannerSubtitle": "Khám phá thế giới màu sắc giúp bạn tỏa sáng mỗi ngày ✨"
+        "retakeButton": "Làm lại bài kiểm tra"
       }
     }
   },
   "Outfit": {
     "Stepper": {
-      "kicker": "Virtual Fitting Studio",
+      "kicker": "Phối đồ",
       "kickerSuffix": "Quy trình 3 bước",
       "steps": {
         "chooseGarment": "Chọn Quần Áo",
