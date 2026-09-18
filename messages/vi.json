@@ -792,8 +792,7 @@
       },
       "Insights": {
         "srHeading": "Bảng màu lý tưởng và trải nghiệm Camera AR",
-        "idealPaletteHeading": "Bảng màu lý tưởng của bạn",
-        "paletteImageAlt": "Bảng phối màu minh họa dành cho {season}"
+        "idealPaletteHeading": "Bảng màu lý tưởng của bạn"
       },
       "Metrics": {
         "heading": "Chi tiết chỉ số màu sắc",
@@ -804,16 +803,25 @@
       "Recommendations": {
         "heading": "Gợi ý ứng dụng",
         "items": {
-          "outfit": {
-            "title": "Màu trang phục"
+          "jewelry": {
+            "title": "Trang sức",
+            "imageAlt": "Trang sức gợi ý"
           },
-          "lipstick": {
-            "title": "Màu son"
-          },
-          "accessory": {
-            "title": "Màu phụ kiện"
+          "makeup": {
+            "title": "Makeup",
+            "blush": "Phấn má",
+            "blushImageAlt": "Bảng màu phấn má gợi ý",
+            "lipstick": "Son môi",
+            "lipstickImageAlt": "Bảng màu son gợi ý",
+            "toneLayout": "Tone"
           }
         },
+        "toneGroups": {
+          "warm": "Da tone Ấm",
+          "cool": "Da tone Lạnh",
+          "neutral": "Da tone Trung tính"
+        },
+        "creditLabel": "Nguồn",
         "ctaBannerTitle": "Kết quả Personal Color của bạn đã sẵn sàng!",
         "ctaBannerSubtitle": "Khám phá thế giới màu sắc giúp bạn tỏa sáng mỗi ngày ✨"
       }

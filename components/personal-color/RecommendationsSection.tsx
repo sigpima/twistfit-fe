@@ -1,20 +1,13 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { SEASON_PROFILES } from '@/lib/seasonProfiles'
 import type { SubSeason } from '@/lib/db'
-
-const RECOMMENDATION_ICONS: Record<'outfit' | 'lipstick' | 'accessory', string> = {
-  outfit: 'checkroom',
-  lipstick: 'favorite',
-  accessory: 'diamond',
-}
-
-const RECOMMENDATION_KEYS = ['outfit', 'lipstick', 'accessory'] as const
+import RecommendationDisclosure from './RecommendationDisclosure'
+import JewelryRecommendation from './JewelryRecommendation'
+import MakeupRecommendations from './MakeupRecommendations'
 
 export default function RecommendationsSection({ subSeason }: { subSeason: SubSeason }) {
   const t = useTranslations('PersonalColor.Result.Recommendations')
-  const profile = SEASON_PROFILES[subSeason]
 
   return (
     <section
@@ -29,21 +22,13 @@ export default function RecommendationsSection({ subSeason }: { subSeason: SubSe
           {t('heading')}
         </h2>
       </div>
-      <div className="grid grid-cols-3 gap-3">
-        {RECOMMENDATION_KEYS.map((key) => (
-          <div
-            key={key}
-            className="flex flex-col items-center gap-2 rounded-2xl border border-[#7b89ba]/10 bg-[#eef4fa]/50 p-3.5 text-center transition-colors hover:bg-[#eef4fa]"
-          >
-            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#4a89dc] to-[#7b89ba] text-white shadow-xs">
-              <span className="material-symbols-outlined text-[20px]">{RECOMMENDATION_ICONS[key]}</span>
-            </div>
-            <div>
-              <h3 className="text-xs font-bold text-[#304461]">{t(`items.${key}.title`)}</h3>
-              <p className="mt-0.5 text-[11px] leading-snug text-[#304461]/80">{profile.recommendations[key]}</p>
-            </div>
-          </div>
-        ))}
+      <div className="space-y-3">
+        <RecommendationDisclosure title={t('items.jewelry.title')}>
+          <JewelryRecommendation subSeason={subSeason} />
+        </RecommendationDisclosure>
+        <RecommendationDisclosure title={t('items.makeup.title')}>
+          <MakeupRecommendations subSeason={subSeason} />
+        </RecommendationDisclosure>
       </div>
       <div className="mt-4 flex items-center gap-3 rounded-2xl border border-[#7b89ba]/20 bg-gradient-to-r from-[#eef4fa] via-indigo-50/60 to-pink-50/60 p-3.5">
         <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#7b89ba]/20 text-[#7b89ba]">

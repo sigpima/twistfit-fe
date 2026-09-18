@@ -12,10 +12,16 @@ vi.mock('react-qr-code', () => ({
 }))
 
 describe('ColorInsights', () => {
-  it('renders the ideal-palette illustration matching the given sub-season', () => {
+  it('renders 12 ideal-palette color dots matching the given sub-season', () => {
     renderWithIntl(<ColorInsights subSeason="true-winter" />)
-    const image = screen.getByRole('img', { name: /.+/ })
-    expect(image).toHaveAttribute('src', '/personal-color/results/true-winter.png')
+    expect(screen.getByText('#404040')).toBeInTheDocument()
+    expect(screen.getByText('#fde55f')).toBeInTheDocument()
+    expect(screen.getAllByText(/^#[0-9a-f]{6}$/)).toHaveLength(12)
+  })
+
+  it('renders different palette colors for a different sub-season', () => {
+    renderWithIntl(<ColorInsights subSeason="light-spring" />)
+    expect(screen.getByText('#f5e077')).toBeInTheDocument()
   })
 
   it('renders the camera AR button', () => {
