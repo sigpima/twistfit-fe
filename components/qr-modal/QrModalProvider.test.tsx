@@ -20,7 +20,7 @@ describe('QrModalProvider', () => {
         <TestConsumer />
       </QrModalProvider>
     )
-    expect(screen.queryByText('Kiểm Tra Personal Color')).not.toBeInTheDocument()
+    expect(screen.queryByText('Kiểm Tra Màu Sắc Cá Nhân')).not.toBeInTheDocument()
   })
 
   it('opens the modal when openQrModal is called', () => {
@@ -30,7 +30,7 @@ describe('QrModalProvider', () => {
       </QrModalProvider>
     )
     fireEvent.click(screen.getByText('open'))
-    expect(screen.getByText('Kiểm Tra Personal Color')).toBeInTheDocument()
+    expect(screen.getByText('Kiểm Tra Màu Sắc Cá Nhân')).toBeInTheDocument()
   })
 
   it('closes the modal when the close button is clicked', () => {
@@ -41,7 +41,7 @@ describe('QrModalProvider', () => {
     )
     fireEvent.click(screen.getByText('open'))
     fireEvent.click(screen.getByLabelText('Đóng'))
-    expect(screen.queryByText('Kiểm Tra Personal Color')).not.toBeInTheDocument()
+    expect(screen.queryByText('Kiểm Tra Màu Sắc Cá Nhân')).not.toBeInTheDocument()
   })
 
   it('closes the modal when the backdrop is clicked', () => {
@@ -52,6 +52,6 @@ describe('QrModalProvider', () => {
     )
     fireEvent.click(screen.getByText('open'))
     fireEvent.click(screen.getByTestId('qr-modal-backdrop'))
-    expect(screen.queryByText('Kiểm Tra Personal Color')).not.toBeInTheDocument()
+    expect(screen.queryByText('Kiểm Tra Màu Sắc Cá Nhân')).not.toBeInTheDocument()
   })
 })

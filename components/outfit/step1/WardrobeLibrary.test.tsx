@@ -78,7 +78,7 @@ describe('WardrobeLibrary', () => {
 
   it('shows the personal-color CTA link when the user has no quiz result', async () => {
     renderLibrary()
-    await waitFor(() => expect(screen.getByRole('link', { name: /Personal Color/ })).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByRole('link', { name: /màu sắc cá nhân/ })).toBeInTheDocument())
   })
 
   it('opens the Lọc dropdown with a checkbox per clothing-type value', async () => {

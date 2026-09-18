@@ -16,9 +16,9 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: 'TwistFit — Personal Color & Phối Đồ Thông Minh',
+  title: 'TwistFit — Màu Sắc Cá Nhân & Phối Đồ Thông Minh',
   description:
-    'TwistFit giúp bạn khám phá Personal Color của chính mình và phối đồ thông minh bằng AI.',
+    'TwistFit giúp bạn khám phá màu sắc cá nhân của chính mình và phối đồ thông minh bằng AI.',
 }
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {

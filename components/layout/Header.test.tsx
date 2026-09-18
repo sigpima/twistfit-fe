@@ -76,7 +76,7 @@ describe('Header', () => {
     renderHeader()
 
     expect(screen.getByRole('link', { name: 'Bộ sưu tập đã lưu' })).toHaveAttribute('href', '/collection')
-    expect(screen.getByRole('link', { name: 'Kết quả đánh giá Personal Color' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Kết quả đánh giá màu sắc cá nhân' })).toHaveAttribute(
       'href',
       '/personal-color/result'
     )

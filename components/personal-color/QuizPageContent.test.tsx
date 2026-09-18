@@ -23,7 +23,7 @@ const QUESTIONS: QuizQuestion[] = Array.from({ length: 5 }, (_, index) => ({
 describe('QuizPageContent', () => {
   it('renders the quiz heading and first question', () => {
     renderWithIntl(<QuizPageContent questions={QUESTIONS} />)
-    expect(screen.getByRole('heading', { level: 1, name: 'Kiểm Tra Personal Color' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'Kiểm Tra Màu Sắc Cá Nhân' })).toBeInTheDocument()
     expect(screen.getByText('Câu hỏi 1/5')).toBeInTheDocument()
   })
 })

@@ -51,14 +51,14 @@ describe('ResultPage', () => {
       screen.getByRole('heading', { level: 1, name: 'KẾT QUẢ PHÂN TÍCH PERSONAL COLOR' })
     ).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Trang chủ' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: 'Kiểm tra Personal Color' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Kiểm tra Màu Sắc Cá Nhân' })).not.toBeInTheDocument()
   })
 
   it('shows an empty state when a signed-out visitor has no saved result', async () => {
     setStoredUser(null)
     renderResultPage()
     await waitFor(() =>
-      expect(screen.getByText('Bạn chưa có kết quả Personal Color nào')).toBeInTheDocument()
+      expect(screen.getByText('Bạn chưa có kết quả màu sắc cá nhân nào')).toBeInTheDocument()
     )
     expect(screen.getByRole('link', { name: 'Làm bài test ngay' })).toHaveAttribute(
       'href',
@@ -94,7 +94,7 @@ describe('ResultPage', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(null)))
     renderResultPage()
     await waitFor(() =>
-      expect(screen.getByText('Bạn chưa có kết quả Personal Color nào')).toBeInTheDocument()
+      expect(screen.getByText('Bạn chưa có kết quả màu sắc cá nhân nào')).toBeInTheDocument()
     )
   })
 

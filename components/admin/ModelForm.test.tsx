@@ -44,7 +44,7 @@ describe('ModelForm', () => {
     fireEvent.change(screen.getByLabelText('Chiều cao'), { target: { value: '1m70' } })
     fireEvent.change(screen.getByLabelText('Dáng người'), { target: { value: 'Chữ nhật' } })
     fireEvent.change(screen.getByLabelText('Số đo vòng eo'), { target: { value: '68cm' } })
-    fireEvent.change(screen.getByLabelText('Personal Color'), { target: { value: 'Warm Spring' } })
+    fireEvent.change(screen.getByLabelText('Màu sắc cá nhân'), { target: { value: 'Warm Spring' } })
     fireEvent.click(screen.getByRole('button', { name: 'Tạo người mẫu' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/model-catalog'))

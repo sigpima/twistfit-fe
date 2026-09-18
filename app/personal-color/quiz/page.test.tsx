@@ -29,7 +29,7 @@ describe('QuizPage', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => QUESTIONS }))
     const page = await QuizPage()
     renderWithIntl(page)
-    expect(screen.getByRole('heading', { level: 1, name: 'Kiểm Tra Personal Color' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'Kiểm Tra Màu Sắc Cá Nhân' })).toBeInTheDocument()
     expect(screen.getByText('Câu hỏi 1/5')).toBeInTheDocument()
   })
 })

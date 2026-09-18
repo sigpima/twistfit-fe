@@ -6,7 +6,7 @@ import CtaBanner from './CtaBanner'
 describe('CtaBanner', () => {
   it('links the two CTAs to the quiz and the outfit flow', () => {
     renderWithIntl(<CtaBanner />)
-    expect(screen.getByRole('link', { name: /Bắt đầu Test Personal Color/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /Bắt đầu Test màu sắc cá nhân/ })).toHaveAttribute(
       'href',
       '/personal-color/quiz'
     )
