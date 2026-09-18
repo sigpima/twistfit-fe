@@ -2,14 +2,9 @@ import { describe, expect, it } from 'vitest'
 import { screen, fireEvent } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import FeatureShowcase from './FeatureShowcase'
-import { QrModalProvider } from '@/components/qr-modal/QrModalProvider'
 
 function renderShowcase() {
-  return renderWithIntl(
-    <QrModalProvider>
-      <FeatureShowcase />
-    </QrModalProvider>
-  )
+  return renderWithIntl(<FeatureShowcase />)
 }
 
 describe('FeatureShowcase', () => {
@@ -19,10 +14,9 @@ describe('FeatureShowcase', () => {
     expect(screen.queryByRole('heading', { name: 'Phối đồ' })).not.toBeInTheDocument()
   })
 
-  it('opens the QR modal from the Personal Color CTA', () => {
+  it('links the Personal Color CTA to the quiz page', () => {
     renderShowcase()
-    fireEvent.click(screen.getByText('Kiểm Tra Ngay'))
-    expect(screen.getByText('Kiểm Tra Personal Color')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Kiểm Tra Ngay' })).toHaveAttribute('href', '/personal-color/quiz')
   })
 
   it('advances to the next feature when the next arrow is clicked', () => {

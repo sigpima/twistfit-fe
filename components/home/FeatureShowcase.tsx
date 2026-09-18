@@ -2,7 +2,6 @@
 
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
-import { useQrModal } from '@/components/qr-modal/QrModalProvider'
 import FeatureSection from './FeatureSection'
 import type { FeatureKey } from '@/lib/featureShowcaseSteps'
 
@@ -13,12 +12,11 @@ const FEATURES: { key: FeatureKey; accentClassName: string }[] = [
 
 export default function FeatureShowcase() {
   const t = useTranslations('Home.FeatureShowcase')
-  const { openQrModal } = useQrModal()
   const [activeIndex, setActiveIndex] = useState(0)
 
   const active = FEATURES[activeIndex]
   const ctaByFeature: Record<FeatureKey, { label: string; onClick?: () => void; href?: string }> = {
-    colorTest: { label: t('features.colorTest.cta'), onClick: openQrModal },
+    colorTest: { label: t('features.colorTest.cta'), href: '/personal-color/quiz' },
     outfit: { label: t('features.outfit.cta'), href: '/outfit/step-1' },
   }
 

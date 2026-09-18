@@ -700,7 +700,7 @@
           "steps": {
             "chooseGarment": {
               "title": "Chọn trang phục cho buổi thử đồ",
-              "body": "Chọn từ tủ đồ cá nhân đã lưu, hoặc tải ảnh/dán link sản phẩm để thêm trang phục mới trước khi thử đồ."
+              "body": ""
             },
             "modelAndFace": {
               "title": "Chọn người mẫu phù hợp với dáng người",

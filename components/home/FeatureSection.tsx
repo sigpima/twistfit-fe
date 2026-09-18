@@ -34,7 +34,9 @@ export default function FeatureSection({ featureKey, accentClassName, cta }: Fea
 
         <div className="space-y-2 lg:hidden">
           <h4 className="text-title-md font-bold text-on-surface">{t(`steps.${images[activeStep].key}.title`)}</h4>
-          <p className="text-body-md text-on-surface-variant">{t(`steps.${images[activeStep].key}.body`)}</p>
+          {t(`steps.${images[activeStep].key}.body`) && (
+            <p className="text-body-md text-on-surface-variant">{t(`steps.${images[activeStep].key}.body`)}</p>
+          )}
         </div>
 
         <div className="hidden space-y-4 lg:block">
@@ -52,7 +54,11 @@ export default function FeatureSection({ featureKey, accentClassName, cta }: Fea
               </span>
               <span>
                 <span className="block text-title-md font-bold text-on-surface">{t(`steps.${image.key}.title`)}</span>
-                <span className="mt-1 block text-body-md text-on-surface-variant">{t(`steps.${image.key}.body`)}</span>
+                {t(`steps.${image.key}.body`) && (
+                  <span className="mt-1 block text-body-md text-on-surface-variant">
+                    {t(`steps.${image.key}.body`)}
+                  </span>
+                )}
               </span>
             </button>
           ))}
