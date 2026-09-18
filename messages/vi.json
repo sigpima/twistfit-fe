@@ -1152,7 +1152,6 @@
   },
   "About": {
     "Hero": {
-      "badgeText": "Về chúng tôi • TwistFit Atelier",
       "heading": "Xin chào, tụi mình là TwistFit!",
       "stat1Label": "Lượt phân tích màu",
       "stat2Value": "98.4%",
@@ -1161,8 +1160,7 @@
       "stat3Label": "Phối đồ thành công",
       "stat4Value": "4.9/5",
       "stat4Label": "Điểm hài lòng",
-      "subheadingGreeting": "Nếu như ngày nào bạn đau đầu với hai câu hỏi: “Hôm nay mặc gì?” và “Rốt cuộc mình hợp màu nào nhất?”, thì TwistFit chính là câu trả lời dành cho bạn.",
-      "subheadingSolution": "Không cần tốn tiền mua sắm linh tinh hay đoán mò nữa, TwistFit giúp bạn xác định đúng bảng màu cá nhân và tận dụng ngay tủ đồ có sẵn để lên đồ đẹp mỗi ngày.",
+      "subheadingIntro": "Nếu như ngày nào bạn đau đầu với hai câu hỏi: “Hôm nay mặc gì?” và “Rốt cuộc mình hợp màu nào nhất?”, thì TwistFit chính là câu trả lời dành cho bạn. Không cần tốn tiền mua sắm linh tinh hay đoán mò nữa, TwistFit giúp bạn xác định đúng bảng màu cá nhân và tận dụng ngay tủ đồ có sẵn để lên đồ đẹp mỗi ngày.",
       "subheadingTransition": "Nhưng mà, lý do gì khiến tụi mình lại bắt đầu hành trình này nhỉ? Để tụi mình kể cho bạn nghe hành trình TwistFit ra đời nha!"
     },
     "StorySections": {
@@ -1193,19 +1191,13 @@
         "paragraph1": "Trở thành mạng xã hội phối đồ AI tiên phong - nơi việc làm mới phong cách cá nhân từ tủ đồ sẵn có là nhịp cầu kết nối trực tiếp cộng đồng người mặc với hệ sinh thái sáng tạo của các thương hiệu Việt Nam.",
         "imageAlt": "Minh họa tầm nhìn tương lai của TwistFit"
       }
-    },
-    "LogoMeaning": {
-      "heading": "Ý nghĩa logo",
-      "body": "Logo TwistFit không chỉ là một nhận diện thị giác, mà còn chứa đựng toàn bộ triết lý chuyển dịch từ sự tĩnh lặng của tủ đồ truyền thống sang không gian số hóa thời trang đầy năng lượng và sáng tạo.",
-      "expandLabel": "Xem thêm",
-      "collapseLabel": "Thu gọn"
     }
   },
   "Faq": {
     "Section": {
       "badgeText": "Trung Tâm Trợ Giúp & Hỏi Đáp",
       "heading": "Chúng Tôi Có Thể Giúp Gì Cho Bạn?",
-      "subheading": "Tìm câu trả lời nhanh chóng cho các thắc mắc về phân tích Personal Color, phòng thử đồ ảo AI và tài khoản TwistFit.",
+      "subheading": "Tìm câu trả lời nhanh chóng cho các thắc mắc về phân tích màu sắc cá nhân, phòng thử đồ ảo AI và tài khoản TwistFit.",
       "noResultsTitle": "Không tìm thấy câu hỏi phù hợp",
       "noResultsBody": "Hãy thử tìm kiếm với các từ khóa ngắn gọn hơn hoặc gửi yêu cầu trực tiếp bên dưới.",
       "relatedQuestionsHeading": "Câu hỏi liên quan"
