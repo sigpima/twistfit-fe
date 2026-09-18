@@ -120,6 +120,39 @@ describe('Header', () => {
   })
 })
 
+describe('Header — mobile menu', () => {
+  afterEach(() => {
+    window.localStorage.clear()
+  })
+
+  it('does not render the mobile menu links until opened', () => {
+    renderHeader()
+    expect(screen.queryByRole('link', { name: 'Cảm hứng' })).toBeInTheDocument()
+    expect(screen.getAllByRole('link', { name: 'Cảm hứng' })).toHaveLength(1)
+  })
+
+  it('opens the mobile menu when the hamburger button is clicked', () => {
+    renderHeader()
+    fireEvent.click(screen.getByRole('button', { name: 'Mở menu' }))
+    expect(screen.getAllByRole('link', { name: 'Cảm hứng' })).toHaveLength(2)
+  })
+
+  it('closes the mobile menu when the close button is clicked', () => {
+    renderHeader()
+    fireEvent.click(screen.getByRole('button', { name: 'Mở menu' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Đóng menu' }))
+    expect(screen.getAllByRole('link', { name: 'Cảm hứng' })).toHaveLength(1)
+  })
+
+  it('closes the mobile menu when a link inside it is clicked', () => {
+    renderHeader()
+    fireEvent.click(screen.getByRole('button', { name: 'Mở menu' }))
+    const links = screen.getAllByRole('link', { name: 'Cảm hứng' })
+    fireEvent.click(links[links.length - 1])
+    expect(screen.getAllByRole('link', { name: 'Cảm hứng' })).toHaveLength(1)
+  })
+})
+
 describe('Header — outfit link auth guard', () => {
   afterEach(() => {
     window.localStorage.clear()

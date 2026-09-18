@@ -13,6 +13,8 @@
     },
     "login": "Đăng nhập",
     "register": "Đăng ký",
+    "menuAriaLabel": "Mở menu",
+    "closeMenuAriaLabel": "Đóng menu",
     "accountAriaLabel": "Tài khoản",
     "adminBadge": "Admin",
     "adminBadgeAriaSuffix": "Tài khoản quản trị viên",

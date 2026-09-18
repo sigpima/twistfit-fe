@@ -53,6 +53,11 @@ export default function Header() {
   const { user, logout } = useAuth()
   const { openLoginRequiredModal } = useLoginRequiredModal()
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  function closeMobileMenu() {
+    setIsMobileMenuOpen(false)
+  }
 
   useEffect(() => {
     function handleScroll() {
@@ -70,19 +75,31 @@ export default function Header() {
           isScrolled ? 'bg-[#fdc8e9]/60 backdrop-blur-xl' : 'bg-[#fdc8e9]'
         }`}
       >
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-end gap-3 px-margin md:px-margin-desktop">
-          {SOCIAL_LINKS.map((social) => (
-            <a
-              key={social.label}
-              href={social.href}
-              aria-label={social.label}
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#fdc8e9] shadow-sm transition-transform hover:scale-105 hover:opacity-90"
-            >
-              <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d={social.path} />
-              </svg>
-            </a>
-          ))}
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-margin md:justify-end md:px-margin-desktop">
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(true)}
+            aria-label={t('menuAriaLabel')}
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#fdc8e9] shadow-sm transition-transform hover:scale-105 hover:opacity-90 md:hidden"
+          >
+            <span className="material-symbols-outlined text-[20px]" aria-hidden="true">
+              menu
+            </span>
+          </button>
+          <div className="flex items-center gap-3">
+            {SOCIAL_LINKS.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                aria-label={social.label}
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#fdc8e9] shadow-sm transition-transform hover:scale-105 hover:opacity-90"
+              >
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d={social.path} />
+                </svg>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -233,11 +250,11 @@ export default function Header() {
               </div>
             </div>
           ) : (
-            <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            <div className="flex shrink-0 items-center gap-2">
               <Link
                 href="/login"
                 aria-label={t('login')}
-                className="flex items-center justify-center gap-1.5 rounded-full border border-[#ec7fb8] p-2.5 text-sm font-semibold text-[#ec7fb8] transition-colors hover:bg-[#ec7fb8]/10 sm:px-5 sm:py-2.5"
+                className="flex items-center justify-center gap-1 rounded-full border border-[#ec7fb8] p-2.5 text-sm font-semibold text-[#ec7fb8] transition-colors hover:bg-[#ec7fb8]/10 sm:px-3.5 sm:py-2.5"
               >
                 <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
                   login
@@ -247,7 +264,7 @@ export default function Header() {
               <Link
                 href="/register"
                 aria-label={t('register')}
-                className="flex items-center justify-center gap-1.5 rounded-full bg-[#ec7fb8] p-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#e564a8] sm:px-5 sm:py-2.5"
+                className="flex items-center justify-center gap-1 rounded-full bg-[#ec7fb8] p-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#e564a8] sm:px-3.5 sm:py-2.5"
               >
                 <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
                   person_add
@@ -257,6 +274,83 @@ export default function Header() {
             </div>
           )}
         </div>
+      </div>
+
+      <div
+        aria-hidden="true"
+        onClick={closeMobileMenu}
+        className={`fixed inset-0 z-40 bg-on-surface/40 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+          isMobileMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
+        }`}
+      />
+      <div
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 max-w-[80vw] transform flex-col bg-[#fdf3d3] shadow-2xl transition-transform duration-300 md:hidden ${
+          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        {isMobileMenuOpen && (
+          <>
+            <div className="flex items-center justify-between border-b border-[#f3e3b8] px-margin py-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/home/logo.png" alt="TwistFit Logo" className="h-10 w-auto object-contain" />
+              <button
+                type="button"
+                onClick={closeMobileMenu}
+                aria-label={t('closeMenuAriaLabel')}
+                className="flex h-9 w-9 items-center justify-center rounded-full text-[#3c4a63] transition-colors hover:bg-white/60"
+              >
+                <span className="material-symbols-outlined text-[22px]" aria-hidden="true">
+                  close
+                </span>
+              </button>
+            </div>
+            <nav className="flex flex-col gap-1 overflow-y-auto px-margin py-4">
+              {PRIMARY_NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={closeMobileMenu}
+                  className="rounded-xl px-4 py-2.5 text-sm font-medium text-[#3c4a63] transition-colors hover:bg-white/60"
+                >
+                  {t(`nav.${link.key}`)}
+                </Link>
+              ))}
+
+              <p className="mt-3 px-4 text-xs font-semibold uppercase tracking-wide text-[#94a3b8]">
+                {t('featuresLabel')}
+              </p>
+              {FEATURE_LINKS.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={(event) => {
+                    if (item.key === 'outfitStyling' && !user) {
+                      event.preventDefault()
+                      openLoginRequiredModal()
+                    }
+                    closeMobileMenu()
+                  }}
+                  className="rounded-xl px-4 py-2.5 text-sm font-medium text-[#3c4a63] transition-colors hover:bg-white/60"
+                >
+                  {t(`features.${item.key}`)}
+                </Link>
+              ))}
+
+              <div className="mt-3 flex flex-col gap-1">
+                {SECONDARY_NAV_LINKS.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={closeMobileMenu}
+                    className="rounded-xl px-4 py-2.5 text-sm font-medium text-[#3c4a63] transition-colors hover:bg-white/60"
+                  >
+                    {t(`nav.${link.key}`)}
+                  </Link>
+                ))}
+              </div>
+            </nav>
+          </>
+        )}
       </div>
     </header>
   )
