@@ -768,7 +768,7 @@
     },
     "Result": {
       "Page": {
-        "heading": "KẾT QUẢ PHÂN TÍCH PERSONAL COLOR",
+        "heading": "KẾT QUẢ ĐÁNH GIÁ MÀU SẮC CÁ NHÂN",
         "subheading": "Bảng màu cá nhân hóa – Tôn vinh vẻ đẹp tự nhiên của bạn",
         "accuracyBadge": "Độ chính xác cao",
         "loadingResult": "Đang tải kết quả của bạn...",
@@ -819,7 +819,7 @@
             "blushImageAlt": "Bảng màu phấn má gợi ý",
             "lipstick": "Son môi",
             "lipstickImageAlt": "Bảng màu son gợi ý",
-            "toneLayout": "Tone"
+            "toneLayout": "Layout"
           }
         },
         "toneGroups": {

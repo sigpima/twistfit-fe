@@ -59,12 +59,12 @@ export default function ContactSection() {
                 </div>
                 <span className="text-body-md">{t('email')}</span>
               </div>
-              <div className="flex items-center gap-3 text-on-surface">
+              {/* <div className="flex items-center gap-3 text-on-surface">
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-secondary-fixed text-secondary">
                   <span className="material-symbols-outlined text-[18px]">call</span>
                 </div>
                 <span className="text-body-md">{t('phone')}</span>
-              </div>
+              </div> */}
               <div className="flex items-center gap-3 text-on-surface">
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-tertiary-fixed text-tertiary">
                   <span className="material-symbols-outlined text-[18px]">location_on</span>
