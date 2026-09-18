@@ -82,6 +82,27 @@ describe('Step2PageContent', () => {
     expect(pushMock).toHaveBeenCalledWith('/outfit/step-3')
   })
 
+  it('sends only the active occasion/style axis, leaving the other null', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(jsonResponse({ id: 77 }, { status: 201 }))
+    vi.stubGlobal('fetch', fetchMock)
+
+    renderWithIntl(
+      <OutfitFlowProvider initialModel={{ ...FALLBACK_MODEL, id: '42' }}>
+        <Step2PageContent models={MODELS} />
+      </OutfitFlowProvider>
+    )
+
+    fireEvent.click(screen.getByRole('button', { name: /Xác nhận người mẫu/ }))
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalled())
+    const [, init] = fetchMock.mock.calls[0]
+    expect(JSON.parse(init.body as string)).toEqual({
+      catalogModelId: 42,
+      occasion: 'hang-ngay',
+      style: null,
+    })
+  })
+
   it('does not navigate when job creation fails', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(null, { ok: false, status: 500 })))
 

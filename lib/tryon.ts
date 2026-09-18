@@ -5,8 +5,8 @@ export type TryOnJob = {
   userId: number
   wardrobeItemId: number | null
   catalogModelId: number
-  occasion: string
-  style: string
+  occasion: string | null
+  style: string | null
   status: TryOnJobStatus
   resultFrontBlobUrl: string | null
   resultSideBlobUrl: string | null

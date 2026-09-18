@@ -31,8 +31,8 @@ export default function Step2PageContent({ models }: { models: CatalogModel[] })
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         catalogModelId,
-        occasion: occasionStyleMode === 'occasion' ? selectedOccasion : 'hang-ngay',
-        style: occasionStyleMode === 'style' ? selectedStyle : 'casual',
+        occasion: occasionStyleMode === 'occasion' ? selectedOccasion : null,
+        style: occasionStyleMode === 'style' ? selectedStyle : null,
       }),
     })
 
