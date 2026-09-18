@@ -31,7 +31,7 @@ export type Model = {
 
 export const FALLBACK_MODEL: Model = {
   id: 'female-1',
-  name: 'Mảnh mai',
+  name: 'Dáng cao gầy',
   image: '/outfit/models/female-1.jpg',
   sideImage: '/outfit/models/female-1-side.jpg',
 }
