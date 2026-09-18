@@ -15,15 +15,18 @@ type Accessory = {
 
 export default function AccessoryRecommendations() {
   const t = useTranslations('Outfit.Step3.AccessoryRecommendations')
-  const { selectedOccasion, selectedStyle } = useOutfitFlow()
+  const { occasionStyleMode, selectedOccasion, selectedStyle } = useOutfitFlow()
   const [accessories, setAccessories] = useState<Accessory[]>([])
 
   useEffect(() => {
     let cancelled = false
 
-    apiFetch(
-      `/accessories/recommendations?occasion=${encodeURIComponent(selectedOccasion)}&style=${encodeURIComponent(selectedStyle)}`
-    )
+    const params =
+      occasionStyleMode === 'occasion'
+        ? `occasion=${encodeURIComponent(selectedOccasion)}`
+        : `style=${encodeURIComponent(selectedStyle)}`
+
+    apiFetch(`/accessories/recommendations?${params}`)
       .then(async (response) => {
         if (cancelled || !response.ok) return
         setAccessories((await response.json()) as Accessory[])
@@ -35,7 +38,7 @@ export default function AccessoryRecommendations() {
     return () => {
       cancelled = true
     }
-  }, [selectedOccasion, selectedStyle])
+  }, [occasionStyleMode, selectedOccasion, selectedStyle])
 
   if (accessories.length === 0) return null
 
