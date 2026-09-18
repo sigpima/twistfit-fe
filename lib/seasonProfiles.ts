@@ -13,7 +13,7 @@ export type SeasonProfile = {
 
 export const SEASON_PROFILES: Record<SubSeason, SeasonProfile> = {
   'light-spring': {
-    displayName: 'Xuân Sáng (Light Spring)',
+    displayName: 'Xuân Sáng',
     paletteHex: ['#FFD9B3', '#FFF2CC', '#C9E4CA', '#F7C6C7', '#FCE38A', '#9FD8CB'],
     description:
       'Da tươi sáng, tóc và mắt màu nhạt ấm áp. Hợp các gam màu ấm nhẹ nhàng, tươi sáng, tránh màu quá đậm hoặc quá trầm khiến gương mặt bị lấn át.',
@@ -24,7 +24,7 @@ export const SEASON_PROFILES: Record<SubSeason, SeasonProfile> = {
     },
   },
   'true-spring': {
-    displayName: 'Xuân Thuần (True Spring)',
+    displayName: 'Xuân Thuần',
     paletteHex: ['#FF7F50', '#FFC72C', '#4CBB17', '#40E0D0', '#FF6347', '#FFB07C'],
     description: 'Tông da ấm rõ rệt, sắc độ trung bình, hợp màu tươi sáng rực rỡ vừa phải.',
     recommendations: {
@@ -34,7 +34,7 @@ export const SEASON_PROFILES: Record<SubSeason, SeasonProfile> = {
     },
   },
   'bright-spring': {
-    displayName: 'Xuân Rực Rỡ (Bright Spring)',
+    displayName: 'Xuân Rực Rỡ',
     paletteHex: ['#FF4F79', '#00CED1', '#FFEA00', '#FF3131', '#FF8C00', '#39FF88'],
     description: 'Ấm áp nhưng sắc nét, độ tương phản khá cao, hợp màu ấm cực kỳ tươi sáng.',
     recommendations: {
@@ -44,7 +44,7 @@ export const SEASON_PROFILES: Record<SubSeason, SeasonProfile> = {
     },
   },
   'light-summer': {
-    displayName: 'Hè Sáng (Light Summer)',
+    displayName: 'Hè Sáng',
     paletteHex: ['#AEC6E8', '#D8BFD8', '#F4C2C2', '#B5C9A8', '#D8A7B1', '#C9D6EA'],
     description: 'Da sáng, tông lạnh nhẹ nhàng, hợp các gam pastel lạnh dịu.',
     recommendations: {
@@ -54,7 +54,7 @@ export const SEASON_PROFILES: Record<SubSeason, SeasonProfile> = {
     },
   },
   'true-summer': {
-    displayName: 'Hè Thuần (True Summer)',
+    displayName: 'Hè Thuần',
     paletteHex: ['#6C93B8', '#A76A82', '#C05C7E', '#8FA3B3', '#A6A2D0', '#B0789A'],
     description: 'Tông lạnh rõ rệt, sắc độ trung bình, hợp màu lạnh dịu vừa phải.',
     recommendations: {
@@ -64,7 +64,7 @@ export const SEASON_PROFILES: Record<SubSeason, SeasonProfile> = {
     },
   },
   'soft-summer': {
-    displayName: 'Hè Dịu (Soft Summer)',
+    displayName: 'Hè Dịu',
     paletteHex: ['#C8A2A2', '#A9BA9D', '#B49A8B', '#A6A9C7', '#B08CA6', '#C9BFB0'],
     description: 'Lạnh nhẹ nhưng độ bão hoà thấp, tương phản mờ nhạt, hợp tông trầm nhẹ nhàng.',
     recommendations: {
@@ -74,7 +74,7 @@ export const SEASON_PROFILES: Record<SubSeason, SeasonProfile> = {
     },
   },
   'soft-autumn': {
-    displayName: 'Thu Dịu (Soft Autumn)',
+    displayName: 'Thu Dịu',
     paletteHex: ['#A98B6D', '#8A9A5B', '#C98A5D', '#C9A66B', '#C08769', '#A68A64'],
     description: 'Ấm nhẹ, độ bão hoà thấp, hợp tông đất nhẹ nhàng.',
     recommendations: {
@@ -84,7 +84,7 @@ export const SEASON_PROFILES: Record<SubSeason, SeasonProfile> = {
     },
   },
   'true-autumn': {
-    displayName: 'Thu Thuần (True Autumn)',
+    displayName: 'Thu Thuần',
     paletteHex: ['#B7410E', '#6B8E23', '#E1AD01', '#8B5A2B', '#D2691E', '#B8860B'],
     description: 'Ấm rõ rệt, độ bão hoà trung bình đến đậm, hợp tông đất ấm rực.',
     recommendations: {
@@ -94,7 +94,7 @@ export const SEASON_PROFILES: Record<SubSeason, SeasonProfile> = {
     },
   },
   'deep-autumn': {
-    displayName: 'Thu Sâu (Deep Autumn)',
+    displayName: 'Thu Sâu',
     paletteHex: ['#4A2C1D', '#3D3D1F', '#A0421D', '#1B4D3E', '#5C4033', '#7A3B12'],
     description: 'Ấm và sẫm màu, tương phản khá rõ, hợp tông đất đậm sâu.',
     recommendations: {
@@ -104,7 +104,7 @@ export const SEASON_PROFILES: Record<SubSeason, SeasonProfile> = {
     },
   },
   'deep-winter': {
-    displayName: 'Đông Sâu (Deep Winter)',
+    displayName: 'Đông Sâu',
     paletteHex: ['#000000', '#36454F', '#6A0033', '#046307', '#B22222', '#002147'],
     description: 'Lạnh và sẫm màu, tương phản cao, hợp tông đậm sắc lạnh.',
     recommendations: {
@@ -114,7 +114,7 @@ export const SEASON_PROFILES: Record<SubSeason, SeasonProfile> = {
     },
   },
   'true-winter': {
-    displayName: 'Đông Thuần (True Winter)',
+    displayName: 'Đông Thuần',
     paletteHex: ['#003399', '#FF0033', '#E0FFFF', '#FF00FF', '#FFFFFF', '#000000'],
     description: 'Lạnh rõ rệt, sắc nét, tương phản cao, hợp màu lạnh trong trẻo.',
     recommendations: {
@@ -124,7 +124,7 @@ export const SEASON_PROFILES: Record<SubSeason, SeasonProfile> = {
     },
   },
   'bright-winter': {
-    displayName: 'Đông Rực Rỡ (Bright Winter)',
+    displayName: 'Đông Rực Rỡ',
     paletteHex: ['#FF1493', '#00BFFF', '#FF0000', '#FFFFFF', '#000000', '#F0F8FF'],
     description: 'Lạnh nhưng cực kỳ tươi sáng/rực, tương phản rất cao.',
     recommendations: {

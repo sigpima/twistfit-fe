@@ -71,7 +71,7 @@ describe('ResultPage', () => {
     saveAnonymousQuizResult(AUTUMN_RESULT)
     renderResultPage()
     await waitFor(() =>
-      expect(screen.getByRole('heading', { level: 3, name: 'Thu Thuần (True Autumn)' })).toBeInTheDocument()
+      expect(screen.getByRole('heading', { level: 3, name: 'Thu Thuần' })).toBeInTheDocument()
     )
     expect(screen.getByText('Lưu lại kết quả của bạn!')).toBeInTheDocument()
   })
@@ -84,7 +84,7 @@ describe('ResultPage', () => {
     )
     renderResultPage()
     await waitFor(() =>
-      expect(screen.getByRole('heading', { level: 3, name: 'Thu Thuần (True Autumn)' })).toBeInTheDocument()
+      expect(screen.getByRole('heading', { level: 3, name: 'Thu Thuần' })).toBeInTheDocument()
     )
     expect(screen.queryByText('Lưu lại kết quả của bạn!')).not.toBeInTheDocument()
   })
@@ -104,7 +104,7 @@ describe('ResultPage', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(null, { ok: false, status: 500 })))
     renderResultPage()
     await waitFor(() =>
-      expect(screen.getByRole('heading', { level: 3, name: 'Thu Thuần (True Autumn)' })).toBeInTheDocument()
+      expect(screen.getByRole('heading', { level: 3, name: 'Thu Thuần' })).toBeInTheDocument()
     )
   })
 })
