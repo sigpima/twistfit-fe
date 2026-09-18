@@ -87,29 +87,73 @@ export default function QuizFlow({ questions }: { questions: QuizQuestion[] }) {
           className="mt-4 w-full rounded-2xl object-cover"
         />
       )}
-      <div className="mt-5 space-y-3">
-        {question.options.map((option) => {
-          const isSelected = selectedOptionId === option.id
-          return (
-            <button
-              key={option.id}
-              type="button"
-              data-quiz-option="true"
-              onClick={() => selectOption(option.id)}
-              className={`flex w-full items-center justify-between rounded-2xl border p-4 text-left text-body-md transition-colors ${
-                isSelected
-                  ? 'border-primary bg-primary-fixed text-on-surface'
-                  : 'border-outline-variant bg-surface text-on-surface hover:bg-surface-container-high'
-              }`}
-            >
-              <span>{option.label}</span>
-              {isSelected && (
-                <span className="material-symbols-outlined text-[20px] text-primary">check_circle</span>
-              )}
-            </button>
-          )
-        })}
-      </div>
+      {question.options.some((option) => option.imageUrl) ? (
+        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {question.options.map((option) => {
+            const isSelected = selectedOptionId === option.id
+            return (
+              <button
+                key={option.id}
+                type="button"
+                data-quiz-option="true"
+                onClick={() => selectOption(option.id)}
+                className={`relative flex overflow-hidden rounded-2xl border text-left transition-colors ${
+                  option.imageUrl
+                    ? 'flex-col'
+                    : 'col-span-2 flex-row items-center gap-3 p-4 sm:col-span-3'
+                } ${
+                  isSelected
+                    ? 'border-primary bg-primary-fixed'
+                    : 'border-outline-variant bg-surface hover:bg-surface-container-high'
+                }`}
+              >
+                {option.imageUrl && (
+                  <div className="aspect-square w-full overflow-hidden bg-surface-container">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={option.imageUrl} alt={option.label} className="h-full w-full object-cover" />
+                  </div>
+                )}
+                <span
+                  className={`text-body-sm font-medium text-on-surface ${
+                    option.imageUrl ? 'p-3 text-center' : 'flex-1 text-body-md'
+                  }`}
+                >
+                  {option.label}
+                </span>
+                {isSelected && (
+                  <span className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-on-primary shadow-md">
+                    <span className="material-symbols-outlined text-[16px]">check</span>
+                  </span>
+                )}
+              </button>
+            )
+          })}
+        </div>
+      ) : (
+        <div className="mt-5 space-y-3">
+          {question.options.map((option) => {
+            const isSelected = selectedOptionId === option.id
+            return (
+              <button
+                key={option.id}
+                type="button"
+                data-quiz-option="true"
+                onClick={() => selectOption(option.id)}
+                className={`flex w-full items-center justify-between rounded-2xl border p-4 text-left text-body-md transition-colors ${
+                  isSelected
+                    ? 'border-primary bg-primary-fixed text-on-surface'
+                    : 'border-outline-variant bg-surface text-on-surface hover:bg-surface-container-high'
+                }`}
+              >
+                <span>{option.label}</span>
+                {isSelected && (
+                  <span className="material-symbols-outlined text-[20px] text-primary">check_circle</span>
+                )}
+              </button>
+            )
+          })}
+        </div>
+      )}
       {submitError && (
         <p className="mt-4 text-center text-body-sm text-error">{t('submitError')}</p>
       )}

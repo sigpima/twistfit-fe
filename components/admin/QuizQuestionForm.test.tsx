@@ -17,8 +17,8 @@ const EXISTING_QUESTION: QuizQuestion = {
   imageUrl: null,
   sortOrder: 0,
   options: [
-    { id: 1, label: 'Lựa chọn 1', axisValue: 'warm', sortOrder: 0 },
-    { id: 2, label: 'Lựa chọn 2', axisValue: 'cool', sortOrder: 1 },
+    { id: 1, label: 'Lựa chọn 1', axisValue: 'warm', imageUrl: null, sortOrder: 0 },
+    { id: 2, label: 'Lựa chọn 2', axisValue: 'cool', imageUrl: null, sortOrder: 1 },
   ],
 }
 

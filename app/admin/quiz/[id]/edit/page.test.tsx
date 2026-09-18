@@ -15,7 +15,7 @@ const QUESTION: QuizQuestion = {
   axis: 'hue',
   imageUrl: null,
   sortOrder: 0,
-  options: [{ id: 1, label: 'A', axisValue: 'warm', sortOrder: 0 }],
+  options: [{ id: 1, label: 'A', axisValue: 'warm', imageUrl: null, sortOrder: 0 }],
 }
 
 describe('EditQuizQuestionPage', () => {

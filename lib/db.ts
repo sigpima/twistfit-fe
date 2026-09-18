@@ -46,6 +46,7 @@ export type QuizOption = {
   id: number
   label: string
   axisValue: AxisValue
+  imageUrl: string | null
   sortOrder: number
 }
 

@@ -11,7 +11,7 @@ const QUESTIONS: QuizQuestion[] = [
     axis: 'hue',
     imageUrl: null,
     sortOrder: 0,
-    options: [{ id: 1, label: 'A', axisValue: 'warm', sortOrder: 0 }],
+    options: [{ id: 1, label: 'A', axisValue: 'warm', imageUrl: null, sortOrder: 0 }],
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const QUESTIONS: QuizQuestion[] = [
     axis: 'hue',
     imageUrl: null,
     sortOrder: 1,
-    options: [{ id: 2, label: 'B', axisValue: 'cool', sortOrder: 0 }],
+    options: [{ id: 2, label: 'B', axisValue: 'cool', imageUrl: null, sortOrder: 0 }],
   },
 ]
 

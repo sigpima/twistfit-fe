@@ -10,7 +10,13 @@ vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: pushMock }),
 }))
 
-function makeQuestion(id: number, axis: QuizQuestion['axis'], text: string, imageUrl: string | null = null): QuizQuestion {
+function makeQuestion(
+  id: number,
+  axis: QuizQuestion['axis'],
+  text: string,
+  imageUrl: string | null = null,
+  optionImageUrls: (string | null)[] = []
+): QuizQuestion {
   const axisValues =
     axis === 'hue' ? ['warm', 'cool', 'neutral'] : axis === 'value' ? ['dark', 'light', 'medium'] : ['bright', 'muted', 'neutral']
   return {
@@ -23,6 +29,7 @@ function makeQuestion(id: number, axis: QuizQuestion['axis'], text: string, imag
       id: id * 10 + index,
       label: `Lựa chọn ${id}.${index + 1}`,
       axisValue: axisValue as QuizQuestion['options'][number]['axisValue'],
+      imageUrl: optionImageUrls[index] ?? null,
       sortOrder: index,
     })),
   }
@@ -125,5 +132,27 @@ describe('QuizFlow', () => {
     completeQuiz()
     await waitFor(() => expect(screen.getByText(/không thể/i)).toBeInTheDocument())
     expect(pushMock).not.toHaveBeenCalled()
+  })
+
+  it('renders an image for each option that has one, and still lets a text-only option be selected', () => {
+    const imagedQuestion = makeQuestion(1, 'hue', 'Câu hỏi ảnh?', null, [
+      '/personal-color/quiz/q2-gold.jpg',
+      '/personal-color/quiz/q2-silver.jpg',
+    ])
+    renderWithIntl(<QuizFlow questions={[imagedQuestion]} />)
+
+    expect(screen.getByAltText('Lựa chọn 1.1')).toHaveAttribute('src', '/personal-color/quiz/q2-gold.jpg')
+    expect(screen.getByAltText('Lựa chọn 1.2')).toHaveAttribute('src', '/personal-color/quiz/q2-silver.jpg')
+    expect(screen.queryByAltText('Lựa chọn 1.3')).not.toBeInTheDocument()
+
+    const optionButtons = screen.getAllByRole('button').filter((btn) => btn.dataset.quizOption === 'true')
+    expect(optionButtons).toHaveLength(3)
+    fireEvent.click(screen.getByText('Lựa chọn 1.3'))
+    expect(screen.getByRole('button', { name: 'Xem kết quả' })).toBeEnabled()
+  })
+
+  it('falls back to the plain text option list when no option has an image', () => {
+    renderWithIntl(<QuizFlow questions={QUESTIONS} />)
+    expect(screen.queryByRole('img', { name: /Lựa chọn/ })).not.toBeInTheDocument()
   })
 })

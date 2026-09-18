@@ -33,7 +33,7 @@ const AXIS_VALUE_OPTIONS: Record<Axis, { value: AxisValue; label: string }[]> = 
   ],
 }
 
-type OptionDraft = { label: string; axisValue: AxisValue }
+type OptionDraft = { label: string; axisValue: AxisValue; imageUrl: string }
 
 function initialAxis(initialQuestion?: QuizQuestion): Axis {
   return initialQuestion?.axis ?? 'hue'
@@ -41,13 +41,17 @@ function initialAxis(initialQuestion?: QuizQuestion): Axis {
 
 function initialOptions(initialQuestion?: QuizQuestion): OptionDraft[] {
   if (initialQuestion) {
-    return initialQuestion.options.map((option) => ({ label: option.label, axisValue: option.axisValue }))
+    return initialQuestion.options.map((option) => ({
+      label: option.label,
+      axisValue: option.axisValue,
+      imageUrl: option.imageUrl ?? '',
+    }))
   }
   return [
-    { label: '', axisValue: 'warm' },
-    { label: '', axisValue: 'cool' },
-    { label: '', axisValue: 'neutral' },
-    { label: '', axisValue: 'warm' },
+    { label: '', axisValue: 'warm', imageUrl: '' },
+    { label: '', axisValue: 'cool', imageUrl: '' },
+    { label: '', axisValue: 'neutral', imageUrl: '' },
+    { label: '', axisValue: 'warm', imageUrl: '' },
   ]
 }
 
@@ -74,7 +78,10 @@ export default function QuizQuestionForm({ initialQuestion }: { initialQuestion?
   }
 
   function addOption() {
-    setOptions((current) => [...current, { label: '', axisValue: AXIS_VALUE_OPTIONS[axis][0].value }])
+    setOptions((current) => [
+      ...current,
+      { label: '', axisValue: AXIS_VALUE_OPTIONS[axis][0].value, imageUrl: '' },
+    ])
   }
 
   function removeOption(index: number) {
@@ -91,7 +98,7 @@ export default function QuizQuestionForm({ initialQuestion }: { initialQuestion?
       axis,
       imageUrl: imageUrl.trim() || null,
       sortOrder: initialQuestion?.sortOrder ?? 0,
-      options,
+      options: options.map((option) => ({ ...option, imageUrl: option.imageUrl.trim() || null })),
     }
 
     const response = await apiFetch(
@@ -180,6 +187,18 @@ export default function QuizQuestionForm({ initialQuestion }: { initialQuestion?
               {errors[`options.${index}.label`] && (
                 <p className="text-label-sm text-error">{errors[`options.${index}.label`]}</p>
               )}
+              <label
+                htmlFor={`option-image-url-${index}`}
+                className="block text-label-sm font-semibold text-on-surface-variant"
+              >
+                {t('optionImageUrlLabel')}
+              </label>
+              <input
+                id={`option-image-url-${index}`}
+                value={option.imageUrl}
+                onChange={(event) => updateOption(index, { imageUrl: event.target.value })}
+                className={inputClass}
+              />
             </div>
             <div className="w-48 space-y-1.5">
               <label htmlFor={`option-axis-value-${index}`} className="text-label-md font-semibold text-on-surface">

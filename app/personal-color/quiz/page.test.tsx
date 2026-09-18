@@ -15,8 +15,8 @@ const QUESTIONS: QuizQuestion[] = Array.from({ length: 5 }, (_, index) => ({
   imageUrl: null,
   sortOrder: index,
   options: [
-    { id: index * 10 + 1, label: 'A', axisValue: 'warm', sortOrder: 0 },
-    { id: index * 10 + 2, label: 'B', axisValue: 'cool', sortOrder: 1 },
+    { id: index * 10 + 1, label: 'A', axisValue: 'warm', imageUrl: null, sortOrder: 0 },
+    { id: index * 10 + 2, label: 'B', axisValue: 'cool', imageUrl: null, sortOrder: 1 },
   ],
 }))
 
