@@ -30,7 +30,7 @@ describe('RecommendationsSection', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Makeup' }))
     expect(screen.getByRole('button', { name: 'Phấn má' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Son môi' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Tone' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Layout' })).toBeInTheDocument()
   })
 
   it('renders the retake-quiz link and the camera AR button instead of the old CTA banner', () => {

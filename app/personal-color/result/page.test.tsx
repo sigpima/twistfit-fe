@@ -48,7 +48,7 @@ describe('ResultPage', () => {
     setStoredUser(null)
     renderResultPage()
     expect(
-      screen.getByRole('heading', { level: 1, name: 'KẾT QUẢ PHÂN TÍCH PERSONAL COLOR' })
+      screen.getByRole('heading', { level: 1, name: 'KẾT QUẢ ĐÁNH GIÁ MÀU SẮC CÁ NHÂN' })
     ).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Trang chủ' })).not.toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Kiểm tra Màu Sắc Cá Nhân' })).not.toBeInTheDocument()
@@ -71,7 +71,7 @@ describe('ResultPage', () => {
     saveAnonymousQuizResult(AUTUMN_RESULT)
     renderResultPage()
     await waitFor(() =>
-      expect(screen.getByRole('heading', { level: 3, name: 'Thu Thuần' })).toBeInTheDocument()
+      expect(screen.getByRole('heading', { level: 3, name: 'Thu Thuần Ấm' })).toBeInTheDocument()
     )
     expect(screen.getByText('Lưu lại kết quả của bạn!')).toBeInTheDocument()
   })
@@ -84,7 +84,7 @@ describe('ResultPage', () => {
     )
     renderResultPage()
     await waitFor(() =>
-      expect(screen.getByRole('heading', { level: 3, name: 'Thu Thuần' })).toBeInTheDocument()
+      expect(screen.getByRole('heading', { level: 3, name: 'Thu Thuần Ấm' })).toBeInTheDocument()
     )
     expect(screen.queryByText('Lưu lại kết quả của bạn!')).not.toBeInTheDocument()
   })
@@ -104,7 +104,7 @@ describe('ResultPage', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(null, { ok: false, status: 500 })))
     renderResultPage()
     await waitFor(() =>
-      expect(screen.getByRole('heading', { level: 3, name: 'Thu Thuần' })).toBeInTheDocument()
+      expect(screen.getByRole('heading', { level: 3, name: 'Thu Thuần Ấm' })).toBeInTheDocument()
     )
   })
 })

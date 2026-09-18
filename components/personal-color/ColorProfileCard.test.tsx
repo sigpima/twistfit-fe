@@ -8,7 +8,7 @@ const RESULT = { subSeason: 'true-winter' as const, hueResult: 'cool' as const, 
 describe('ColorProfileCard', () => {
   it('renders the real sub-season name and description', () => {
     renderWithIntl(<ColorProfileCard result={RESULT} />)
-    expect(screen.getByRole('heading', { level: 3, name: 'Đông Thuần' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 3, name: 'Đông Thuần Lạnh' })).toBeInTheDocument()
     expect(screen.getByText(/Lạnh rõ rệt, sắc nét/)).toBeInTheDocument()
   })
 

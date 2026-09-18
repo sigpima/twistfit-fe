@@ -8,7 +8,7 @@ describe('MakeupRecommendations', () => {
     renderWithIntl(<MakeupRecommendations subSeason="true-winter" />)
     expect(screen.getByRole('button', { name: 'Phấn má' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Son môi' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Tone' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Layout' })).toBeInTheDocument()
   })
 
   it('reveals the blush image for the given sub-season when opened', () => {
@@ -22,7 +22,7 @@ describe('MakeupRecommendations', () => {
 
   it('shows the cool tone group and its variants for a cool sub-season', () => {
     renderWithIntl(<MakeupRecommendations subSeason="true-winter" />)
-    fireEvent.click(screen.getByRole('button', { name: 'Tone' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Layout' }))
     expect(screen.getByText('Da tone Lạnh')).toBeInTheDocument()
     expect(screen.getByText('Tone hồng lạnh')).toBeInTheDocument()
     expect(screen.getByText(/Feyede Maya/)).toBeInTheDocument()
@@ -31,7 +31,7 @@ describe('MakeupRecommendations', () => {
 
   it('shows the neutral tone group for a neutral sub-season', () => {
     renderWithIntl(<MakeupRecommendations subSeason="light-spring" />)
-    fireEvent.click(screen.getByRole('button', { name: 'Tone' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Layout' }))
     expect(screen.getByText('Da tone Trung tính')).toBeInTheDocument()
     expect(screen.getByText('Tone hồng trung tính')).toBeInTheDocument()
   })
