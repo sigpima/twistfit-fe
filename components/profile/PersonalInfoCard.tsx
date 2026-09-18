@@ -8,13 +8,20 @@ import { FORM_INPUT_CLASS } from '@/lib/formFieldStyles'
 
 const inputClass = `${FORM_INPUT_CLASS} disabled:cursor-not-allowed disabled:opacity-60`
 
+const GENDER_OPTIONS = ['male', 'female', 'other'] as const
+
 export default function PersonalInfoCard({ user }: { user: AuthUser }) {
   const t = useTranslations('Profile.PersonalInfo')
   const tRole = useTranslations('Profile')
   const { updateUser } = useAuth()
 
   const [name, setName] = useState(user.name)
+  const [username, setUsername] = useState(user.username ?? '')
   const [phone, setPhone] = useState(user.phone ?? '')
+  const [birthDate, setBirthDate] = useState(user.birthDate ?? '')
+  const [gender, setGender] = useState(user.gender ?? '')
+  const [heightCm, setHeightCm] = useState(user.heightCm?.toString() ?? '')
+  const [weightKg, setWeightKg] = useState(user.weightKg?.toString() ?? '')
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
@@ -28,15 +35,28 @@ export default function PersonalInfoCard({ user }: { user: AuthUser }) {
     const response = await apiFetch('/auth/me', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, phone: phone || null }),
+      body: JSON.stringify({
+        name,
+        phone: phone || null,
+        username: username || null,
+        birthDate: birthDate || null,
+        gender: gender || null,
+        heightCm: heightCm ? Number(heightCm) : null,
+        weightKg: weightKg ? Number(weightKg) : null,
+      }),
     })
 
     setSubmitting(false)
 
     if (!response.ok) {
-      if (response.status === 409) setError(t('phoneTakenError'))
-      else if (response.status === 422) setError(t('invalidPhoneError'))
-      else setError(t('genericError'))
+      if (response.status === 409) {
+        const body = (await response.json().catch(() => null)) as { detail?: string } | null
+        setError(body?.detail === 'USERNAME_TAKEN' ? t('usernameTakenError') : t('phoneTakenError'))
+      } else if (response.status === 422) {
+        setError(t('invalidPhoneError'))
+      } else {
+        setError(t('genericError'))
+      }
       return
     }
 
@@ -59,30 +79,104 @@ export default function PersonalInfoCard({ user }: { user: AuthUser }) {
         )}
       </div>
       <form className="space-y-4" onSubmit={handleSubmit}>
-        <div className="space-y-1.5">
-          <label htmlFor="profile-name" className="text-label-md font-semibold text-on-surface">
-            {t('fields.name')}
-          </label>
-          <input
-            id="profile-name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-            required
-            className={inputClass}
-          />
-        </div>
-        <div className="space-y-1.5">
-          <label htmlFor="profile-phone" className="text-label-md font-semibold text-on-surface">
-            {t('fields.phone')}
-          </label>
-          <input
-            id="profile-phone"
-            type="tel"
-            value={phone}
-            onChange={(event) => setPhone(event.target.value)}
-            placeholder={t('phonePlaceholder')}
-            className={inputClass}
-          />
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="space-y-1.5">
+            <label htmlFor="profile-name" className="text-label-md font-semibold text-on-surface">
+              {t('fields.name')}
+            </label>
+            <input
+              id="profile-name"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              required
+              className={inputClass}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label htmlFor="profile-username" className="text-label-md font-semibold text-on-surface">
+              {t('fields.username')}
+            </label>
+            <input
+              id="profile-username"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+              placeholder={t('notUpdatedPlaceholder')}
+              className={inputClass}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label htmlFor="profile-phone" className="text-label-md font-semibold text-on-surface">
+              {t('fields.phone')}
+            </label>
+            <input
+              id="profile-phone"
+              type="tel"
+              value={phone}
+              onChange={(event) => setPhone(event.target.value)}
+              placeholder={t('phonePlaceholder')}
+              className={inputClass}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label htmlFor="profile-birth-date" className="text-label-md font-semibold text-on-surface">
+              {t('fields.birthDate')}
+            </label>
+            <input
+              id="profile-birth-date"
+              type="date"
+              value={birthDate}
+              onChange={(event) => setBirthDate(event.target.value)}
+              className={inputClass}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label htmlFor="profile-gender" className="text-label-md font-semibold text-on-surface">
+              {t('fields.gender')}
+            </label>
+            <select
+              id="profile-gender"
+              value={gender}
+              onChange={(event) => setGender(event.target.value)}
+              className={inputClass}
+            >
+              <option value="">{t('notUpdatedPlaceholder')}</option>
+              {GENDER_OPTIONS.map((option) => (
+                <option key={option} value={option}>
+                  {t(`genderOptions.${option}`)}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="space-y-1.5">
+            <label htmlFor="profile-height" className="text-label-md font-semibold text-on-surface">
+              {t('fields.heightCm')}
+            </label>
+            <input
+              id="profile-height"
+              type="number"
+              min="0"
+              step="0.1"
+              value={heightCm}
+              onChange={(event) => setHeightCm(event.target.value)}
+              placeholder={t('notUpdatedPlaceholder')}
+              className={inputClass}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label htmlFor="profile-weight" className="text-label-md font-semibold text-on-surface">
+              {t('fields.weightKg')}
+            </label>
+            <input
+              id="profile-weight"
+              type="number"
+              min="0"
+              step="0.1"
+              value={weightKg}
+              onChange={(event) => setWeightKg(event.target.value)}
+              placeholder={t('notUpdatedPlaceholder')}
+              className={inputClass}
+            />
+          </div>
         </div>
         <div className="space-y-1.5">
           <label htmlFor="profile-email" className="text-label-md font-semibold text-on-surface">

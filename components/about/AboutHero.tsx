@@ -36,20 +36,13 @@ export default function AboutHero() {
           </span>
         </div>
         <h1 className="max-w-4xl text-display-lg leading-tight tracking-tight text-on-surface">
-          {t.rich('heading', {
-            br: () => <br className="hidden sm:inline" />,
-            highlight: (chunks) => (
-              <span className="bg-gradient-to-r from-primary via-primary-container to-secondary bg-clip-text text-transparent">
-                {chunks}
-              </span>
-            ),
-          })}
+          {t('heading')}
         </h1>
-        <p className="mt-space-lg max-w-3xl text-body-lg leading-relaxed text-on-surface-variant">
-          {t.rich('subheading', {
-            tagline: (chunks) => <span className="font-semibold italic text-primary">{chunks}</span>,
-          })}
-        </p>
+        <div className="mt-space-lg flex max-w-3xl flex-col gap-space-md text-body-lg leading-relaxed text-on-surface-variant">
+          <p>{t('subheadingGreeting')}</p>
+          <p>{t('subheadingSolution')}</p>
+          <p>{t('subheadingTransition')}</p>
+        </div>
         {/* <div className="mt-space-xl grid w-full grid-cols-2 gap-space-md lg:grid-cols-4">
           <div className="flex flex-col items-center rounded-xl bg-surface-container-lowest/80 p-space-lg shadow-sm backdrop-blur-md transition-all duration-300 hover:shadow-md">
             <div className="mb-space-sm flex h-10 w-10 items-center justify-center rounded-full bg-primary-fixed text-on-primary-fixed">

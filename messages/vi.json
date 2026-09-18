@@ -8,7 +8,7 @@
     },
     "featuresLabel": "Tính năng",
     "features": {
-      "personalColorTest": "Test Personal Color",
+      "personalColorTest": "Đánh giá màu sắc cá nhân",
       "outfitStyling": "Phối đồ"
     },
     "login": "Đăng nhập",
@@ -115,6 +115,7 @@
       "imageUrlLabel": "URL ảnh minh hoạ (không bắt buộc)",
       "optionLabel": "Lựa chọn",
       "axisValueLabel": "Giá trị trục",
+      "optionImageUrlLabel": "URL ảnh minh hoạ",
       "addOption": "Thêm lựa chọn",
       "removeOption": "Xóa lựa chọn",
       "submitCreate": "Tạo câu hỏi",
@@ -414,6 +415,7 @@
       "emptyState": "Chưa có bài viết nào trong chuyên mục này.",
       "likesLabel": "lượt thích",
       "commentsLabel": "bình luận",
+      "viewAllComments": "Xem tất cả {count} bình luận",
       "newPostLink": "Đăng bài mới",
       "myPostsLink": "Bài của tôi",
       "savedLink": "Đã lưu"
@@ -499,6 +501,11 @@
   },
   "Collection": {
     "title": "Bộ sưu tập đã lưu",
+    "subtitle": "Những bài viết và outfit bạn đã lưu",
+    "tabs": {
+      "posts": "Bài viết",
+      "outfits": "Phối đồ"
+    },
     "OutfitResults": {
       "heading": "Phối đồ đã tạo",
       "loading": "Đang tải...",
@@ -506,38 +513,47 @@
       "emptyStateCta": "Bắt đầu phối đồ",
       "frontImageAlt": "Ảnh trực diện",
       "sideImageAlt": "Ảnh nghiêng"
-    },
-    "Wardrobe": {
-      "heading": "Tủ đồ của tôi",
-      "loading": "Đang tải...",
-      "emptyState": "Tủ đồ của bạn đang trống.",
-      "emptyStateCta": "Tải đồ lên",
-      "itemImageAlt": "Món đồ trong tủ đồ"
-    },
-    "PersonalColor": {
-      "heading": "Kết quả Personal Color",
-      "loading": "Đang tải...",
-      "emptyState": "Bạn chưa có kết quả Personal Color nào.",
-      "emptyStateCta": "Làm bài test ngay",
-      "viewDetailButton": "Xem chi tiết"
     }
   },
   "Profile": {
     "title": "Thông tin cá nhân",
     "adminBadge": "Admin",
+    "Header": {
+      "memberSince": "Thành viên từ {date}"
+    },
+    "QuickLinks": {
+      "heading": "Truy cập nhanh",
+      "links": {
+        "wardrobe": "Tủ đồ",
+        "saved": "Đã lưu",
+        "result": "Kết quả"
+      }
+    },
     "PersonalInfo": {
       "heading": "Thông tin cá nhân",
       "fields": {
         "name": "Họ và tên",
+        "username": "Tên người dùng",
         "phone": "Số điện thoại",
+        "birthDate": "Ngày sinh",
+        "gender": "Giới tính",
+        "heightCm": "Chiều cao (cm)",
+        "weightKg": "Cân nặng (kg)",
         "email": "Địa chỉ Email"
       },
+      "genderOptions": {
+        "male": "Nam",
+        "female": "Nữ",
+        "other": "Khác"
+      },
+      "notUpdatedPlaceholder": "Chưa cập nhật",
       "phonePlaceholder": "0912345678",
       "emailLockedNote": "Email dùng để đăng nhập, không thể thay đổi.",
       "saveButton": "Lưu thay đổi",
       "saving": "Đang lưu...",
       "successMessage": "Đã cập nhật thông tin.",
       "phoneTakenError": "Số điện thoại này đã được dùng cho tài khoản khác.",
+      "usernameTakenError": "Tên người dùng này đã được dùng cho tài khoản khác.",
       "invalidPhoneError": "Số điện thoại không hợp lệ.",
       "genericError": "Có lỗi xảy ra, vui lòng thử lại."
     },
@@ -605,7 +621,6 @@
     "supportHeading": "Hỗ trợ & thông tin",
     "support": {
       "about": "Về chúng tôi",
-      "howItWorks": "Cơ chế vận hành",
       "faq": "Câu hỏi thường gặp",
       "blog": "Cảm hứng"
     },
@@ -651,8 +666,8 @@
     },
     "FeatureShowcase": {
       "badgePill": "Hệ Sinh Thái Thời Trang Cá Nhân Hoá",
-      "heading": "Ba Bước Đột Phá Nâng Tầm Phong Cách",
-      "subheading": "Từ phân tích sinh trắc quang phổ đến trải nghiệm thử đồ ảo và kết nối hội những tín đồ mặc đẹp cùng hệ sắc tố.",
+      "heading": "Thấu Hiểu Bản Thân & Tái Sinh Tủ Đồ",
+      "subheading": "Khám phá bảng màu cá nhân và trải nghiệm phối outfit thông minh mỗi người dựa trên những gì đang sẵn có trong tủ đồ.",
       "prevAriaLabel": "Xem tính năng trước",
       "nextAriaLabel": "Xem tính năng tiếp theo",
       "viewFeatureAriaLabel": "Xem tính năng: {title}",
@@ -679,39 +694,17 @@
           "title": "Phối đồ",
           "cta": "Bắt Đầu Phối Đồ Ngay",
           "steps": {
-            "digitizeCloset": {
-              "title": "Số hóa tủ đồ chỉ trong tích tắc",
-              "body": "Tải lên từng món đồ bạn có. Hệ thống sẽ tự động nhận diện và phân loại ngăn nắp vào tủ đồ ảo của bạn."
+            "chooseGarment": {
+              "title": "Chọn trang phục cho buổi thử đồ",
+              "body": "Chọn từ tủ đồ cá nhân đã lưu, hoặc tải ảnh/dán link sản phẩm để thêm trang phục mới trước khi thử đồ."
             },
-            "setPreferences": {
-              "title": "Thiết lập gu và nhu cầu riêng",
-              "body": "Lựa chọn dịp diện đồ, phong cách yêu thích hoặc mix-match chuẩn bảng màu cá nhân. Muốn đổi gió? Hãy bật tính năng gợi ý thêm item mới từ bên ngoài."
+            "modelAndFace": {
+              "title": "Chọn người mẫu phù hợp với dáng người",
+              "body": "Chọn người mẫu phù hợp để AI dựng trang phục lên đúng vóc dáng, giúp bạn hình dung chính xác tổng thể trước khi thử."
             },
-            "chooseModel": {
-              "title": "Chọn mẫu và dáng pose theo ý thích",
-              "body": "Chọn người mẫu sẵn có cùng dáng đứng phù hợp nhất để dễ dàng hình dung tổng thể bộ trang phục khi mặc lên người."
-            },
-            "getOutfit": {
+            "viewResult": {
               "title": "Nhận ngay outfit hoàn chỉnh",
               "body": "Chiêm ngưỡng set đồ được AI phối sẵn chuẩn chỉnh theo từng đường nét, sẵn sàng để bạn tự tin diện ra ngoài."
-            }
-          }
-        },
-        "community": {
-          "title": "Diễn đàn",
-          "cta": "Khám Phá Diễn Đàn",
-          "steps": {
-            "share": {
-              "title": "Chia sẻ phong cách cá nhân",
-              "body": "Đăng tải outfit thường ngày với hình ảnh sắc nét và caption chia sẻ câu chuyện, ý tưởng phối đồ của riêng bạn."
-            },
-            "connect": {
-              "title": "Kết nối và lan tỏa cảm hứng",
-              "body": "Tương tác trực tiếp với cộng đồng mê thời trang qua từng lượt thả tim yêu thích và những dòng bình luận rôm rả."
-            },
-            "save": {
-              "title": "Lưu giữ outfit tâm đắc",
-              "body": "Lưu lại những bài đăng ấn tượng để mở ra tham khảo bất cứ khi nào cần lên đồ."
             }
           }
         }
@@ -793,26 +786,36 @@
         "closeAriaLabel": "Đóng"
       },
       "ProfileCard": {
-        "srHeading": "Tổng quan mùa sắc thái và gợi ý ứng dụng",
+        "srHeading": "Kết quả phân tích mùa sắc thái",
         "portraitAlt": "Chân dung phân tích sắc tố khuôn mặt",
-        "paletteLabel": "Bảng màu phù hợp nhất",
-        "overviewHeading": "Tổng quan sắc diện",
-        "hueLabel": "Nhiệt độ màu",
-        "valueLabel": "Sắc độ",
-        "chromaLabel": "Độ bão hoà",
-        "recommendationsHeading": "Gợi ý ứng dụng",
-        "recommendations": {
-          "outfit": { "title": "Màu trang phục" },
-          "lipstick": { "title": "Màu son" },
-          "accessory": { "title": "Màu phụ kiện" }
-        },
-        "ctaBannerTitle": "Kết quả Personal Color của bạn đã sẵn sàng!",
-        "ctaBannerSubtitle": "Khám phá thế giới màu sắc giúp bạn tỏa sáng mỗi ngày ✨"
+        "paletteLabel": "Bảng màu phù hợp nhất"
       },
       "Insights": {
         "srHeading": "Bảng màu lý tưởng và trải nghiệm Camera AR",
         "idealPaletteHeading": "Bảng màu lý tưởng của bạn",
         "paletteImageAlt": "Bảng phối màu minh họa dành cho {season}"
+      },
+      "Metrics": {
+        "heading": "Chi tiết chỉ số màu sắc",
+        "hueLabel": "Nhiệt độ màu",
+        "valueLabel": "Sắc độ",
+        "chromaLabel": "Độ bão hoà"
+      },
+      "Recommendations": {
+        "heading": "Gợi ý ứng dụng",
+        "items": {
+          "outfit": {
+            "title": "Màu trang phục"
+          },
+          "lipstick": {
+            "title": "Màu son"
+          },
+          "accessory": {
+            "title": "Màu phụ kiện"
+          }
+        },
+        "ctaBannerTitle": "Kết quả Personal Color của bạn đã sẵn sàng!",
+        "ctaBannerSubtitle": "Khám phá thế giới màu sắc giúp bạn tỏa sáng mỗi ngày ✨"
       }
     }
   },
@@ -820,25 +823,17 @@
     "Stepper": {
       "kicker": "Virtual Fitting Studio",
       "kickerSuffix": "Quy trình 3 bước",
-      "badge": "AI Segmentation 4.0 Online",
       "steps": {
         "chooseGarment": "Chọn Quần Áo",
         "modelAndFace": "Dáng & Khuôn Mặt",
-        "viewResult": "Xem Kết Quả 3D"
+        "viewResult": "Xem Kết Quả"
       },
       "statusCurrent": "Bước {step} · Đang chọn",
       "statusDone": "Bước {step} · Đã xong",
       "statusUpcoming": "Bước {step} · Sắp tới"
     },
-    "FlowOverviewBanner": {
-      "showButton": "Xem tổng quan quy trình",
-      "hideButton": "Ẩn sơ đồ"
-    },
     "Step1": {
       "Page": {
-        "bannerTitle": "Lộ trình thử đồ thông minh cá nhân hóa",
-        "bannerSubtitle": "Hệ thống phân tách bóc phông chuẩn Studio, hỗ trợ link sàn Shopee, Zara, TikTok Shop",
-        "bannerImageAlt": "Quy trình thử đồ ảo TwistFit 3 bước",
         "stepBadge": "Step 01 / 03",
         "tagline": "A little twist, a better fit",
         "heading": "Chọn Trang Phục Cho Buổi Thử Đồ",
@@ -919,10 +914,22 @@
       "primaryCta": "Thử nghiệm ngay (Miễn phí)",
       "secondaryCta": "Xem video hướng dẫn",
       "metrics": {
-        "spectrumPoints": { "value": "1024", "label": "Điểm đo quang phổ" },
-        "seasons": { "value": "12", "label": "Mùa sắc thái toàn diện" },
-        "accuracy": { "value": "98.4%", "label": "Độ chuẩn xác đối chiếu" },
-        "instantResult": { "value": "30s", "label": "Kết quả ngay lập tức" }
+        "spectrumPoints": {
+          "value": "1024",
+          "label": "Điểm đo quang phổ"
+        },
+        "seasons": {
+          "value": "12",
+          "label": "Mùa sắc thái toàn diện"
+        },
+        "accuracy": {
+          "value": "98.4%",
+          "label": "Độ chuẩn xác đối chiếu"
+        },
+        "instantResult": {
+          "value": "30s",
+          "label": "Kết quả ngay lập tức"
+        }
       }
     },
     "AssessmentMethodology": {
@@ -1139,15 +1146,17 @@
   "About": {
     "Hero": {
       "badgeText": "Về chúng tôi • TwistFit Atelier",
-      "heading": "Định Hình Phong Cách Bằng<br></br><highlight>Khoa Học Màu Sắc</highlight> & Công Nghệ AI",
-      "subheading": "TwistFit ra đời từ niềm tin rằng mỗi cá nhân đều sở hữu một bản sắc thẩm mỹ độc bản. Với phương châm <tagline>\"A little twist, a better fit\"</tagline>, chúng tôi kết hợp phân tích Personal Color chuẩn quốc tế và công nghệ thử đồ ảo để biến tủ đồ của bạn thành nguồn cảm hứng bất tận.",
+      "heading": "Xin chào, tụi mình là TwistFit!",
       "stat1Label": "Lượt phân tích màu",
       "stat2Value": "98.4%",
       "stat2Label": "Độ chính xác AI",
       "stat3Value": "40.000+",
       "stat3Label": "Phối đồ thành công",
       "stat4Value": "4.9/5",
-      "stat4Label": "Điểm hài lòng"
+      "stat4Label": "Điểm hài lòng",
+      "subheadingGreeting": "Nếu như ngày nào bạn đau đầu với hai câu hỏi: “Hôm nay mặc gì?” và “Rốt cuộc mình hợp màu nào nhất?”, thì TwistFit chính là câu trả lời dành cho bạn.",
+      "subheadingSolution": "Không cần tốn tiền mua sắm linh tinh hay đoán mò nữa, TwistFit giúp bạn xác định đúng bảng màu cá nhân và tận dụng ngay tủ đồ có sẵn để lên đồ đẹp mỗi ngày.",
+      "subheadingTransition": "Nhưng mà, lý do gì khiến tụi mình lại bắt đầu hành trình này nhỉ? Để tụi mình kể cho bạn nghe hành trình TwistFit ra đời nha!"
     },
     "StorySections": {
       "story": {
@@ -1178,17 +1187,11 @@
         "imageAlt": "Minh họa tầm nhìn tương lai của TwistFit"
       }
     },
-    "TeamGrid": {
-      "kicker": "Đội Ngũ Chuyên Gia",
-      "heading": "Những Nhà Kiến Tạo Tại TwistFit",
-      "subheading": "Sự giao thoa hoàn hảo giữa cảm quan thẩm mỹ thời trang cao cấp và năng lực nghiên cứu trí tuệ nhân tạo."
-    },
-    "CtaBanner": {
-      "badge": "Khởi đầu chuyển hóa phong cách",
-      "heading": "Bắt đầu hành trình tìm kiếm sắc màu của riêng bạn ngay hôm nay.",
-      "subheading": "Chỉ với 3 phút trải nghiệm bài test AI, bạn sẽ nhận được bản đồ bảng màu cá nhân hóa toàn diện và tự do thử nghiệm các outfits trong phòng thử đồ ảo.",
-      "primaryCta": "Làm bài test Personal Color",
-      "secondaryCta": "Khám phá phòng thử đồ ảo"
+    "LogoMeaning": {
+      "heading": "Ý nghĩa logo",
+      "body": "Logo TwistFit không chỉ là một nhận diện thị giác, mà còn chứa đựng toàn bộ triết lý chuyển dịch từ sự tĩnh lặng của tủ đồ truyền thống sang không gian số hóa thời trang đầy năng lượng và sáng tạo.",
+      "expandLabel": "Xem thêm",
+      "collapseLabel": "Thu gọn"
     }
   },
   "Faq": {
@@ -1203,9 +1206,9 @@
     "CategoryTabs": {
       "categories": {
         "all": "Tất cả",
-        "account": "Tài khoản & Dữ liệu",
-        "personalColor": "Trắc nghiệm Personal Color",
-        "fittingRoom": "Phòng thử đồ ảo (Fitting Room)",
+        "account": "Thiết lập tài khoản",
+        "personalColor": "Đánh giá màu sắc cá nhân",
+        "fittingRoom": "Phối đồ",
         "policy": "Chính sách"
       }
     },
@@ -1225,7 +1228,12 @@
       "heading": "Vẫn Còn Câu Hỏi Chưa Được Giải Đáp?",
       "body": "Đội ngũ Stylist và chuyên gia công nghệ của TwistFit luôn sẵn sàng hỗ trợ bạn qua kênh trò chuyện trực tuyến hoặc giải đáp phản hồi chi tiết.",
       "contactButton": "Liên hệ hỗ trợ ngay",
-      "feedbackButton": "Gửi phản hồi"
+      "namePlaceholder": "Nhập tên của bạn*",
+      "phonePlaceholder": "Nhập số điện thoại*",
+      "emailPlaceholder": "Nhập địa chỉ email*",
+      "questionPlaceholder": "Nhập câu hỏi của bạn ở đây:*",
+      "submitButton": "Gửi câu hỏi",
+      "successMessage": "Cảm ơn bạn! TwistFit sẽ phản hồi câu hỏi của bạn sớm nhất có thể."
     }
   },
   "Blog": {
@@ -1270,21 +1278,6 @@
     "RelatedPosts": {
       "heading": "Bài viết liên quan",
       "ariaLabel": "Bài viết liên quan cùng chuyên mục"
-    },
-    "QuizCallout": {
-      "title": "Chưa biết mình thuộc hệ màu nào?",
-      "body": "Làm bài trắc nghiệm thông minh chỉ trong 60 giây và nhận bảng gợi ý trang phục chuẩn xác.",
-      "ctaButton": "Test Personal Color Ngay"
-    },
-    "NewsletterSection": {
-      "heading": "Nhận Cẩm Nang Thời Trang Hàng Tuần",
-      "body": "Đăng ký nhận cẩm nang thời trang & mẹo màu sắc độc quyền hàng tuần vào hộp thư của bạn. Hoàn toàn miễn phí, hủy đăng ký bất kỳ lúc nào.",
-      "emailPlaceholder": "Nhập địa chỉ email của bạn...",
-      "submitButton": "Đăng ký",
-      "successMessage": "Cảm ơn bạn đã đăng ký theo dõi TwistFit!",
-      "noSpam": "Không spam",
-      "dataSecurity": "Bảo mật dữ liệu",
-      "readersCount": "15,000+ Readers"
     }
   }
 }

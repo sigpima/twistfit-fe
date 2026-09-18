@@ -28,13 +28,14 @@ describe('ForumPostList', () => {
     vi.unstubAllGlobals()
   })
 
-  it('fetches published posts on mount and links to the detail page', async () => {
+  it('fetches published posts on mount and shows the content and image inline, with a link to the detail page', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POSTS }))
     renderWithIntl(<ForumPostList />)
 
     await waitFor(() => expect(screen.getByText('Bài công khai')).toBeInTheDocument())
     expect(fetch).toHaveBeenCalledWith('/forum/posts', { credentials: 'include' })
-    expect(screen.getByRole('link', { name: 'Bài công khai' })).toHaveAttribute('href', '/forum/1')
+    expect(screen.getByText('Nội dung')).toBeInTheDocument()
+    expect(screen.getAllByRole('link', { name: 'Lan Anh' })[0]).toHaveAttribute('href', '/forum/1')
   })
 
   it('refetches with a category query param when a filter is clicked', async () => {
@@ -80,13 +81,36 @@ describe('ForumPostList', () => {
     )
   })
 
-  it('shows the thumbnail, author, and counts for a post', async () => {
+  it('toggles the like button', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((url: string, init?: RequestInit) => {
+        if (init?.method === 'POST') {
+          return Promise.resolve({ ok: true, json: async () => ({ liked: true, likeCount: 4 }) })
+        }
+        return Promise.resolve({ ok: true, json: async () => POSTS })
+      })
+    )
+    renderWithIntl(<ForumPostList />)
+    await waitFor(() => expect(screen.getByText('Bài công khai')).toBeInTheDocument())
+
+    fireEvent.click(screen.getByRole('button', { name: 'Thích (3)' }))
+
+    await waitFor(() => expect(screen.getByText('4 lượt thích')).toBeInTheDocument())
+    expect(fetch).toHaveBeenCalledWith(
+      '/forum/posts/1/like',
+      expect.objectContaining({ method: 'POST', credentials: 'include' })
+    )
+  })
+
+  it('shows the image, author, like count, and a link to all comments', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POSTS }))
     renderWithIntl(<ForumPostList />)
 
     await waitFor(() => expect(screen.getByText('Bài công khai')).toBeInTheDocument())
-    expect(screen.getByText(/Lan Anh/)).toBeInTheDocument()
+    expect(screen.getAllByText(/Lan Anh/).length).toBeGreaterThan(0)
     expect(screen.getByAltText('')).toHaveAttribute('src', 'https://example.com/outfit.jpg')
-    expect(screen.getByText('3 lượt thích · 2 bình luận')).toBeInTheDocument()
+    expect(screen.getByText('3 lượt thích')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Xem tất cả 2 bình luận' })).toHaveAttribute('href', '/forum/1')
   })
 })

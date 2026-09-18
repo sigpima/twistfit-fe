@@ -32,7 +32,7 @@ describe('FaqForm', () => {
     renderWithIntl(<FaqForm />)
     fireEvent.change(screen.getByLabelText('Câu hỏi'), { target: { value: 'Câu hỏi mới?' } })
     fireEvent.change(screen.getByLabelText('Câu trả lời (Markdown)'), { target: { value: 'Trả lời mới.' } })
-    fireEvent.click(screen.getByLabelText('Trắc nghiệm Personal Color'))
+    fireEvent.click(screen.getByLabelText('Đánh giá màu sắc cá nhân'))
     fireEvent.click(screen.getByRole('button', { name: 'Tạo câu hỏi' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/faq'))
@@ -43,7 +43,7 @@ describe('FaqForm', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 200, json: async () => EXISTING_ITEM }))
     renderWithIntl(<FaqForm initialItem={EXISTING_ITEM} />)
     expect(screen.getByLabelText('Câu hỏi')).toHaveValue('Câu hỏi hiện có?')
-    expect(screen.getByLabelText('Tài khoản & Dữ liệu')).toBeChecked()
+    expect(screen.getByLabelText('Thiết lập tài khoản')).toBeChecked()
     fireEvent.click(screen.getByRole('button', { name: 'Lưu thay đổi' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/faq'))

@@ -52,7 +52,7 @@ export default function StorySections() {
         <StoryChapter image="/about/mission.png" imageAlt={t('mission.imageAlt')} imageOnRight>
           <h2 className="text-headline-lg text-on-surface">{t('mission.heading')}</h2>
           <p className="text-headline-sm font-semibold text-secondary">{t('mission.subheading')}</p>
-          <p className="text-headline-sm font-serif italic text-secondary">{t('mission.quote')}</p>
+          <p className="text-headline-sm italic text-secondary">{t('mission.quote')}</p>
           <div className="flex max-w-prose flex-col gap-space-md text-body-md leading-relaxed text-on-surface-variant">
             <p>{t('mission.paragraph1')}</p>
             <p>{t('mission.paragraph2')}</p>
@@ -62,7 +62,7 @@ export default function StorySections() {
 
         <StoryChapter image="/about/vision.png" imageAlt={t('vision.imageAlt')} imageOnRight={false}>
           <h2 className="text-headline-lg text-on-surface">{t('vision.heading')}</h2>
-          <p className="text-headline-sm font-serif italic text-secondary">{t('vision.quote')}</p>
+          <p className="text-headline-sm italic text-secondary">{t('vision.quote')}</p>
           <div className="flex max-w-prose flex-col gap-space-md text-body-md leading-relaxed text-on-surface-variant">
             <p>{t('vision.paragraph1')}</p>
           </div>

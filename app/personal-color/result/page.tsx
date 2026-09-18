@@ -8,6 +8,8 @@ import { useAuth } from '@/components/auth/AuthProvider'
 import { getAnonymousQuizResult } from '@/lib/quizResultStorage'
 import ColorProfileCard from '@/components/personal-color/ColorProfileCard'
 import ColorInsights from '@/components/personal-color/ColorInsights'
+import ColorMetricsSection from '@/components/personal-color/ColorMetricsSection'
+import RecommendationsSection from '@/components/personal-color/RecommendationsSection'
 import AnonymousResultBanner from '@/components/personal-color/AnonymousResultBanner'
 import type { AxisValue, SubSeason } from '@/lib/db'
 
@@ -90,10 +92,12 @@ export default function ResultPage() {
         </div>
       )}
       {state.status === 'found' && (
-        <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-12 lg:gap-8">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6">
           {!user && <AnonymousResultBanner />}
           <ColorProfileCard result={state.result} />
           <ColorInsights subSeason={state.result.subSeason} />
+          <ColorMetricsSection result={state.result} />
+          <RecommendationsSection subSeason={state.result.subSeason} />
         </div>
       )}
     </main>

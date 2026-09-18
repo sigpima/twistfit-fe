@@ -10,8 +10,8 @@ export default function ColorInsights({ subSeason }: { subSeason: SubSeason }) {
   const profile = SEASON_PROFILES[subSeason]
 
   return (
-    <section aria-labelledby="metrics-and-guide-title" className="flex flex-col gap-6 lg:col-span-5">
-      <h2 className="sr-only" id="metrics-and-guide-title">
+    <section aria-labelledby="palette-and-camera-title" className="flex flex-col gap-6">
+      <h2 className="sr-only" id="palette-and-camera-title">
         {t('srHeading')}
       </h2>
       <div className="rounded-3xl border border-[#7b89ba]/15 bg-white p-6 shadow-[0_4px_20px_rgba(48,68,97,0.05)]">

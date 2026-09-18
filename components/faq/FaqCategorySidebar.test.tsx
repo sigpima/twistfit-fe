@@ -7,15 +7,15 @@ describe('FaqCategorySidebar', () => {
   it('renders the "all" tile plus every FAQ category', () => {
     renderWithIntl(<FaqCategorySidebar active="all" onChange={vi.fn()} />)
     expect(screen.getByRole('button', { name: 'Tất cả' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Tài khoản & Dữ liệu' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Trắc nghiệm Personal Color' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Phòng thử đồ ảo (Fitting Room)' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Thiết lập tài khoản' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Đánh giá màu sắc cá nhân' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Phối đồ' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Chính sách' })).toBeInTheDocument()
   })
 
   it('marks the active category as pressed', () => {
     renderWithIntl(<FaqCategorySidebar active="fitting-room" onChange={vi.fn()} />)
-    expect(screen.getByRole('button', { name: 'Phòng thử đồ ảo (Fitting Room)' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'Phối đồ' })).toHaveAttribute(
       'aria-pressed',
       'true'
     )

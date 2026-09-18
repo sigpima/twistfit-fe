@@ -45,7 +45,7 @@ describe('FaqPage', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ITEMS }))
     const page = await FaqPage({ searchParams: Promise.resolve({ category: 'fitting-room' }) })
     renderWithIntl(page)
-    expect(screen.getByRole('button', { name: /Phòng thử đồ ảo/ })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: /Phối đồ/ })).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getByText('Câu hỏi phòng thử đồ?')).toBeInTheDocument()
     expect(screen.queryByText('Câu hỏi seed test?')).not.toBeInTheDocument()
   })

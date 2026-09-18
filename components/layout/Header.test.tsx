@@ -35,7 +35,7 @@ describe('Header', () => {
   it('renders the features dropdown with links to the expected routes', () => {
     renderHeader()
     expect(screen.getByRole('button', { name: 'Tính năng' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Test Personal Color' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Đánh giá màu sắc cá nhân' })).toHaveAttribute(
       'href',
       '/personal-color/quiz'
     )

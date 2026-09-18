@@ -23,17 +23,4 @@ describe('ColorProfileCard', () => {
     const portrait = screen.getByRole('img', { name: /.+/ })
     expect(portrait).toHaveAttribute('src', '/personal-color/portraits/bright-spring.png')
   })
-
-  it('renders the three axis results', () => {
-    renderWithIntl(<ColorProfileCard result={RESULT} />)
-    expect(screen.getByText('Lạnh')).toBeInTheDocument()
-    expect(screen.getByText('Trung bình')).toBeInTheDocument()
-    expect(screen.getByText('Trung tính')).toBeInTheDocument()
-  })
-
-  it('renders the real recommendation text for the given sub-season', () => {
-    renderWithIntl(<ColorProfileCard result={RESULT} />)
-    expect(screen.getByText('Đỏ tươi, hồng fuchsia')).toBeInTheDocument()
-    expect(screen.getByText('Áo trắng phối đen, đầm xanh hoàng gia')).toBeInTheDocument()
-  })
 })

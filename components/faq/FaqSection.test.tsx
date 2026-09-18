@@ -60,7 +60,7 @@ describe('FaqSection', () => {
 
   it('filters questions by category', () => {
     renderWithIntl(<FaqSection items={ITEMS} />)
-    fireEvent.click(screen.getByRole('button', { name: 'Phòng thử đồ ảo (Fitting Room)' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Phối đồ' }))
     expect(screen.getByText(/Tính năng Thử Đồ Ảo/)).toBeInTheDocument()
     expect(screen.queryByText(/Personal Color Test trên TwistFit hoạt động/)).not.toBeInTheDocument()
   })
@@ -75,7 +75,7 @@ describe('FaqSection', () => {
 
   it('pre-selects the category passed via initialCategory', () => {
     renderWithIntl(<FaqSection items={ITEMS} initialCategory="fitting-room" />)
-    expect(screen.getByRole('button', { name: 'Phòng thử đồ ảo (Fitting Room)' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'Phối đồ' })).toHaveAttribute(
       'aria-pressed',
       'true'
     )

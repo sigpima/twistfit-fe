@@ -8,9 +8,15 @@ const STORAGE_KEY = 'twistfit.auth'
 
 export type AuthUser = {
   name: string
+  username: string | null
   email: string | null
   phone: string | null
   role: Role
+  birthDate: string | null
+  gender: string | null
+  heightCm: number | null
+  weightKg: number | null
+  createdAt: string
 }
 
 type AuthContextValue = {

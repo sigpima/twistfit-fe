@@ -21,16 +21,10 @@ export default function OutfitStepper({
   return (
     <section className="sticky top-20 z-40 w-full bg-surface-container-low/80 px-margin-desktop py-space-lg shadow-sm backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl flex-col gap-space-md">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-space-xs text-on-surface-variant">
-            <span className="text-label-sm font-bold uppercase tracking-widest text-primary">{t('kicker')}</span>
-            <span className="material-symbols-outlined text-[14px]">chevron_right</span>
-            <span className="text-label-sm font-medium">{t('kickerSuffix')}</span>
-          </div>
-          <div className="flex items-center gap-space-xs rounded-full bg-secondary-container/60 px-space-sm py-0.5 text-label-sm text-on-secondary-container">
-            <span className="material-symbols-outlined text-[15px]">auto_awesome</span>
-            <span>{t('badge')}</span>
-          </div>
+        <div className="flex items-center gap-space-xs text-on-surface-variant">
+          <span className="text-label-sm font-bold uppercase tracking-widest text-primary">{t('kicker')}</span>
+          <span className="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span className="text-label-sm font-medium">{t('kickerSuffix')}</span>
         </div>
         <div className="grid grid-cols-1 gap-space-md pt-space-xs md:grid-cols-3">
           {STEPS.map((item) => {

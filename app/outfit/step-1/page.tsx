@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import FlowOverviewBanner from '@/components/outfit/FlowOverviewBanner'
 import UploadFlow from '@/components/outfit/step1/UploadFlow'
 import WardrobeLibrary from '@/components/outfit/step1/WardrobeLibrary'
 
@@ -25,15 +24,7 @@ export default function Step1Page() {
   return (
     <div className="flex w-full flex-col pb-space-xl">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-space-lg px-margin-desktop pt-space-md">
-        <div className="pt-space-lg">
-          <FlowOverviewBanner
-            title={t('bannerTitle')}
-            subtitle={t('bannerSubtitle')}
-            image="/outfit/flow-overview.png"
-            imageAlt={t('bannerImageAlt')}
-          />
-        </div>
-        <div className="flex flex-col justify-between gap-space-md pb-space-xs md:flex-row md:items-end">
+        <div className="flex flex-col justify-between gap-space-md pt-space-lg pb-space-xs md:flex-row md:items-end">
           <div className="flex flex-col gap-space-xs">
             <div className="flex items-center gap-space-xs">
               <span className="rounded-full bg-primary px-2.5 py-0.5 text-label-sm font-semibold uppercase tracking-widest text-on-primary">

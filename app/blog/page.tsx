@@ -1,8 +1,6 @@
 import BlogHero from '@/components/blog/BlogHero'
 import BlogFeaturedArticle from '@/components/blog/BlogFeaturedArticle'
 import BlogArticleGrid from '@/components/blog/BlogArticleGrid'
-import BlogQuizCallout from '@/components/blog/BlogQuizCallout'
-import BlogNewsletterSection from '@/components/blog/BlogNewsletterSection'
 import FaqSection from '@/components/faq/FaqSection'
 import FaqSupportBanner from '@/components/faq/FaqSupportBanner'
 import { apiFetch } from '@/lib/apiClient'
@@ -25,10 +23,10 @@ export default async function BlogPage() {
         <BlogHero />
         {featured && <BlogFeaturedArticle post={featured} />}
         <BlogArticleGrid posts={rest} />
-        <BlogQuizCallout />
-        <BlogNewsletterSection />
       </div>
-      <FaqSection items={faqItems} />
+      <div id="faq">
+        <FaqSection items={faqItems} />
+      </div>
       <FaqSupportBanner />
     </main>
   )

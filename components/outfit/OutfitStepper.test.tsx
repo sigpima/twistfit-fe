@@ -24,7 +24,7 @@ describe('OutfitStepper', () => {
 
   it('renders steps already visited ahead of the current step as clickable links', () => {
     renderWithIntl(<OutfitStepper currentStep={2} maxStepReached={3} />)
-    expect(screen.getByRole('link', { name: /Xem Kết Quả 3D/ })).toHaveAttribute('href', '/outfit/step-3')
+    expect(screen.getByRole('link', { name: /Xem Kết Quả/ })).toHaveAttribute('href', '/outfit/step-3')
   })
 
   it('does not link to steps beyond the furthest one reached', () => {

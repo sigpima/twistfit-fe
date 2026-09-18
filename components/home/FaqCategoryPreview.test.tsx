@@ -7,15 +7,15 @@ describe('FaqCategoryPreview', () => {
   it('renders exactly the four FAQ category tiles, each linking to the FAQ page', () => {
     renderWithIntl(<FaqCategoryPreview />)
 
-    expect(screen.getByRole('link', { name: /Tài khoản & Dữ liệu/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /Thiết lập tài khoản/ })).toHaveAttribute(
       'href',
       '/faq?category=account'
     )
-    expect(screen.getByRole('link', { name: /Trắc nghiệm Personal Color/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /Đánh giá màu sắc cá nhân/ })).toHaveAttribute(
       'href',
       '/faq?category=personal-color'
     )
-    expect(screen.getByRole('link', { name: /Phòng thử đồ ảo \(Fitting Room\)/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /Phối đồ/ })).toHaveAttribute(
       'href',
       '/faq?category=fitting-room'
     )
@@ -25,15 +25,15 @@ describe('FaqCategoryPreview', () => {
   it('renders each category tile with its matching background image', () => {
     renderWithIntl(<FaqCategoryPreview />)
 
-    expect(screen.getByRole('link', { name: /Tài khoản & Dữ liệu/ }).querySelector('img')).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /Thiết lập tài khoản/ }).querySelector('img')).toHaveAttribute(
       'src',
       '/faq/account.jpg'
     )
     expect(
-      screen.getByRole('link', { name: /Trắc nghiệm Personal Color/ }).querySelector('img')
+      screen.getByRole('link', { name: /Đánh giá màu sắc cá nhân/ }).querySelector('img')
     ).toHaveAttribute('src', '/faq/personal-color.jpg')
     expect(
-      screen.getByRole('link', { name: /Phòng thử đồ ảo \(Fitting Room\)/ }).querySelector('img')
+      screen.getByRole('link', { name: /Phối đồ/ }).querySelector('img')
     ).toHaveAttribute('src', '/faq/fitting-room.jpg')
     expect(screen.getByRole('link', { name: /Chính sách/ }).querySelector('img')).toHaveAttribute(
       'src',
