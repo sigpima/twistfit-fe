@@ -887,17 +887,11 @@
     },
     "Step2": {
       "Page": {
-        "eyebrow": "Cá nhân hoá hình tượng",
         "heading": "Bước 2: Chọn Người Mẫu",
         "subheading": "Chọn người mẫu phù hợp để AI dựng trang phục lên đúng vóc dáng.",
         "backButton": "Quay lại Bước 1 (Chọn đồ)",
         "generateButton": "Xác nhận người mẫu & Tạo Đồ Ảo Ngay",
         "generateError": "Không thể tạo yêu cầu phối đồ, vui lòng thử lại."
-      },
-      "SelectedGarmentBanner": {
-        "selectedLabel": "Trang phục đã chọn (B1)",
-        "paletteNote": "Bảng màu {tone}",
-        "changeLink": "Đổi áo"
       }
     },
     "Step3": {

@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { apiFetch } from '@/lib/apiClient'
 import { useOutfitFlow } from '../OutfitFlowProvider'
-import SelectedGarmentBanner from './SelectedGarmentBanner'
 import ModelCatalog from './ModelCatalog'
 import type { CatalogModel } from '@/lib/modelCatalog'
 
@@ -52,16 +51,9 @@ export default function Step2PageContent({ models }: { models: CatalogModel[] })
   return (
     <div className="flex w-full flex-col">
       <section className="w-full bg-surface-container-low px-margin-desktop py-space-lg">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-space-md lg:flex-row lg:items-center">
-          <div>
-            <div className="flex items-center gap-space-xs text-label-md font-semibold uppercase tracking-wider text-secondary">
-              <span className="material-symbols-outlined text-[18px]">face_retouching_natural</span>
-              {t('eyebrow')}
-            </div>
-            <h1 className="mt-1 text-headline-lg tracking-tight text-on-surface">{t('heading')}</h1>
-            <p className="mt-1 text-body-md text-on-surface-variant">{t('subheading')}</p>
-          </div>
-          <SelectedGarmentBanner />
+        <div className="mx-auto max-w-7xl">
+          <h1 className="text-headline-lg tracking-tight text-on-surface">{t('heading')}</h1>
+          <p className="mt-1 text-body-md text-on-surface-variant">{t('subheading')}</p>
         </div>
       </section>
       <section className="w-full bg-background px-margin-desktop py-space-xl">

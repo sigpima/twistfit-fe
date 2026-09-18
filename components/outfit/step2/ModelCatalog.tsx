@@ -40,13 +40,6 @@ export default function ModelCatalog({ models }: { models: CatalogModel[] }) {
                 className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
-            <div className="flex flex-col bg-surface-container-lowest p-space-sm">
-              <span
-                className={`text-label-lg font-semibold ${isSelected ? 'font-bold text-primary' : 'text-on-surface'}`}
-              >
-                {model.name}
-              </span>
-            </div>
           </button>
         )
       })}

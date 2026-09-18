@@ -41,9 +41,9 @@ describe('ModelCatalog', () => {
         <ModelCatalog models={MODELS} />
       </OutfitFlowProvider>
     )
-    expect(screen.getByText('Mảnh mai')).toBeInTheDocument()
-    expect(screen.getByText('Thể thao')).toBeInTheDocument()
-    expect(screen.getByText('Thư sinh')).toBeInTheDocument()
+    expect(screen.getByAltText('Mảnh mai')).toBeInTheDocument()
+    expect(screen.getByAltText('Thể thao')).toBeInTheDocument()
+    expect(screen.getByAltText('Thư sinh')).toBeInTheDocument()
   })
 
   it('shows the front-facing image for each model', () => {
@@ -62,7 +62,7 @@ describe('ModelCatalog', () => {
         <ModelCatalog models={MODELS} />
       </OutfitFlowProvider>
     )
-    fireEvent.click(screen.getByText('Thư sinh'))
+    fireEvent.click(screen.getByAltText('Thư sinh'))
     expect(screen.getByText('Đang xem: Thư sinh')).toBeInTheDocument()
   })
 
@@ -72,7 +72,7 @@ describe('ModelCatalog', () => {
         <ModelCatalog models={MODELS} />
       </OutfitFlowProvider>
     )
-    const card = screen.getByText('Thể thao').closest('button') as HTMLButtonElement
+    const card = screen.getByAltText('Thể thao').closest('button') as HTMLButtonElement
     fireEvent.click(card)
     expect(card).toHaveAttribute('aria-pressed', 'true')
   })
