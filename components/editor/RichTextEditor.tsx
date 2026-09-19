@@ -7,6 +7,7 @@ import { Markdown } from 'tiptap-markdown'
 import { useState } from 'react'
 import ImagePickerDialog from '@/components/admin/ImagePickerDialog'
 import RichTextToolbar from './RichTextToolbar'
+import ImageEditBubbleMenu from './ImageEditBubbleMenu'
 
 export default function RichTextEditor({
   value,
@@ -52,6 +53,7 @@ export default function RichTextEditor({
         />
       )}
       <EditorContent editor={editor} />
+      {editor && <ImageEditBubbleMenu editor={editor} onEditImage={setEditingImage} />}
       <ImagePickerDialog
         open={imageDialogOpen}
         uploadUrlEndpoint={uploadUrlEndpoint}
