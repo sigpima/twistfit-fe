@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { useEffect, useState, type ChangeEvent } from 'react'
 import { apiFetch } from '@/lib/apiClient'
+import { IMAGE_INPUT_ACCEPT, isAllowedImageType } from '@/lib/imageUpload'
 
 const inputClass =
   'w-full rounded-xl bg-surface px-4 py-3 text-body-md text-on-surface placeholder:text-outline transition-colors focus:bg-surface-container-high focus:outline-none'
@@ -62,10 +63,18 @@ export default function ImagePickerDialog({
     const file = event.target.files?.[0]
     if (!file) return
 
+    if (!isAllowedImageType(file.type)) {
+      setError(t('invalidTypeError'))
+      return
+    }
+
     setUploading(true)
     setError('')
 
-    const uploadUrlResponse = await apiFetch(uploadUrlEndpoint, { method: 'POST' })
+    const uploadUrlResponse = await apiFetch(
+      `${uploadUrlEndpoint}?content_type=${encodeURIComponent(file.type)}`,
+      { method: 'POST' }
+    )
     if (!uploadUrlResponse.ok) {
       setUploading(false)
       setError(t('uploadError'))
@@ -126,7 +135,7 @@ export default function ImagePickerDialog({
             <input
               id="image-picker-file"
               type="file"
-              accept="image/*"
+              accept={IMAGE_INPUT_ACCEPT}
               onChange={handleFileChange}
               disabled={uploading}
             />

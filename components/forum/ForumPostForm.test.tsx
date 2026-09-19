@@ -93,7 +93,7 @@ describe('ForumPostForm', () => {
       'fetch',
       vi.fn((url: string, init?: RequestInit) => {
         if (init?.method === 'PUT') return putMock(url, init)
-        if (url === '/forum/upload-url') {
+        if (url === '/forum/upload-url?content_type=image%2Fjpeg') {
           return Promise.resolve(
             jsonResponse({
               uploadUrl: 'https://blob.example.com/upload?sig=abc',
@@ -137,5 +137,19 @@ describe('ForumPostForm', () => {
         }),
       })
     )
+  })
+
+  it('rejects an unsupported image file type without calling the upload API', async () => {
+    const fetchMock = vi.fn()
+    vi.stubGlobal('fetch', fetchMock)
+    renderWithIntl(<ForumPostForm />)
+
+    const file = new File(['fake'], 'notes.pdf', { type: 'application/pdf' })
+    fireEvent.change(screen.getByLabelText('Hình ảnh (không bắt buộc)'), { target: { files: [file] } })
+
+    expect(
+      await screen.findByText('Định dạng ảnh không được hỗ trợ. Vui lòng chọn ảnh JPG, PNG, GIF hoặc WEBP.')
+    ).toBeInTheDocument()
+    expect(fetchMock).not.toHaveBeenCalled()
   })
 })

@@ -73,6 +73,7 @@
       "fileLabel": "Chọn tệp ảnh",
       "uploadingLabel": "Đang tải ảnh lên...",
       "uploadError": "Tải ảnh lên thất bại, vui lòng thử lại.",
+      "invalidTypeError": "Định dạng ảnh không được hỗ trợ. Vui lòng chọn ảnh JPG, PNG, GIF hoặc WEBP.",
       "cancelButton": "Hủy",
       "confirmButton": "Chèn ảnh"
     },
@@ -388,6 +389,7 @@
       },
       "imageUploading": "Đang tải ảnh lên...",
       "imageUploadError": "Tải ảnh lên thất bại, vui lòng thử lại.",
+      "imageInvalidTypeError": "Định dạng ảnh không được hỗ trợ. Vui lòng chọn ảnh JPG, PNG, GIF hoặc WEBP.",
       "removeImageButton": "Xóa ảnh",
       "submitCreate": "Đăng bài",
       "submitEdit": "Lưu thay đổi",

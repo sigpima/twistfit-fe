@@ -7,6 +7,7 @@ import RichTextEditor from '@/components/editor/RichTextEditor'
 import { apiFetch } from '@/lib/apiClient'
 import { FORUM_CATEGORIES, type ForumCategory, type ForumPost } from '@/lib/forum'
 import { FORM_INPUT_CLASS } from '@/lib/formFieldStyles'
+import { IMAGE_INPUT_ACCEPT, isAllowedImageType } from '@/lib/imageUpload'
 
 const inputClass = FORM_INPUT_CLASS
 
@@ -27,10 +28,18 @@ export default function ForumPostForm({ initialPost }: { initialPost?: ForumPost
     const file = event.target.files?.[0]
     if (!file) return
 
+    if (!isAllowedImageType(file.type)) {
+      setErrors((current) => ({ ...current, image: t('PostForm.imageInvalidTypeError') }))
+      return
+    }
+
     setUploadingImage(true)
     setErrors((current) => ({ ...current, image: '' }))
 
-    const uploadUrlResponse = await apiFetch('/forum/upload-url', { method: 'POST' })
+    const uploadUrlResponse = await apiFetch(
+      `/forum/upload-url?content_type=${encodeURIComponent(file.type)}`,
+      { method: 'POST' }
+    )
     if (!uploadUrlResponse.ok) {
       setUploadingImage(false)
       setErrors((current) => ({ ...current, image: t('PostForm.imageUploadError') }))
@@ -141,7 +150,7 @@ export default function ForumPostForm({ initialPost }: { initialPost?: ForumPost
         <input
           id="forum-image"
           type="file"
-          accept="image/*"
+          accept={IMAGE_INPUT_ACCEPT}
           onChange={handleImageChange}
           disabled={uploadingImage}
         />

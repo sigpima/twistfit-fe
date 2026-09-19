@@ -186,12 +186,21 @@ describe('ImagePickerDialog', () => {
       'fetch',
       vi.fn((url: string, init?: RequestInit) => {
         if (init?.method === 'PUT') return putMock(url, init)
-        if (url === '/blog/upload-url') {
+        if (url === '/blog/upload-url?content_type=image%2Fjpeg') {
           return Promise.resolve(
             jsonResponse({
               uploadUrl: 'https://blob.example.com/upload?sig=abc',
               blobPath: 'x.jpg',
               imageUrl: 'https://blob.example.com/x.jpg',
+            })
+          )
+        }
+        if (url === '/blog/upload-url?content_type=image%2Fwebp') {
+          return Promise.resolve(
+            jsonResponse({
+              uploadUrl: 'https://blob.example.com/upload?sig=def',
+              blobPath: 'x.webp',
+              imageUrl: 'https://blob.example.com/x.webp',
             })
           )
         }
@@ -216,5 +225,47 @@ describe('ImagePickerDialog', () => {
     fireEvent.change(screen.getByLabelText('Mô tả ảnh (alt text)'), { target: { value: 'Ảnh sản phẩm' } })
     fireEvent.click(screen.getByRole('button', { name: 'Chèn ảnh' }))
     expect(onConfirm).toHaveBeenCalledWith({ url: 'https://blob.example.com/x.jpg', alt: 'Ảnh sản phẩm', caption: '' })
+  })
+
+  it('uploads a webp file successfully', async () => {
+    const putMock = vi.fn().mockResolvedValue(jsonResponse({}))
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((url: string, init?: RequestInit) => {
+        if (init?.method === 'PUT') return putMock(url, init)
+        if (url === '/blog/upload-url?content_type=image%2Fwebp') {
+          return Promise.resolve(
+            jsonResponse({
+              uploadUrl: 'https://blob.example.com/upload?sig=def',
+              blobPath: 'x.webp',
+              imageUrl: 'https://blob.example.com/x.webp',
+            })
+          )
+        }
+        return Promise.resolve(jsonResponse(null, { ok: false, status: 404 }))
+      })
+    )
+    renderWithIntl(<ImagePickerDialog open uploadUrlEndpoint="/blog/upload-url" onCancel={vi.fn()} onConfirm={vi.fn()} />)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Tải ảnh lên' }))
+    const file = new File(['fake'], 'photo.webp', { type: 'image/webp' })
+    fireEvent.change(screen.getByLabelText('Chọn tệp ảnh'), { target: { files: [file] } })
+
+    await waitFor(() => expect(screen.getByLabelText('Đường dẫn ảnh')).toHaveValue('https://blob.example.com/x.webp'))
+  })
+
+  it('rejects an unsupported file type without calling the upload API', async () => {
+    const fetchMock = vi.fn()
+    vi.stubGlobal('fetch', fetchMock)
+    renderWithIntl(<ImagePickerDialog open uploadUrlEndpoint="/blog/upload-url" onCancel={vi.fn()} onConfirm={vi.fn()} />)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Tải ảnh lên' }))
+    const file = new File(['fake'], 'notes.pdf', { type: 'application/pdf' })
+    fireEvent.change(screen.getByLabelText('Chọn tệp ảnh'), { target: { files: [file] } })
+
+    expect(
+      await screen.findByText('Định dạng ảnh không được hỗ trợ. Vui lòng chọn ảnh JPG, PNG, GIF hoặc WEBP.')
+    ).toBeInTheDocument()
+    expect(fetchMock).not.toHaveBeenCalled()
   })
 })
