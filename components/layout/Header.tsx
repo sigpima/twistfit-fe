@@ -54,6 +54,7 @@ export default function Header() {
   const { openLoginRequiredModal } = useLoginRequiredModal()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false)
 
   function closeMobileMenu() {
     setIsMobileMenuOpen(false)
@@ -184,6 +185,9 @@ export default function Header() {
               <div className="group relative">
                 <button
                   type="button"
+                  onClick={() => setIsAccountMenuOpen((open) => !open)}
+                  aria-haspopup="menu"
+                  aria-expanded={isAccountMenuOpen}
                   aria-label={
                     user.role === 'admin'
                       ? `${t('accountAriaLabel')} — ${user.name} (${t('adminBadgeAriaSuffix')})`
@@ -211,7 +215,21 @@ export default function Header() {
                     </span>
                   )}
                 </button>
-                <div className="invisible absolute right-0 top-full z-20 pt-2 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                {isAccountMenuOpen && (
+                  <div
+                    aria-hidden="true"
+                    data-testid="account-menu-overlay"
+                    onClick={() => setIsAccountMenuOpen(false)}
+                    className="fixed inset-0 z-10"
+                  />
+                )}
+                <div
+                  role="menu"
+                  onClick={() => setIsAccountMenuOpen(false)}
+                  className={`absolute right-0 top-full z-20 pt-2 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 ${
+                    isAccountMenuOpen ? 'visible opacity-100' : 'invisible opacity-0'
+                  }`}
+                >
                   <div className="w-60 rounded-2xl border border-[#f3e3b8] bg-white p-2 shadow-lg">
                     <p className="truncate px-4 pb-2 pt-1 text-xs font-semibold text-[#94a3b8]">{user.name}</p>
                     {user.role === 'admin' && (

@@ -118,6 +118,38 @@ describe('Header', () => {
     expect(screen.getByRole('link', { name: 'Đăng nhập' })).toBeInTheDocument()
     expect(window.localStorage.getItem('twistfit.auth')).toBeNull()
   })
+
+  it('toggles the account dropdown open on tap/click (not hover-only), for mobile support', () => {
+    window.localStorage.setItem(
+      'twistfit.auth',
+      JSON.stringify({ name: 'Người dùng Test', email: 'user@twistfit.vn', role: 'user' })
+    )
+    renderHeader()
+
+    const accountButton = screen.getByRole('button', { name: /Tài khoản/ })
+    expect(accountButton).toHaveAttribute('aria-expanded', 'false')
+
+    fireEvent.click(accountButton)
+    expect(accountButton).toHaveAttribute('aria-expanded', 'true')
+
+    fireEvent.click(accountButton)
+    expect(accountButton).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('closes the account dropdown when tapping outside it', () => {
+    window.localStorage.setItem(
+      'twistfit.auth',
+      JSON.stringify({ name: 'Người dùng Test', email: 'user@twistfit.vn', role: 'user' })
+    )
+    renderHeader()
+
+    const accountButton = screen.getByRole('button', { name: /Tài khoản/ })
+    fireEvent.click(accountButton)
+    expect(accountButton).toHaveAttribute('aria-expanded', 'true')
+
+    fireEvent.click(screen.getByTestId('account-menu-overlay'))
+    expect(accountButton).toHaveAttribute('aria-expanded', 'false')
+  })
 })
 
 describe('Header — mobile menu', () => {
