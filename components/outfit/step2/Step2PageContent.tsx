@@ -3,28 +3,44 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { apiFetch } from '@/lib/apiClient'
 import { useOutfitFlow } from '../OutfitFlowProvider'
 import ModelCatalog from './ModelCatalog'
 import type { CatalogModel } from '@/lib/modelCatalog'
+
+type TryOnQuota = { usedToday: number; limit: number; remainingToday: number }
 
 export default function Step2PageContent({ models }: { models: CatalogModel[] }) {
   const t = useTranslations('Outfit.Step2.Page')
   const router = useRouter()
   const { selectedModel, occasionStyleMode, selectedOccasion, selectedStyle, setJobId } = useOutfitFlow()
   const [isGenerating, setIsGenerating] = useState(false)
-  const [generateError, setGenerateError] = useState(false)
+  const [generateError, setGenerateError] = useState<string | null>(null)
+  const [quota, setQuota] = useState<TryOnQuota | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    apiFetch('/tryon/quota')
+      .then((response) => (response.ok ? (response.json() as Promise<TryOnQuota>) : null))
+      .then((data) => {
+        if (!cancelled && data && typeof data.remainingToday === 'number') setQuota(data)
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   async function handleGenerate() {
     const catalogModelId = Number(selectedModel.id)
     if (Number.isNaN(catalogModelId)) {
-      setGenerateError(true)
+      setGenerateError(t('generateError'))
       return
     }
 
     setIsGenerating(true)
-    setGenerateError(false)
+    setGenerateError(null)
 
     const response = await apiFetch('/tryon', {
       method: 'POST',
@@ -39,10 +55,13 @@ export default function Step2PageContent({ models }: { models: CatalogModel[] })
     setIsGenerating(false)
 
     if (!response.ok) {
-      setGenerateError(true)
+      const body = (await response.json().catch(() => null)) as { detail?: string } | null
+      setGenerateError(body?.detail ?? t('generateError'))
+      if (response.status === 429) setQuota((current) => (current ? { ...current, remainingToday: 0 } : current))
       return
     }
 
+    setQuota((current) => (current ? { ...current, remainingToday: current.remainingToday - 1 } : current))
     const job = (await response.json()) as { id: number }
     setJobId(job.id)
     router.push('/outfit/step-3')
@@ -63,6 +82,17 @@ export default function Step2PageContent({ models }: { models: CatalogModel[] })
       </section>
       <section className="sticky bottom-0 z-40 w-full bg-surface-container-lowest/95 px-margin-desktop py-space-md shadow-xl backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-space-sm">
+          {quota && (
+            <span
+              className={`rounded-full px-space-md py-2 text-label-lg font-semibold ${
+                quota.remainingToday === 0
+                  ? 'bg-error-container text-on-error-container'
+                  : 'bg-primary-fixed text-on-primary-fixed'
+              }`}
+            >
+              {t('quotaBadge', { remaining: quota.remainingToday, limit: quota.limit })}
+            </span>
+          )}
           <div className="flex w-full flex-col items-center justify-between gap-space-md sm:flex-row">
             <Link
               href="/outfit/step-1"
@@ -74,14 +104,14 @@ export default function Step2PageContent({ models }: { models: CatalogModel[] })
             <button
               type="button"
               onClick={handleGenerate}
-              disabled={isGenerating}
+              disabled={isGenerating || quota?.remainingToday === 0}
               className="flex w-full items-center justify-center gap-space-sm rounded-full bg-primary px-space-xl py-3.5 text-label-lg text-on-primary shadow-md transition-all hover:bg-primary-container hover:shadow-lg disabled:opacity-60 sm:w-auto"
             >
               <span>{t('generateButton')}</span>
               <span className="material-symbols-outlined text-[20px]">bolt</span>
             </button>
           </div>
-          {generateError && <p className="text-center text-body-sm text-error">{t('generateError')}</p>}
+          {generateError && <p className="text-center text-body-sm text-error">{generateError}</p>}
         </div>
       </section>
     </div>

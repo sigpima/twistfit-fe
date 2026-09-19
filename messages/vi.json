@@ -893,7 +893,8 @@
         "subheading": "Chọn người mẫu phù hợp để AI dựng trang phục lên đúng vóc dáng.",
         "backButton": "Quay lại Bước 1 (Chọn đồ)",
         "generateButton": "Xác nhận người mẫu & Tạo Đồ Ảo Ngay",
-        "generateError": "Không thể tạo yêu cầu phối đồ, vui lòng thử lại."
+        "generateError": "Không thể tạo yêu cầu phối đồ, vui lòng thử lại.",
+        "quotaBadge": "Còn {remaining}/{limit} lượt thử hôm nay"
       }
     },
     "Step3": {

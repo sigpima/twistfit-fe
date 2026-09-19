@@ -95,12 +95,47 @@ describe('Step2PageContent', () => {
     fireEvent.click(screen.getByRole('button', { name: /Xác nhận người mẫu/ }))
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalled())
-    const [, init] = fetchMock.mock.calls[0]
+    const createCall = fetchMock.mock.calls.find(([url]) => (url as string).endsWith('/tryon'))
+    const [, init] = createCall!
     expect(JSON.parse(init.body as string)).toEqual({
       catalogModelId: 42,
       occasion: 'hang-ngay',
       style: null,
     })
+  })
+
+  it('shows how many try-on attempts remain today, from the quota endpoint', async () => {
+    const fetchMock = vi.fn().mockImplementation((url: string) =>
+      Promise.resolve(
+        url.endsWith('/tryon/quota') ? jsonResponse({ usedToday: 2, limit: 5, remainingToday: 3 }) : jsonResponse({ id: 77 }, { status: 201 })
+      )
+    )
+    vi.stubGlobal('fetch', fetchMock)
+
+    renderWithIntl(
+      <OutfitFlowProvider initialModel={{ ...FALLBACK_MODEL, id: '42' }}>
+        <Step2PageContent models={MODELS} />
+      </OutfitFlowProvider>
+    )
+
+    expect(await screen.findByText('Còn 3/5 lượt thử hôm nay')).toBeInTheDocument()
+  })
+
+  it('disables the button and shows the server message when the daily quota is exhausted', async () => {
+    const fetchMock = vi.fn().mockImplementation((url: string) => {
+      if (url.endsWith('/tryon/quota')) return Promise.resolve(jsonResponse({ usedToday: 5, limit: 5, remainingToday: 0 }))
+      return Promise.resolve(jsonResponse({ detail: 'Bạn đã dùng hết 5 lượt thử hôm nay, quay lại vào ngày mai nhé.' }, { ok: false, status: 429 }))
+    })
+    vi.stubGlobal('fetch', fetchMock)
+
+    renderWithIntl(
+      <OutfitFlowProvider initialModel={{ ...FALLBACK_MODEL, id: '42' }}>
+        <Step2PageContent models={MODELS} />
+      </OutfitFlowProvider>
+    )
+
+    const button = await screen.findByRole('button', { name: /Xác nhận người mẫu/ })
+    await waitFor(() => expect(button).toBeDisabled())
   })
 
   it('does not navigate when job creation fails', async () => {
@@ -131,7 +166,7 @@ describe('Step2PageContent', () => {
     fireEvent.click(screen.getByRole('button', { name: /Xác nhận người mẫu/ }))
 
     await waitFor(() => expect(screen.getByText(/không thể tạo/i)).toBeInTheDocument())
-    expect(fetchMock).not.toHaveBeenCalled()
+    expect(fetchMock.mock.calls.some(([url]) => (url as string).endsWith('/tryon'))).toBe(false)
     expect(pushMock).not.toHaveBeenCalled()
   })
 })
