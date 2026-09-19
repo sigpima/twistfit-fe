@@ -12,6 +12,7 @@ const POSTS: BlogPost[] = [
     excerpt: 'Mô tả',
     content: 'Nội dung',
     coverImageUrl: '/blog/a.jpg',
+    coverImageAlt: null,
     category: 'styling',
     authorName: null,
     isFeatured: false,

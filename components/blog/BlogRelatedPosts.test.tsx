@@ -12,6 +12,7 @@ function makePost(overrides: Partial<BlogPost>): BlogPost {
     excerpt: 'Mô tả',
     content: 'Nội dung',
     coverImageUrl: '/blog/cover.jpg',
+    coverImageAlt: null,
     category: 'styling',
     authorName: null,
     isFeatured: false,

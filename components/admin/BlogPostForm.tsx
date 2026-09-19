@@ -23,6 +23,7 @@ export default function BlogPostForm({ initialPost }: { initialPost?: BlogPost }
   const [excerpt, setExcerpt] = useState(initialPost?.excerpt ?? '')
   const [content, setContent] = useState(initialPost?.content ?? '')
   const [coverImageUrl, setCoverImageUrl] = useState(initialPost?.coverImageUrl ?? '')
+  const [coverImageAlt, setCoverImageAlt] = useState(initialPost?.coverImageAlt ?? '')
   const [category, setCategory] = useState<BlogCategory>(initialPost?.category ?? BLOG_CATEGORIES[0])
   const [authorName, setAuthorName] = useState(initialPost?.authorName ?? '')
   const [isFeatured, setIsFeatured] = useState(initialPost?.isFeatured ?? false)
@@ -49,6 +50,7 @@ export default function BlogPostForm({ initialPost }: { initialPost?: BlogPost }
       excerpt,
       content,
       coverImageUrl,
+      coverImageAlt: coverImageAlt.trim() || null,
       category,
       authorName: authorName.trim() || null,
       isFeatured,
@@ -139,7 +141,7 @@ export default function BlogPostForm({ initialPost }: { initialPost?: BlogPost }
           <span className="text-label-md font-semibold text-on-surface">{t('fields.coverImageUrl')}</span>
           {coverImageUrl && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={coverImageUrl} alt="" className="h-32 w-full rounded-xl object-cover" />
+            <img src={coverImageUrl} alt={coverImageAlt} className="h-32 w-full rounded-xl object-cover" />
           )}
           <button
             type="button"
@@ -173,11 +175,15 @@ export default function BlogPostForm({ initialPost }: { initialPost?: BlogPost }
 
       <ImagePickerDialog
         open={coverDialogOpen}
-        requireAlt={false}
+        requireAlt
+        showCaption={false}
         uploadUrlEndpoint="/blog/upload-url"
+        initialUrl={coverImageUrl}
+        initialAlt={coverImageAlt}
         onCancel={() => setCoverDialogOpen(false)}
-        onConfirm={({ url }) => {
+        onConfirm={({ url, alt }) => {
           setCoverImageUrl(url)
+          setCoverImageAlt(alt)
           setCoverDialogOpen(false)
         }}
       />

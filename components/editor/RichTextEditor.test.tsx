@@ -67,4 +67,23 @@ describe('RichTextEditor', () => {
     )
     expect(screen.queryByLabelText('Đường dẫn ảnh')).not.toBeInTheDocument()
   })
+
+  it('serializes an image caption as the markdown title', async () => {
+    const { onChange } = setup('before')
+    await waitFor(() => expect(screen.getByLabelText('Nội dung')).toBeInTheDocument())
+
+    fireEvent.click(screen.getByRole('button', { name: 'Ảnh' }))
+    fireEvent.change(screen.getByLabelText('Đường dẫn ảnh'), { target: { value: 'https://example.com/a.jpg' } })
+    fireEvent.change(screen.getByLabelText('Mô tả ảnh (alt text)'), { target: { value: 'Mô tả ảnh' } })
+    fireEvent.change(screen.getByLabelText('Chú thích ảnh (hiện bên dưới ảnh, để trống nếu không cần)'), {
+      target: { value: 'Chú thích minh họa' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: 'Chèn ảnh' }))
+
+    await waitFor(() =>
+      expect(onChange).toHaveBeenCalledWith(
+        expect.stringContaining('![Mô tả ảnh](https://example.com/a.jpg "Chú thích minh họa")')
+      )
+    )
+  })
 })

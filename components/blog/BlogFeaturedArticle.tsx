@@ -19,7 +19,7 @@ export default function BlogFeaturedArticle({ post }: { post: BlogPost }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={post.coverImageUrl}
-            alt={post.title}
+            alt={post.coverImageAlt || post.title}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-on-surface/50 via-transparent to-transparent lg:hidden" />

@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { useState, type ChangeEvent } from 'react'
+import { useEffect, useState, type ChangeEvent } from 'react'
 import { apiFetch } from '@/lib/apiClient'
 
 const inputClass =
@@ -10,27 +10,51 @@ const inputClass =
 export interface ImagePickerResult {
   url: string
   alt: string
+  caption: string
 }
 
 export default function ImagePickerDialog({
   open,
   requireAlt = true,
+  showCaption = true,
   uploadUrlEndpoint,
+  initialUrl = '',
+  initialAlt = '',
+  initialCaption = '',
   onCancel,
   onConfirm,
 }: {
   open: boolean
   requireAlt?: boolean
+  showCaption?: boolean
   uploadUrlEndpoint: string
+  initialUrl?: string
+  initialAlt?: string
+  initialCaption?: string
   onCancel: () => void
   onConfirm: (result: ImagePickerResult) => void
 }) {
   const t = useTranslations('Admin.ImagePicker')
   const [mode, setMode] = useState<'link' | 'upload'>('link')
-  const [url, setUrl] = useState('')
-  const [alt, setAlt] = useState('')
+  const [url, setUrl] = useState(initialUrl)
+  const [alt, setAlt] = useState(initialAlt)
+  const [caption, setCaption] = useState(initialCaption)
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState('')
+
+  // Reset to this open's initial values every time the dialog opens — it stays
+  // mounted (early-returns null while closed), so state wouldn't otherwise
+  // reset between "insert new image" and "edit this other image" openings.
+  useEffect(() => {
+    if (open) {
+      setMode('link')
+      setUrl(initialUrl)
+      setAlt(initialAlt)
+      setCaption(initialCaption)
+      setError('')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
 
   if (!open) return null
 
@@ -67,7 +91,7 @@ export default function ImagePickerDialog({
   }
 
   function handleConfirm() {
-    onConfirm({ url: url.trim(), alt: alt.trim() })
+    onConfirm({ url: url.trim(), alt: alt.trim(), caption: caption.trim() })
   }
 
   const canConfirm = url.trim() !== '' && (!requireAlt || alt.trim() !== '')
@@ -131,6 +155,20 @@ export default function ImagePickerDialog({
               id="image-picker-alt"
               value={alt}
               onChange={(event) => setAlt(event.target.value)}
+              className={inputClass}
+            />
+          </div>
+        )}
+
+        {showCaption && (
+          <div className="space-y-1.5">
+            <label htmlFor="image-picker-caption" className="text-label-md font-semibold text-on-surface">
+              {t('captionLabel')}
+            </label>
+            <input
+              id="image-picker-caption"
+              value={caption}
+              onChange={(event) => setCaption(event.target.value)}
               className={inputClass}
             />
           </div>

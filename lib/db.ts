@@ -34,6 +34,7 @@ export type BlogPost = {
   excerpt: string
   content: string
   coverImageUrl: string
+  coverImageAlt: string | null
   category: BlogCategory
   authorName: string | null
   isFeatured: boolean

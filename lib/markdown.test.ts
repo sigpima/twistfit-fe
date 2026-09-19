@@ -31,6 +31,25 @@ describe('renderMarkdown', () => {
     expect(html).toContain('id="ket-luan"')
     expect(html).toContain('id="ket-luan-2"')
   })
+
+  it('renders a plain image with no title as a bare img tag', () => {
+    const html = renderMarkdown('![Mô tả](https://example.com/a.jpg)')
+    expect(html).toContain('<img src="https://example.com/a.jpg" alt="Mô tả">')
+    expect(html).not.toContain('<figure>')
+  })
+
+  it('renders an image with a title as a figure with a figcaption', () => {
+    const html = renderMarkdown('![Mô tả](https://example.com/a.jpg "Chú thích ảnh")')
+    expect(html).toContain(
+      '<figure><img src="https://example.com/a.jpg" alt="Mô tả"><figcaption>Chú thích ảnh</figcaption></figure>'
+    )
+  })
+
+  it('escapes HTML in an image caption instead of injecting markup', () => {
+    const html = renderMarkdown('![Mô tả](https://example.com/a.jpg "<script>alert(1)</script>")')
+    expect(html).not.toContain('<script>')
+    expect(html).toContain('&lt;script&gt;')
+  })
 })
 
 describe('extractHeadings', () => {

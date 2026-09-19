@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { screen, waitFor, act, fireEvent } from '@testing-library/react'
 import { useEditor, EditorContent, type Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import ImageExtension from '@tiptap/extension-image'
 import { Markdown } from 'tiptap-markdown'
 import { useEffect } from 'react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
@@ -11,13 +12,15 @@ function Harness({
   initialValue,
   onReady,
   onRequestImage = vi.fn(),
+  onEditImage = vi.fn(),
 }: {
   initialValue: string
   onReady: (editor: Editor) => void
   onRequestImage?: () => void
+  onEditImage?: (attrs: { src: string; alt: string; title: string }) => void
 }) {
   const editor = useEditor({
-    extensions: [StarterKit.configure({ heading: { levels: [2, 3] } }), Markdown],
+    extensions: [StarterKit.configure({ heading: { levels: [2, 3] } }), ImageExtension, Markdown],
     content: initialValue,
     immediatelyRender: false,
   })
@@ -30,15 +33,22 @@ function Harness({
 
   return (
     <div>
-      <RichTextToolbar editor={editor} onRequestImage={onRequestImage} />
+      <RichTextToolbar editor={editor} onRequestImage={onRequestImage} onEditImage={onEditImage} />
       <EditorContent editor={editor} />
     </div>
   )
 }
 
-async function mount(initialValue: string, onRequestImage?: () => void) {
+async function mount(initialValue: string, onRequestImage?: () => void, onEditImage?: (attrs: { src: string; alt: string; title: string }) => void) {
   let captured: Editor | null = null
-  renderWithIntl(<Harness initialValue={initialValue} onReady={(e) => (captured = e)} onRequestImage={onRequestImage} />)
+  renderWithIntl(
+    <Harness
+      initialValue={initialValue}
+      onReady={(e) => (captured = e)}
+      onRequestImage={onRequestImage}
+      onEditImage={onEditImage}
+    />
+  )
   await waitFor(() => expect(captured).not.toBeNull())
   const editor = captured as unknown as Editor
   // select the whole document, the same way a user pressing Ctrl+A would —
@@ -52,7 +62,7 @@ async function mount(initialValue: string, onRequestImage?: () => void) {
 
 describe('RichTextToolbar', () => {
   it('renders nothing while the editor is not ready yet', () => {
-    renderWithIntl(<RichTextToolbar editor={null} onRequestImage={vi.fn()} />)
+    renderWithIntl(<RichTextToolbar editor={null} onRequestImage={vi.fn()} onEditImage={vi.fn()} />)
     expect(screen.queryByRole('button')).not.toBeInTheDocument()
   })
 
@@ -109,5 +119,43 @@ describe('RichTextToolbar', () => {
     await mount('x', onRequestImage)
     fireEvent.click(screen.getByRole('button', { name: 'Ảnh' }))
     expect(onRequestImage).toHaveBeenCalled()
+  })
+
+  it('does not show an edit-image button while no image is selected', async () => {
+    await mount('just text')
+    expect(screen.queryByRole('button', { name: 'Sửa ảnh đang chọn' })).not.toBeInTheDocument()
+  })
+
+  it('shows the edit-image button once an image node is selected, and reports its current attrs', async () => {
+    const onEditImage = vi.fn()
+    const editor = await mount('', undefined, onEditImage)
+
+    act(() => {
+      editor.chain().insertContent({ type: 'image', attrs: { src: 'https://example.com/a.jpg', alt: 'Mô tả cũ' } }).run()
+      // Select the node we just inserted, the same way TipTap does for a clicked image.
+      editor.commands.setNodeSelection(0)
+    })
+
+    const editButton = await screen.findByRole('button', { name: 'Sửa ảnh đang chọn' })
+    fireEvent.click(editButton)
+
+    expect(onEditImage).toHaveBeenCalledWith({ src: 'https://example.com/a.jpg', alt: 'Mô tả cũ', title: '' })
+  })
+
+  it('hides the edit-image button again once the selection moves off the image', async () => {
+    const editor = await mount('after', undefined)
+
+    act(() => {
+      editor.chain().insertContent({ type: 'image', attrs: { src: 'https://example.com/a.jpg', alt: 'x' } }).run()
+      editor.commands.setNodeSelection(0)
+    })
+    await screen.findByRole('button', { name: 'Sửa ảnh đang chọn' })
+
+    act(() => {
+      editor.chain().focus('end').run()
+    })
+    await waitFor(() =>
+      expect(screen.queryByRole('button', { name: 'Sửa ảnh đang chọn' })).not.toBeInTheDocument()
+    )
   })
 })

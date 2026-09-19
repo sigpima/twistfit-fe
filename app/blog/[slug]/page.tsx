@@ -51,7 +51,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             )}
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={post.coverImageUrl} alt={post.title} className="mt-space-lg w-full rounded-3xl object-cover" />
+          <img
+            src={post.coverImageUrl}
+            alt={post.coverImageAlt || post.title}
+            className="mt-space-lg w-full rounded-3xl object-cover"
+          />
           <div
             className="prose mt-space-lg max-w-none text-body-lg text-on-surface [&_h2]:scroll-mt-24 [&_h3]:scroll-mt-24"
             dangerouslySetInnerHTML={{ __html: contentHtml }}

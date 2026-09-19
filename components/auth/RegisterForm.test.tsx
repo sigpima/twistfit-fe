@@ -71,7 +71,7 @@ describe('RegisterForm', () => {
   it('expands the policy content when the policy row is clicked, without checking the box', () => {
     renderRegisterForm()
     const checkbox = screen.getByRole('checkbox', { name: /Tôi xác nhận đã đủ điều kiện pháp lý/ }) as HTMLInputElement
-    const toggle = screen.getByRole('button', { name: 'Chính sách sử dụng Camera AR & Ảnh cộng đồng' })
+    const toggle = screen.getByRole('button', { name: 'Chính sách bảo mật và Điều khoản sử dụng' })
     expect(toggle).toHaveAttribute('aria-expanded', 'false')
     expect(screen.queryByText('1. Dữ liệu cá nhân thu thập')).not.toBeInTheDocument()
 
@@ -83,7 +83,7 @@ describe('RegisterForm', () => {
 
   it('renders the full structured policy content once expanded', () => {
     renderRegisterForm()
-    fireEvent.click(screen.getByRole('button', { name: 'Chính sách sử dụng Camera AR & Ảnh cộng đồng' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Chính sách bảo mật và Điều khoản sử dụng' }))
 
     expect(screen.getByText('1. Dữ liệu cá nhân thu thập')).toBeInTheDocument()
     expect(screen.getByText('5. Chia sẻ và bảo mật thông tin')).toBeInTheDocument()
@@ -92,7 +92,7 @@ describe('RegisterForm', () => {
 
   it('collapses the policy content when the policy row is clicked again', () => {
     renderRegisterForm()
-    const toggle = screen.getByRole('button', { name: 'Chính sách sử dụng Camera AR & Ảnh cộng đồng' })
+    const toggle = screen.getByRole('button', { name: 'Chính sách bảo mật và Điều khoản sử dụng' })
     fireEvent.click(toggle)
     expect(screen.getByText('1. Dữ liệu cá nhân thu thập')).toBeInTheDocument()
 

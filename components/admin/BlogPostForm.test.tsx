@@ -17,6 +17,7 @@ const EXISTING_POST: BlogPost = {
   excerpt: 'Mô tả hiện có',
   content: 'Nội dung hiện có',
   coverImageUrl: '/blog/existing.jpg',
+  coverImageAlt: null,
   category: 'beauty',
   authorName: 'Tác giả X',
   isFeatured: false,
@@ -60,8 +61,10 @@ describe('BlogPostForm', () => {
     fireEvent.change(screen.getByLabelText('Ngày đăng'), { target: { value: '2026-02-01' } })
 
     fireEvent.click(screen.getByRole('button', { name: 'Chọn ảnh bìa' }))
-    expect(screen.queryByLabelText('Mô tả ảnh (alt text)')).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Chú thích ảnh (hiện bên dưới ảnh, để trống nếu không cần)')).not.toBeInTheDocument()
     fireEvent.change(screen.getByLabelText('Đường dẫn ảnh'), { target: { value: '/blog/x.jpg' } })
+    expect(screen.getByRole('button', { name: 'Chèn ảnh' })).toBeDisabled()
+    fireEvent.change(screen.getByLabelText('Mô tả ảnh (alt text)'), { target: { value: 'Ảnh bìa bài viết' } })
     fireEvent.click(screen.getByRole('button', { name: 'Chèn ảnh' }))
 
     fireEvent.click(screen.getByRole('button', { name: 'Tạo bài viết' }))
@@ -71,7 +74,7 @@ describe('BlogPostForm', () => {
       '/blog',
       expect.objectContaining({
         method: 'POST',
-        body: expect.stringContaining('"coverImageUrl":"/blog/x.jpg"'),
+        body: expect.stringContaining('"coverImageUrl":"/blog/x.jpg","coverImageAlt":"Ảnh bìa bài viết"'),
       })
     )
   })

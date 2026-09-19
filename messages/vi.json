@@ -61,13 +61,15 @@
       "inlineCode": "Mã (code)",
       "link": "Chèn liên kết",
       "linkPrompt": "Nhập đường dẫn liên kết:",
-      "image": "Ảnh"
+      "image": "Ảnh",
+      "editImage": "Sửa ảnh đang chọn"
     },
     "ImagePicker": {
       "modeLink": "Dán link",
       "modeUpload": "Tải ảnh lên",
       "urlLabel": "Đường dẫn ảnh",
       "altLabel": "Mô tả ảnh (alt text)",
+      "captionLabel": "Chú thích ảnh (hiện bên dưới ảnh, để trống nếu không cần)",
       "fileLabel": "Chọn tệp ảnh",
       "uploadingLabel": "Đang tải ảnh lên...",
       "uploadError": "Tải ảnh lên thất bại, vui lòng thử lại.",

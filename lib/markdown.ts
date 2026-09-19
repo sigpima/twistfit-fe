@@ -1,6 +1,10 @@
 import { Marked } from 'marked'
 import DOMPurify from 'isomorphic-dompurify'
 
+function escapeHtml(value: string): string {
+  return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
+
 function slugify(text: string): string {
   return text
     .replace(/đ/g, 'd')
@@ -28,6 +32,14 @@ export function renderMarkdown(content: string): string {
         slugCounts.set(base, count + 1)
         const id = count === 0 ? base : `${base}-${count + 1}`
         return `<h${effectiveDepth} id="${id}">${html}</h${effectiveDepth}>\n`
+      },
+      image({ href, title, text }) {
+        const src = escapeHtml(href)
+        const alt = escapeHtml(text)
+        if (title) {
+          return `<figure><img src="${src}" alt="${alt}"><figcaption>${escapeHtml(title)}</figcaption></figure>`
+        }
+        return `<img src="${src}" alt="${alt}">`
       },
     },
   })

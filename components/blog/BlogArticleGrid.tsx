@@ -92,7 +92,7 @@ export default function BlogArticleGrid({ posts }: { posts: BlogPost[] }) {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={post.coverImageUrl}
-                    alt={post.title}
+                    alt={post.coverImageAlt || post.title}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute bottom-space-sm left-space-sm">

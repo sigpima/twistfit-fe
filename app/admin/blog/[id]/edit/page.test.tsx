@@ -16,6 +16,7 @@ const POST: BlogPost = {
   excerpt: 'Mô tả',
   content: 'Nội dung',
   coverImageUrl: '/blog/x.jpg',
+  coverImageAlt: null,
   category: 'styling',
   authorName: null,
   isFeatured: false,

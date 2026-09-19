@@ -12,9 +12,11 @@ function buttonClass(isActive: boolean): string {
 export default function RichTextToolbar({
   editor,
   onRequestImage,
+  onEditImage,
 }: {
   editor: Editor | null
   onRequestImage: () => void
+  onEditImage: (attrs: { src: string; alt: string; title: string }) => void
 }) {
   const t = useTranslations('Admin.RichTextToolbar')
 
@@ -38,6 +40,8 @@ export default function RichTextToolbar({
         code: snapshot.editor.isActive('code'),
         link: snapshot.editor.isActive('link'),
         linkHref: snapshot.editor.getAttributes('link').href as string | undefined,
+        image: snapshot.editor.isActive('image'),
+        imageAttrs: snapshot.editor.getAttributes('image') as { src?: string; alt?: string; title?: string },
       }
     },
   })
@@ -128,6 +132,22 @@ export default function RichTextToolbar({
       <button type="button" aria-label={t('image')} onClick={onRequestImage} className={buttonClass(false)}>
         <span className="material-symbols-outlined text-[20px]">image</span>
       </button>
+      {activeState.image && (
+        <button
+          type="button"
+          aria-label={t('editImage')}
+          onClick={() =>
+            onEditImage({
+              src: activeState.imageAttrs.src ?? '',
+              alt: activeState.imageAttrs.alt ?? '',
+              title: activeState.imageAttrs.title ?? '',
+            })
+          }
+          className={buttonClass(true)}
+        >
+          <span className="material-symbols-outlined text-[20px]">edit</span>
+        </button>
+      )}
     </div>
   )
 }

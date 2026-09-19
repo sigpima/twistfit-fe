@@ -20,6 +20,7 @@ export default function RichTextEditor({
   uploadUrlEndpoint: string
 }) {
   const [imageDialogOpen, setImageDialogOpen] = useState(false)
+  const [editingImage, setEditingImage] = useState<{ src: string; alt: string; title: string } | null>(null)
 
   const editor = useEditor({
     extensions: [StarterKit.configure({ heading: { levels: [2, 3] } }), ImageExtension, Markdown],
@@ -43,15 +44,33 @@ export default function RichTextEditor({
       {/* RichTextToolbar uses useEditorState, which does not pick up a prop
           transitioning from null to a real editor across renders — mount it
           only once a real editor exists, instead of passing it null. */}
-      {editor && <RichTextToolbar editor={editor} onRequestImage={() => setImageDialogOpen(true)} />}
+      {editor && (
+        <RichTextToolbar
+          editor={editor}
+          onRequestImage={() => setImageDialogOpen(true)}
+          onEditImage={(attrs) => setEditingImage(attrs)}
+        />
+      )}
       <EditorContent editor={editor} />
       <ImagePickerDialog
         open={imageDialogOpen}
         uploadUrlEndpoint={uploadUrlEndpoint}
         onCancel={() => setImageDialogOpen(false)}
-        onConfirm={({ url, alt }) => {
-          editor?.chain().focus().setImage({ src: url, alt }).run()
+        onConfirm={({ url, alt, caption }) => {
+          editor?.chain().focus().setImage({ src: url, alt, title: caption || undefined }).run()
           setImageDialogOpen(false)
+        }}
+      />
+      <ImagePickerDialog
+        open={editingImage !== null}
+        uploadUrlEndpoint={uploadUrlEndpoint}
+        initialUrl={editingImage?.src ?? ''}
+        initialAlt={editingImage?.alt ?? ''}
+        initialCaption={editingImage?.title ?? ''}
+        onCancel={() => setEditingImage(null)}
+        onConfirm={({ url, alt, caption }) => {
+          editor?.chain().focus().updateAttributes('image', { src: url, alt, title: caption || undefined }).run()
+          setEditingImage(null)
         }}
       />
     </div>

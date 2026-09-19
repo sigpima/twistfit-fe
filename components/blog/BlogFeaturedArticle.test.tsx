@@ -11,6 +11,7 @@ const POST: BlogPost = {
   excerpt: 'Khám phá sức hút mãnh liệt của sự tương phản cao.',
   content: Array(1000).fill('từ').join(' '),
   coverImageUrl: '/blog/featured-winter-outfit.jpg',
+  coverImageAlt: null,
   category: 'personal-color',
   authorName: 'Stylist Mai Anh',
   isFeatured: true,

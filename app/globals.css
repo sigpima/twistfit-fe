@@ -215,3 +215,19 @@ body {
   height: auto;
   border-radius: 1rem;
 }
+
+.prose figure {
+  margin: var(--spacing-space-lg) auto;
+}
+
+.prose figure img {
+  margin: 0;
+}
+
+.prose figcaption {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-style: italic;
+  font-size: var(--text-body-sm);
+  color: var(--color-on-surface-variant);
+}

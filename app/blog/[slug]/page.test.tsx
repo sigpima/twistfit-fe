@@ -11,6 +11,7 @@ function makePost(overrides: Partial<BlogPost>): BlogPost {
     excerpt: 'Mô tả ngắn',
     content: '## Tiêu đề phụ\n\nNội dung **đầy đủ** của bài viết.',
     coverImageUrl: '/blog/featured-winter-outfit.jpg',
+    coverImageAlt: null,
     category: 'personal-color',
     authorName: 'Stylist Mai Anh',
     isFeatured: true,
