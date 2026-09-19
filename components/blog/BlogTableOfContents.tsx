@@ -58,7 +58,7 @@ export default function BlogTableOfContents({ headings }: { headings: HeadingEnt
               <a
                 href={`#${item.id}`}
                 aria-current={isActive ? 'location' : undefined}
-                className={`-ml-px block border-l-2 py-1 text-body-sm transition-colors ${
+                className={`-ml-px block border-l-2 py-1 text-body-md transition-colors ${
                   item.depth === 3 ? 'pl-space-lg' : 'pl-space-sm'
                 } ${
                   isActive

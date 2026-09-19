@@ -134,7 +134,7 @@ export default function ForumPostList() {
                     aria-hidden="true"
                     style={
                       post.bookmarkedByMe
-                        ? { fontVariationSettings: "'FILL' 1", color: 'var(--color-primary)' }
+                        ? { fontVariationSettings: "'FILL' 1", color: '#16a34a' }
                         : undefined
                     }
                   >
