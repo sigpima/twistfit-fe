@@ -411,7 +411,7 @@
       "notFoundBody": "Bài viết này không tồn tại hoặc bạn không có quyền sửa."
     },
     "Public": {
-      "title": "Diễn đàn TwistFit",
+      "title": "Cộng đồng TwistFit",
       "subtitle": "Nơi chia sẻ và xin tư vấn phối đồ cùng cộng đồng TwistFit.",
       "loading": "Đang tải...",
       "emptyState": "Chưa có bài viết nào trong chuyên mục này.",
@@ -610,6 +610,10 @@
     },
     "showPassword": "Hiện mật khẩu",
     "hidePassword": "Ẩn mật khẩu",
+    "policyAgreement": {
+      "prefix": "Tôi xác nhận đã đủ điều kiện pháp lý, đã đọc, hiểu rõ và đồng thuận cho phép TwistFit xử lý dữ liệu hình ảnh của tôi theo",
+      "linkText": "Chính sách sử dụng Camera AR & Ảnh cộng đồng"
+    },
     "submit": "ĐĂNG KÝ",
     "haveAccount": "Đã có tài khoản?",
     "loginLink": "Đăng nhập ngay"
@@ -648,6 +652,55 @@
     "title": "Bạn cần đăng nhập",
     "description": "Đăng nhập để sử dụng tính năng phối đồ và lưu tủ đồ của riêng bạn.",
     "loginButton": "Đăng nhập ngay",
+    "closeAriaLabel": "Đóng"
+  },
+  "CameraArPolicyModal": {
+    "title": "Chính sách bảo mật và Điều khoản sử dụng",
+    "documentTitle": "CHÍNH SÁCH BẢO MẬT VÀ ĐIỀU KHOẢN SỬ DỤNG",
+    "documentSubtitle": "(Tuân thủ Nghị định 13/2023/NĐ-CP về Bảo vệ Dữ liệu Cá nhân & Tiêu chuẩn PII)",
+    "intro": "Chào mừng bạn đến với TwistFit. Việc sử dụng dịch vụ của chúng tôi đồng nghĩa với việc bạn đã đọc và đồng ý với các điều khoản dưới đây.",
+    "sections": [
+      {
+        "heading": "1. Dữ liệu cá nhân thu thập",
+        "intro": "Hệ thống chỉ thu thập các dữ liệu cần thiết phục vụ việc vận hành tính năng và trải nghiệm cá nhân hóa, bao gồm:",
+        "items": [
+          { "label": "Dữ liệu định danh cá nhân cơ bản", "text": "Họ tên, địa chỉ email, số điện thoại." },
+          { "label": "Dữ liệu hình ảnh từ tính năng AR", "text": "Luồng hình ảnh thời gian thực qua camera khi sử dụng tính năng thử khung màu." },
+          { "label": "Dữ liệu chia sẻ cộng đồng", "text": "Hình ảnh trang phục, bài viết, bình luận, tương tác người dùng chủ động tải lên bảng tin hoặc diễn đàn công khai." }
+        ]
+      },
+      {
+        "heading": "2. Mục đích xử lý dữ liệu",
+        "items": [
+          { "label": "Quản lý tài khoản", "text": "Xác thực danh tính, bảo mật đăng nhập và liên hệ hỗ trợ kỹ thuật qua email/số điện thoại." },
+          { "label": "Trải nghiệm AR thời gian thực", "text": "Nhận diện khuôn mặt và tương tác màu sắc trực tiếp trên trình duyệt/ứng dụng nhằm gợi ý bảng màu cá nhân." },
+          { "label": "Vận hành cộng đồng", "text": "Hiển thị bài viết, hình ảnh thời trang theo chủ ý của người dùng; xây dựng không gian tương tác văn minh." }
+        ]
+      },
+      {
+        "heading": "3. Nguyên tắc bảo vệ và xử lý dữ liệu nhạy cảm",
+        "items": [
+          { "label": "Xử lý tại thiết bị", "text": "Luồng hình ảnh/video phục vụ tính năng AR thử màu được xử lý trực tiếp trên bộ nhớ tạm của thiết bị người dùng. Hệ thống không tự ý ghi hình, lưu trữ hoặc trích xuất dữ liệu sinh trắc học lên máy chủ khi chưa có thao tác lưu rõ ràng." },
+          { "label": "Chỉ lưu khi có yêu cầu", "text": "Nếu bạn chọn lưu kết quả phân tích hoặc lưu ảnh về hồ sơ, hệ thống mới tiến hành lưu trữ hình ảnh đó theo lệnh trực tiếp từ bạn." }
+        ]
+      },
+      {
+        "heading": "4. Quyền và trách nhiệm đối với nội dung cộng đồng",
+        "items": [
+          { "label": "Quyền kiểm soát của người dùng", "text": "Bất kỳ hình ảnh nào được tải lên khu vực cộng đồng sẽ hiển thị công khai. Bạn có toàn quyền sửa đổi hoặc xóa bài viết bất cứ lúc nào." },
+          { "label": "Tiêu chuẩn nội dung", "text": "Người dùng cam kết không tải lên hình ảnh xâm phạm đời tư của người khác khi chưa được phép, hình ảnh vi phạm thuần phong mỹ tục hoặc pháp luật hiện hành. Ban quản trị có quyền gỡ bỏ nội dung vi phạm mà không cần thông báo trước." }
+        ]
+      },
+      {
+        "heading": "5. Chia sẻ và bảo mật thông tin",
+        "items": [
+          { "label": "Nguyên tắc không bán dữ liệu", "text": "Hệ thống cam kết tuyệt đối không bán, trao đổi hoặc thương mại hóa email, số điện thoại hay dữ liệu cá nhân của người dùng cho bên thứ ba vì mục đích quảng cáo độc lập." },
+          { "label": "Chia sẻ cho đối tác dịch vụ", "text": "Dữ liệu chỉ được xử lý qua hạ tầng máy chủ đám mây đạt tiêu chuẩn bảo mật nhằm duy trì vận hành kỹ thuật của nền tảng." },
+          { "label": "Biện pháp bảo mật", "text": "Dữ liệu cá nhân được mã hóa đường truyền (SSL/TLS) và lưu trữ phân quyền nghiêm ngặt nhằm phòng chống truy cập trái phép theo quy định của Nghị định 13/2023/NĐ-CP." }
+        ]
+      }
+    ],
+    "closeButton": "Đã hiểu",
     "closeAriaLabel": "Đóng"
   },
   "Home": {
@@ -702,7 +755,7 @@
           "steps": {
             "chooseGarment": {
               "title": "Chọn trang phục cho buổi thử đồ",
-              "body": ""
+              "body": "Tải lên từng món đồ bạn có. Hệ thống sẽ tự động nhận diện và phân loại ngăn nắp vào tủ đồ ảo của bạn."
             },
             "modelAndFace": {
               "title": "Chọn người mẫu phù hợp với dáng người",

@@ -38,7 +38,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         <article className="mx-auto w-full max-w-3xl">
           <Link href="/blog" className="text-label-md font-semibold text-primary hover:underline">
-            ← Quay lại Blog
+            ← Quay lại
           </Link>
           <h1 className="mt-space-md text-headline-lg font-bold text-on-surface">{post.title}</h1>
           <div className="mt-space-xs flex items-center gap-space-sm text-label-sm text-on-surface-variant">

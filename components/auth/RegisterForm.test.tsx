@@ -29,6 +29,7 @@ function fillValidForm(overrides: { password?: string; confirmPassword?: string;
   fireEvent.change(screen.getByLabelText('Xác nhận mật khẩu *'), {
     target: { value: overrides.confirmPassword ?? 'password123' },
   })
+  fireEvent.click(screen.getByRole('checkbox', { name: /Tôi xác nhận đã đủ điều kiện pháp lý/ }))
 }
 
 describe('RegisterForm', () => {
@@ -58,6 +59,42 @@ describe('RegisterForm', () => {
     expect(passwordInput).toHaveAttribute('type', 'password')
     fireEvent.click(screen.getAllByLabelText('Hiện mật khẩu')[0])
     expect(passwordInput).toHaveAttribute('type', 'text')
+  })
+
+  it('requires the Camera AR policy checkbox to be checked', () => {
+    renderRegisterForm()
+    const checkbox = screen.getByRole('checkbox', { name: /Tôi xác nhận đã đủ điều kiện pháp lý/ }) as HTMLInputElement
+    expect(checkbox).toBeRequired()
+    expect(checkbox.checked).toBe(false)
+  })
+
+  it('opens the policy modal from the checkbox label link without checking the box', () => {
+    renderRegisterForm()
+    const checkbox = screen.getByRole('checkbox', { name: /Tôi xác nhận đã đủ điều kiện pháp lý/ }) as HTMLInputElement
+
+    fireEvent.click(screen.getByRole('button', { name: 'Chính sách sử dụng Camera AR & Ảnh cộng đồng' }))
+
+    expect(screen.getByText('Chính sách sử dụng Camera AR & Ảnh cộng đồng', { selector: 'h3' })).toBeInTheDocument()
+    expect(checkbox.checked).toBe(false)
+  })
+
+  it('renders the full structured policy content inside the modal', () => {
+    renderRegisterForm()
+    fireEvent.click(screen.getByRole('button', { name: 'Chính sách sử dụng Camera AR & Ảnh cộng đồng' }))
+
+    expect(screen.getByText('1. Dữ liệu cá nhân thu thập')).toBeInTheDocument()
+    expect(screen.getByText('5. Chia sẻ và bảo mật thông tin')).toBeInTheDocument()
+    expect(screen.getByText(/Dữ liệu định danh cá nhân cơ bản/)).toBeInTheDocument()
+  })
+
+  it('closes the policy modal via the close button', () => {
+    renderRegisterForm()
+    fireEvent.click(screen.getByRole('button', { name: 'Chính sách sử dụng Camera AR & Ảnh cộng đồng' }))
+    expect(screen.getByTestId('camera-ar-policy-modal-backdrop')).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Đã hiểu' }))
+
+    expect(screen.queryByTestId('camera-ar-policy-modal-backdrop')).not.toBeInTheDocument()
   })
 
   it('shows a mismatch error and never calls the API when passwords differ', () => {
