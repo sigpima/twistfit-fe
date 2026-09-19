@@ -66,11 +66,11 @@ export default function Footer() {
                   {t('features.outfitByBodyShape')}
                 </a>
               </li> */}
-              <li>
+              {/* <li>
                 <a href="/forum" className="transition-colors hover:text-[#304461]">
                   {t('features.newsletter')}
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div>
