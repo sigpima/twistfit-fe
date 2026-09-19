@@ -132,7 +132,11 @@ export default function ForumPostList() {
                   <span
                     className="material-symbols-outlined text-[24px]"
                     aria-hidden="true"
-                    style={post.bookmarkedByMe ? { fontVariationSettings: "'FILL' 1" } : undefined}
+                    style={
+                      post.bookmarkedByMe
+                        ? { fontVariationSettings: "'FILL' 1", color: 'var(--color-primary)' }
+                        : undefined
+                    }
                   >
                     bookmark
                   </span>
