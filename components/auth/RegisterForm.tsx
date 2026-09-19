@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 import { useAuth } from '@/components/auth/AuthProvider'
-import CameraArPolicyModal from '@/components/auth/CameraArPolicyModal'
+import CameraArPolicyContent from '@/components/auth/CameraArPolicyContent'
 import { apiFetch } from '@/lib/apiClient'
 import { FORM_INPUT_CLASS } from '@/lib/formFieldStyles'
 
@@ -18,7 +18,7 @@ export default function RegisterForm() {
   const [confirmError, setConfirmError] = useState(false)
   const [formError, setFormError] = useState<string | null>(null)
   const [agreedToPolicy, setAgreedToPolicy] = useState(false)
-  const [isPolicyModalOpen, setIsPolicyModalOpen] = useState(false)
+  const [isPolicyExpanded, setIsPolicyExpanded] = useState(false)
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -162,30 +162,37 @@ export default function RegisterForm() {
             )}
           </div>
 
-          <div className="flex items-start gap-2">
-            <input
-              id="register-agree-policy"
-              name="agreePolicy"
-              type="checkbox"
-              required
-              checked={agreedToPolicy}
-              onChange={(event) => setAgreedToPolicy(event.target.checked)}
-              className="mt-1 h-4 w-4 shrink-0 rounded border-outline text-primary focus:ring-primary"
-            />
-            <label htmlFor="register-agree-policy" className="text-body-sm text-on-surface-variant">
-              {t('policyAgreement.prefix')}{' '}
-              <button
-                type="button"
-                onClick={(event) => {
-                  event.preventDefault()
-                  setIsPolicyModalOpen(true)
-                }}
-                className="font-semibold text-primary underline hover:no-underline"
-              >
-                {t('policyAgreement.linkText')}
-              </button>
-              .
-            </label>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-start gap-2">
+              <input
+                id="register-agree-policy"
+                name="agreePolicy"
+                type="checkbox"
+                required
+                checked={agreedToPolicy}
+                onChange={(event) => setAgreedToPolicy(event.target.checked)}
+                className="mt-1 h-4 w-4 shrink-0 rounded border-outline text-primary focus:ring-primary"
+              />
+              <label htmlFor="register-agree-policy" className="flex-1 text-body-sm text-on-surface-variant">
+                {t('policyAgreement.prefix')}.
+              </label>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsPolicyExpanded((value) => !value)}
+              aria-expanded={isPolicyExpanded}
+              className="flex items-center justify-between rounded-xl bg-surface-container px-3 py-2 text-label-md font-semibold text-on-surface transition-colors hover:bg-surface-container-high"
+            >
+              <span>{t('policyAgreement.linkText')}</span>
+              <span className="material-symbols-outlined text-[20px]" aria-hidden="true">
+                {isPolicyExpanded ? 'expand_less' : 'expand_more'}
+              </span>
+            </button>
+            {isPolicyExpanded && (
+              <div className="max-h-64 overflow-y-auto rounded-2xl bg-surface-container p-4">
+                <CameraArPolicyContent />
+              </div>
+            )}
           </div>
 
           {formError && (
@@ -209,7 +216,6 @@ export default function RegisterForm() {
           </Link>
         </p>
       </div>
-      <CameraArPolicyModal isOpen={isPolicyModalOpen} onClose={() => setIsPolicyModalOpen(false)} />
     </section>
   )
 }

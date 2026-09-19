@@ -68,17 +68,20 @@ describe('RegisterForm', () => {
     expect(checkbox.checked).toBe(false)
   })
 
-  it('opens the policy modal from the checkbox label link without checking the box', () => {
+  it('expands the policy content when the policy row is clicked, without checking the box', () => {
     renderRegisterForm()
     const checkbox = screen.getByRole('checkbox', { name: /Tôi xác nhận đã đủ điều kiện pháp lý/ }) as HTMLInputElement
+    const toggle = screen.getByRole('button', { name: 'Chính sách sử dụng Camera AR & Ảnh cộng đồng' })
+    expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.queryByText('1. Dữ liệu cá nhân thu thập')).not.toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('button', { name: 'Chính sách sử dụng Camera AR & Ảnh cộng đồng' }))
+    fireEvent.click(toggle)
 
-    expect(screen.getByText('Chính sách sử dụng Camera AR & Ảnh cộng đồng', { selector: 'h3' })).toBeInTheDocument()
+    expect(toggle).toHaveAttribute('aria-expanded', 'true')
     expect(checkbox.checked).toBe(false)
   })
 
-  it('renders the full structured policy content inside the modal', () => {
+  it('renders the full structured policy content once expanded', () => {
     renderRegisterForm()
     fireEvent.click(screen.getByRole('button', { name: 'Chính sách sử dụng Camera AR & Ảnh cộng đồng' }))
 
@@ -87,14 +90,16 @@ describe('RegisterForm', () => {
     expect(screen.getByText(/Dữ liệu định danh cá nhân cơ bản/)).toBeInTheDocument()
   })
 
-  it('closes the policy modal via the close button', () => {
+  it('collapses the policy content when the policy row is clicked again', () => {
     renderRegisterForm()
-    fireEvent.click(screen.getByRole('button', { name: 'Chính sách sử dụng Camera AR & Ảnh cộng đồng' }))
-    expect(screen.getByTestId('camera-ar-policy-modal-backdrop')).toBeInTheDocument()
+    const toggle = screen.getByRole('button', { name: 'Chính sách sử dụng Camera AR & Ảnh cộng đồng' })
+    fireEvent.click(toggle)
+    expect(screen.getByText('1. Dữ liệu cá nhân thu thập')).toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('button', { name: 'Đã hiểu' }))
+    fireEvent.click(toggle)
 
-    expect(screen.queryByTestId('camera-ar-policy-modal-backdrop')).not.toBeInTheDocument()
+    expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.queryByText('1. Dữ liệu cá nhân thu thập')).not.toBeInTheDocument()
   })
 
   it('shows a mismatch error and never calls the API when passwords differ', () => {

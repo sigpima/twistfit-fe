@@ -611,7 +611,7 @@
     "showPassword": "Hiện mật khẩu",
     "hidePassword": "Ẩn mật khẩu",
     "policyAgreement": {
-      "prefix": "Tôi xác nhận đã đủ điều kiện pháp lý, đã đọc, hiểu rõ và đồng thuận cho phép TwistFit xử lý dữ liệu hình ảnh của tôi theo",
+      "prefix": "Tôi xác nhận đã đủ điều kiện pháp lý, đã đọc, hiểu rõ và đồng thuận cho phép TwistFit xử lý dữ liệu của tôi theo các điều khoản nêu trên",
       "linkText": "Chính sách sử dụng Camera AR & Ảnh cộng đồng"
     },
     "submit": "ĐĂNG KÝ",
@@ -654,8 +654,7 @@
     "loginButton": "Đăng nhập ngay",
     "closeAriaLabel": "Đóng"
   },
-  "CameraArPolicyModal": {
-    "title": "Chính sách bảo mật và Điều khoản sử dụng",
+  "CameraArPolicy": {
     "documentTitle": "CHÍNH SÁCH BẢO MẬT VÀ ĐIỀU KHOẢN SỬ DỤNG",
     "documentSubtitle": "(Tuân thủ Nghị định 13/2023/NĐ-CP về Bảo vệ Dữ liệu Cá nhân & Tiêu chuẩn PII)",
     "intro": "Chào mừng bạn đến với TwistFit. Việc sử dụng dịch vụ của chúng tôi đồng nghĩa với việc bạn đã đọc và đồng ý với các điều khoản dưới đây.",
@@ -699,9 +698,7 @@
           { "label": "Biện pháp bảo mật", "text": "Dữ liệu cá nhân được mã hóa đường truyền (SSL/TLS) và lưu trữ phân quyền nghiêm ngặt nhằm phòng chống truy cập trái phép theo quy định của Nghị định 13/2023/NĐ-CP." }
         ]
       }
-    ],
-    "closeButton": "Đã hiểu",
-    "closeAriaLabel": "Đóng"
+    ]
   },
   "Home": {
     "Hero": {

@@ -40,7 +40,7 @@ export default function MakeupRecommendations({ subSeason }: { subSeason: SubSea
             {toneVariants.map((variant) => (
               <div key={variant.name} className="overflow-hidden rounded-xl border border-[#7b89ba]/10">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={variant.image} alt={variant.name} className="aspect-[3/1] w-full object-cover" />
+                <img src={variant.image} alt={variant.name} className="w-full object-contain" />
                 <div className="p-2">
                   <p className="text-[11px] font-bold text-[#304461]">{variant.name}</p>
                   <p className="mt-0.5 text-[9px] leading-snug text-[#304461]/50">
