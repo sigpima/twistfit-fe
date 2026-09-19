@@ -17,7 +17,7 @@ function StoryChapter({
   return (
     <div className="grid grid-cols-1 items-center gap-space-xl lg:grid-cols-2">
       <div className={imageOnRight ? 'lg:order-2' : 'lg:order-1'}>
-        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-surface-container-low shadow-lg">
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={image} alt={imageAlt} className="h-full w-full object-contain" />
         </div>

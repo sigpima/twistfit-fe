@@ -875,7 +875,7 @@
         "filterLabel": "Lọc",
         "filterEmptyOption": "Tất cả loại",
         "suggestExternalLabel": "Đề xuất thêm đồ ngoài",
-        "personalColorLabel": "Phối đồ theo kết quả đánh giá personal color",
+        "personalColorLabel": "Phối đồ theo kết quả đánh giá màu sắc cá nhân",
         "personalColorCta": "Làm bài test màu sắc cá nhân để phối theo màu",
         "emptyState": "Không có món đồ nào khớp lựa chọn hiện tại.",
         "loadingItems": "Đang tải tủ đồ...",
