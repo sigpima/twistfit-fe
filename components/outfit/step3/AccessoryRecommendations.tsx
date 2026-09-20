@@ -15,10 +15,15 @@ type Accessory = {
 
 export default function AccessoryRecommendations() {
   const t = useTranslations('Outfit.Step3.AccessoryRecommendations')
-  const { occasionStyleMode, selectedOccasion, selectedStyle } = useOutfitFlow()
+  const { occasionStyleMode, selectedOccasion, selectedStyle, suggestAccessories } = useOutfitFlow()
   const [accessories, setAccessories] = useState<Accessory[]>([])
 
   useEffect(() => {
+    if (!suggestAccessories) {
+      setAccessories([])
+      return
+    }
+
     let cancelled = false
 
     const params =
@@ -38,7 +43,7 @@ export default function AccessoryRecommendations() {
     return () => {
       cancelled = true
     }
-  }, [occasionStyleMode, selectedOccasion, selectedStyle])
+  }, [occasionStyleMode, selectedOccasion, selectedStyle, suggestAccessories])
 
   if (accessories.length === 0) return null
 

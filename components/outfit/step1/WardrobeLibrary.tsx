@@ -11,12 +11,19 @@ import OccasionStyleSelector from './OccasionStyleSelector'
 
 export default function WardrobeLibrary() {
   const t = useTranslations('Outfit.Step1.WardrobeLibrary')
-  const { occasionStyleMode, setOccasionStyleMode, selectedOccasion, setSelectedOccasion, selectedStyle, setSelectedStyle } =
-    useOutfitFlow()
+  const {
+    occasionStyleMode,
+    setOccasionStyleMode,
+    selectedOccasion,
+    setSelectedOccasion,
+    selectedStyle,
+    setSelectedStyle,
+    suggestAccessories,
+    setSuggestAccessories,
+  } = useOutfitFlow()
 
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false)
   const [selectedClothingTypes, setSelectedClothingTypes] = useState<string[]>([])
-  const [suggestExternal, setSuggestExternal] = useState(false)
 
   const [items, setItems] = useState<WardrobeItem[] | null>(null)
   const [loadError, setLoadError] = useState(false)
@@ -138,10 +145,10 @@ export default function WardrobeLibrary() {
           <label className="flex cursor-pointer select-none items-center gap-space-xs">
             <input
               type="checkbox"
-              checked={suggestExternal}
-              onChange={(event) => setSuggestExternal(event.target.checked)}
+              checked={suggestAccessories}
+              onChange={(event) => setSuggestAccessories(event.target.checked)}
             />
-            <span className="text-label-md font-medium text-on-surface">{t('suggestExternalLabel')}</span>
+            <span className="text-label-md font-medium text-on-surface">{t('suggestAccessoriesLabel')}</span>
           </label>
           {hasPersonalColorResult ? (
             <label className="flex cursor-pointer select-none items-center gap-space-xs">

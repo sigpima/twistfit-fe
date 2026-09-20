@@ -2,14 +2,20 @@ import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import WardrobeLibrary from './WardrobeLibrary'
-import { OutfitFlowProvider } from '../OutfitFlowProvider'
+import { OutfitFlowProvider, useOutfitFlow } from '../OutfitFlowProvider'
 import type { TaxonomyGroup } from '@/lib/taxonomy'
 import type { WardrobeItem } from '@/lib/wardrobe'
+
+function SuggestAccessoriesReadout() {
+  const { suggestAccessories } = useOutfitFlow()
+  return <span data-testid="suggest-accessories-readout">{String(suggestAccessories)}</span>
+}
 
 function renderLibrary() {
   return renderWithIntl(
     <OutfitFlowProvider>
       <WardrobeLibrary />
+      <SuggestAccessoriesReadout />
     </OutfitFlowProvider>
   )
 }
@@ -74,6 +80,20 @@ describe('WardrobeLibrary', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(null, { ok: false, status: 500 })))
     renderLibrary()
     await waitFor(() => expect(screen.getByText('Không tải được tủ đồ, vui lòng thử lại.')).toBeInTheDocument())
+  })
+
+  it('shows the accessories checkbox checked by default, and toggling it updates the shared flow state', async () => {
+    renderLibrary()
+    await waitFor(() => expect(screen.getAllByRole('img')).toHaveLength(2))
+
+    const checkbox = screen.getByRole('checkbox', { name: 'Đề xuất thêm phụ kiện' })
+    expect(checkbox).toBeChecked()
+    expect(screen.getByTestId('suggest-accessories-readout')).toHaveTextContent('true')
+
+    fireEvent.click(checkbox)
+
+    expect(checkbox).not.toBeChecked()
+    expect(screen.getByTestId('suggest-accessories-readout')).toHaveTextContent('false')
   })
 
   it('shows the personal-color CTA link when the user has no quiz result', async () => {

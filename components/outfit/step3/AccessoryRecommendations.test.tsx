@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { screen, waitFor } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import AccessoryRecommendations from './AccessoryRecommendations'
 import { OutfitFlowProvider, useOutfitFlow } from '../OutfitFlowProvider'
@@ -12,6 +12,15 @@ function SetStyleMode() {
     setSelectedStyle('formal')
   }, [setOccasionStyleMode, setSelectedStyle])
   return null
+}
+
+function ToggleSuggestAccessories() {
+  const { suggestAccessories, setSuggestAccessories } = useOutfitFlow()
+  return (
+    <button type="button" onClick={() => setSuggestAccessories(!suggestAccessories)}>
+      toggle suggestAccessories
+    </button>
+  )
 }
 
 function jsonResponse(body: unknown, init: { ok?: boolean } = {}) {
@@ -110,5 +119,29 @@ describe('AccessoryRecommendations', () => {
 
     await waitFor(() => expect(fetch).toHaveBeenCalled())
     expect(container).toBeEmptyDOMElement()
+  })
+
+  it('clears and stops fetching accessories once suggestAccessories is turned off', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(
+      jsonResponse([
+        { id: 1, name: 'Túi tote nâu', imageUrl: '/tote.png', affiliateLink: 'https://shop.example.com/tote', category: 'tui-xach' },
+      ])
+    )
+    vi.stubGlobal('fetch', fetchMock)
+
+    renderWithIntl(
+      <OutfitFlowProvider>
+        <ToggleSuggestAccessories />
+        <AccessoryRecommendations />
+      </OutfitFlowProvider>
+    )
+
+    await waitFor(() => expect(screen.getByText('Túi tote nâu')).toBeInTheDocument())
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+
+    fireEvent.click(screen.getByRole('button', { name: 'toggle suggestAccessories' }))
+
+    await waitFor(() => expect(screen.queryByText('Túi tote nâu')).not.toBeInTheDocument())
+    expect(fetchMock).toHaveBeenCalledTimes(1)
   })
 })

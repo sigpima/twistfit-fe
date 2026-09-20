@@ -427,7 +427,7 @@
       "savedLink": "Đã lưu"
     },
     "Detail": {
-      "backLink": "← Quay lại Diễn đàn",
+      "backLink": "← Quay lại Cộng đồng",
       "notFoundTitle": "Không tìm thấy bài viết",
       "notFoundBody": "Bài viết này không tồn tại hoặc bạn không có quyền xem.",
       "deleteButton": "Xóa bài viết",
@@ -928,7 +928,7 @@
       "WardrobeLibrary": {
         "filterLabel": "Lọc",
         "filterEmptyOption": "Tất cả loại",
-        "suggestExternalLabel": "Đề xuất thêm đồ ngoài",
+        "suggestAccessoriesLabel": "Đề xuất thêm phụ kiện",
         "personalColorLabel": "Phối đồ theo kết quả đánh giá màu sắc cá nhân",
         "personalColorCta": "Làm bài test màu sắc cá nhân để phối theo màu",
         "emptyState": "Không có món đồ nào khớp lựa chọn hiện tại.",

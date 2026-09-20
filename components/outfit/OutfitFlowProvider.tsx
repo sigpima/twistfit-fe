@@ -57,6 +57,8 @@ type OutfitFlowContextValue = {
   setSelectedStyle: (tag: StyleTag) => void
   jobId: number | null
   setJobId: (id: number | null) => void
+  suggestAccessories: boolean
+  setSuggestAccessories: (value: boolean) => void
 }
 
 const OutfitFlowContext = createContext<OutfitFlowContextValue | null>(null)
@@ -75,6 +77,7 @@ export function OutfitFlowProvider({
   const [selectedOccasion, setSelectedOccasion] = useState<OccasionTag>('hang-ngay')
   const [selectedStyle, setSelectedStyle] = useState<StyleTag>('casual')
   const [jobId, setJobId] = useState<number | null>(null)
+  const [suggestAccessories, setSuggestAccessories] = useState(true)
 
   function markStepVisited(step: FlowStep) {
     setMaxStepReached((current) => (step > current ? step : current))
@@ -97,6 +100,8 @@ export function OutfitFlowProvider({
         setSelectedStyle,
         jobId,
         setJobId,
+        suggestAccessories,
+        setSuggestAccessories,
       }}
     >
       {children}
