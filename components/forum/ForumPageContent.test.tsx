@@ -11,7 +11,7 @@ describe('ForumPageContent', () => {
   it('renders the heading and the post list', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => [] }))
     renderWithIntl(<ForumPageContent />)
-    expect(screen.getByRole('heading', { name: 'Diễn đàn TwistFit' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Cộng đồng TwistFit' })).toBeInTheDocument()
     await waitFor(() => expect(fetch).toHaveBeenCalledWith('/forum/posts', { credentials: 'include' }))
   })
 
