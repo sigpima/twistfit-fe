@@ -1,6 +1,11 @@
+import type { Metadata } from 'next'
 import QuizPageContent from '@/components/personal-color/QuizPageContent'
 import { apiFetch } from '@/lib/apiClient'
 import type { QuizQuestion } from '@/lib/db'
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/personal-color/quiz' },
+}
 
 export default async function QuizPage() {
   const response = await apiFetch('/quiz-questions', { cache: 'no-store' })

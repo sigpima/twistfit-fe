@@ -16,6 +16,7 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://twistfit.org'),
   title: 'TwistFit — Màu Sắc Cá Nhân & Phối Đồ Thông Minh',
   description:
     'TwistFit giúp bạn khám phá màu sắc cá nhân của chính mình và phối đồ thông minh bằng AI.',

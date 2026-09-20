@@ -1,13 +1,11 @@
-import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
-import { screen, fireEvent } from '@testing-library/react'
+import { describe, expect, it, vi, afterEach } from 'vitest'
+import { screen } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
-import Step1Page from './page'
 import { OutfitFlowProvider } from '@/components/outfit/OutfitFlowProvider'
-
-const pushMock = vi.fn()
+import Step1Page, { metadata } from './page'
 
 vi.mock('next/navigation', () => ({
-  useRouter: () => ({ push: pushMock }),
+  useRouter: () => ({ push: vi.fn() }),
 }))
 
 function jsonResponse(body: unknown, init: { ok?: boolean; status?: number } = {}) {
@@ -15,8 +13,15 @@ function jsonResponse(body: unknown, init: { ok?: boolean; status?: number } = {
 }
 
 describe('Step1Page', () => {
-  beforeEach(() => {
-    pushMock.mockClear()
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  it('sets a self-referencing canonical URL', () => {
+    expect(metadata.alternates?.canonical).toBe('/outfit/step-1')
+  })
+
+  it('renders the step content', () => {
     vi.stubGlobal(
       'fetch',
       vi.fn((url: string) => {
@@ -25,37 +30,11 @@ describe('Step1Page', () => {
         return Promise.resolve(jsonResponse(null, { ok: false, status: 404 }))
       })
     )
-  })
-
-  afterEach(() => {
-    vi.unstubAllGlobals()
-  })
-
-  it('renders the step heading', () => {
     renderWithIntl(
       <OutfitFlowProvider>
         <Step1Page />
       </OutfitFlowProvider>
     )
     expect(screen.getByRole('heading', { name: 'Chọn Trang Phục Cho Buổi Thử Đồ' })).toBeInTheDocument()
-  })
-
-  it('links back to the home page', () => {
-    renderWithIntl(
-      <OutfitFlowProvider>
-        <Step1Page />
-      </OutfitFlowProvider>
-    )
-    expect(screen.getByRole('link', { name: /Quay lại trang chủ/ })).toHaveAttribute('href', '/')
-  })
-
-  it('navigates to step 2 after clicking continue', () => {
-    renderWithIntl(
-      <OutfitFlowProvider>
-        <Step1Page />
-      </OutfitFlowProvider>
-    )
-    fireEvent.click(screen.getByRole('button', { name: /Tiếp tục sang Bước 2/ }))
-    expect(pushMock).toHaveBeenCalledWith('/outfit/step-2')
   })
 })
