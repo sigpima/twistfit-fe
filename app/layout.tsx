@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { QrModalProvider } from '@/components/qr-modal/QrModalProvider'
 import { AuthProvider } from '@/components/auth/AuthProvider'
 import { LoginRequiredModalProvider } from '@/components/auth/LoginRequiredModalProvider'
@@ -46,6 +47,9 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
           </AuthProvider>
         </NextIntlClientProvider>
       </body>
+      {/* Unset in local dev on purpose — only set NEXT_PUBLIC_GA_ID in production, so local
+          testing never sends real analytics events. */}
+      {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
     </html>
   )
 }
