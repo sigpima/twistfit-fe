@@ -67,6 +67,20 @@ describe('BlogPostPage', () => {
     expect(notFoundMock).toHaveBeenCalled()
   })
 
+  it('embeds BlogPosting and BreadcrumbList JSON-LD scripts', async () => {
+    stubFetchByUrl({ '/blog/slug/mua-dong-2026': POST, '/blog': [POST] })
+    const { default: BlogPostPage } = await import('./page')
+    const ui = await BlogPostPage({ params: Promise.resolve({ slug: 'mua-dong-2026' }) })
+    const { container } = renderWithIntl(ui!)
+    const scripts = [...container.querySelectorAll('script[type="application/ld+json"]')].map((script) =>
+      JSON.parse(script.innerHTML)
+    )
+    expect(scripts.find((s) => s['@type'] === 'BlogPosting')).toMatchObject({
+      headline: 'Bí quyết chọn trang phục tôn da chuẩn tone Mùa Đông',
+    })
+    expect(scripts.find((s) => s['@type'] === 'BreadcrumbList')?.itemListElement).toHaveLength(3)
+  })
+
   it('sets the tab title to the post title and the description to its excerpt', async () => {
     stubFetchByUrl({ '/blog/slug/mua-dong-2026': POST, '/blog': [POST] })
     const { generateMetadata } = await import('./page')

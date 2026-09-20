@@ -6,6 +6,8 @@ import { extractHeadings, renderMarkdown } from '@/lib/markdown'
 import type { BlogPost } from '@/lib/db'
 import BlogTableOfContents from '@/components/blog/BlogTableOfContents'
 import BlogRelatedPosts from '@/components/blog/BlogRelatedPosts'
+import { buildBlogPostingJsonLd, buildBreadcrumbJsonLd } from '@/lib/jsonLd'
+import JsonLd from '@/components/seo/JsonLd'
 
 const MAX_RELATED_POSTS = 4
 
@@ -51,6 +53,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <main className="w-full bg-surface">
+      <JsonLd data={buildBlogPostingJsonLd(post)} />
+      <JsonLd
+        data={buildBreadcrumbJsonLd([
+          { name: 'Trang chủ', path: '/' },
+          { name: 'Blog', path: '/blog' },
+          { name: post.title, path: `/blog/${post.slug}` },
+        ])}
+      />
       <div className="mx-auto max-w-7xl px-margin py-space-lg md:px-margin-desktop md:py-space-xl lg:grid lg:grid-cols-[240px_minmax(0,1fr)_300px] lg:gap-space-xl">
         <div className="hidden lg:block">
           <BlogTableOfContents headings={headings} />

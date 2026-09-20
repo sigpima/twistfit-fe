@@ -41,6 +41,24 @@ describe('FaqPage', () => {
     expect(screen.getByText('Câu hỏi phòng thử đồ?')).toBeInTheDocument()
   })
 
+  it('embeds an FAQPage JSON-LD script listing every question', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ITEMS }))
+    const page = await FaqPage({ searchParams: Promise.resolve({}) })
+    const { container } = renderWithIntl(page)
+    const script = container.querySelector('script[type="application/ld+json"]')
+    const jsonLd = JSON.parse(script!.innerHTML)
+    expect(jsonLd['@type']).toBe('FAQPage')
+    expect(jsonLd.mainEntity).toHaveLength(2)
+    expect(jsonLd.mainEntity[0].name).toBe('Câu hỏi seed test?')
+  })
+
+  it('omits the JSON-LD script when there are no FAQ items', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => [] }))
+    const page = await FaqPage({ searchParams: Promise.resolve({}) })
+    const { container } = renderWithIntl(page)
+    expect(container.querySelector('script[type="application/ld+json"]')).toBeNull()
+  })
+
   it('pre-selects the category from the ?category= search param', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ITEMS }))
     const page = await FaqPage({ searchParams: Promise.resolve({ category: 'fitting-room' }) })

@@ -3,6 +3,8 @@ import FaqSupportBanner from '@/components/faq/FaqSupportBanner'
 import { apiFetch } from '@/lib/apiClient'
 import { FAQ_CATEGORIES } from '@/lib/faq'
 import type { FaqItem } from '@/lib/faq'
+import { buildFaqPageJsonLd } from '@/lib/jsonLd'
+import JsonLd from '@/components/seo/JsonLd'
 
 export default async function FaqPage({
   searchParams,
@@ -16,6 +18,7 @@ export default async function FaqPage({
 
   return (
     <main className="w-full bg-surface">
+      {items.length > 0 && <JsonLd data={buildFaqPageJsonLd(items)} />}
       <FaqSection items={items} initialCategory={initialCategory} />
       <FaqSupportBanner />
     </main>

@@ -3,11 +3,13 @@ import { Montserrat } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { SITE_URL } from '@/lib/site'
+import { buildOrganizationJsonLd, buildWebsiteJsonLd } from '@/lib/jsonLd'
 import { QrModalProvider } from '@/components/qr-modal/QrModalProvider'
 import { AuthProvider } from '@/components/auth/AuthProvider'
 import { LoginRequiredModalProvider } from '@/components/auth/LoginRequiredModalProvider'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import JsonLd from '@/components/seo/JsonLd'
 import './globals.css'
 
 const montserrat = Montserrat({
@@ -34,6 +36,8 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
         />
+        <JsonLd data={buildOrganizationJsonLd()} />
+        <JsonLd data={buildWebsiteJsonLd()} />
       </head>
       <body className="flex min-h-screen flex-col bg-surface text-on-surface">
         <NextIntlClientProvider>

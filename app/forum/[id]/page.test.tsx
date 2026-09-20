@@ -51,4 +51,24 @@ describe('ForumPostPage', () => {
     const metadata = await generateMetadata({ params: Promise.resolve({ id: '999' }) })
     expect(metadata).toEqual({})
   })
+
+  it('embeds DiscussionForumPosting and BreadcrumbList JSON-LD scripts', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POST }))
+    const ui = await ForumPostPage({ params: Promise.resolve({ id: '4' }) })
+    const { container } = renderWithIntl(<AuthProvider>{ui}</AuthProvider>)
+    const scripts = [...container.querySelectorAll('script[type="application/ld+json"]')].map((script) =>
+      JSON.parse(script.innerHTML)
+    )
+    expect(scripts.find((s) => s['@type'] === 'DiscussionForumPosting')).toMatchObject({
+      headline: 'Bài test route',
+    })
+    expect(scripts.find((s) => s['@type'] === 'BreadcrumbList')?.itemListElement).toHaveLength(3)
+  })
+
+  it('omits the JSON-LD scripts when the post does not exist', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 404 }))
+    const ui = await ForumPostPage({ params: Promise.resolve({ id: '999' }) })
+    const { container } = renderWithIntl(<AuthProvider>{ui}</AuthProvider>)
+    expect(container.querySelector('script[type="application/ld+json"]')).toBeNull()
+  })
 })
