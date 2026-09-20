@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import BlogHero from '@/components/blog/BlogHero'
 import BlogFeaturedArticle from '@/components/blog/BlogFeaturedArticle'
 import BlogArticleGrid from '@/components/blog/BlogArticleGrid'
@@ -6,6 +7,10 @@ import FaqSupportBanner from '@/components/faq/FaqSupportBanner'
 import { apiFetch } from '@/lib/apiClient'
 import type { BlogPost } from '@/lib/db'
 import type { FaqItem } from '@/lib/faq'
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/blog' },
+}
 
 export default async function BlogPage() {
   const [blogResponse, faqResponse] = await Promise.all([

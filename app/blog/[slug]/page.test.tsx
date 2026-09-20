@@ -73,6 +73,7 @@ describe('BlogPostPage', () => {
     const metadata = await generateMetadata({ params: Promise.resolve({ slug: 'mua-dong-2026' }) })
     expect(metadata.title).toBe('Bí quyết chọn trang phục tôn da chuẩn tone Mùa Đông | TwistFit')
     expect(metadata.description).toBe('Mô tả ngắn')
+    expect(metadata.alternates?.canonical).toBe('/blog/mua-dong-2026')
   })
 
   it('returns empty metadata when the slug does not exist', async () => {

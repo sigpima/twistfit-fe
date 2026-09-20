@@ -24,6 +24,7 @@ export async function generateMetadata({
   return {
     title: `${post.title} | TwistFit`,
     description: post.excerpt,
+    alternates: { canonical: `/blog/${post.slug}` },
   }
 }
 

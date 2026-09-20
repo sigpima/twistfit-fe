@@ -1,14 +1,33 @@
-'use client'
+import type { Metadata } from 'next'
+import { apiFetch } from '@/lib/apiClient'
+import type { ForumPost } from '@/lib/forum'
+import ForumPostPageContent from '@/components/forum/ForumPostPageContent'
 
-import { useEffect, useState } from 'react'
-import ForumPostDetail from '@/components/forum/ForumPostDetail'
+const DESCRIPTION_MAX_LENGTH = 160
 
-export default function ForumPostPage({ params }: { params: Promise<{ id: string }> }) {
-  const [id, setId] = useState<string | null>(null)
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}): Promise<Metadata> {
+  const { id } = await params
+  const response = await apiFetch(`/forum/posts/${id}`, { cache: 'no-store' })
+  if (!response.ok) {
+    return {}
+  }
 
-  useEffect(() => {
-    params.then((resolved) => setId(resolved.id))
-  }, [params])
+  const post = (await response.json()) as ForumPost
+  const description =
+    post.body.length > DESCRIPTION_MAX_LENGTH ? `${post.body.slice(0, DESCRIPTION_MAX_LENGTH)}…` : post.body
 
-  return <main className="w-full bg-surface">{id && <ForumPostDetail id={id} />}</main>
+  return {
+    title: `${post.title} | TwistFit`,
+    description,
+    alternates: { canonical: `/forum/${post.id}` },
+  }
+}
+
+export default async function ForumPostPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  return <ForumPostPageContent id={id} />
 }
