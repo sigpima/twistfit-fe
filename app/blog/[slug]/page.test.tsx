@@ -67,6 +67,21 @@ describe('BlogPostPage', () => {
     expect(notFoundMock).toHaveBeenCalled()
   })
 
+  it('sets the tab title to the post title and the description to its excerpt', async () => {
+    stubFetchByUrl({ '/blog/slug/mua-dong-2026': POST, '/blog': [POST] })
+    const { generateMetadata } = await import('./page')
+    const metadata = await generateMetadata({ params: Promise.resolve({ slug: 'mua-dong-2026' }) })
+    expect(metadata.title).toBe('Bí quyết chọn trang phục tôn da chuẩn tone Mùa Đông | TwistFit')
+    expect(metadata.description).toBe('Mô tả ngắn')
+  })
+
+  it('returns empty metadata when the slug does not exist', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 404 }))
+    const { generateMetadata } = await import('./page')
+    const metadata = await generateMetadata({ params: Promise.resolve({ slug: 'khong-ton-tai' }) })
+    expect(metadata).toEqual({})
+  })
+
   it('renders a table of contents built from the post headings', async () => {
     stubFetchByUrl({ '/blog/slug/mua-dong-2026': POST, '/blog': [POST] })
     const { default: BlogPostPage } = await import('./page')

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { apiFetch } from '@/lib/apiClient'
@@ -7,6 +8,24 @@ import BlogTableOfContents from '@/components/blog/BlogTableOfContents'
 import BlogRelatedPosts from '@/components/blog/BlogRelatedPosts'
 
 const MAX_RELATED_POSTS = 4
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const response = await apiFetch(`/blog/slug/${slug}`, { cache: 'no-store' })
+  if (!response.ok) {
+    return {}
+  }
+
+  const post = (await response.json()) as BlogPost
+  return {
+    title: `${post.title} | TwistFit`,
+    description: post.excerpt,
+  }
+}
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
