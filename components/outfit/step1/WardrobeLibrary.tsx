@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { apiFetch } from '@/lib/apiClient'
 import { findGroup, type TaxonomyGroup } from '@/lib/taxonomy'
 import type { WardrobeItem } from '@/lib/wardrobe'
+import { closestColorDistance, getSeasonReferenceColors } from '@/lib/colorDistance'
 import { useOutfitFlow } from '../OutfitFlowProvider'
 import OccasionStyleSelector from './OccasionStyleSelector'
 
@@ -29,7 +30,7 @@ export default function WardrobeLibrary() {
   const [loadError, setLoadError] = useState(false)
   const [taxonomyGroups, setTaxonomyGroups] = useState<TaxonomyGroup[]>([])
 
-  const [hasPersonalColorResult, setHasPersonalColorResult] = useState(false)
+  const [personalColorSeason, setPersonalColorSeason] = useState<string | null>(null)
   const [matchByPersonalColor, setMatchByPersonalColor] = useState(false)
 
   useEffect(() => {
@@ -62,8 +63,8 @@ export default function WardrobeLibrary() {
     let cancelled = false
     apiFetch('/quiz-attempts/me').then(async (response) => {
       if (cancelled || !response.ok) return
-      const result = (await response.json()) as { season: string } | null
-      setHasPersonalColorResult(result !== null)
+      const result = (await response.json()) as { parentSeason: string } | null
+      setPersonalColorSeason(result?.parentSeason ?? null)
     })
     return () => {
       cancelled = true
@@ -81,7 +82,7 @@ export default function WardrobeLibrary() {
   const visibleItems = useMemo(() => {
     if (!items) return []
     const activeTag = occasionStyleMode === 'occasion' ? selectedOccasion : selectedStyle
-    return items.filter((item) => {
+    const filtered = items.filter((item) => {
       const matchesOccasionOrStyle =
         occasionStyleMode === 'occasion'
           ? (item.attributes.occasion ?? []).includes(activeTag)
@@ -91,7 +92,24 @@ export default function WardrobeLibrary() {
         (item.attributes['clothing-type'] ?? []).some((value) => selectedClothingTypes.includes(value))
       return matchesOccasionOrStyle && matchesClothingType
     })
-  }, [items, occasionStyleMode, selectedOccasion, selectedStyle, selectedClothingTypes])
+
+    if (!matchByPersonalColor || !personalColorSeason) return filtered
+
+    const referenceColors = getSeasonReferenceColors(personalColorSeason)
+    return [...filtered].sort(
+      (a, b) =>
+        closestColorDistance(a.dominantColors, referenceColors) -
+        closestColorDistance(b.dominantColors, referenceColors)
+    )
+  }, [
+    items,
+    occasionStyleMode,
+    selectedOccasion,
+    selectedStyle,
+    selectedClothingTypes,
+    matchByPersonalColor,
+    personalColorSeason,
+  ])
 
   return (
     <div className="flex flex-col gap-space-lg">
@@ -150,7 +168,7 @@ export default function WardrobeLibrary() {
             />
             <span className="text-label-md font-medium text-on-surface">{t('suggestAccessoriesLabel')}</span>
           </label>
-          {hasPersonalColorResult ? (
+          {personalColorSeason ? (
             <label className="flex cursor-pointer select-none items-center gap-space-xs">
               <input
                 type="checkbox"
