@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { SITE_URL } from '@/lib/site'
 import { QrModalProvider } from '@/components/qr-modal/QrModalProvider'
 import { AuthProvider } from '@/components/auth/AuthProvider'
 import { LoginRequiredModalProvider } from '@/components/auth/LoginRequiredModalProvider'
@@ -17,7 +18,7 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://twistfit.org'),
+  metadataBase: new URL(SITE_URL),
   title: 'TwistFit — Màu Sắc Cá Nhân & Phối Đồ Thông Minh',
   description:
     'TwistFit giúp bạn khám phá màu sắc cá nhân của chính mình và phối đồ thông minh bằng AI.',
