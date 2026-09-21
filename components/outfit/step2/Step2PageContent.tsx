@@ -18,19 +18,30 @@ export default function Step2PageContent({ models }: { models: CatalogModel[] })
   const [isGenerating, setIsGenerating] = useState(false)
   const [generateError, setGenerateError] = useState<string | null>(null)
   const [quota, setQuota] = useState<TryOnQuota | null>(null)
+  const [quotaLoadFailed, setQuotaLoadFailed] = useState(false)
+  const [quotaRetryToken, setQuotaRetryToken] = useState(0)
 
   useEffect(() => {
     let cancelled = false
+    setQuotaLoadFailed(false)
     apiFetch('/tryon/quota')
-      .then((response) => (response.ok ? (response.json() as Promise<TryOnQuota>) : null))
-      .then((data) => {
-        if (!cancelled && data && typeof data.remainingToday === 'number') setQuota(data)
+      .then((response) => {
+        if (cancelled) return
+        if (!response.ok) {
+          setQuotaLoadFailed(true)
+          return
+        }
+        response.json().then((data: TryOnQuota) => {
+          if (!cancelled && typeof data.remainingToday === 'number') setQuota(data)
+        })
       })
-      .catch(() => {})
+      .catch(() => {
+        if (!cancelled) setQuotaLoadFailed(true)
+      })
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [quotaRetryToken])
 
   async function handleGenerate() {
     const catalogModelId = Number(selectedModel.id)
@@ -93,6 +104,18 @@ export default function Step2PageContent({ models }: { models: CatalogModel[] })
               {t('quotaBadge', { remaining: quota.remainingToday, limit: quota.limit })}
             </span>
           )}
+          {quotaLoadFailed && (
+            <span className="flex items-center gap-space-sm rounded-full bg-error-container px-space-md py-2 text-label-lg font-semibold text-on-error-container">
+              {t('quotaLoadError')}
+              <button
+                type="button"
+                onClick={() => setQuotaRetryToken((current) => current + 1)}
+                className="underline"
+              >
+                {t('quotaRetryButton')}
+              </button>
+            </span>
+          )}
           <div className="flex w-full flex-col items-center justify-between gap-space-md sm:flex-row">
             <Link
               href="/outfit/step-1"
@@ -104,7 +127,7 @@ export default function Step2PageContent({ models }: { models: CatalogModel[] })
             <button
               type="button"
               onClick={handleGenerate}
-              disabled={isGenerating || quota?.remainingToday === 0}
+              disabled={isGenerating || quota?.remainingToday === 0 || quotaLoadFailed}
               className="flex w-full items-center justify-center gap-space-sm rounded-full bg-primary px-space-xl py-3.5 text-label-lg text-on-primary shadow-md transition-all hover:bg-primary-container hover:shadow-lg disabled:opacity-60 sm:w-auto"
             >
               <span>{t('generateButton')}</span>

@@ -138,6 +138,37 @@ describe('Step2PageContent', () => {
     await waitFor(() => expect(button).toBeDisabled())
   })
 
+  it('disables the button and offers a retry when the quota request fails outright', async () => {
+    const fetchMock = vi.fn().mockImplementation((url: string) => {
+      if (url.endsWith('/tryon/quota')) return Promise.resolve(jsonResponse(null, { ok: false, status: 500 }))
+      return Promise.resolve(jsonResponse({ id: 77 }, { status: 201 }))
+    })
+    vi.stubGlobal('fetch', fetchMock)
+
+    renderWithIntl(
+      <OutfitFlowProvider initialModel={{ ...FALLBACK_MODEL, id: '42' }}>
+        <Step2PageContent models={MODELS} />
+      </OutfitFlowProvider>
+    )
+
+    const errorMessage = await screen.findByText('Không tải được số lượt thử còn lại hôm nay.')
+    expect(errorMessage).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Xác nhận người mẫu/ })).toBeDisabled()
+
+    fetchMock.mockImplementation((url: string) =>
+      Promise.resolve(
+        url.endsWith('/tryon/quota') ? jsonResponse({ usedToday: 0, limit: 5, remainingToday: 5 }) : jsonResponse({ id: 77 }, { status: 201 })
+      )
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Thử lại' }))
+
+    await waitFor(() =>
+      expect(screen.queryByText('Không tải được số lượt thử còn lại hôm nay.')).not.toBeInTheDocument()
+    )
+    expect(await screen.findByText('Còn 5/5 lượt thử hôm nay')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Xác nhận người mẫu/ })).not.toBeDisabled()
+  })
+
   it('does not navigate when job creation fails', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse(null, { ok: false, status: 500 })))
 

@@ -954,7 +954,9 @@
         "backButton": "Quay lại Bước 1 (Chọn đồ)",
         "generateButton": "Xác nhận người mẫu & Tạo Đồ Ảo Ngay",
         "generateError": "Không thể tạo yêu cầu phối đồ, vui lòng thử lại.",
-        "quotaBadge": "Còn {remaining}/{limit} lượt thử hôm nay"
+        "quotaBadge": "Còn {remaining}/{limit} lượt thử hôm nay",
+        "quotaLoadError": "Không tải được số lượt thử còn lại hôm nay.",
+        "quotaRetryButton": "Thử lại"
       }
     },
     "Step3": {
