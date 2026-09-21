@@ -23,9 +23,22 @@ jobs:
         with:
           node-version: '24.x'
 
-      - name: npm install, build, and test
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Debug Next
         run: |
-          npm install
+          echo "=== npm ls next ==="
+          npm ls next
+      
+          echo "=== next binary ==="
+          ls -lah node_modules/.bin/next
+      
+          echo "=== next version ==="
+          node -p "require('next/package.json').version"
+
+      - name: npm build, and test
+        run: |
           npm run build --if-present
           npm run test --if-present
 
