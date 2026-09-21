@@ -78,4 +78,19 @@ describe('OutfitFlowChrome', () => {
 
     expect(screen.getByRole('link', { name: /Xem Kết Quả/ })).toHaveAttribute('href', '/outfit/step-3')
   })
+
+  it('does not mark step 2 as done when landing directly on step 3 without ever visiting it', () => {
+    mockPathname = '/outfit/step-3'
+    render(
+      withIntl(
+        <OutfitFlowProvider>
+          <OutfitFlowChrome>
+            <p>content</p>
+          </OutfitFlowChrome>
+        </OutfitFlowProvider>
+      )
+    )
+
+    expect(screen.queryByRole('link', { name: /Dáng & Khuôn Mặt/ })).not.toBeInTheDocument()
+  })
 })

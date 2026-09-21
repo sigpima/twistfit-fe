@@ -4,13 +4,13 @@ import { renderHook, act } from '@testing-library/react'
 import { OutfitFlowProvider, useOutfitFlow, DEFAULT_GARMENT, FALLBACK_MODEL } from './OutfitFlowProvider'
 
 function TestConsumer() {
-  const { selectedGarment, setSelectedGarment, selectedModel, setSelectedModel, maxStepReached, markStepVisited } =
+  const { selectedGarment, setSelectedGarment, selectedModel, setSelectedModel, visitedSteps, markStepVisited } =
     useOutfitFlow()
   return (
     <div>
       <span>{selectedGarment.name}</span>
       <span>{selectedModel.name}</span>
-      <span>Max: {maxStepReached}</span>
+      <span>Visited: {visitedSteps.join(',')}</span>
       <button onClick={() => markStepVisited(3)}>mark step 3</button>
       <button onClick={() => markStepVisited(2)}>mark step 2</button>
       <button
@@ -75,26 +75,37 @@ describe('OutfitFlowProvider', () => {
     expect(screen.getByText('Mảnh khảnh')).toBeInTheDocument()
   })
 
-  it('starts with the furthest step reached at 1', () => {
+  it('starts with only step 1 visited', () => {
     render(
       <OutfitFlowProvider>
         <TestConsumer />
       </OutfitFlowProvider>
     )
-    expect(screen.getByText('Max: 1')).toBeInTheDocument()
+    expect(screen.getByText('Visited: 1')).toBeInTheDocument()
   })
 
-  it('advances the furthest step reached when markStepVisited is called with a later step', () => {
+  it('records exactly the step marked visited, without inferring steps skipped in between', () => {
     render(
       <OutfitFlowProvider>
         <TestConsumer />
       </OutfitFlowProvider>
     )
     fireEvent.click(screen.getByText('mark step 3'))
-    expect(screen.getByText('Max: 3')).toBeInTheDocument()
+    expect(screen.getByText('Visited: 1,3')).toBeInTheDocument()
   })
 
-  it('does not lower the furthest step reached when marking an earlier step', () => {
+  it('does not add a duplicate entry when the same step is marked visited again', () => {
+    render(
+      <OutfitFlowProvider>
+        <TestConsumer />
+      </OutfitFlowProvider>
+    )
+    fireEvent.click(screen.getByText('mark step 3'))
+    fireEvent.click(screen.getByText('mark step 3'))
+    expect(screen.getByText('Visited: 1,3')).toBeInTheDocument()
+  })
+
+  it('accumulates steps visited out of order', () => {
     render(
       <OutfitFlowProvider>
         <TestConsumer />
@@ -102,7 +113,7 @@ describe('OutfitFlowProvider', () => {
     )
     fireEvent.click(screen.getByText('mark step 3'))
     fireEvent.click(screen.getByText('mark step 2'))
-    expect(screen.getByText('Max: 3')).toBeInTheDocument()
+    expect(screen.getByText('Visited: 1,3,2')).toBeInTheDocument()
   })
 })
 

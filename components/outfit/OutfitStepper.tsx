@@ -11,10 +11,10 @@ const STEPS = [
 
 export default function OutfitStepper({
   currentStep,
-  maxStepReached = currentStep,
+  visitedSteps = Array.from({ length: currentStep }, (_, index) => (index + 1) as 1 | 2 | 3),
 }: {
   currentStep: 1 | 2 | 3
-  maxStepReached?: 1 | 2 | 3
+  visitedSteps?: (1 | 2 | 3)[]
 }) {
   const t = useTranslations('Outfit.Stepper')
 
@@ -29,7 +29,7 @@ export default function OutfitStepper({
         <div className="grid grid-cols-1 gap-space-md pt-space-xs md:grid-cols-3">
           {STEPS.map((item) => {
             const isCurrent = item.step === currentStep
-            const isVisited = item.step <= maxStepReached
+            const isVisited = visitedSteps.includes(item.step)
             const isReachable = isVisited && !isCurrent
             const content = (
               <>

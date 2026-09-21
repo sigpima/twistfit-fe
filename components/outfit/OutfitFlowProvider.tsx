@@ -47,7 +47,7 @@ type OutfitFlowContextValue = {
   setSelectedGarment: (garment: Garment) => void
   selectedModel: Model
   setSelectedModel: (model: Model) => void
-  maxStepReached: FlowStep
+  visitedSteps: FlowStep[]
   markStepVisited: (step: FlowStep) => void
   occasionStyleMode: OccasionStyleMode
   setOccasionStyleMode: (mode: OccasionStyleMode) => void
@@ -72,7 +72,7 @@ export function OutfitFlowProvider({
 }) {
   const [selectedGarment, setSelectedGarment] = useState<Garment>(DEFAULT_GARMENT)
   const [selectedModel, setSelectedModel] = useState<Model>(initialModel ?? FALLBACK_MODEL)
-  const [maxStepReached, setMaxStepReached] = useState<FlowStep>(1)
+  const [visitedSteps, setVisitedSteps] = useState<FlowStep[]>([1])
   const [occasionStyleMode, setOccasionStyleMode] = useState<OccasionStyleMode>('occasion')
   const [selectedOccasion, setSelectedOccasion] = useState<OccasionTag>('hang-ngay')
   const [selectedStyle, setSelectedStyle] = useState<StyleTag>('casual')
@@ -80,7 +80,7 @@ export function OutfitFlowProvider({
   const [suggestAccessories, setSuggestAccessories] = useState(true)
 
   function markStepVisited(step: FlowStep) {
-    setMaxStepReached((current) => (step > current ? step : current))
+    setVisitedSteps((current) => (current.includes(step) ? current : [...current, step]))
   }
 
   return (
@@ -90,7 +90,7 @@ export function OutfitFlowProvider({
         setSelectedGarment,
         selectedModel,
         setSelectedModel,
-        maxStepReached,
+        visitedSteps,
         markStepVisited,
         occasionStyleMode,
         setOccasionStyleMode,

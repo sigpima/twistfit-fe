@@ -15,7 +15,7 @@ const STEP_BY_PATHNAME: Record<string, FlowStep> = {
 export default function OutfitFlowChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const currentStep = STEP_BY_PATHNAME[pathname] ?? 1
-  const { maxStepReached, markStepVisited } = useOutfitFlow()
+  const { visitedSteps, markStepVisited } = useOutfitFlow()
 
   useEffect(() => {
     markStepVisited(currentStep)
@@ -24,7 +24,7 @@ export default function OutfitFlowChrome({ children }: { children: ReactNode }) 
   return (
     <>
       <OutfitAuthGate />
-      <OutfitStepper currentStep={currentStep} maxStepReached={Math.max(currentStep, maxStepReached) as FlowStep} />
+      <OutfitStepper currentStep={currentStep} visitedSteps={visitedSteps} />
       {children}
     </>
   )
