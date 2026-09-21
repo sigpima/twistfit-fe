@@ -59,6 +59,7 @@ type OutfitFlowContextValue = {
   setJobId: (id: number | null) => void
   suggestAccessories: boolean
   setSuggestAccessories: (value: boolean) => void
+  resetFlow: () => void
 }
 
 const OutfitFlowContext = createContext<OutfitFlowContextValue | null>(null)
@@ -83,6 +84,14 @@ export function OutfitFlowProvider({
     setVisitedSteps((current) => (current.includes(step) ? current : [...current, step]))
   }
 
+  function resetFlow() {
+    setSelectedModel(initialModel ?? FALLBACK_MODEL)
+    setOccasionStyleMode('occasion')
+    setSelectedOccasion('hang-ngay')
+    setSelectedStyle('casual')
+    setJobId(null)
+  }
+
   return (
     <OutfitFlowContext.Provider
       value={{
@@ -102,6 +111,7 @@ export function OutfitFlowProvider({
         setJobId,
         suggestAccessories,
         setSuggestAccessories,
+        resetFlow,
       }}
     >
       {children}

@@ -4,10 +4,12 @@ import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import AccessoryRecommendations from './AccessoryRecommendations'
 import ResultPreview from './ResultPreview'
+import { useOutfitFlow } from '../OutfitFlowProvider'
 
 export default function Step3PageContent() {
   const t = useTranslations('Outfit.Step3.Page')
   const router = useRouter()
+  const { resetFlow } = useOutfitFlow()
 
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-space-lg px-margin-desktop py-space-xl lg:max-w-6xl">
@@ -20,7 +22,10 @@ export default function Step3PageContent() {
       </div>
       <button
         type="button"
-        onClick={() => router.push('/outfit/step-1')}
+        onClick={() => {
+          resetFlow()
+          router.push('/outfit/step-1')
+        }}
         className="flex items-center justify-center gap-space-sm rounded-full bg-primary px-space-xl py-3.5 text-label-lg text-on-primary shadow-md transition-all hover:bg-primary-container hover:shadow-lg"
       >
         <span className="material-symbols-outlined text-[20px]">refresh</span>
