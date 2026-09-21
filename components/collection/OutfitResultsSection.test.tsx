@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, afterEach } from 'vitest'
-import { screen, waitFor } from '@testing-library/react'
+import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import OutfitResultsSection from './OutfitResultsSection'
 import type { TryOnJob } from '@/lib/tryon'
@@ -48,5 +48,56 @@ describe('OutfitResultsSection', () => {
     await waitFor(() => expect(screen.getAllByAltText('Ảnh trực diện')).toHaveLength(1))
     expect(screen.getByAltText('Ảnh trực diện')).toHaveAttribute('src', 'https://example.com/front.png')
     expect(screen.getByAltText('Ảnh nghiêng')).toHaveAttribute('src', 'https://example.com/side.png')
+  })
+
+  it('deletes an outfit after confirming, removing it from the grid', async () => {
+    const fetchMock = vi.fn((url: string, init?: RequestInit) => {
+      if (init?.method === 'DELETE') return Promise.resolve({ ok: true })
+      return Promise.resolve({ ok: true, json: async () => [makeJob({ id: 1 })] })
+    })
+    vi.stubGlobal('fetch', fetchMock)
+    vi.stubGlobal('confirm', vi.fn().mockReturnValue(true))
+
+    renderWithIntl(<OutfitResultsSection />)
+    await waitFor(() => expect(screen.getByAltText('Ảnh trực diện')).toBeInTheDocument())
+
+    fireEvent.click(screen.getByRole('button', { name: 'Xóa outfit này' }))
+
+    expect(window.confirm).toHaveBeenCalledWith('Xóa outfit này?')
+    await waitFor(() =>
+      expect(fetchMock).toHaveBeenCalledWith('/tryon/1', { method: 'DELETE', credentials: 'include' })
+    )
+    await waitFor(() => expect(screen.getByText('Bạn chưa có kết quả phối đồ nào.')).toBeInTheDocument())
+  })
+
+  it('does not delete when the confirm dialog is dismissed', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: async () => [makeJob({ id: 1 })] })
+    vi.stubGlobal('fetch', fetchMock)
+    vi.stubGlobal('confirm', vi.fn().mockReturnValue(false))
+
+    renderWithIntl(<OutfitResultsSection />)
+    await waitFor(() => expect(screen.getByAltText('Ảnh trực diện')).toBeInTheDocument())
+
+    fireEvent.click(screen.getByRole('button', { name: 'Xóa outfit này' }))
+
+    expect(fetchMock).not.toHaveBeenCalledWith('/tryon/1', { method: 'DELETE', credentials: 'include' })
+    expect(screen.getByAltText('Ảnh trực diện')).toBeInTheDocument()
+  })
+
+  it('shows an error message and keeps the card when the delete request fails', async () => {
+    const fetchMock = vi.fn((url: string, init?: RequestInit) => {
+      if (init?.method === 'DELETE') return Promise.resolve({ ok: false, status: 500 })
+      return Promise.resolve({ ok: true, json: async () => [makeJob({ id: 1 })] })
+    })
+    vi.stubGlobal('fetch', fetchMock)
+    vi.stubGlobal('confirm', vi.fn().mockReturnValue(true))
+
+    renderWithIntl(<OutfitResultsSection />)
+    await waitFor(() => expect(screen.getByAltText('Ảnh trực diện')).toBeInTheDocument())
+
+    fireEvent.click(screen.getByRole('button', { name: 'Xóa outfit này' }))
+
+    await waitFor(() => expect(screen.getByText('Không xóa được, vui lòng thử lại.')).toBeInTheDocument())
+    expect(screen.getByAltText('Ảnh trực diện')).toBeInTheDocument()
   })
 })

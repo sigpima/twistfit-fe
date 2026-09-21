@@ -9,12 +9,25 @@ import type { TryOnJob } from '@/lib/tryon'
 export default function OutfitResultsSection() {
   const t = useTranslations('Collection.OutfitResults')
   const [jobs, setJobs] = useState<TryOnJob[] | null>(null)
+  const [deleteError, setDeleteError] = useState(false)
 
   useEffect(() => {
     apiFetch('/tryon')
       .then((response) => (response.ok ? response.json() : []))
       .then((data: TryOnJob[]) => setJobs(data.filter((job) => job.status === 'done')))
   }, [])
+
+  async function handleDelete(jobId: number) {
+    if (!window.confirm(t('deleteConfirm'))) return
+
+    setDeleteError(false)
+    const response = await apiFetch(`/tryon/${jobId}`, { method: 'DELETE' })
+    if (!response.ok) {
+      setDeleteError(true)
+      return
+    }
+    setJobs((current) => (current ? current.filter((job) => job.id !== jobId) : current))
+  }
 
   return (
     <section className="rounded-3xl border border-outline bg-surface-container-lowest p-6 shadow-[0_12px_36px_rgba(4,28,55,0.06)] sm:p-8">
@@ -31,10 +44,19 @@ export default function OutfitResultsSection() {
           </Link>
         </div>
       )}
+      {deleteError && <p className="mb-4 text-body-sm text-error">{t('deleteError')}</p>}
       {jobs !== null && jobs.length > 0 && (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {jobs.map((job) => (
-            <div key={job.id} className="overflow-hidden rounded-2xl bg-surface shadow-sm">
+            <div key={job.id} className="relative overflow-hidden rounded-2xl bg-surface shadow-sm">
+              <button
+                type="button"
+                onClick={() => handleDelete(job.id)}
+                aria-label={t('deleteAriaLabel')}
+                className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-surface/90 text-on-surface shadow-sm hover:bg-error hover:text-on-error"
+              >
+                <span className="material-symbols-outlined text-[18px]">delete</span>
+              </button>
               <div className="grid grid-cols-2 gap-px bg-outline-variant">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img

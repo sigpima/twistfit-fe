@@ -522,7 +522,10 @@
       "emptyState": "Bạn chưa có kết quả phối đồ nào.",
       "emptyStateCta": "Bắt đầu phối đồ",
       "frontImageAlt": "Ảnh trực diện",
-      "sideImageAlt": "Ảnh nghiêng"
+      "sideImageAlt": "Ảnh nghiêng",
+      "deleteAriaLabel": "Xóa outfit này",
+      "deleteConfirm": "Xóa outfit này?",
+      "deleteError": "Không xóa được, vui lòng thử lại."
     }
   },
   "Profile": {
