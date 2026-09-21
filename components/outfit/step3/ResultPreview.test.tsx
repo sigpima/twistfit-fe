@@ -81,6 +81,26 @@ describe('ResultPreview', () => {
     expect(screen.queryByAltText('Ảnh nghiêng')).not.toBeInTheDocument()
   })
 
+  it('gives up and shows a timeout message after too many pending/processing polls', async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true })
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(jsonResponse({ status: 'processing' })))
+
+    renderWithIntl(
+      <OutfitFlowProvider>
+        <SetJobId jobId={10} />
+        <ResultPreview />
+      </OutfitFlowProvider>
+    )
+
+    expect(screen.getByText('Đang xử lý phối đồ, vui lòng đợi...')).toBeInTheDocument()
+
+    await vi.advanceTimersByTimeAsync(3000 * 40)
+
+    await waitFor(() =>
+      expect(screen.getByText('Quá thời gian xử lý, vui lòng thử lại sau.')).toBeInTheDocument()
+    )
+  })
+
   it('shows the error message when the job fails', async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true })
     vi.stubGlobal(

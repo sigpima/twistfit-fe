@@ -13,26 +13,35 @@ type JobPollResult = {
   errorMessage: string | null
 }
 
+const POLL_INTERVAL_MS = 3000
+const MAX_POLL_ATTEMPTS = 40 // ~2 minutes at the interval above
+
 export default function ResultPreview() {
   const t = useTranslations('Outfit.Step3.ResultPreview')
   const { jobId } = useOutfitFlow()
   const [job, setJob] = useState<JobPollResult | null>(null)
+  const [timedOut, setTimedOut] = useState(false)
 
   useEffect(() => {
     if (jobId === null) return
     let cancelled = false
+    setTimedOut(false)
 
-    async function poll() {
+    async function poll(attempt: number) {
       const response = await apiFetch(`/tryon/${jobId}`)
       if (cancelled || !response.ok) return
       const result = (await response.json()) as JobPollResult
       setJob(result)
       if (result.status === 'pending' || result.status === 'processing') {
-        setTimeout(poll, 3000)
+        if (attempt + 1 >= MAX_POLL_ATTEMPTS) {
+          setTimedOut(true)
+          return
+        }
+        setTimeout(() => poll(attempt + 1), POLL_INTERVAL_MS)
       }
     }
 
-    poll()
+    poll(0)
     return () => {
       cancelled = true
     }
@@ -40,6 +49,10 @@ export default function ResultPreview() {
 
   if (jobId === null) {
     return <p className="text-center text-body-md text-on-surface-variant">{t('noJob')}</p>
+  }
+
+  if (timedOut) {
+    return <p className="text-center text-body-md text-error">{t('timeoutStatus')}</p>
   }
 
   if (!job || job.status === 'pending' || job.status === 'processing') {
