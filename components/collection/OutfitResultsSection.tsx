@@ -5,11 +5,13 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { apiFetch } from '@/lib/apiClient'
 import type { TryOnJob } from '@/lib/tryon'
+import ImageLightbox from '@/components/shared/ImageLightbox'
 
 export default function OutfitResultsSection() {
   const t = useTranslations('Collection.OutfitResults')
   const [jobs, setJobs] = useState<TryOnJob[] | null>(null)
   const [deleteError, setDeleteError] = useState(false)
+  const [lightboxImage, setLightboxImage] = useState<{ src: string; alt: string } | null>(null)
 
   useEffect(() => {
     apiFetch('/tryon')
@@ -58,19 +60,33 @@ export default function OutfitResultsSection() {
                 <span className="material-symbols-outlined text-[18px]">delete</span>
               </button>
               <div className="grid grid-cols-2 gap-px bg-outline-variant">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={job.resultFrontBlobUrl ?? ''}
-                  alt={t('frontImageAlt')}
-                  className="aspect-[3/4] w-full object-cover"
-                />
-                {job.resultSideBlobUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
+                <button
+                  type="button"
+                  onClick={() =>
+                    setLightboxImage({ src: job.resultFrontBlobUrl ?? '', alt: t('frontImageAlt') })
+                  }
+                  className="block"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={job.resultSideBlobUrl}
-                    alt={t('sideImageAlt')}
+                    src={job.resultFrontBlobUrl ?? ''}
+                    alt={t('frontImageAlt')}
                     className="aspect-[3/4] w-full object-cover"
                   />
+                </button>
+                {job.resultSideBlobUrl ? (
+                  <button
+                    type="button"
+                    onClick={() => setLightboxImage({ src: job.resultSideBlobUrl ?? '', alt: t('sideImageAlt') })}
+                    className="block"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={job.resultSideBlobUrl}
+                      alt={t('sideImageAlt')}
+                      className="aspect-[3/4] w-full object-cover"
+                    />
+                  </button>
                 ) : (
                   <div className="aspect-[3/4] w-full bg-surface-container" />
                 )}
@@ -81,6 +97,9 @@ export default function OutfitResultsSection() {
             </div>
           ))}
         </div>
+      )}
+      {lightboxImage && (
+        <ImageLightbox src={lightboxImage.src} alt={lightboxImage.alt} onClose={() => setLightboxImage(null)} />
       )}
     </section>
   )

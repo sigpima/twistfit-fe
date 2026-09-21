@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, afterEach } from 'vitest'
-import { screen, fireEvent, waitFor } from '@testing-library/react'
+import { screen, fireEvent, waitFor, within } from '@testing-library/react'
 import { renderWithIntl } from '@/test-utils/renderWithIntl'
 import OutfitResultsSection from './OutfitResultsSection'
 import type { TryOnJob } from '@/lib/tryon'
@@ -82,6 +82,21 @@ describe('OutfitResultsSection', () => {
 
     expect(fetchMock).not.toHaveBeenCalledWith('/tryon/1', { method: 'DELETE', credentials: 'include' })
     expect(screen.getByAltText('Ảnh trực diện')).toBeInTheDocument()
+  })
+
+  it('opens a lightbox with the clicked image, and closes it', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => [makeJob({ id: 1 })] }))
+
+    renderWithIntl(<OutfitResultsSection />)
+    await waitFor(() => expect(screen.getByAltText('Ảnh trực diện')).toBeInTheDocument())
+
+    fireEvent.click(screen.getByAltText('Ảnh trực diện'))
+
+    const lightbox = screen.getByTestId('image-lightbox-backdrop')
+    expect(within(lightbox).getByAltText('Ảnh trực diện')).toHaveAttribute('src', 'https://example.com/front.png')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Đóng' }))
+    expect(screen.queryByTestId('image-lightbox-backdrop')).not.toBeInTheDocument()
   })
 
   it('shows an error message and keeps the card when the delete request fails', async () => {

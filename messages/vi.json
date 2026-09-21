@@ -655,6 +655,9 @@
     "compatibility": "Tương thích iPhone & Android",
     "instructions": "Không cần tải app • Quét và nhận kết quả tức thì"
   },
+  "ImageLightbox": {
+    "closeAriaLabel": "Đóng"
+  },
   "LoginRequiredModal": {
     "title": "Bạn cần đăng nhập",
     "description": "Đăng nhập để sử dụng tính năng phối đồ và lưu tủ đồ của riêng bạn.",
