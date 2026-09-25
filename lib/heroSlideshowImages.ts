@@ -6,20 +6,20 @@ const IMAGE_NUMBERS = [
 
 export type HeroSlideshowImage = {
   src: string
+  webpSrc: string
   alt: string
 }
 
-export const HERO_SLIDESHOW_MOBILE_IMAGES: HeroSlideshowImage[] = IMAGE_NUMBERS.map((number) => ({
-  src: `/home/hero-slideshow/mobile/img-${number}.jpg`,
-  alt: '',
-}))
+function buildImageSet(directory: string): HeroSlideshowImage[] {
+  return IMAGE_NUMBERS.map((number) => ({
+    src: `/home/hero-slideshow/${directory}/img-${number}.jpg`,
+    webpSrc: `/home/hero-slideshow/${directory}/img-${number}.webp`,
+    alt: '',
+  }))
+}
 
-export const HERO_SLIDESHOW_DESKTOP_IMAGES: HeroSlideshowImage[] = IMAGE_NUMBERS.map((number) => ({
-  src: `/home/hero-slideshow/desktop/img-${number}.jpg`,
-  alt: '',
-}))
+export const HERO_SLIDESHOW_MOBILE_IMAGES: HeroSlideshowImage[] = buildImageSet('mobile')
 
-export const HERO_SLIDESHOW_DESKTOP_WIDE_IMAGES: HeroSlideshowImage[] = IMAGE_NUMBERS.map((number) => ({
-  src: `/home/hero-slideshow/desktop-wide/img-${number}.jpg`,
-  alt: '',
-}))
+export const HERO_SLIDESHOW_DESKTOP_IMAGES: HeroSlideshowImage[] = buildImageSet('desktop')
+
+export const HERO_SLIDESHOW_DESKTOP_WIDE_IMAGES: HeroSlideshowImage[] = buildImageSet('desktop-wide')

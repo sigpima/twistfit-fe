@@ -15,12 +15,15 @@ describe('heroSlideshowImages', () => {
   it('points each set at its own directory', () => {
     for (const image of HERO_SLIDESHOW_MOBILE_IMAGES) {
       expect(image.src).toMatch(/^\/home\/hero-slideshow\/mobile\/img-\d+\.jpg$/)
+      expect(image.webpSrc).toMatch(/^\/home\/hero-slideshow\/mobile\/img-\d+\.webp$/)
     }
     for (const image of HERO_SLIDESHOW_DESKTOP_IMAGES) {
       expect(image.src).toMatch(/^\/home\/hero-slideshow\/desktop\/img-\d+\.jpg$/)
+      expect(image.webpSrc).toMatch(/^\/home\/hero-slideshow\/desktop\/img-\d+\.webp$/)
     }
     for (const image of HERO_SLIDESHOW_DESKTOP_WIDE_IMAGES) {
       expect(image.src).toMatch(/^\/home\/hero-slideshow\/desktop-wide\/img-\d+\.jpg$/)
+      expect(image.webpSrc).toMatch(/^\/home\/hero-slideshow\/desktop-wide\/img-\d+\.webp$/)
     }
   })
 

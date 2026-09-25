@@ -3,8 +3,8 @@ import { render, act } from '@testing-library/react'
 import HeroSlideshow from './HeroSlideshow'
 
 const IMAGES = [
-  { src: '/a.jpg', alt: '' },
-  { src: '/b.jpg', alt: '' },
+  { src: '/a.jpg', webpSrc: '/a.webp', alt: '' },
+  { src: '/b.jpg', webpSrc: '/b.webp', alt: '' },
 ]
 
 function isVisible(img: Element) {

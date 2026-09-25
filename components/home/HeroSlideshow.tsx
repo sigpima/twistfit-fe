@@ -1,10 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 
 export type HeroSlideshowImage = {
   src: string
+  webpSrc: string
   alt: string
 }
 
@@ -39,24 +39,23 @@ export default function HeroSlideshow({ images, className }: HeroSlideshowProps)
   return (
     <div className={`relative overflow-hidden ${className ?? ''}`} aria-hidden="true">
       {images.slice(0, mountedCount).map((image, index) => (
-        <Image
-          key={image.src}
-          src={image.src}
-          alt=""
-          fill
-          sizes="100vw"
-          priority={index === 0}
-          // The Next.js image optimizer re-requests local /public files through
-          // its own request handler to resize them; on this app's production
-          // host that internal re-fetch comes back as "not a valid image"
-          // (400) even though the raw file serves fine directly. Skip the
-          // optimizer for these already-reasonably-sized static slides so
-          // they load unmodified instead of erroring.
-          unoptimized
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out ${
-            index === activeIndex ? 'opacity-100' : 'opacity-0'
-          }`}
-        />
+        // Plain <picture>/<img> rather than next/image: these files are
+        // pre-optimized (see scripts/optimize-hero-images.mjs) and served
+        // unmodified, so next/image's runtime resize/format pipeline (which
+        // also 400s on this app's production host — see git history) has
+        // nothing to add here.
+        <picture key={image.src}>
+          <source srcSet={image.webpSrc} type="image/webp" />
+          <img
+            src={image.src}
+            alt=""
+            fetchPriority={index === 0 ? 'high' : undefined}
+            loading={index === 0 ? 'eager' : 'lazy'}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out ${
+              index === activeIndex ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        </picture>
       ))}
     </div>
   )
