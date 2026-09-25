@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
+import Script from 'next/script'
 import { NextIntlClientProvider } from 'next-intl'
-import { GoogleAnalytics } from '@next/third-parties/google'
 import { SITE_URL } from '@/lib/site'
 import { buildOrganizationJsonLd, buildWebsiteJsonLd } from '@/lib/jsonLd'
 import { QrModalProvider } from '@/components/qr-modal/QrModalProvider'
@@ -10,6 +10,7 @@ import { LoginRequiredModalProvider } from '@/components/auth/LoginRequiredModal
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import JsonLd from '@/components/seo/JsonLd'
+import MaterialSymbolsStylesheet from '@/components/seo/MaterialSymbolsStylesheet'
 import './globals.css'
 
 const montserrat = Montserrat({
@@ -30,12 +31,9 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="vi" className={`${montserrat.variable} antialiased`}>
       <head>
-        {/* Material Symbols isn't available via next/font/google; this stylesheet link is the documented way to load it. */}
-        {/* eslint-disable-next-line @next/next/google-font-display, @next/next/no-page-custom-font */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
-        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <MaterialSymbolsStylesheet />
         <JsonLd data={buildOrganizationJsonLd()} />
         <JsonLd data={buildWebsiteJsonLd()} />
       </head>
@@ -53,8 +51,25 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         </NextIntlClientProvider>
       </body>
       {/* Unset in local dev on purpose — only set NEXT_PUBLIC_GA_ID in production, so local
-          testing never sends real analytics events. */}
-      {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
+          testing never sends real analytics events. Loaded with strategy="lazyOnload"
+          (rather than @next/third-parties' GoogleAnalytics, which uses "afterInteractive")
+          so the ~170 KiB gtag.js bundle downloads after the page is idle instead of
+          competing with the initial page load. */}
+      {process.env.NEXT_PUBLIC_GA_ID && (
+        <>
+          <Script id="ga-init" strategy="lazyOnload">
+            {`window.dataLayer = window.dataLayer || [];
+              function gtag(){window.dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');`}
+          </Script>
+          <Script
+            id="ga-src"
+            strategy="lazyOnload"
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+          />
+        </>
+      )}
     </html>
   )
 }
