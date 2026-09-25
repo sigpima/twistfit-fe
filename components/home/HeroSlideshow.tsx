@@ -46,6 +46,13 @@ export default function HeroSlideshow({ images, className }: HeroSlideshowProps)
           fill
           sizes="100vw"
           priority={index === 0}
+          // The Next.js image optimizer re-requests local /public files through
+          // its own request handler to resize them; on this app's production
+          // host that internal re-fetch comes back as "not a valid image"
+          // (400) even though the raw file serves fine directly. Skip the
+          // optimizer for these already-reasonably-sized static slides so
+          // they load unmodified instead of erroring.
+          unoptimized
           className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out ${
             index === activeIndex ? 'opacity-100' : 'opacity-0'
           }`}
