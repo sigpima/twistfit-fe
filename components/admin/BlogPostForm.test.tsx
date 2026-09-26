@@ -71,7 +71,7 @@ describe('BlogPostForm', () => {
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/blog'))
     expect(fetch).toHaveBeenCalledWith(
-      '/blog',
+      '/api/blog',
       expect.objectContaining({
         method: 'POST',
         body: expect.stringContaining('"coverImageUrl":"/blog/x.jpg","coverImageAlt":"Ảnh bìa bài viết"'),
@@ -89,7 +89,7 @@ describe('BlogPostForm', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Lưu thay đổi' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/blog'))
-    expect(fetch).toHaveBeenCalledWith('/blog/42', expect.objectContaining({ method: 'PUT', credentials: 'include' }))
+    expect(fetch).toHaveBeenCalledWith('/api/blog/42', expect.objectContaining({ method: 'PUT', credentials: 'include' }))
   })
 
   it('shows a generic error and does not redirect when the API rejects the submission', async () => {

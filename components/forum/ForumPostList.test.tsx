@@ -36,7 +36,7 @@ describe('ForumPostList', () => {
     renderWithIntl(<ForumPostList />)
 
     await waitFor(() => expect(screen.getByText('Bài công khai')).toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/forum/posts', { credentials: 'include' })
+    expect(fetch).toHaveBeenCalledWith('/api/forum/posts', { credentials: 'include' })
     expect(screen.getByText('Nội dung')).toBeInTheDocument()
     expect(screen.getAllByRole('link', { name: 'Lan Anh' })[0]).toHaveAttribute('href', '/forum/1')
   })
@@ -48,7 +48,7 @@ describe('ForumPostList', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Xin tư vấn phối đồ' }))
     await waitFor(() =>
-      expect(fetch).toHaveBeenCalledWith('/forum/posts?category=styling-help', { credentials: 'include' })
+      expect(fetch).toHaveBeenCalledWith('/api/forum/posts?category=styling-help', { credentials: 'include' })
     )
   })
 
@@ -79,7 +79,7 @@ describe('ForumPostList', () => {
       expect(screen.getByRole('button', { name: 'Bỏ lưu bài viết' })).toHaveAttribute('aria-pressed', 'true')
     )
     expect(fetch).toHaveBeenCalledWith(
-      '/forum/posts/1/bookmark',
+      '/api/forum/posts/1/bookmark',
       expect.objectContaining({ method: 'POST', credentials: 'include' })
     )
   })
@@ -101,7 +101,7 @@ describe('ForumPostList', () => {
 
     await waitFor(() => expect(screen.getByText('4 lượt thích')).toBeInTheDocument())
     expect(fetch).toHaveBeenCalledWith(
-      '/forum/posts/1/like',
+      '/api/forum/posts/1/like',
       expect.objectContaining({ method: 'POST', credentials: 'include' })
     )
   })

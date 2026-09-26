@@ -33,7 +33,7 @@ describe('TaxonomyGroupDetail', () => {
     vi.stubGlobal(
       'fetch',
       vi.fn((url: string, init?: RequestInit) => {
-        if (url === '/taxonomy/groups/1/values' && init?.method === 'POST') {
+        if (url === '/api/taxonomy/groups/1/values' && init?.method === 'POST') {
           return Promise.resolve(jsonResponse({ id: 2, key: 'quan', label: 'Quần', sortOrder: 1 }, { status: 201 }))
         }
         return Promise.resolve(jsonResponse([GROUP]))
@@ -47,7 +47,7 @@ describe('TaxonomyGroupDetail', () => {
 
     await waitFor(() => expect(screen.getByText('Quần')).toBeInTheDocument())
     expect(fetch).toHaveBeenCalledWith(
-      '/taxonomy/groups/1/values',
+      '/api/taxonomy/groups/1/values',
       expect.objectContaining({ method: 'POST', body: JSON.stringify({ key: 'quan', label: 'Quần' }) })
     )
   })
@@ -56,7 +56,7 @@ describe('TaxonomyGroupDetail', () => {
     vi.stubGlobal(
       'fetch',
       vi.fn((url: string, init?: RequestInit) => {
-        if (url === '/taxonomy/values/1' && init?.method === 'DELETE') {
+        if (url === '/api/taxonomy/values/1' && init?.method === 'DELETE') {
           return Promise.resolve(jsonResponse({}))
         }
         return Promise.resolve(jsonResponse([GROUP]))
@@ -75,7 +75,7 @@ describe('TaxonomyGroupDetail', () => {
     vi.stubGlobal(
       'fetch',
       vi.fn((url: string, init?: RequestInit) => {
-        if (url === '/taxonomy/values/1' && init?.method === 'DELETE') {
+        if (url === '/api/taxonomy/values/1' && init?.method === 'DELETE') {
           return Promise.resolve(jsonResponse({ detail: 'Đang được 3 món đồ sử dụng' }, { ok: false, status: 400 }))
         }
         return Promise.resolve(jsonResponse([GROUP]))

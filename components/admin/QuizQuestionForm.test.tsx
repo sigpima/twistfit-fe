@@ -49,7 +49,7 @@ describe('QuizQuestionForm', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Tạo câu hỏi' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/quiz'))
-    expect(fetch).toHaveBeenCalledWith('/quiz-questions', expect.objectContaining({ method: 'POST', credentials: 'include' }))
+    expect(fetch).toHaveBeenCalledWith('/api/quiz-questions', expect.objectContaining({ method: 'POST', credentials: 'include' }))
   })
 
   it('pre-fills fields and PUTs to /api/quiz-questions/{id} when editing', async () => {
@@ -60,7 +60,7 @@ describe('QuizQuestionForm', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Lưu thay đổi' }))
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/quiz'))
-    expect(fetch).toHaveBeenCalledWith('/quiz-questions/9', expect.objectContaining({ method: 'PUT', credentials: 'include' }))
+    expect(fetch).toHaveBeenCalledWith('/api/quiz-questions/9', expect.objectContaining({ method: 'PUT', credentials: 'include' }))
   })
 
   it('shows a generic error and does not redirect when the API rejects the submission', async () => {

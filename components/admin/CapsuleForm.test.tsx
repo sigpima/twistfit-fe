@@ -55,7 +55,7 @@ describe('CapsuleForm', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Tạo set đồ' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/capsule-wardrobe'))
-    expect(fetch).toHaveBeenCalledWith('/capsule-wardrobe', expect.objectContaining({ method: 'POST', credentials: 'include' }))
+    expect(fetch).toHaveBeenCalledWith('/api/capsule-wardrobe', expect.objectContaining({ method: 'POST', credentials: 'include' }))
   })
 
   it('pre-fills fields and PUTs to /api/capsule-wardrobe/{id} when editing', async () => {
@@ -66,7 +66,7 @@ describe('CapsuleForm', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Lưu thay đổi' }))
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/capsule-wardrobe'))
-    expect(fetch).toHaveBeenCalledWith('/capsule-wardrobe/9', expect.objectContaining({ method: 'PUT', credentials: 'include' }))
+    expect(fetch).toHaveBeenCalledWith('/api/capsule-wardrobe/9', expect.objectContaining({ method: 'PUT', credentials: 'include' }))
   })
 
   it('shows a generic error and does not redirect when the API rejects the submission', async () => {

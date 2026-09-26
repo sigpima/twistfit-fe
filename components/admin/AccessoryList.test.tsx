@@ -45,7 +45,7 @@ describe('AccessoryList', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Xóa' }))
 
     await waitFor(() => expect(screen.queryByText('Túi tote nâu')).not.toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/accessories/1', { method: 'DELETE', credentials: 'include' })
+    expect(fetch).toHaveBeenCalledWith('/api/accessories/1', { method: 'DELETE', credentials: 'include' })
   })
 
   it('shows an empty state when there are no accessories', async () => {

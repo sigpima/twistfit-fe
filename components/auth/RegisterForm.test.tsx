@@ -134,7 +134,7 @@ describe('RegisterForm', () => {
     fireEvent.click(screen.getByRole('button', { name: 'ĐĂNG KÝ' }))
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/'))
     expect(fetchMock).toHaveBeenCalledWith(
-      '/auth/register',
+      '/api/auth/register',
       expect.objectContaining({
         body: JSON.stringify({ name: 'Linh Đan', identifier: '0912345678', password: 'password123' }),
       })

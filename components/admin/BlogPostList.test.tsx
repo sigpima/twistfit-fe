@@ -47,7 +47,7 @@ describe('BlogPostList', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Xóa' }))
 
     await waitFor(() => expect(screen.queryByText('Bài viết A')).not.toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/blog/1', { method: 'DELETE', credentials: 'include' })
+    expect(fetch).toHaveBeenCalledWith('/api/blog/1', { method: 'DELETE', credentials: 'include' })
   })
 
   it('shows an empty state when there are no posts', async () => {

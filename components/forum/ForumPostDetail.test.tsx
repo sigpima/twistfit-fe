@@ -50,8 +50,8 @@ function stubForumFetches(comments: ForumComment[] = COMMENTS) {
   vi.stubGlobal(
     'fetch',
     vi.fn((url: string, init?: RequestInit) => {
-      if (url === '/forum/posts/9') return Promise.resolve({ ok: true, json: async () => POST })
-      if (url === '/forum/posts/9/comments' && (!init || init.method === undefined)) {
+      if (url === '/api/forum/posts/9') return Promise.resolve({ ok: true, json: async () => POST })
+      if (url === '/api/forum/posts/9/comments' && (!init || init.method === undefined)) {
         return Promise.resolve({ ok: true, json: async () => comments })
       }
       return Promise.resolve({ ok: true, json: async () => ({}) })
@@ -73,7 +73,7 @@ describe('ForumPostDetail', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POST }))
     renderDetail()
     await waitFor(() => expect(screen.getByText('Bài chi tiết')).toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/forum/posts/9', { credentials: 'include' })
+    expect(fetch).toHaveBeenCalledWith('/api/forum/posts/9', { credentials: 'include' })
   })
 
   it('shows a not-found message when the fetch fails', async () => {
@@ -123,7 +123,7 @@ describe('ForumPostDetail', () => {
     await waitFor(() => expect(screen.getByRole('button', { name: /Đã thích \(3\)/ })).toBeInTheDocument())
     expect(screen.getByRole('button', { name: /Đã thích \(3\)/ })).toHaveAttribute('aria-pressed', 'true')
     expect(fetch).toHaveBeenCalledWith(
-      '/forum/posts/9/like',
+      '/api/forum/posts/9/like',
       expect.objectContaining({ method: 'POST', credentials: 'include' })
     )
   })
@@ -168,7 +168,7 @@ describe('ForumPostDetail', () => {
 
     await waitFor(() => expect(screen.getByText('Đẹp!')).toBeInTheDocument())
     expect(fetch).toHaveBeenCalledWith(
-      '/forum/posts/9/comments',
+      '/api/forum/posts/9/comments',
       expect.objectContaining({ method: 'POST', credentials: 'include', body: JSON.stringify({ body: 'Đẹp!' }) })
     )
   })
@@ -188,7 +188,7 @@ describe('ForumPostDetail', () => {
 
     await waitFor(() => expect(screen.queryByText('Phối đồ đẹp quá!')).not.toBeInTheDocument())
     expect(fetch).toHaveBeenCalledWith(
-      '/forum/comments/1',
+      '/api/forum/comments/1',
       expect.objectContaining({ method: 'DELETE', credentials: 'include' })
     )
   })
@@ -208,7 +208,7 @@ describe('ForumPostDetail', () => {
 
     await waitFor(() => expect(screen.getByRole('button', { name: 'Đã lưu' })).toHaveAttribute('aria-pressed', 'true'))
     expect(fetch).toHaveBeenCalledWith(
-      '/forum/posts/9/bookmark',
+      '/api/forum/posts/9/bookmark',
       expect.objectContaining({ method: 'POST', credentials: 'include' })
     )
   })
@@ -235,7 +235,7 @@ describe('ForumPostDetail', () => {
 
     await waitFor(() => expect(screen.getByText('Đã gửi báo cáo, cảm ơn bạn.')).toBeInTheDocument())
     expect(fetch).toHaveBeenCalledWith(
-      '/forum/posts/9/report',
+      '/api/forum/posts/9/report',
       expect.objectContaining({ method: 'POST', credentials: 'include', body: JSON.stringify({ reason: 'Spam' }) })
     )
   })
@@ -266,7 +266,7 @@ describe('ForumPostDetail', () => {
 
     await waitFor(() => expect(screen.getByText('Bài viết đã bị xóa bởi tác giả.')).toBeInTheDocument())
     expect(fetch).toHaveBeenCalledWith(
-      '/forum/posts/9',
+      '/api/forum/posts/9',
       expect.objectContaining({ method: 'DELETE', credentials: 'include' })
     )
     expect(screen.queryByText('Nội dung chi tiết')).not.toBeInTheDocument()
@@ -293,8 +293,8 @@ describe('ForumPostDetail', () => {
     vi.stubGlobal(
       'fetch',
       vi.fn((url: string) => {
-        if (url === '/forum/posts/9') return Promise.resolve({ ok: true, json: async () => deletedPost })
-        if (url === '/forum/posts/9/comments') return Promise.resolve({ ok: true, json: async () => COMMENTS })
+        if (url === '/api/forum/posts/9') return Promise.resolve({ ok: true, json: async () => deletedPost })
+        if (url === '/api/forum/posts/9/comments') return Promise.resolve({ ok: true, json: async () => COMMENTS })
         return Promise.resolve({ ok: true, json: async () => ({}) })
       })
     )

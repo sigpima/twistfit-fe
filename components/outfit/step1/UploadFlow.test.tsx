@@ -31,12 +31,12 @@ function stubUploadFetches() {
   vi.stubGlobal(
     'fetch',
     vi.fn((url: string, init?: RequestInit) => {
-      if (url === '/taxonomy') return Promise.resolve(jsonResponse(TAXONOMY_GROUPS))
-      if (url === '/wardrobe/upload-url') {
+      if (url === '/api/taxonomy') return Promise.resolve(jsonResponse(TAXONOMY_GROUPS))
+      if (url === '/api/wardrobe/upload-url') {
         return Promise.resolve(jsonResponse({ uploadUrl: 'https://blob.example.com/upload', blobPath: 'u1/x.png' }))
       }
       if (init?.method === 'PUT') return Promise.resolve(jsonResponse({}))
-      if (url === '/wardrobe/items/suggest-tags') {
+      if (url === '/api/wardrobe/items/suggest-tags') {
         return Promise.resolve(
           jsonResponse({
             'clothing-type': ['ao'],
@@ -46,7 +46,7 @@ function stubUploadFetches() {
           })
         )
       }
-      if (url === '/wardrobe/items') return Promise.resolve(jsonResponse({ id: 1 }, { status: 201 }))
+      if (url === '/api/wardrobe/items') return Promise.resolve(jsonResponse({ id: 1 }, { status: 201 }))
       return Promise.resolve(jsonResponse(null, { ok: false, status: 404 }))
     })
   )
@@ -71,7 +71,7 @@ describe('UploadFlow', () => {
 
     await waitFor(() => expect(onUploaded).toHaveBeenCalled())
     expect(fetch).toHaveBeenCalledWith(
-      '/wardrobe/items',
+      '/api/wardrobe/items',
       expect.objectContaining({
         method: 'POST',
         body: JSON.stringify({
@@ -96,7 +96,7 @@ describe('UploadFlow', () => {
 
     await waitFor(() =>
       expect(fetch).toHaveBeenCalledWith(
-        '/wardrobe/items',
+        '/api/wardrobe/items',
         expect.objectContaining({
           body: JSON.stringify({
             blobUrl: 'https://blob.example.com/u1/x.png',

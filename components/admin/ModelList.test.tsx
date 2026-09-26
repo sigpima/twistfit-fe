@@ -48,7 +48,7 @@ describe('ModelList', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Xóa' }))
 
     await waitFor(() => expect(screen.queryByText('Model A')).not.toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/model-catalog/1', { method: 'DELETE', credentials: 'include' })
+    expect(fetch).toHaveBeenCalledWith('/api/model-catalog/1', { method: 'DELETE', credentials: 'include' })
   })
 
   it('shows an empty state when there are no models', async () => {

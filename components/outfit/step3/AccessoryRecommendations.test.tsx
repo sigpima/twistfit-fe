@@ -73,7 +73,7 @@ describe('AccessoryRecommendations', () => {
 
     await waitFor(() =>
       expect(fetchMock).toHaveBeenCalledWith(
-        '/accessories/recommendations?occasion=hang-ngay',
+        '/api/accessories/recommendations?occasion=hang-ngay',
         expect.anything()
       )
     )
@@ -91,7 +91,7 @@ describe('AccessoryRecommendations', () => {
     )
 
     await waitFor(() =>
-      expect(fetchMock).toHaveBeenCalledWith('/accessories/recommendations?style=formal', expect.anything())
+      expect(fetchMock).toHaveBeenCalledWith('/api/accessories/recommendations?style=formal', expect.anything())
     )
   })
 

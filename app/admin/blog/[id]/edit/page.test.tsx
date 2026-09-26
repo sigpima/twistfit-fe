@@ -46,6 +46,6 @@ describe('EditBlogPostPage', () => {
       </AuthProvider>
     )
     await waitFor(() => expect(screen.getByLabelText('Tiêu đề')).toHaveValue('Bài cần sửa'))
-    expect(fetch).toHaveBeenCalledWith('/blog/7', { credentials: 'include' })
+    expect(fetch).toHaveBeenCalledWith('/api/blog/7', { credentials: 'include' })
   })
 })

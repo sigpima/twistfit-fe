@@ -50,7 +50,7 @@ export default function UploadFlow({ onUploaded }: { onUploaded: () => void }) {
 
     const putResponse = await fetch(uploadUrl, {
       method: 'PUT',
-      headers: { 'x-ms-blob-type': 'BlockBlob', 'x-ms-blob-content-type': file.type },
+      headers: { 'Content-Type': file.type },
       body: file,
     })
     if (!putResponse.ok) {

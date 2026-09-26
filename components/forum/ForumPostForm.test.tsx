@@ -47,7 +47,7 @@ describe('ForumPostForm', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Đăng bài' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/forum/my-posts'))
-    expect(fetch).toHaveBeenCalledWith('/forum/posts', expect.objectContaining({ method: 'POST', credentials: 'include' }))
+    expect(fetch).toHaveBeenCalledWith('/api/forum/posts', expect.objectContaining({ method: 'POST', credentials: 'include' }))
   })
 
   it('renders the existing post body in the editor when editing', () => {
@@ -63,7 +63,7 @@ describe('ForumPostForm', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Lưu thay đổi' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/forum/my-posts'))
-    expect(fetch).toHaveBeenCalledWith('/forum/posts/7', expect.objectContaining({ method: 'PUT', credentials: 'include' }))
+    expect(fetch).toHaveBeenCalledWith('/api/forum/posts/7', expect.objectContaining({ method: 'PUT', credentials: 'include' }))
   })
 
   it('shows a generic error and does not redirect when the API rejects the submission', async () => {
@@ -93,7 +93,7 @@ describe('ForumPostForm', () => {
       'fetch',
       vi.fn((url: string, init?: RequestInit) => {
         if (init?.method === 'PUT') return putMock(url, init)
-        if (url === '/forum/upload-url?content_type=image%2Fjpeg') {
+        if (url === '/api/forum/upload-url?content_type=image%2Fjpeg') {
           return Promise.resolve(
             jsonResponse({
               uploadUrl: 'https://blob.example.com/upload?sig=abc',
@@ -102,7 +102,7 @@ describe('ForumPostForm', () => {
             })
           )
         }
-        if (url === '/forum/posts') return Promise.resolve(jsonResponse({ id: 1 }, { status: 201 }))
+        if (url === '/api/forum/posts') return Promise.resolve(jsonResponse({ id: 1 }, { status: 201 }))
         return Promise.resolve(jsonResponse(null, { ok: false, status: 404 }))
       })
     )
@@ -117,7 +117,7 @@ describe('ForumPostForm', () => {
         'https://blob.example.com/upload?sig=abc',
         expect.objectContaining({
           method: 'PUT',
-          headers: { 'x-ms-blob-type': 'BlockBlob', 'x-ms-blob-content-type': 'image/jpeg' },
+          headers: { 'Content-Type': 'image/jpeg' },
         })
       )
     )
@@ -126,7 +126,7 @@ describe('ForumPostForm', () => {
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/forum/my-posts'))
     expect(fetch).toHaveBeenCalledWith(
-      '/forum/posts',
+      '/api/forum/posts',
       expect.objectContaining({
         method: 'POST',
         body: JSON.stringify({

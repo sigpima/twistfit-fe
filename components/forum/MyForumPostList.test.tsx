@@ -52,7 +52,7 @@ describe('MyForumPostList', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Xóa' }))
 
     await waitFor(() => expect(screen.queryByText('Bài của tôi')).not.toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/forum/posts/1', { method: 'DELETE', credentials: 'include' })
+    expect(fetch).toHaveBeenCalledWith('/api/forum/posts/1', { method: 'DELETE', credentials: 'include' })
   })
 
   it('shows an empty state when there are no posts', async () => {

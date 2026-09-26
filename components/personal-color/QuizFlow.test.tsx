@@ -108,7 +108,7 @@ describe('QuizFlow', () => {
 
     await waitFor(() =>
       expect(fetch).toHaveBeenCalledWith(
-        '/quiz-attempts',
+        '/api/quiz-attempts',
         expect.objectContaining({ method: 'POST', credentials: 'include' })
       )
     )

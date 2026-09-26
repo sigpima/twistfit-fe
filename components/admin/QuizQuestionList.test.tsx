@@ -58,9 +58,9 @@ describe('QuizQuestionList', () => {
     fireEvent.click(screen.getAllByRole('button', { name: 'Xuống' })[0])
 
     await waitFor(() =>
-      expect(fetch).toHaveBeenCalledWith('/quiz-questions/1', expect.objectContaining({ method: 'PUT' }))
+      expect(fetch).toHaveBeenCalledWith('/api/quiz-questions/1', expect.objectContaining({ method: 'PUT' }))
     )
-    expect(fetch).toHaveBeenCalledWith('/quiz-questions/2', expect.objectContaining({ method: 'PUT' }))
+    expect(fetch).toHaveBeenCalledWith('/api/quiz-questions/2', expect.objectContaining({ method: 'PUT' }))
   })
 
   it('deletes a question when confirmed', async () => {

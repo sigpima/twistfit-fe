@@ -186,7 +186,7 @@ describe('ImagePickerDialog', () => {
       'fetch',
       vi.fn((url: string, init?: RequestInit) => {
         if (init?.method === 'PUT') return putMock(url, init)
-        if (url === '/blog/upload-url?content_type=image%2Fjpeg') {
+        if (url === '/api/blog/upload-url?content_type=image%2Fjpeg') {
           return Promise.resolve(
             jsonResponse({
               uploadUrl: 'https://blob.example.com/upload?sig=abc',
@@ -195,7 +195,7 @@ describe('ImagePickerDialog', () => {
             })
           )
         }
-        if (url === '/blog/upload-url?content_type=image%2Fwebp') {
+        if (url === '/api/blog/upload-url?content_type=image%2Fwebp') {
           return Promise.resolve(
             jsonResponse({
               uploadUrl: 'https://blob.example.com/upload?sig=def',
@@ -219,7 +219,7 @@ describe('ImagePickerDialog', () => {
     await waitFor(() => expect(screen.getByLabelText('Đường dẫn ảnh')).toHaveValue('https://blob.example.com/x.jpg'))
     expect(putMock).toHaveBeenCalledWith(
       'https://blob.example.com/upload?sig=abc',
-      expect.objectContaining({ method: 'PUT', headers: { 'x-ms-blob-type': 'BlockBlob', 'x-ms-blob-content-type': 'image/jpeg' } })
+      expect.objectContaining({ method: 'PUT', headers: { 'Content-Type': 'image/jpeg' } })
     )
 
     fireEvent.change(screen.getByLabelText('Mô tả ảnh (alt text)'), { target: { value: 'Ảnh sản phẩm' } })
@@ -233,7 +233,7 @@ describe('ImagePickerDialog', () => {
       'fetch',
       vi.fn((url: string, init?: RequestInit) => {
         if (init?.method === 'PUT') return putMock(url, init)
-        if (url === '/blog/upload-url?content_type=image%2Fwebp') {
+        if (url === '/api/blog/upload-url?content_type=image%2Fwebp') {
           return Promise.resolve(
             jsonResponse({
               uploadUrl: 'https://blob.example.com/upload?sig=def',

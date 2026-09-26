@@ -12,7 +12,7 @@ describe('ForumPageContent', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => [] }))
     renderWithIntl(<ForumPageContent />)
     expect(screen.getByRole('heading', { name: 'Cộng đồng TwistFit' })).toBeInTheDocument()
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith('/forum/posts', { credentials: 'include' }))
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith('/api/forum/posts', { credentials: 'include' }))
   })
 
   it('links to new post, my posts, and saved pages', () => {

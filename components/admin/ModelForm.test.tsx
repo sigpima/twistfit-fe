@@ -48,7 +48,7 @@ describe('ModelForm', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Tạo người mẫu' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/model-catalog'))
-    expect(fetch).toHaveBeenCalledWith('/model-catalog', expect.objectContaining({ method: 'POST', credentials: 'include' }))
+    expect(fetch).toHaveBeenCalledWith('/api/model-catalog', expect.objectContaining({ method: 'POST', credentials: 'include' }))
   })
 
   it('pre-fills fields and PUTs to /api/model-catalog/{id} when editing', async () => {
@@ -59,7 +59,7 @@ describe('ModelForm', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Lưu thay đổi' }))
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/model-catalog'))
-    expect(fetch).toHaveBeenCalledWith('/model-catalog/5', expect.objectContaining({ method: 'PUT', credentials: 'include' }))
+    expect(fetch).toHaveBeenCalledWith('/api/model-catalog/5', expect.objectContaining({ method: 'PUT', credentials: 'include' }))
   })
 
   it('shows a generic error and does not redirect when the API rejects the submission', async () => {

@@ -27,7 +27,7 @@ describe('ForumReportQueue', () => {
     renderWithIntl(<ForumReportQueue />)
 
     await waitFor(() => expect(screen.getByText('Bài bị báo cáo')).toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/forum/moderation/reports', { credentials: 'include' })
+    expect(fetch).toHaveBeenCalledWith('/api/forum/moderation/reports', { credentials: 'include' })
     expect(screen.getByText(/Nội dung không phù hợp/)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Ẩn bài' })).toBeInTheDocument()
   })
@@ -43,7 +43,7 @@ describe('ForumReportQueue', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Đánh dấu đã xử lý' }))
 
     await waitFor(() => expect(screen.queryByText('Bài bị báo cáo')).not.toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/forum/reports/1', { method: 'PATCH', credentials: 'include' })
+    expect(fetch).toHaveBeenCalledWith('/api/forum/reports/1', { method: 'PATCH', credentials: 'include' })
   })
 
   it('hiding the post PATCHes its status to hidden', async () => {
@@ -58,7 +58,7 @@ describe('ForumReportQueue', () => {
 
     await waitFor(() =>
       expect(fetch).toHaveBeenCalledWith(
-        '/forum/posts/10',
+        '/api/forum/posts/10',
         expect.objectContaining({ method: 'PATCH', credentials: 'include', body: JSON.stringify({ status: 'hidden' }) })
       )
     )
@@ -86,7 +86,7 @@ describe('ForumReportQueue', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Xóa bài' }))
 
     await waitFor(() => expect(screen.queryByText('Bài bị báo cáo')).not.toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/forum/posts/10', { method: 'DELETE', credentials: 'include' })
+    expect(fetch).toHaveBeenCalledWith('/api/forum/posts/10', { method: 'DELETE', credentials: 'include' })
   })
 
   it('shows an empty state when there are no open reports', async () => {

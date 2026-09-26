@@ -45,6 +45,6 @@ describe('EditCapsuleSetPage', () => {
       </AuthProvider>
     )
     await waitFor(() => expect(screen.getByLabelText('Tiêu đề')).toHaveValue('Set cần sửa'))
-    expect(fetch).toHaveBeenCalledWith('/capsule-wardrobe/4', { credentials: 'include' })
+    expect(fetch).toHaveBeenCalledWith('/api/capsule-wardrobe/4', { credentials: 'include' })
   })
 })

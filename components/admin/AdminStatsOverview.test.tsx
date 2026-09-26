@@ -22,7 +22,7 @@ describe('AdminStatsOverview', () => {
     renderWithIntl(<AdminStatsOverview />)
 
     await waitFor(() => expect(screen.getByText('7')).toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/admin/stats', { credentials: 'include' })
+    expect(fetch).toHaveBeenCalledWith('/api/admin/stats', { credentials: 'include' })
     expect(screen.getByText('Bài viết Blog')).toBeInTheDocument()
     expect(screen.getByText('+2 trong 30 ngày qua')).toBeInTheDocument()
     expect(screen.getByText('20')).toBeInTheDocument()

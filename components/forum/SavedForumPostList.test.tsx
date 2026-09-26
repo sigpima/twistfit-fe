@@ -36,7 +36,7 @@ describe('SavedForumPostList', () => {
     renderWithIntl(<SavedForumPostList />)
 
     await waitFor(() => expect(screen.getByText('Bài đã lưu')).toBeInTheDocument())
-    expect(fetch).toHaveBeenCalledWith('/forum/posts/saved', { credentials: 'include' })
+    expect(fetch).toHaveBeenCalledWith('/api/forum/posts/saved', { credentials: 'include' })
   })
 
   it('shows an empty state when nothing is saved', async () => {

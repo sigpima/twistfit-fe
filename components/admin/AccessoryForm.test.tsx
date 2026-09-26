@@ -41,7 +41,7 @@ describe('AccessoryForm', () => {
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/accessories'))
     expect(fetch).toHaveBeenCalledWith(
-      '/accessories/9',
+      '/api/accessories/9',
       expect.objectContaining({ method: 'PUT', credentials: 'include' })
     )
   })
@@ -91,7 +91,7 @@ describe('AccessoryForm', () => {
 
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/admin/accessories'))
     expect(fetchMock).toHaveBeenLastCalledWith(
-      '/accessories',
+      '/api/accessories',
       expect.objectContaining({ method: 'POST', credentials: 'include' })
     )
   })

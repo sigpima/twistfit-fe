@@ -59,4 +59,19 @@ describe('apiFetch', () => {
     await apiFetch('/auth/refresh', { method: 'POST' })
     expect(fetch).toHaveBeenCalledTimes(1)
   })
+
+  it('falls back to the /api rewrite path in the browser when unset', async () => {
+    vi.unstubAllEnvs()
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 200 }))
+    await apiFetch('/faq')
+    expect(fetch).toHaveBeenCalledWith('/api/faq', expect.objectContaining({ credentials: 'include' }))
+  })
+
+  it('calls the backend directly when running server-side (no window)', async () => {
+    vi.stubEnv('BACKEND_INTERNAL_URL', 'http://backend:8000')
+    vi.stubGlobal('window', undefined)
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 200 }))
+    await apiFetch('/faq')
+    expect(fetch).toHaveBeenCalledWith('http://backend:8000/faq', expect.objectContaining({ credentials: 'include' }))
+  })
 })

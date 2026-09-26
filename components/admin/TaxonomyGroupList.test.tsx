@@ -64,7 +64,7 @@ describe('TaxonomyGroupList', () => {
 
     await waitFor(() => expect(screen.getByText('Chất liệu')).toBeInTheDocument())
     expect(fetch).toHaveBeenCalledWith(
-      '/taxonomy/groups',
+      '/api/taxonomy/groups',
       expect.objectContaining({
         method: 'POST',
         body: JSON.stringify({ key: 'chat-lieu', label: 'Chất liệu' }),

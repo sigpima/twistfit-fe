@@ -33,7 +33,7 @@ describe('ChangePasswordCard', () => {
 
     await waitFor(() => expect(screen.getByText('Đã đổi mật khẩu thành công.')).toBeInTheDocument())
     expect(fetch).toHaveBeenCalledWith(
-      '/auth/me/change-password',
+      '/api/auth/me/change-password',
       expect.objectContaining({
         method: 'POST',
         body: JSON.stringify({ currentPassword: 'oldpassword', newPassword: 'newpassword1' }),

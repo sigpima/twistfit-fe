@@ -84,7 +84,7 @@ describe('PersonalInfoCard', () => {
 
     await waitFor(() => expect(screen.getByText('Đã cập nhật thông tin.')).toBeInTheDocument())
     expect(fetch).toHaveBeenCalledWith(
-      '/auth/me',
+      '/api/auth/me',
       expect.objectContaining({
         method: 'PATCH',
         body: JSON.stringify({

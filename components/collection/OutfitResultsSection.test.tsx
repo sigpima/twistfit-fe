@@ -65,7 +65,7 @@ describe('OutfitResultsSection', () => {
 
     expect(window.confirm).toHaveBeenCalledWith('Xóa outfit này?')
     await waitFor(() =>
-      expect(fetchMock).toHaveBeenCalledWith('/tryon/1', { method: 'DELETE', credentials: 'include' })
+      expect(fetchMock).toHaveBeenCalledWith('/api/tryon/1', { method: 'DELETE', credentials: 'include' })
     )
     await waitFor(() => expect(screen.getByText('Bạn chưa có kết quả phối đồ nào.')).toBeInTheDocument())
   })
@@ -80,7 +80,7 @@ describe('OutfitResultsSection', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Xóa outfit này' }))
 
-    expect(fetchMock).not.toHaveBeenCalledWith('/tryon/1', { method: 'DELETE', credentials: 'include' })
+    expect(fetchMock).not.toHaveBeenCalledWith('/api/tryon/1', { method: 'DELETE', credentials: 'include' })
     expect(screen.getByAltText('Ảnh trực diện')).toBeInTheDocument()
   })
 

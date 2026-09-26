@@ -44,6 +44,6 @@ describe('EditTeamMemberPage', () => {
       </AuthProvider>
     )
     await waitFor(() => expect(screen.getByLabelText('Họ tên')).toHaveValue('Thành viên cần sửa'))
-    expect(fetch).toHaveBeenCalledWith('/team/2', { credentials: 'include' })
+    expect(fetch).toHaveBeenCalledWith('/api/team/2', { credentials: 'include' })
   })
 })
