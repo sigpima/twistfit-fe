@@ -8,7 +8,11 @@ function apiBaseUrl(): string {
   if (typeof window === 'undefined') {
     return process.env.BACKEND_INTERNAL_URL ?? ''
   }
-  return process.env.NEXT_PUBLIC_API_BASE_URL ?? '/api'
+  // "||" chứ không phải "??": nếu build-arg NEXT_PUBLIC_API_BASE_URL từng
+  // được set rỗng (chuỗi ""), "??" sẽ không fallback (chỉ bắt null/undefined)
+  // — từng gây bug thật: request thành "" + path, tức đường dẫn tương đối
+  // theo origin hiện tại thay vì qua "/api" rewrite.
+  return process.env.NEXT_PUBLIC_API_BASE_URL || '/api'
 }
 
 async function rawFetch(path: string, init: RequestInit = {}): Promise<Response> {
