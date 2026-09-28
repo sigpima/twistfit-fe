@@ -11,6 +11,12 @@ type Suggestion = {
   blobUrl: string
 }
 
+// Kept in sync with backend/app/domains/wardrobe/service.py's
+// _REQUIRED_ATTRIBUTE_GROUPS — an item missing clothing-type is silently
+// invisible to every future outfit generation, occasion/style are what
+// tryon jobs filter candidates by.
+const REQUIRED_GROUP_KEYS = ['clothing-type', 'occasion', 'style']
+
 type FlowState =
   | { step: 'pick' }
   | { step: 'uploading' }
@@ -143,6 +149,9 @@ export default function UploadFlow({ onUploaded }: { onUploaded: () => void }) {
 
   const { suggestion } = state
   const isSaving = state.step === 'saving'
+  const missingRequiredGroups = taxonomyGroups.filter(
+    (group) => REQUIRED_GROUP_KEYS.includes(group.key) && (suggestion.attributes[group.key] ?? []).length === 0
+  )
 
   return (
     <div className="flex flex-col gap-space-md rounded-3xl bg-surface-container-lowest p-space-lg shadow-sm">
@@ -170,10 +179,16 @@ export default function UploadFlow({ onUploaded }: { onUploaded: () => void }) {
         </div>
       ))}
 
+      {missingRequiredGroups.length > 0 && (
+        <p role="alert" className="text-label-sm text-error">
+          {t('missingRequiredTags', { groups: missingRequiredGroups.map((group) => group.label).join(', ') })}
+        </p>
+      )}
+
       <button
         type="button"
         onClick={handleSave}
-        disabled={isSaving}
+        disabled={isSaving || missingRequiredGroups.length > 0}
         className="rounded-full bg-primary px-space-lg py-space-sm text-label-lg font-semibold text-on-primary disabled:opacity-60"
       >
         {isSaving ? t('saving') : t('saveButton')}

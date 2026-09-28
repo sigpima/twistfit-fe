@@ -95,4 +95,26 @@ describe('AccessoryForm', () => {
       expect.objectContaining({ method: 'POST', credentials: 'include' })
     )
   })
+
+  it('disables submit and lists which tag fields are missing when style/occasion tags are empty', async () => {
+    const noTags: AccessoryProduct = { ...EXISTING_ACCESSORY, styleTags: [], occasionTags: [] }
+    vi.stubGlobal('fetch', vi.fn())
+    renderWithIntl(<AccessoryForm initialAccessory={noTags} />)
+
+    expect(screen.getByRole('alert')).toHaveTextContent('Chọn ít nhất 1 giá trị cho: Phong cách phù hợp, Dịp phù hợp')
+    expect(screen.getByRole('button', { name: 'Lưu thay đổi' })).toBeDisabled()
+  })
+
+  it('shows the specific backend validation message when submission is rejected', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({ ok: false, status: 400, json: async () => ({ detail: 'Chọn ít nhất 1 tag dịp' }) })
+    )
+    renderWithIntl(<AccessoryForm initialAccessory={EXISTING_ACCESSORY} />)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Lưu thay đổi' }))
+
+    await waitFor(() => expect(screen.getByText('Chọn ít nhất 1 tag dịp')).toBeInTheDocument())
+    expect(pushMock).not.toHaveBeenCalled()
+  })
 })

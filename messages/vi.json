@@ -263,6 +263,7 @@
       "pickFileHint": "Chọn một ảnh sản phẩm để AI gợi ý danh mục và tag.",
       "uploading": "Đang tải ảnh lên...",
       "errorMessage": "Có lỗi khi tải ảnh, vui lòng thử lại.",
+      "missingRequiredTags": "Chọn ít nhất 1 giá trị cho: {fields}",
       "fields": {
         "name": "Tên phụ kiện",
         "affiliateLink": "Link affiliate",
@@ -929,7 +930,8 @@
         "saveButton": "Lưu vào tủ đồ",
         "saving": "Đang lưu...",
         "savedMessage": "Đã lưu vào tủ đồ!",
-        "errorMessage": "Có lỗi xảy ra, vui lòng thử lại."
+        "errorMessage": "Có lỗi xảy ra, vui lòng thử lại.",
+        "missingRequiredTags": "Chọn ít nhất 1 giá trị cho: {groups}"
       },
       "WardrobeLibrary": {
         "filterLabel": "Lọc",

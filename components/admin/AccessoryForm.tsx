@@ -146,7 +146,9 @@ export default function AccessoryForm({ initialAccessory }: { initialAccessory?:
 
     if (!response.ok) {
       setState({ step: 'form', values })
-      setErrors({ form: t('genericError') })
+      const body = await response.json().catch(() => null)
+      const detail = body && typeof body.detail === 'string' ? body.detail : null
+      setErrors({ form: detail ?? t('genericError') })
       return
     }
 
@@ -176,6 +178,11 @@ export default function AccessoryForm({ initialAccessory }: { initialAccessory?:
 
   const { values } = state
   const isSaving = state.step === 'saving'
+  // Kept in sync with backend/app/domains/accessories/service.py's
+  // _validate_style_and_occasion_tags.
+  const missingTagFields: string[] = []
+  if (values.styleTags.length === 0) missingTagFields.push(t('fields.styleTags'))
+  if (values.occasionTags.length === 0) missingTagFields.push(t('fields.occasionTags'))
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
@@ -272,11 +279,17 @@ export default function AccessoryForm({ initialAccessory }: { initialAccessory?:
         </div>
       </div>
 
+      {missingTagFields.length > 0 && (
+        <p role="alert" className="text-label-sm text-error">
+          {t('missingRequiredTags', { fields: missingTagFields.join(', ') })}
+        </p>
+      )}
+
       {errors.form && <p className="text-label-sm text-error">{errors.form}</p>}
 
       <button
         type="submit"
-        disabled={isSaving}
+        disabled={isSaving || missingTagFields.length > 0}
         className="rounded-full bg-primary px-9 py-3.5 text-label-lg text-on-primary shadow-md transition-all hover:bg-primary-container disabled:opacity-60"
       >
         {isSaving ? t('saving') : isEditing ? t('submitEdit') : t('submitCreate')}
