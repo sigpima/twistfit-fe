@@ -38,9 +38,9 @@ export default function BlogRelatedPosts({ posts }: { posts: BlogPost[] }) {
                   <span className={`text-label-sm font-semibold ${presentation.colorClass}`}>
                     {tCategory(`categories.${presentation.translationKey}`)}
                   </span>
-                  <h4 className="line-clamp-2 text-body-sm font-semibold text-on-surface transition-colors group-hover:text-primary">
+                  <h2 className="line-clamp-2 text-body-sm font-semibold text-on-surface transition-colors group-hover:text-primary">
                     {post.title}
-                  </h4>
+                  </h2>
                 </div>
               </Link>
             </li>
