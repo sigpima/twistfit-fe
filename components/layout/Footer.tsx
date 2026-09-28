@@ -42,7 +42,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-margin md:px-margin-desktop">
         <div className="grid grid-cols-1 gap-10 border-b border-[#f1f5f9] pb-12 md:grid-cols-4">
           <div className="space-y-4">
-            <h3 className="font-serif text-2xl font-black tracking-tight text-[#304461]">{t('brand')}</h3>
+            <h2 className="font-serif text-2xl font-black tracking-tight text-[#304461]">{t('brand')}</h2>
             <p className="text-xs italic text-[#7b89ba]">{t('tagline')}</p>
             <p className="text-xs leading-relaxed text-[#64748b]">{t('description')}</p>
           </div>
