@@ -20,11 +20,31 @@ const montserrat = Montserrat({
   style: ['normal', 'italic'],
 })
 
+const DEFAULT_TITLE = 'TwistFit — Màu Sắc Cá Nhân & Phối Đồ Thông Minh'
+const DEFAULT_DESCRIPTION =
+  'TwistFit giúp bạn khám phá màu sắc cá nhân của chính mình và phối đồ thông minh bằng AI.'
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'TwistFit — Màu Sắc Cá Nhân & Phối Đồ Thông Minh',
-  description:
-    'TwistFit giúp bạn khám phá màu sắc cá nhân của chính mình và phối đồ thông minh bằng AI.',
+  title: DEFAULT_TITLE,
+  description: DEFAULT_DESCRIPTION,
+  // Fallback cho mọi trang chưa tự khai openGraph/twitter riêng (che tạm
+  // bằng logo — trang nào có ảnh riêng phù hợp hơn thì tự override, xem
+  // app/blog/[slug]/page.tsx làm ví dụ).
+  openGraph: {
+    type: 'website',
+    url: SITE_URL,
+    siteName: 'TwistFit',
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: [{ url: '/home/logo.png', width: 578, height: 201, alt: 'TwistFit' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: ['/home/logo.png'],
+  },
 }
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {

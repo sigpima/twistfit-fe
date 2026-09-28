@@ -23,10 +23,24 @@ export async function generateMetadata({
   }
 
   const post = (await response.json()) as BlogPost
+  const title = `${post.title} | TwistFit`
   return {
-    title: `${post.title} | TwistFit`,
+    title,
     description: post.excerpt,
     alternates: { canonical: `/blog/${post.slug}` },
+    openGraph: {
+      type: 'article',
+      url: `/blog/${post.slug}`,
+      title,
+      description: post.excerpt,
+      images: [{ url: post.coverImageUrl, alt: post.coverImageAlt || post.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: post.excerpt,
+      images: [post.coverImageUrl],
+    },
   }
 }
 
