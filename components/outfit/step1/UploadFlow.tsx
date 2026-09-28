@@ -52,7 +52,11 @@ export default function UploadFlow({ onUploaded }: { onUploaded: () => void }) {
       setState({ step: 'error' })
       return
     }
-    const { uploadUrl, blobPath } = (await uploadUrlResponse.json()) as { uploadUrl: string; blobPath: string }
+    const { uploadUrl, blobPath, blobUrl } = (await uploadUrlResponse.json()) as {
+      uploadUrl: string
+      blobPath: string
+      blobUrl: string
+    }
 
     const putResponse = await fetch(uploadUrl, {
       method: 'PUT',
@@ -64,26 +68,32 @@ export default function UploadFlow({ onUploaded }: { onUploaded: () => void }) {
       return
     }
 
-    const suggestResponse = await apiFetch('/wardrobe/items/suggest-tags', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ blobPath }),
-    })
-    if (!suggestResponse.ok) {
-      setState({ step: 'error' })
-      return
+    // The image is safely uploaded at this point (blobUrl above is already
+    // valid) — a failure past here is Gemini/suggest-tags specific, so it
+    // must still land on manual tagging rather than a dead-end error screen
+    // (a proxy/timeout killing the connection produces a non-2xx here even
+    // though the backend itself already degrades a Gemini failure to a 200
+    // with empty attributes — see wardrobe/router.py).
+    let suggestion: Suggestion = { attributes: {}, dominantColors: [], blobUrl }
+    try {
+      const suggestResponse = await apiFetch('/wardrobe/items/suggest-tags', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ blobPath }),
+      })
+      if (suggestResponse.ok) {
+        const raw = (await suggestResponse.json()) as Record<string, unknown>
+        const { dominantColors, blobUrl: suggestedBlobUrl, ...attributes } = raw
+        suggestion = {
+          attributes: attributes as Record<string, string[]>,
+          dominantColors: dominantColors as string[],
+          blobUrl: suggestedBlobUrl as string,
+        }
+      }
+    } catch {
+      // network error/timeout — keep the empty-suggestion fallback above
     }
-    const raw = (await suggestResponse.json()) as Record<string, unknown>
-    const { dominantColors, blobUrl, ...attributes } = raw
-    setState({
-      step: 'review',
-      blobPath,
-      suggestion: {
-        attributes: attributes as Record<string, string[]>,
-        dominantColors: dominantColors as string[],
-        blobUrl: blobUrl as string,
-      },
-    })
+    setState({ step: 'review', blobPath, suggestion })
   }
 
   function toggleAttributeValue(groupKey: string, valueKey: string) {

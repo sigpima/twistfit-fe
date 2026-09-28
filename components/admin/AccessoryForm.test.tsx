@@ -63,7 +63,13 @@ describe('AccessoryForm', () => {
   it('walks through upload, Gemini suggestion, and creates on submit', async () => {
     const fetchMock = vi
       .fn()
-      .mockResolvedValueOnce(jsonResponse({ uploadUrl: 'https://blob.example.com/upload?sig=abc', blobPath: 'x.png' }))
+      .mockResolvedValueOnce(
+        jsonResponse({
+          uploadUrl: 'https://blob.example.com/upload?sig=abc',
+          blobPath: 'x.png',
+          blobUrl: 'https://blob.example.com/x.png',
+        })
+      )
       .mockResolvedValueOnce({ ok: true }) // the raw PUT to blob storage
       .mockResolvedValueOnce(
         jsonResponse({
@@ -116,5 +122,33 @@ describe('AccessoryForm', () => {
 
     await waitFor(() => expect(screen.getByText('Chọn ít nhất 1 tag dịp')).toBeInTheDocument())
     expect(pushMock).not.toHaveBeenCalled()
+  })
+
+  it('still reaches manual tagging when the suggest-tags request itself fails (not just a Gemini-internal failure)', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        jsonResponse({
+          uploadUrl: 'https://blob.example.com/upload?sig=abc',
+          blobPath: 'x.png',
+          blobUrl: 'https://blob.example.com/x.png',
+        })
+      )
+      .mockResolvedValueOnce({ ok: true }) // the raw PUT to blob storage
+      // A proxy/timeout killing the connection before the backend's
+      // (already-degraded) response gets back — a non-2xx, unlike a
+      // Gemini-internal failure which the backend still answers as 200.
+      .mockResolvedValueOnce(jsonResponse(null, { ok: false, status: 500 }))
+    vi.stubGlobal('fetch', fetchMock)
+
+    renderWithIntl(<AccessoryForm />)
+
+    const file = new File(['fake-image'], 'tote.png', { type: 'image/png' })
+    fireEvent.change(screen.getByLabelText('Tải ảnh phụ kiện lên'), { target: { files: [file] } })
+
+    await waitFor(() => expect(screen.getByLabelText('Tên phụ kiện')).toBeInTheDocument())
+    expect(screen.getByRole('img')).toHaveAttribute('src', 'https://blob.example.com/x.png')
+    expect(screen.getByRole('checkbox', { name: 'casual' })).not.toBeChecked()
+    expect(screen.getByRole('button', { name: 'Tạo phụ kiện' })).toBeDisabled()
   })
 })

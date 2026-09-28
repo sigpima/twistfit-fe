@@ -40,7 +40,13 @@ function stubUploadFetches() {
     vi.fn((url: string, init?: RequestInit) => {
       if (url === '/api/taxonomy') return Promise.resolve(jsonResponse(TAXONOMY_GROUPS))
       if (url === '/api/wardrobe/upload-url') {
-        return Promise.resolve(jsonResponse({ uploadUrl: 'https://blob.example.com/upload', blobPath: 'u1/x.png' }))
+        return Promise.resolve(
+          jsonResponse({
+            uploadUrl: 'https://blob.example.com/upload',
+            blobPath: 'u1/x.png',
+            blobUrl: 'https://blob.example.com/u1/x.png',
+          })
+        )
       }
       if (init?.method === 'PUT') return Promise.resolve(jsonResponse({}))
       if (url === '/api/wardrobe/items/suggest-tags') {
@@ -136,7 +142,13 @@ describe('UploadFlow', () => {
       vi.fn((url: string, init?: RequestInit) => {
         if (url === '/api/taxonomy') return Promise.resolve(jsonResponse(TAXONOMY_GROUPS))
         if (url === '/api/wardrobe/upload-url') {
-          return Promise.resolve(jsonResponse({ uploadUrl: 'https://blob.example.com/upload', blobPath: 'u1/x.png' }))
+          return Promise.resolve(
+            jsonResponse({
+              uploadUrl: 'https://blob.example.com/upload',
+              blobPath: 'u1/x.png',
+              blobUrl: 'https://blob.example.com/u1/x.png',
+            })
+          )
         }
         if (init?.method === 'PUT') return Promise.resolve(jsonResponse({}))
         if (url === '/api/wardrobe/items/suggest-tags') {
@@ -168,5 +180,58 @@ describe('UploadFlow', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Lưu vào tủ đồ' }))
 
     await waitFor(() => expect(onUploaded).toHaveBeenCalled())
+  })
+
+  it('still reaches manual tagging when the suggest-tags request itself fails (not just a Gemini-internal failure)', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((url: string, init?: RequestInit) => {
+        if (url === '/api/taxonomy') return Promise.resolve(jsonResponse(TAXONOMY_GROUPS))
+        if (url === '/api/wardrobe/upload-url') {
+          return Promise.resolve(
+            jsonResponse({
+              uploadUrl: 'https://blob.example.com/upload',
+              blobPath: 'u1/x.png',
+              blobUrl: 'https://blob.example.com/u1/x.png',
+            })
+          )
+        }
+        if (init?.method === 'PUT') return Promise.resolve(jsonResponse({}))
+        if (url === '/api/wardrobe/items/suggest-tags') {
+          // A proxy/timeout killing the connection before the backend's
+          // (already-degraded) response gets back — a non-2xx, unlike the
+          // Gemini-internal-failure case above which is still a 200.
+          return Promise.resolve(jsonResponse(null, { ok: false, status: 500 }))
+        }
+        if (url === '/api/wardrobe/items') return Promise.resolve(jsonResponse({ id: 1 }, { status: 201 }))
+        return Promise.resolve(jsonResponse(null, { ok: false, status: 404 }))
+      })
+    )
+    const onUploaded = vi.fn()
+    renderWithIntl(<UploadFlow onUploaded={onUploaded} />)
+
+    const file = new File(['fake'], 'shirt.png', { type: 'image/png' })
+    fireEvent.change(screen.getByLabelText('Chọn ảnh áo quần để thêm vào tủ đồ'), { target: { files: [file] } })
+    await waitFor(() => expect(screen.getByText('Loại quần áo')).toBeInTheDocument())
+
+    expect(screen.getByRole('checkbox', { name: 'Áo' })).not.toBeChecked()
+    expect(screen.getByRole('button', { name: 'Lưu vào tủ đồ' })).toBeDisabled()
+
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Áo' }))
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Casual' }))
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Hằng ngày' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Lưu vào tủ đồ' }))
+
+    await waitFor(() => expect(onUploaded).toHaveBeenCalled())
+    expect(fetch).toHaveBeenCalledWith(
+      '/api/wardrobe/items',
+      expect.objectContaining({
+        body: JSON.stringify({
+          blobUrl: 'https://blob.example.com/u1/x.png',
+          attributes: { 'clothing-type': ['ao'], style: ['casual'], occasion: ['hang-ngay'] },
+          dominantColors: [],
+        }),
+      })
+    )
   })
 })

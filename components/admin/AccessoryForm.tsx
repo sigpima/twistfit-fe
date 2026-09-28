@@ -87,7 +87,11 @@ export default function AccessoryForm({ initialAccessory }: { initialAccessory?:
       setState({ step: 'error' })
       return
     }
-    const { uploadUrl, blobPath } = (await uploadUrlResponse.json()) as { uploadUrl: string; blobPath: string }
+    const { uploadUrl, blobPath, blobUrl } = (await uploadUrlResponse.json()) as {
+      uploadUrl: string
+      blobPath: string
+      blobUrl: string
+    }
 
     const putResponse = await fetch(uploadUrl, {
       method: 'PUT',
@@ -99,16 +103,25 @@ export default function AccessoryForm({ initialAccessory }: { initialAccessory?:
       return
     }
 
-    const suggestResponse = await apiFetch('/accessories/suggest-tags', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ blobPath }),
-    })
-    if (!suggestResponse.ok) {
-      setState({ step: 'error' })
-      return
+    // The image is safely uploaded at this point (blobUrl above is already
+    // valid) — a failure past here is Gemini/suggest-tags specific, so it
+    // must still land on manual tagging rather than a dead-end error screen
+    // (a proxy/timeout killing the connection produces a non-2xx here even
+    // though the backend itself already degrades a Gemini failure to a 200
+    // with the fallback suggestion — see accessories/router.py).
+    let suggestion: Suggestion = { category: ACCESSORY_CATEGORIES[0], styleTags: [], occasionTags: [], toneTags: [], blobUrl }
+    try {
+      const suggestResponse = await apiFetch('/accessories/suggest-tags', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ blobPath }),
+      })
+      if (suggestResponse.ok) {
+        suggestion = (await suggestResponse.json()) as Suggestion
+      }
+    } catch {
+      // network error/timeout — keep the empty-suggestion fallback above
     }
-    const suggestion = (await suggestResponse.json()) as Suggestion
     setState({ step: 'form', values: valuesFromSuggestion(suggestion) })
   }
 
