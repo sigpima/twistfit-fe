@@ -47,9 +47,9 @@ export default function Footer() {
             <p className="text-xs leading-relaxed text-[#64748b]">{t('description')}</p>
           </div>
           <div>
-            <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-[#304461]">
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-[#304461]">
               {t('featuresHeading')}
-            </h4>
+            </h3>
             <ul className="space-y-2.5 text-xs text-[#64748b]">
               <li>
                 <a href="/personal-color/quiz" className="transition-colors hover:text-[#304461]">
@@ -74,9 +74,9 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-[#304461]">
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-[#304461]">
               {t('supportHeading')}
-            </h4>
+            </h3>
             <ul className="space-y-2.5 text-xs text-[#64748b]">
               <li>
                 <Link href="/about" className="transition-colors hover:text-[#304461]">
@@ -101,9 +101,9 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-[#304461]">
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-[#304461]">
               {t('contactHeading')}
-            </h4>
+            </h3>
             <ul className="mb-5 space-y-2.5 text-xs text-[#64748b]">
               <li className="flex items-center gap-2">
                 <svg className="h-4 w-4 text-[#7b89ba]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
