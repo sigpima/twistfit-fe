@@ -30,7 +30,7 @@ export default function BlogRelatedPosts({ posts }: { posts: BlogPost[] }) {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={post.coverImageUrl}
-                    alt=""
+                    alt={post.title}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>

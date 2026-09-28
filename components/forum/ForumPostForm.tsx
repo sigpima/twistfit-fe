@@ -145,7 +145,7 @@ export default function ForumPostForm({ initialPost }: { initialPost?: ForumPost
         </label>
         {imageUrl && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={imageUrl} alt="" className="h-40 w-40 rounded-xl object-cover" />
+          <img src={imageUrl} alt={title || 'Ảnh minh hoạ bài viết'} className="h-40 w-40 rounded-xl object-cover" />
         )}
         <input
           id="forum-image"

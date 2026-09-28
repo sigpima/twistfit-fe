@@ -93,7 +93,7 @@ describe('ForumPostDetail', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => POST }))
     renderDetail()
     await waitFor(() => expect(screen.getByText('Bài chi tiết')).toBeInTheDocument())
-    expect(screen.getByAltText('')).toHaveAttribute('src', 'https://example.com/outfit.jpg')
+    expect(screen.getByAltText('Bài chi tiết')).toHaveAttribute('src', 'https://example.com/outfit.jpg')
     expect(screen.getByText('Lan Anh')).toBeInTheDocument()
   })
 

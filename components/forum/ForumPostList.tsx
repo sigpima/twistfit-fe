@@ -95,7 +95,7 @@ export default function ForumPostList() {
 
               {post.imageUrl && (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={post.imageUrl} alt="" className="aspect-square w-full object-cover" />
+                <img src={post.imageUrl} alt={post.title} className="aspect-square w-full object-cover" />
               )}
 
               <div className="flex items-center gap-space-sm px-space-md pt-space-md">

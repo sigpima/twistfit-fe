@@ -42,7 +42,7 @@ export default function SavedForumPostList() {
         >
           {post.imageUrl && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={post.imageUrl} alt="" className="h-20 w-20 shrink-0 rounded-xl object-cover" />
+            <img src={post.imageUrl} alt={post.title} className="h-20 w-20 shrink-0 rounded-xl object-cover" />
           )}
           <div className="min-w-0 flex-1">
             <Link

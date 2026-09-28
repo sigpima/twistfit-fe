@@ -35,7 +35,7 @@ describe('ForumPostViewDialog', () => {
 
     expect(screen.getByText('Bài chờ duyệt')).toBeInTheDocument()
     expect(screen.getByText(/Tác giả/)).toBeInTheDocument()
-    expect(screen.getByAltText('')).toHaveAttribute('src', 'https://example.com/outfit.jpg')
+    expect(screen.getByAltText('Bài chờ duyệt')).toHaveAttribute('src', 'https://example.com/outfit.jpg')
     expect(screen.getByText('in đậm').tagName).toBe('STRONG')
   })
 

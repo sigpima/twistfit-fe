@@ -147,7 +147,7 @@ export default function UploadFlow({ onUploaded }: { onUploaded: () => void }) {
   return (
     <div className="flex flex-col gap-space-md rounded-3xl bg-surface-container-lowest p-space-lg shadow-sm">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={suggestion.blobUrl} alt="" className="mx-auto h-48 w-48 object-contain" />
+      <img src={suggestion.blobUrl} alt="Ảnh trang phục vừa tải lên" className="mx-auto h-48 w-48 object-contain" />
 
       {taxonomyGroups.map((group) => (
         <div key={group.id} className="flex flex-col gap-1">

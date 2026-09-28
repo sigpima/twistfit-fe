@@ -20,7 +20,7 @@ export default function ForumPostViewDialog({ post, onClose }: { post: ForumPost
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={post.imageUrl}
-            alt=""
+            alt={post.title}
             className="mt-space-md aspect-[4/3] w-full rounded-2xl object-cover"
           />
         )}

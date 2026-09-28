@@ -112,7 +112,7 @@ describe('ForumPostList', () => {
 
     await waitFor(() => expect(screen.getByText('Bài công khai')).toBeInTheDocument())
     expect(screen.getAllByText(/Lan Anh/).length).toBeGreaterThan(0)
-    expect(screen.getByAltText('')).toHaveAttribute('src', 'https://example.com/outfit.jpg')
+    expect(screen.getByAltText('Bài công khai')).toHaveAttribute('src', 'https://example.com/outfit.jpg')
     expect(screen.getByText('3 lượt thích')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Xem tất cả 2 bình luận' })).toHaveAttribute('href', '/forum/1')
   })

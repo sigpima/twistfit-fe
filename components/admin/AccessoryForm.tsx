@@ -180,7 +180,7 @@ export default function AccessoryForm({ initialAccessory }: { initialAccessory?:
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={values.imageUrl} alt="" className="mx-auto h-40 w-40 object-contain" />
+      <img src={values.imageUrl} alt={values.name || 'Ảnh phụ kiện'} className="mx-auto h-40 w-40 object-contain" />
 
       <div className="space-y-1.5">
         <label htmlFor="accessory-name" className="text-label-md font-semibold text-on-surface">

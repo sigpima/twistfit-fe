@@ -66,6 +66,6 @@ describe('MyForumPostList', () => {
     renderWithIntl(<MyForumPostList />)
 
     await waitFor(() => expect(screen.getByText('Bài của tôi')).toBeInTheDocument())
-    expect(screen.getByAltText('')).toHaveAttribute('src', 'https://example.com/mine.jpg')
+    expect(screen.getByAltText('Bài của tôi')).toHaveAttribute('src', 'https://example.com/mine.jpg')
   })
 })

@@ -36,7 +36,7 @@ export default function MyForumPostList() {
         <li key={post.id} className="flex gap-space-md rounded-2xl border border-outline-variant p-space-lg">
           {post.imageUrl && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={post.imageUrl} alt="" className="h-16 w-16 shrink-0 rounded-xl object-cover" />
+            <img src={post.imageUrl} alt={post.title} className="h-16 w-16 shrink-0 rounded-xl object-cover" />
           )}
           <div className="min-w-0 flex-1">
             <div className="flex items-center justify-between gap-space-md">
