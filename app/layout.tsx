@@ -20,7 +20,7 @@ const montserrat = Montserrat({
   style: ['normal', 'italic'],
 })
 
-const DEFAULT_TITLE = 'TwistFit — Màu Sắc Cá Nhân & Phối Đồ Thông Minh'
+const DEFAULT_TITLE = 'TwistFit - Màu Sắc Cá Nhân & Phối Đồ Thông Minh'
 const DEFAULT_DESCRIPTION =
   'TwistFit giúp bạn khám phá màu sắc cá nhân của chính mình và phối đồ thông minh bằng AI.'
 
