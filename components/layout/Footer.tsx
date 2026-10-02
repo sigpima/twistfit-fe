@@ -40,7 +40,7 @@ export default function Footer() {
   return (
     <footer className="mt-8 w-full border-t border-[#e2e8f0] bg-white pb-8 pt-14 sm:mt-20">
       <div className="mx-auto max-w-7xl px-margin md:px-margin-desktop">
-        <div className="grid grid-cols-1 gap-10 border-b border-[#f1f5f9] pb-12 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-10 pb-12 md:grid-cols-4">
           <div className="space-y-4">
             <h2 className="font-serif text-2xl font-black tracking-tight text-[#304461]">{t('brand')}</h2>
             <p className="text-xs italic text-[#7b89ba]">{t('tagline')}</p>
@@ -156,9 +156,27 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between gap-4 pt-8 text-xs text-[#94a3b8] md:flex-row">
-          <p>{t('copyright')}</p>
-          <p>{t('copyrightSecondary')}</p>
+        <div className="flex flex-col text-xs text-[#94a3b8]">
+          <div className="mx-auto flex max-w-2xl items-start gap-2 rounded-xl bg-[#f0f3ff]/60 px-4 py-3">
+            <svg
+              className="mt-0.5 h-4 w-4 shrink-0 text-[#7b89ba]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 3L2 9l10 6 10-6-10-6zM6 11.5v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"
+              />
+            </svg>
+            <p className="text-left italic leading-relaxed text-[#64748b]">{t('projectScope')}</p>
+          </div>
+          <div className="flex flex-col items-center justify-between gap-4 pb-6 pt-8 text-xs text-[#94a3b8] md:flex-row">
+            <p>{t('copyright')}</p>
+            <p>{t('copyrightSecondary')}</p>
+          </div>
         </div>
       </div>
     </footer>
