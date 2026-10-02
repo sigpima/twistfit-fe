@@ -157,6 +157,10 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex flex-col text-xs text-[#94a3b8]">
+          <div className="flex flex-col items-center justify-between gap-4 pb-6 pt-8 text-xs text-[#94a3b8] md:flex-row">
+            <p>{t('copyright')}</p>
+            <p>{t('copyrightSecondary')}</p>
+          </div>
           <div className="mx-auto flex max-w-2xl items-start gap-2 rounded-xl bg-[#f0f3ff]/60 px-4 py-3">
             <svg
               className="mt-0.5 h-4 w-4 shrink-0 text-[#7b89ba]"
@@ -172,10 +176,6 @@ export default function Footer() {
               />
             </svg>
             <p className="text-left italic leading-relaxed text-[#64748b]">{t('projectScope')}</p>
-          </div>
-          <div className="flex flex-col items-center justify-between gap-4 pb-6 pt-8 text-xs text-[#94a3b8] md:flex-row">
-            <p>{t('copyright')}</p>
-            <p>{t('copyrightSecondary')}</p>
           </div>
         </div>
       </div>
