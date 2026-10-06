@@ -19,14 +19,32 @@ async function rawFetch(path: string, init: RequestInit = {}): Promise<Response>
   return fetch(`${apiBaseUrl()}${path}`, { ...init, credentials: 'include' })
 }
 
+// The backend rotates the refresh token on every use — a second concurrent
+// /auth/refresh call with the same (now-stale) cookie gets 401 even though
+// the first one just succeeded. Concurrent 401s (e.g. several widgets
+// fetching on mount after the access token expires) must share one refresh
+// call instead of each racing their own.
+let refreshPromise: Promise<boolean> | null = null
+
+function refreshAccessToken(): Promise<boolean> {
+  if (!refreshPromise) {
+    refreshPromise = rawFetch('/auth/refresh', { method: 'POST' })
+      .then((response) => response.ok)
+      .finally(() => {
+        refreshPromise = null
+      })
+  }
+  return refreshPromise
+}
+
 export async function apiFetch(path: string, init: RequestInit = {}): Promise<Response> {
   const response = await rawFetch(path, init)
   if (response.status !== 401 || SKIP_REFRESH_RETRY_PATHS.has(path)) {
     return response
   }
 
-  const refreshResponse = await rawFetch('/auth/refresh', { method: 'POST' })
-  if (!refreshResponse.ok) {
+  const refreshed = await refreshAccessToken()
+  if (!refreshed) {
     return response
   }
 

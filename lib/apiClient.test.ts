@@ -35,6 +35,25 @@ describe('apiFetch', () => {
     expect(response.ok).toBe(true)
   })
 
+  it('shares a single in-flight refresh across concurrent 401s', async () => {
+    const callsPerUrl: Record<string, number> = {}
+    const fetchMock = vi.fn().mockImplementation((url: string) => {
+      callsPerUrl[url] = (callsPerUrl[url] ?? 0) + 1
+      if (url.endsWith('/auth/refresh')) {
+        return Promise.resolve({ ok: true, status: 200 })
+      }
+      const isFirstCallForUrl = callsPerUrl[url] === 1
+      return Promise.resolve({ ok: !isFirstCallForUrl, status: isFirstCallForUrl ? 401 : 200 })
+    })
+    vi.stubGlobal('fetch', fetchMock)
+
+    const [responseA, responseB] = await Promise.all([apiFetch('/a'), apiFetch('/b')])
+
+    expect(callsPerUrl['https://api.twistfit.vn/auth/refresh']).toBe(1)
+    expect(responseA.ok).toBe(true)
+    expect(responseB.ok).toBe(true)
+  })
+
   it('does not retry when the refresh itself fails', async () => {
     const fetchMock = vi
       .fn()
