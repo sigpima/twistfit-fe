@@ -943,7 +943,10 @@
         "emptyState": "Không có món đồ nào khớp lựa chọn hiện tại.",
         "loadingItems": "Đang tải tủ đồ...",
         "loadError": "Không tải được tủ đồ, vui lòng thử lại.",
-        "itemCountBadge": "{count} món đồ phù hợp"
+        "itemCountBadge": "{count} món đồ phù hợp",
+        "deleteAriaLabel": "Xóa món đồ này",
+        "deleteConfirm": "Xóa món đồ này khỏi tủ đồ?",
+        "deleteError": "Không xóa được, vui lòng thử lại."
       },
       "OccasionStyleSelector": {
         "modeOccasion": "Theo dịp",

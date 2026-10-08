@@ -28,6 +28,7 @@ export default function WardrobeLibrary() {
 
   const [items, setItems] = useState<WardrobeItem[] | null>(null)
   const [loadError, setLoadError] = useState(false)
+  const [deleteError, setDeleteError] = useState(false)
   const [taxonomyGroups, setTaxonomyGroups] = useState<TaxonomyGroup[]>([])
 
   const [personalColorSeason, setPersonalColorSeason] = useState<string | null>(null)
@@ -72,6 +73,18 @@ export default function WardrobeLibrary() {
   }, [])
 
   const clothingTypeGroup = findGroup(taxonomyGroups, 'clothing-type')
+
+  async function handleDelete(itemId: number) {
+    if (!window.confirm(t('deleteConfirm'))) return
+
+    setDeleteError(false)
+    const response = await apiFetch(`/wardrobe/items/${itemId}`, { method: 'DELETE' })
+    if (!response.ok) {
+      setDeleteError(true)
+      return
+    }
+    setItems((current) => current?.filter((item) => item.id !== itemId) ?? null)
+  }
 
   function toggleClothingType(valueKey: string) {
     setSelectedClothingTypes((current) =>
@@ -200,6 +213,8 @@ export default function WardrobeLibrary() {
         />
       </div>
 
+      {deleteError && <p className="text-body-sm text-error">{t('deleteError')}</p>}
+
       {loadError ? (
         <p className="rounded-2xl bg-error-container p-space-lg text-center text-body-md text-on-error-container">
           {t('loadError')}
@@ -221,8 +236,16 @@ export default function WardrobeLibrary() {
             return (
               <div
                 key={item.id}
-                className="flex flex-col overflow-hidden rounded-2xl bg-surface-container-lowest text-left shadow-sm"
+                className="relative flex flex-col overflow-hidden rounded-2xl bg-surface-container-lowest text-left shadow-sm"
               >
+                <button
+                  type="button"
+                  onClick={() => handleDelete(item.id)}
+                  aria-label={t('deleteAriaLabel')}
+                  className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-surface/90 text-on-surface shadow-sm hover:bg-error hover:text-on-error"
+                >
+                  <span className="material-symbols-outlined text-[18px]">delete</span>
+                </button>
                 <div className="aspect-square w-full overflow-hidden bg-surface-container">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={item.blobUrl} alt={clothingTypeLabel} className="h-full w-full object-cover" />

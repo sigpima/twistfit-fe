@@ -178,4 +178,67 @@ describe('WardrobeLibrary', () => {
 
     await waitFor(() => expect(screen.getAllByRole('img')).toHaveLength(2))
   })
+
+  it('deletes an item after confirming, removing it from the grid', async () => {
+    const fetchMock = vi.fn((url: string, init?: RequestInit) => {
+      if (init?.method === 'DELETE') return Promise.resolve(jsonResponse(null))
+      if (url.includes('/wardrobe/items')) return Promise.resolve(jsonResponse([SHIRT_ITEM, PANTS_ITEM]))
+      if (url.includes('/quiz-attempts/me')) return Promise.resolve(jsonResponse(null))
+      if (url.includes('/taxonomy')) return Promise.resolve(jsonResponse([CLOTHING_TYPE_GROUP]))
+      return Promise.resolve(jsonResponse(null, { ok: false, status: 404 }))
+    })
+    vi.stubGlobal('fetch', fetchMock)
+    vi.stubGlobal('confirm', vi.fn().mockReturnValue(true))
+
+    renderLibrary()
+    await waitFor(() => expect(screen.getAllByRole('img')).toHaveLength(2))
+
+    fireEvent.click(screen.getAllByRole('button', { name: 'Xóa món đồ này' })[0])
+
+    expect(window.confirm).toHaveBeenCalledWith('Xóa món đồ này khỏi tủ đồ?')
+    await waitFor(() =>
+      expect(fetchMock).toHaveBeenCalledWith('/api/wardrobe/items/1', { method: 'DELETE', credentials: 'include' })
+    )
+    await waitFor(() => expect(screen.getAllByRole('img')).toHaveLength(1))
+  })
+
+  it('does not delete when the confirm dialog is dismissed', async () => {
+    const fetchMock = vi.fn((url: string, init?: RequestInit) => {
+      if (init?.method === 'DELETE') return Promise.resolve(jsonResponse(null))
+      if (url.includes('/wardrobe/items')) return Promise.resolve(jsonResponse([SHIRT_ITEM, PANTS_ITEM]))
+      if (url.includes('/quiz-attempts/me')) return Promise.resolve(jsonResponse(null))
+      if (url.includes('/taxonomy')) return Promise.resolve(jsonResponse([CLOTHING_TYPE_GROUP]))
+      return Promise.resolve(jsonResponse(null, { ok: false, status: 404 }))
+    })
+    vi.stubGlobal('fetch', fetchMock)
+    vi.stubGlobal('confirm', vi.fn().mockReturnValue(false))
+
+    renderLibrary()
+    await waitFor(() => expect(screen.getAllByRole('img')).toHaveLength(2))
+
+    fireEvent.click(screen.getAllByRole('button', { name: 'Xóa món đồ này' })[0])
+
+    expect(fetchMock).not.toHaveBeenCalledWith('/api/wardrobe/items/1', { method: 'DELETE', credentials: 'include' })
+    expect(screen.getAllByRole('img')).toHaveLength(2)
+  })
+
+  it('shows an error message and keeps the item when the delete request fails', async () => {
+    const fetchMock = vi.fn((url: string, init?: RequestInit) => {
+      if (init?.method === 'DELETE') return Promise.resolve(jsonResponse(null, { ok: false, status: 500 }))
+      if (url.includes('/wardrobe/items')) return Promise.resolve(jsonResponse([SHIRT_ITEM, PANTS_ITEM]))
+      if (url.includes('/quiz-attempts/me')) return Promise.resolve(jsonResponse(null))
+      if (url.includes('/taxonomy')) return Promise.resolve(jsonResponse([CLOTHING_TYPE_GROUP]))
+      return Promise.resolve(jsonResponse(null, { ok: false, status: 404 }))
+    })
+    vi.stubGlobal('fetch', fetchMock)
+    vi.stubGlobal('confirm', vi.fn().mockReturnValue(true))
+
+    renderLibrary()
+    await waitFor(() => expect(screen.getAllByRole('img')).toHaveLength(2))
+
+    fireEvent.click(screen.getAllByRole('button', { name: 'Xóa món đồ này' })[0])
+
+    await waitFor(() => expect(screen.getByText('Không xóa được, vui lòng thử lại.')).toBeInTheDocument())
+    expect(screen.getAllByRole('img')).toHaveLength(2)
+  })
 })
