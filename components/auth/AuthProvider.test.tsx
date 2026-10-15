@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { act, renderHook } from '@testing-library/react'
+import { act, renderHook, waitFor } from '@testing-library/react'
 import { AuthProvider, useAuth } from './AuthProvider'
+import { apiFetch } from '@/lib/apiClient'
 import type { ReactNode } from 'react'
 
 function wrapper({ children }: { children: ReactNode }) {
@@ -108,6 +109,25 @@ describe('AuthProvider / useAuth', () => {
     })
 
     expect(result.current.user).toBeNull()
+    expect(window.localStorage.getItem('twistfit.auth')).toBeNull()
+  })
+
+  it('clears the stored session once a real API call reports the refresh token is dead', async () => {
+    const { result } = renderHook(() => useAuth(), { wrapper })
+
+    await act(async () => {
+      await result.current.login('admin@twistfit.vn', 'admin1234')
+    })
+    expect(result.current.user?.role).toBe('admin')
+
+    // Any authenticated call that 401s and whose refresh retry also 401s —
+    // not a manual logout — must still clear the stale "logged in" state.
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 401 }))
+    await act(async () => {
+      await apiFetch('/wardrobe/items')
+    })
+
+    await waitFor(() => expect(result.current.user).toBeNull())
     expect(window.localStorage.getItem('twistfit.auth')).toBeNull()
   })
 })

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { apiFetch } from './apiClient'
+import { apiFetch, setSessionExpiredHandler } from './apiClient'
 
 describe('apiFetch', () => {
   beforeEach(() => {
@@ -9,6 +9,7 @@ describe('apiFetch', () => {
   afterEach(() => {
     vi.unstubAllGlobals()
     vi.unstubAllEnvs()
+    setSessionExpiredHandler(null)
   })
 
   it('calls the API base URL with credentials included', async () => {
@@ -65,6 +66,45 @@ describe('apiFetch', () => {
 
     expect(fetchMock).toHaveBeenCalledTimes(2)
     expect(response.status).toBe(401)
+  })
+
+  it('reports a dead session when the refresh itself fails, so the app can clear the stale login state', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce({ ok: false, status: 401 })
+      .mockResolvedValueOnce({ ok: false, status: 401 })
+    vi.stubGlobal('fetch', fetchMock)
+    const handler = vi.fn()
+    setSessionExpiredHandler(handler)
+
+    await apiFetch('/auth/me')
+
+    expect(handler).toHaveBeenCalledTimes(1)
+  })
+
+  it('does not report a dead session when the refresh succeeds', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce({ ok: false, status: 401 })
+      .mockResolvedValueOnce({ ok: true, status: 200 })
+      .mockResolvedValueOnce({ ok: true, status: 200 })
+    vi.stubGlobal('fetch', fetchMock)
+    const handler = vi.fn()
+    setSessionExpiredHandler(handler)
+
+    await apiFetch('/auth/me')
+
+    expect(handler).not.toHaveBeenCalled()
+  })
+
+  it('does not report a dead session for a plain request that never needed a refresh', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 200 }))
+    const handler = vi.fn()
+    setSessionExpiredHandler(handler)
+
+    await apiFetch('/faq')
+
+    expect(handler).not.toHaveBeenCalled()
   })
 
   it('does not attempt a refresh retry for /auth/login itself', async () => {

@@ -37,6 +37,17 @@ function refreshAccessToken(): Promise<boolean> {
   return refreshPromise
 }
 
+// A 401 whose refresh retry also fails means the refresh token itself is
+// dead (expired, rotated by another request, revoked) — the browser's
+// stored "logged in" state is now stale and would otherwise 401 forever
+// until the user manually logs out. AuthProvider registers itself here so
+// it can clear that stale state the moment this happens.
+let onSessionExpired: (() => void) | null = null
+
+export function setSessionExpiredHandler(handler: (() => void) | null): void {
+  onSessionExpired = handler
+}
+
 export async function apiFetch(path: string, init: RequestInit = {}): Promise<Response> {
   const response = await rawFetch(path, init)
   if (response.status !== 401 || SKIP_REFRESH_RETRY_PATHS.has(path)) {
@@ -45,6 +56,7 @@ export async function apiFetch(path: string, init: RequestInit = {}): Promise<Re
 
   const refreshed = await refreshAccessToken()
   if (!refreshed) {
+    onSessionExpired?.()
     return response
   }
 

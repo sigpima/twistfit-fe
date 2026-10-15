@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
-import { apiFetch } from '@/lib/apiClient'
+import { apiFetch, setSessionExpiredHandler } from '@/lib/apiClient'
 import type { Role } from '@/lib/auth/users'
 
 const STORAGE_KEY = 'twistfit.auth'
@@ -48,6 +48,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsHydrated(true)
   }, [])
 
+  useEffect(() => {
+    // apiFetch calls this once a refresh retry genuinely fails (refresh
+    // token expired/rotated/revoked) — the stored "logged in" state is now
+    // stale and must be cleared, or AuthGate keeps rendering protected pages
+    // for a session that's already dead server-side.
+    setSessionExpiredHandler(clearSession)
+    return () => setSessionExpiredHandler(null)
+  }, [])
+
   async function login(identifier: string, password: string): Promise<AuthUser | null> {
     const response = await apiFetch('/auth/login', {
       method: 'POST',
@@ -61,9 +70,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return account
   }
 
-  function logout() {
+  function clearSession() {
     setUser(null)
     window.localStorage.removeItem(STORAGE_KEY)
+  }
+
+  function logout() {
+    clearSession()
     void apiFetch('/auth/logout', { method: 'POST' }).catch(() => {})
   }
 
